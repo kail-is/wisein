@@ -1,0 +1,27 @@
+@import './common/common';
+
+
+.content-wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 100px;
+    @include MD{
+        margin: 0 1em;
+
+    }
+    
+    .answer .function{
+        position: absolute;
+        top: 2em;
+        right: 2em;
+        span{
+            font-size: 1.25rem;
+            padding-right: 0.25em;
+        }
+
+        @include XS{
+            position: static;
+        }
+    }
+}
+
