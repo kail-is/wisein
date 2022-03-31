@@ -3,6 +3,6 @@
 <mapper namespace="com.wisein.wiselab.mapper.memberMapper">
 
     <!-- test -->
-    <select id="getTest" resultType="String"> select sysdate from dual </select>
+    <select id="getTest" resultType="String"> select id from member where name = '서은빈';  </select>
 
 </mapper>
