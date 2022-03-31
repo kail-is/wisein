@@ -2,7 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.memberMapper">
 
-    <!-- test -->
-    <select id="getTest" resultType="String"> select id from member where name = '서은빈';  </select>
+    <!-- 회원 가입 -->
+    <insert id="register" parameterType="com.wisein.wiselab.dto.MemberDTO">
+        INSERT INTO MEMBER(
+        ID
+        , PW
+        , NAME
+        , SITE
+        , REG_DATE
+        )VALUES(
+        #{id}
+        , #{pw}
+        , #{name}
+        , #{site}
+        , NOW()
+        )
+    </insert>
+
+
+    <!-- 회원 로그인 -->
+    <select id="login" parameterType="String" resultType="MemberDTO">
+        SELECT
+        ID
+        , PW
+        , NAME
+        , SITE
+        , HIRE_DATE
+        , REG_DATE
+        , MEET_LINK
+        , MEET_YN
+        , MEM_STATUS
+        FROM MEMBER
+        WHERE USER_ID = #{userId}
+        AND MEM_STATUS = 'Y'
+    </select>
 
 </mapper>
