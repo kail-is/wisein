@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 		//인증 번호 저장
-		var authNum = "";
+	var authNum = "";
 
 		$("#email_btn").click(function(){
 			var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
