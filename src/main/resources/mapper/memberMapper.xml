@@ -19,7 +19,6 @@
         )
     </insert>
 
-
     <!-- 회원 로그인 -->
     <select id="login" parameterType="String" resultType="com.wisein.wiselab.dto.MemberDTO">
         SELECT
@@ -36,5 +35,6 @@
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </select>
+
 
 </mapper>
