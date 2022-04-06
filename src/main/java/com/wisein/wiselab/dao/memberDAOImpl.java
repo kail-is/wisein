@@ -13,11 +13,6 @@ public class memberDAOImpl implements MemberDAO {
     private static final String NS = "com.wisein.wiselab.mapper.memberMapper";
 
     @Override
-    public String getTest() {
-        return sql.selectOne(NS + ".getTest");
-    }
-
-    @Override
     public void register(MemberDTO dto) {
         sql.insert(NS + ".register", dto);
     }

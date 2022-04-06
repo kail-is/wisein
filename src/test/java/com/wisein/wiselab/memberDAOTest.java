@@ -12,14 +12,8 @@ public class memberDAOTest {
     @Autowired
     private MemberDAO dao;
 
-
     @Autowired
     private MemberDTO dto;
-
-    @Test
-    public void getTest() {
-        System.out.println("연결 테스트: " + dao.getTest());
-    }
 
     @Test
     public void register(MemberDTO dto) throws Exception {
