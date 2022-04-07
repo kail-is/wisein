@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,7 +62,7 @@ public class testController2 {
 		dto.setPw(passEncd);
 
 		service.register(dto);
-		return "redirect:/";
+		return "redirect:/reg";
 	}
 
 
