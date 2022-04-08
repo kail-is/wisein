@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -66,17 +67,33 @@ public class testController2 {
 	}
 
 
-	@PostMapping(value = "/login")
-	public String login(MemberDTO dto, HttpServletRequest req) throws Exception {
-
-		return "redirect:/";
+	@GetMapping(value="/login")
+	public String getLogin () throws Exception {
+		return "login";
 	}
 
+	@PostMapping(value = "/login")
+	public String postLogin(MemberDTO dto, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 
+		HttpSession session= req.getSession();
+		MemberDTO login = service.login(dto);
+
+		boolean passMat = passEncoder.matches(dto.getPw(), login.getPw());
+
+		if(login != null && passMat) {
+			session.setAttribute("member", login);
+		} else {
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", false);
+			return "redirect:/login";
+		}
+
+		return "redirect:/login";
+	}
 
 	@GetMapping(value = "/logout")
 	public String logout(HttpSession session) throws Exception {
-		session.invalidate();
+		service.logout(session);
 		return "redirect:/";
 	}
 

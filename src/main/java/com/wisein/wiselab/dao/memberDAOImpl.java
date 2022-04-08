@@ -17,4 +17,9 @@ public class memberDAOImpl implements MemberDAO {
         sql.insert(NS + ".register", dto);
     }
 
+    @Override
+    public MemberDTO login(MemberDTO dto) throws Exception {
+        return sql.selectOne(NS + ".login", dto);
+    }
+
 }
