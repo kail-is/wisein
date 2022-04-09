@@ -20,8 +20,8 @@
 <div> 로그인 여부: ${not empty member} </div>
 <div> 로그인 객체: ${member} </div>
 
-<c:if test="${msg == false}">
-    <p style="color:red;">로그인 실패</p>
+<c:if test="${not empty msg}">
+    <p style="color:red;">${msg}</p>
 </c:if>
 
 <ul>

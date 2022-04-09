@@ -77,17 +77,30 @@ public class testController2 {
 
 		HttpSession session= req.getSession();
 		MemberDTO login = service.login(dto);
+		String lgFailMessage; // 로그인 실패 시의 RedirectAttributes
 
-		boolean passMat = passEncoder.matches(dto.getPw(), login.getPw());
+		if (login != null) {
+			// 해당 MemberDTO를 받아왔을 때에만 출력
+			boolean passMat = passEncoder.matches(dto.getPw(), login.getPw());
 
-		if(login != null && passMat) {
-			session.setAttribute("member", login);
+			if(passMat) {
+				// matches를 통한 패스워드 매칭 시 로그인 성공
+				session.setAttribute("member", login);
+			} else {
+				// login이 null || 패스워드 매칭 실패
+				session.setAttribute("member", null);
+				lgFailMessage ="로그인에 실패했습니다.";
+				rttr.addFlashAttribute("msg", lgFailMessage);
+				return "redirect:/login";
+			}
+
 		} else {
-			session.setAttribute("member", null);
-			rttr.addFlashAttribute("msg", false);
+			//  해당 MemberDTO를 받아오지 못했을 경우 - mem_status = 'N' 등
+			lgFailMessage ="로그인에 실패했습니다.";
+			rttr.addFlashAttribute("msg", lgFailMessage);
 			return "redirect:/login";
 		}
-
+		
 		return "redirect:/login";
 	}
 
