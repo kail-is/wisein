@@ -26,7 +26,7 @@ $(document).ready(function(){
 						data:{"email":email},
 						type:"POST",
 						dataType:"json",
-						url:"/wiselab/authKeySend",
+						url:"/authKeySend",
 						success:function(data) {
 
 							authNum = data.authNum;
@@ -58,7 +58,7 @@ $(document).ready(function(){
 				$("#auth_Error").css({"color":"green","font-size":"11px"});
 
 				$.ajax({
-					url:"/wiselab/stateUpd",
+					url:"/stateUpd",
 					data : {"id":"ehdrms523"},
 					dataType:"json",
 					success:function(data) {
@@ -80,7 +80,7 @@ $(document).ready(function(){
 
 		$("#auth_Check").click(function() {
 			$.ajax({
-				url:"/wiselab/auth_Check",
+				url:"/auth_Check",
 				data:{"id":"ehdrms523"},
 				dataType:"json",
 				success:function(data) {
