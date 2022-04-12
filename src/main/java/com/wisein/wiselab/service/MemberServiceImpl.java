@@ -28,5 +28,16 @@ public class MemberServiceImpl implements MemberService {
         session.invalidate();
     }
 
+    @Override
+    public void modify(MemberDTO dto) throws Exception {
+        dao.modify(dto);
+    }
+
+    @Override
+    public void withdraw(MemberDTO dto, HttpSession session) throws Exception {
+        dao.withdraw(dto);
+        session.invalidate();
+    }
+
 
 }

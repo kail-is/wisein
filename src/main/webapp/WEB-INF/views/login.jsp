@@ -26,10 +26,12 @@
 
 <ul>
  <c:if test="${empty member}">
- <li> <a href="/login">로그인</a> </li>
- <li> <a href="/reg">회원가입</a> </li>
+ <li> <a href="login">로그인</a> </li>
+ <li> <a href="reg">회원가입</a> </li>
  </c:if>
   <c:if test="${not empty member}">
- <li><a href="/logout">로그아웃</a> </li>
+ <li><a href="logout">로그아웃</a> </li>
+ <li><a href="update">정보 수정</a> </li>
+ <li><a href="withdraw">탈퇴</a> </li>
  </c:if>
 </ul>
