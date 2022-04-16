@@ -22,4 +22,14 @@ public class memberDAOImpl implements MemberDAO {
         return sql.selectOne(NS + ".login", dto);
     }
 
+    @Override
+    public String findTempKey(String id) throws Exception {
+        return sql.selectOne(NS + ".key", id);
+    }
+
+    @Override
+    public void authStateUpdate(String id) throws Exception {
+        sql.update(NS + ".authStateUpdate", id);
+    }
+
 }

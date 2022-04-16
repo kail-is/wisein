@@ -14,5 +14,6 @@ public class MemberDTO {
     private String meetLink;
     private String meetYn;
     private String mem_status;
+    private String authstate;
 
 }

@@ -12,23 +12,17 @@
 </style>
 </head>
 <body>
+    사이트 이용 전 이메일 인증
 	<div class="auth_Wrap">
 		<div>
 			<label for="email">Email</label>
 			<input type="text" id="email">
-			<button type="button" id="email_btn">인증번호 전송</button>
+			<button type="button" id="email_btn">인증메일 발송</button>
 			<p id="error_Text"></p>
 		</div>
 
 		<div>
-			<label for="authKey">인증번호</label>
-			<input type="text" id="authKey">
-			<button type="button" id="certi_Btn">인증하기</button>
-			<p id="auth_Error"></p>
-		</div>
-
-		<div>
-			<button type="button" id="auth_Check">인증 완료</button>
+		    <button type="button" id="auth_Check">완료</button>
 		</div>
 	</div>
 </body>

@@ -10,12 +10,14 @@
         , NAME
         , SITE
         , REG_DATE
+        , AUTHSTATE
         )VALUES(
         #{id}
         , #{pw}
         , #{name}
         , #{site}
         , NOW()
+        , #{authstate}
         )
     </insert>
 
@@ -35,6 +37,21 @@
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </select>
+
+    <!-- 인증키 가져옴 -->
+    <select id="key" parameterType="String" resultType="String">
+        SELECT
+        AUTHSTATE
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="authStateUpdate" parameterType="String">
+        UPDATE
+        MEMBER
+        SET AUTHSTATE='Y'
+        WHERE ID = #{id}
+    </update>
 
 
 </mapper>

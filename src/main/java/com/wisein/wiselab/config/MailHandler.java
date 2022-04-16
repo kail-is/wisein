@@ -1,48 +1,31 @@
 package com.wisein.wiselab.config;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MailHandler {
-
-    private MimeMessage message;
-    private MimeMessageHelper messageHelper;
 
     private JavaMailSender mailSender;
 
-    public MailHandler() {}
-
-    public MailHandler(JavaMailSender mailSender) throws MessagingException {
-        this.mailSender=mailSender;
-        message = this.mailSender.createMimeMessage();
-        messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+    public MailHandler(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
-
-    public void setFrom(String email, String name) throws UnsupportedEncodingException, MessagingException {
-        messageHelper.setFrom(email, name);
-    }
-
-    public void setTo(String email) throws MessagingException {
-        messageHelper.setTo(email);
-    }
-
-    public void setSubject(String subject) throws MessagingException {
-        messageHelper.setSubject(subject);
-    }
-
-    public void setText(String text) throws MessagingException {
-        messageHelper.setText(text, true);
-    }
-
-    public void send() {
+    public void send(String toEmail, String subject, String message) {
         try {
-            mailSender.send(message);
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            messageHelper.setFrom("ehdrms235@gmail.com", "WISEADMIN");
+            messageHelper.setTo(toEmail);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(message, true);
+
+            mailSender.send(mimeMessage);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

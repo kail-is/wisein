@@ -24,8 +24,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public String findTempKey(String id) throws Exception {
+        return dao.findTempKey(id);
+    }
+
+    @Override
     public void logout(HttpSession session) throws Exception {
         session.invalidate();
+    }
+
+    @Override
+    public void authStateUpdate(String id) throws Exception {
+        dao.authStateUpdate(id);
     }
 
 
