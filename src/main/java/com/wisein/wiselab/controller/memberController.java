@@ -4,6 +4,7 @@ import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Slf4j
 @Controller
-@RequestMapping("/user/*")
 public class memberController {
 
 	@Autowired
@@ -24,7 +25,6 @@ public class memberController {
 
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
-
 
 	@GetMapping(value="/register")
 	public String getRegister () throws Exception {
@@ -41,7 +41,7 @@ public class memberController {
 
 		service.register(dto);
 
-		return "redirect:/user/register";
+		return "redirect:/register";
 	}
 
 	@GetMapping(value="/login")
@@ -65,30 +65,31 @@ public class memberController {
 				lgFailMessage ="로그인에 실패했습니다.";
 				rttr.addFlashAttribute("msg", lgFailMessage);
 
-				return "redirect:/user/login";
+				return "redirect:/login";
 			}
 		} else {
 			lgFailMessage ="로그인에 실패했습니다.";
 			rttr.addFlashAttribute("msg", lgFailMessage);
 
-			return "redirect:/user/login";
+			return "redirect:/login";
 		}
 
-		return "redirect:/user/login";
+		return "redirect:/login";
 	}
 
-	@GetMapping(value = "/logout")
+	@GetMapping(value = "/user/logout")
 	public String logout(HttpSession session) throws Exception {
 		service.logout(session);
-		return "redirect:/user/login";
+		return "redirect:/login";
 	}
 
-	@GetMapping(value = "/update")
+
+	@GetMapping(value = "/user/update")
 	public String getModifyUser() throws Exception {
 		return "upd";
 	}
 
-	@PostMapping(value = "/update")
+	@PostMapping(value = "/user/update")
 	public String postModifyUser(MemberDTO dto) throws Exception {
 
 		String inputPw = dto.getPw();
@@ -97,19 +98,18 @@ public class memberController {
 
 		service.modify(dto);
 
-		return "redirect:/user/login";
+		return "redirect:/login";
 	}
 
-
-	@GetMapping(value = "/withdraw")
+	@GetMapping(value = "/user/withdraw")
 	public String getWithdrawalUser() throws Exception {
 		return "withdrawal";
 	}
 
-	@PostMapping(value = "/withdraw")
+	@PostMapping(value = "/user/withdraw")
 	public String withdrawal(MemberDTO dto, HttpSession session) throws Exception {
 		service.withdraw(dto, session);
-		return "redirect:/user/login";
+		return "redirect:/login";
 	}
 
 }

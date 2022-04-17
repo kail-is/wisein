@@ -26,11 +26,11 @@
         , PW
         , NAME
         , SITE
-        , HIRE_DATE
-        , REG_DATE
-        , MEET_LINK
-        , MEET_YN
-        , MEM_STATUS
+        , HIRE_DATE as hireDate
+        , REG_DATE as regDate
+        , MEET_LINK as meetLink
+        , MEET_YN as meetYn
+        , MEM_STATUS as memStatus
         FROM MEMBER
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'

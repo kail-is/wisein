@@ -11,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class testController2 {
 
-
 	@GetMapping(value="/main")
 	public String main () throws Exception {
-		System.out.println("한나실험임");
 		return "cmn/main";
 	}
 
