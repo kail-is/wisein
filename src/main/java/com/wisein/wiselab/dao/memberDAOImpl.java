@@ -22,4 +22,14 @@ public class memberDAOImpl implements MemberDAO {
         return sql.selectOne(NS + ".login", dto);
     }
 
+    @Override
+    public void modify(MemberDTO dto) throws Exception {
+        sql.update(NS + ".modify", dto);
+    }
+
+    @Override
+    public void withdraw(MemberDTO dto) throws Exception {
+        sql.update(NS + ".withdraw", dto);
+    }
+
 }
