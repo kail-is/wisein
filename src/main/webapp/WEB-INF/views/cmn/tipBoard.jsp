@@ -16,7 +16,9 @@
 
         <div class="button-wrap">
             <input type="button" value="등록" onclick="submit()">
+            <input type="button" value="취소" onclick="cancel()">
        </div>
+
     </div>
 
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
@@ -28,8 +30,21 @@
                  previewStyle: 'vertical',
                  initialValue: '📌욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요📌'
             });
-            document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHtml());
-            console.log(editor.getHtml());
+    </script>
+
+    <script>
+        function submit(){
+            console.log(editor.getHTML());
+        }
+    </script>
+
+    <script>
+        function cancel(){
+            if(confirm('진짜 취소하실꺼에여?🥺') == true){
+                console.log('뒤로가기되찌롱');
+                window.history.back()
+            }
+        }
     </script>
 </body>
 </html>
