@@ -8,7 +8,7 @@
     <div class="content-wrap">
 
         <div>제목</div>
-        <p><input type="text" size="210" placeholder="제목을 입력하세요" required></p>
+        <p><input type="text" size="210" id='title' placeholder="제목을 입력하세요" required></p>
 
         <div>내용</div>
         <div id="editor"></div>
@@ -31,13 +31,13 @@
                  initialValue: '📌욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요📌'
             });
     </script>
-
     <script>
         function submit(){
+            const title = document.getElementById('title').value;
+            console.log(title);
             console.log(editor.getHTML());
         }
     </script>
-
     <script>
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){
