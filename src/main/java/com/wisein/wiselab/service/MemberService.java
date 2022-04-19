@@ -15,5 +15,7 @@ public interface MemberService {
     public void logout(HttpSession session) throws Exception;
 
     public void authStateUpdate(String id) throws Exception;
+
+    public int authIdExist(String id) throws Exception;
 }
 

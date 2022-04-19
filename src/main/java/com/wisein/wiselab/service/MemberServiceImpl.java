@@ -38,5 +38,9 @@ public class MemberServiceImpl implements MemberService {
         dao.authStateUpdate(id);
     }
 
+    @Override
+    public int authIdExist(String id) throws Exception {
+        return dao.authIdExist(id);
+    }
 
 }

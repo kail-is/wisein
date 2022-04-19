@@ -32,4 +32,9 @@ public class memberDAOImpl implements MemberDAO {
         sql.update(NS + ".authStateUpdate", id);
     }
 
+    @Override
+    public int authIdExist(String id) throws Exception {
+        return sql.selectOne(NS + ".authId", id);
+    }
+
 }

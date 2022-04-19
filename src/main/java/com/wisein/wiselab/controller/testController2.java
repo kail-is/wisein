@@ -84,7 +84,7 @@ public class testController2 {
 		dto.setPw(passEncd);
 
 		service.register(dto);
-		return "redirect:/reg";
+		return "emailSend";
 	}
 
 
@@ -94,19 +94,12 @@ public class testController2 {
 	}
 
 	@PostMapping(value = "/login")
-	public String postLogin(MemberDTO dto, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	public String postLogin(MemberDTO dto, HttpServletRequest req, RedirectAttributes rttr,
+							HttpServletResponse response) throws Exception {
 
 		HttpSession session = req.getSession();
 		MemberDTO login = service.login(dto);
 		String lgFailMessage; // 로그인 실패 시의 RedirectAttributes
-
-		String authKey = service.findTempKey(login.getId());
-		System.out.println("인증키 : " + authKey);
-
-		if (!authKey.equals("Y")) {
-			session.setAttribute("authUser", login.getId());
-			return "auth";
-		}
 
 		if (login != null) {
 			// 해당 MemberDTO를 받아왔을 때에만 출력
@@ -143,9 +136,9 @@ public class testController2 {
 	@ResponseBody
 	@GetMapping(value = "/authMailSend")
 	public void authMailSend(HttpSession session,
-							 @RequestParam("email") String email) {
+							 @RequestParam("email_Id") String email) {
 
-		String userName = (String) session.getAttribute("authUser");
+		session.setAttribute("authUser", email);
 
 		StringBuffer emailcontent = new StringBuffer();
 		emailcontent.append("<!DOCTYPE html>");
@@ -159,9 +152,6 @@ public class testController2 {
 				"		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">WISN IN</span><br />" +
 				"		<span style=\"color: #02b875\">메일인증</span> 안내입니다." +
 				"	</h1>\n" +
-				"	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">" +
-				userName +
-				"		님 안녕하세요.<br />" +
 				"		아래 <b style=\"color: #02b875\">메일 인증</b> 버튼을 클릭하여 인증을 완료해주세요.<br />" +
 				"		감사합니다." +
 				"	</p>" +
@@ -178,38 +168,41 @@ public class testController2 {
 		mailHandler.send(email, "WISE IN 이메일 인증", emailcontent.toString());
 	}
 	
-	//메일 인증 클릭시 인증 상태 업데이트
+	//메일 인증 완료
 	@GetMapping(value = "/authSuccess")
 	public void authSuccess(HttpSession session, HttpServletResponse response,
 							Model model) throws Exception {
 		String id = (String) session.getAttribute("authUser");
+		System.out.println("이메일 : " +id);
 		service.authStateUpdate(id);
 
 		model.addAttribute("checkId", id);
 
+		String path = "login";
+
+		session.removeAttribute("authUser");
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
-		writer.println("<script>alert('이메일 인증이 완료되었습니다.'); window.close(); </script>;");
-
+		writer.println("<script>alert('이메일 인증이 완료되었습니다.'); location.href='"+path+"' </script>;");
 	}
 
 	//인증 체크
+	//
 	@ResponseBody
 	@GetMapping(value = "/authCheck")
-	public Map<String, String> authCheck(HttpSession session, HttpServletResponse response) throws Exception {
-		String id = (String) session.getAttribute("authUser");
-		Map<String, String> map = new HashMap<String, String>();
+	public Map<String, String> authCheck(@RequestParam("login_Id") String id) throws Exception {
 
-		String state = service.findTempKey(id);
-		System.out.print(state);
+		Map<String, String> auth_Map = new HashMap<String, String>();
 
-		map.put("msg", state);
+		String authKey = service.findTempKey(id);
 
-		if (state.equals("Y")) {
-			session.removeAttribute("authUser");
-		}
+		int idExist = service.authIdExist(id);
+		String id_Exist = Integer.toString(idExist);
 
-		return map;
+		auth_Map.put("idExist", id_Exist);
+		auth_Map.put("authKey", authKey);
+
+		return auth_Map;
 	}
-
 }

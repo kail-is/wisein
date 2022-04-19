@@ -53,5 +53,11 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="authId" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
 
 </mapper>

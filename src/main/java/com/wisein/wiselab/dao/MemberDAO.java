@@ -11,4 +11,6 @@ public interface MemberDAO {
     public String findTempKey(String id) throws Exception;
 
     public void authStateUpdate(String id) throws Exception;
+
+    public int authIdExist(String id) throws Exception;
 }
