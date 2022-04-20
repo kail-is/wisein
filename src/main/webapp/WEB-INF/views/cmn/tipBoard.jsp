@@ -14,7 +14,7 @@
 
         <div>내용</div>
         <div id="contents">
-            <div id="editor" onclick="focus()"></div>
+            <div id="editor"></div>
             <div id="viewer"></div>
         </div>
 
@@ -47,14 +47,6 @@
             console.log(editor.getHTML());
         }
     </script>
-
-    <script>
-        function focus(){
-            console.log('내용지워따리');
-            document.getElementByClassName('ProseMirror').value = '';
-        }
-    </script>
-
     <script>
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){
