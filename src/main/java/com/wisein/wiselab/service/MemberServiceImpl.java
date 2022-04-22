@@ -20,7 +20,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDTO login(MemberDTO dto) throws Exception {
-       return dao.login(dto);
+        return dao.login(dto);
+    }
+
+    @Override
+    public String findTempKey(String id) throws Exception {
+        return dao.findTempKey(id);
     }
 
     @Override
@@ -29,15 +34,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void modify(MemberDTO dto) throws Exception {
-        dao.modify(dto);
+    public void authStateUpdate(String id) throws Exception {
+        dao.authStateUpdate(id);
     }
 
     @Override
-    public void withdraw(MemberDTO dto, HttpSession session) throws Exception {
-        dao.withdraw(dto);
-        session.invalidate();
+    public int authIdExist(String id) throws Exception {
+        return dao.authIdExist(id);
     }
-
 
 }

@@ -45,6 +45,8 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-web:5.5.3'
 	implementation 'org.springframework.security:spring-security-config:5.5.3'
 
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 	testImplementation 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'

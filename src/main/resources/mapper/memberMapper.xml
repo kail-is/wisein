@@ -10,14 +10,17 @@
         , NAME
         , SITE
         , REG_DATE
+        , AUTHSTATE
         )VALUES(
         #{id}
         , #{pw}
         , #{name}
         , #{site}
         , NOW()
+        , #{authstate}
         )
     </insert>
+
 
     <!-- 회원 로그인 -->
     <select id="login" parameterType="String" resultType="com.wisein.wiselab.dto.MemberDTO">
@@ -26,37 +29,36 @@
         , PW
         , NAME
         , SITE
-        , HIRE_DATE as hireDate
-        , REG_DATE as regDate
-        , MEET_LINK as meetLink
-        , MEET_YN as meetYn
-        , MEM_STATUS as memStatus
+        , HIRE_DATE
+        , REG_DATE
+        , MEET_LINK
+        , MEET_YN
+        , MEM_STATUS
         FROM MEMBER
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </select>
 
-    <!--  회원 정보 수정  -->
-    <update id="modify" parameterType="com.wisein.wiselab.dto.MemberDTO">
-        UPDATE MEMBER
-        SET
-        PW = #{pw}
-        , SITE = #{site}
-        , HIRE_DATE = #{hireDate}
-        , MEET_LINK = #{meetLink}
-        , MEET_YN = #{meetYn}
+    <!-- 인증키 가져옴 -->
+    <select id="key" parameterType="String" resultType="String">
+        SELECT
+        AUTHSTATE
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="authStateUpdate" parameterType="String">
+        UPDATE
+        MEMBER
+        SET AUTHSTATE='Y'
         WHERE ID = #{id}
     </update>
 
-
-    <!--  회원 탈퇴  -->
-    <update id="withdraw" parameterType="com.wisein.wiselab.dto.MemberDTO">
-        UPDATE MEMBER
-        SET
-        MEM_STATUS = 'N'
+    <select id="authId" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
         WHERE ID = #{id}
-        AND MEM_STATUS = 'Y'
-    </update>
-
+    </select>
 
 </mapper>

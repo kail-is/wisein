@@ -23,13 +23,18 @@ public class memberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public void modify(MemberDTO dto) throws Exception {
-        sql.update(NS + ".modify", dto);
+    public String findTempKey(String id) throws Exception {
+        return sql.selectOne(NS + ".key", id);
     }
 
     @Override
-    public void withdraw(MemberDTO dto) throws Exception {
-        sql.update(NS + ".withdraw", dto);
+    public void authStateUpdate(String id) throws Exception {
+        sql.update(NS + ".authStateUpdate", id);
+    }
+
+    @Override
+    public int authIdExist(String id) throws Exception {
+        return sql.selectOne(NS + ".authId", id);
     }
 
 }

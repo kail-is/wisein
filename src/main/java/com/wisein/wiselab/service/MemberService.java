@@ -10,9 +10,12 @@ public interface MemberService {
 
     public MemberDTO login(MemberDTO dto) throws Exception;
 
+    public String findTempKey(String id) throws Exception;
+
     public void logout(HttpSession session) throws Exception;
 
-    public void modify(MemberDTO dto) throws Exception;
+    public void authStateUpdate(String id) throws Exception;
 
-    public void withdraw(MemberDTO dto, HttpSession session) throws Exception;
+    public int authIdExist(String id) throws Exception;
 }
+
