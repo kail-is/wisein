@@ -1,5 +1,6 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.config.AuthKeyConfig;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,13 @@ public class memberController {
 	}
 
 	@PostMapping(value = "/register")
-	public String postRegister (MemberDTO dto) throws Exception {
+	public String postRegister (MemberDTO dto,
+								AuthKeyConfig tmpKey) throws Exception {
+
+		//회원가입 하면 이메일 인증에 필요한 임시키 생성
+		//dto의 auth_state에 저장
+		String tempKey = tmpKey.tempKeyCreate();
+		dto.setAuthstate(tempKey);
 
 		// Password Encoding by BCryptPasswordEncoder
 		String inputPw = dto.getPw();
@@ -41,7 +48,7 @@ public class memberController {
 
 		service.register(dto);
 
-		return "redirect:/register";
+		return "emailSend";
 	}
 
 	@GetMapping(value="/login")

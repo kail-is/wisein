@@ -13,4 +13,8 @@ public interface MemberDAO {
     public void authStateUpdate(String id) throws Exception;
 
     public int authIdExist(String id) throws Exception;
+
+    public void modify(MemberDTO dto) throws Exception;
+
+    public void withdraw(MemberDTO dto) throws Exception;
 }
