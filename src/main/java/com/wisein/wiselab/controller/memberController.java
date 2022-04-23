@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,13 +91,17 @@ public class memberController {
 	}
 
 	@PostMapping(value = "/user/update")
-	public String postModifyUser(MemberDTO dto) throws Exception {
+	public String postModifyUser(MemberDTO dto, HttpSession session) throws Exception {
 
 		String inputPw = dto.getPw();
 		String passEncd = passEncoder.encode(inputPw);
 		dto.setPw(passEncd);
 
 		service.modify(dto);
+
+		// 회원 정보 수정 뒤 세션 등록 dto 수정
+		MemberDTO login = service.login(dto);
+		session.setAttribute("member", login);
 
 		return "redirect:/login";
 	}
@@ -109,6 +114,7 @@ public class memberController {
 	@PostMapping(value = "/user/withdraw")
 	public String withdrawal(MemberDTO dto, HttpSession session) throws Exception {
 		service.withdraw(dto, session);
+		session.invalidate();
 		return "redirect:/login";
 	}
 

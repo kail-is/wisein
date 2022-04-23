@@ -8,6 +8,8 @@ public interface MemberService {
 
     public void register(MemberDTO dto) throws Exception;
 
+    public int idDupChk(String userId) throws Exception;
+
     public MemberDTO login(MemberDTO dto) throws Exception;
 
     public void logout(HttpSession session) throws Exception;
