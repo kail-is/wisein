@@ -10,12 +10,14 @@
         , NAME
         , SITE
         , REG_DATE
+        , AUTHSTATE
         )VALUES(
         #{id}
         , #{pw}
         , #{name}
         , #{site}
         , NOW()
+        , #{authstate}
         )
     </insert>
 
@@ -36,5 +38,49 @@
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </select>
+
+    <!-- 인증키 가져옴 -->
+    <select id="key" parameterType="String" resultType="String">
+        SELECT
+        AUTHSTATE
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="authStateUpdate" parameterType="String">
+        UPDATE
+        MEMBER
+        SET AUTHSTATE='Y'
+        WHERE ID = #{id}
+    </update>
+
+    <select id="authId" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <!--  회원 정보 수정  -->
+    <update id="modify" parameterType="com.wisein.wiselab.dto.MemberDTO">
+        UPDATE MEMBER
+        SET
+        PW = #{pw}
+        , SITE = #{site}
+        , HIRE_DATE = #{hireDate}
+        , MEET_LINK = #{meetLink}
+        , MEET_YN = #{meetYn}
+        WHERE ID = #{id}
+    </update>
+
+
+    <!--  회원 탈퇴  -->
+    <update id="withdraw" parameterType="com.wisein.wiselab.dto.MemberDTO">
+        UPDATE MEMBER
+        SET
+        MEM_STATUS = 'N'
+        WHERE ID = #{id}
+        AND MEM_STATUS = 'Y'
+    </update>
 
 </mapper>

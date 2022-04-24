@@ -17,4 +17,34 @@ public class memberDAOImpl implements MemberDAO {
         sql.insert(NS + ".register", dto);
     }
 
+    @Override
+    public MemberDTO login(MemberDTO dto) throws Exception {
+        return sql.selectOne(NS + ".login", dto);
+    }
+
+    @Override
+    public String findTempKey(String id) throws Exception {
+        return sql.selectOne(NS + ".key", id);
+    }
+
+    @Override
+    public void authStateUpdate(String id) throws Exception {
+        sql.update(NS + ".authStateUpdate", id);
+    }
+
+    @Override
+    public int authIdExist(String id) throws Exception {
+        return sql.selectOne(NS + ".authId", id);
+    }
+
+    @Override
+    public void modify(MemberDTO dto) throws Exception {
+        sql.update(NS + ".modify", dto);
+    }
+
+    @Override
+    public void withdraw(MemberDTO dto) throws Exception {
+        sql.update(NS + ".withdraw", dto);
+    }
+
 }

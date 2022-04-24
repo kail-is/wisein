@@ -6,4 +6,15 @@ public interface MemberDAO {
 
     public void register(MemberDTO dto) throws Exception;
 
+    public MemberDTO login(MemberDTO dto) throws Exception;
+
+    public String findTempKey(String id) throws Exception;
+
+    public void authStateUpdate(String id) throws Exception;
+
+    public int authIdExist(String id) throws Exception;
+
+    public void modify(MemberDTO dto) throws Exception;
+
+    public void withdraw(MemberDTO dto) throws Exception;
 }
