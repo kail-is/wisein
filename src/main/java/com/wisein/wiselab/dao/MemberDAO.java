@@ -6,6 +6,8 @@ public interface MemberDAO {
 
     public void register(MemberDTO dto) throws Exception;
 
+    public int idDupChk(String userId) throws Exception;
+
     public MemberDTO login(MemberDTO dto) throws Exception;
 
     public String findTempKey(String id) throws Exception;

@@ -3,7 +3,7 @@
 <mapper namespace="com.wisein.wiselab.mapper.memberMapper">
 
     <!-- 회원 가입 -->
-    <insert id="register" parameterType="com.wisein.wiselab.dto.MemberDTO">
+    <insert id="register" parameterType="MemberDTO">
         INSERT INTO MEMBER(
         ID
         , PW
@@ -21,19 +21,26 @@
         )
     </insert>
 
+    <!--회원 아이디 중복 체크-->
+    <select id="idDupChk" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
 
     <!-- 회원 로그인 -->
-    <select id="login" parameterType="String" resultType="com.wisein.wiselab.dto.MemberDTO">
+    <select id="login" parameterType="String" resultType="MemberDTO">
         SELECT
         ID
         , PW
         , NAME
         , SITE
-        , HIRE_DATE
-        , REG_DATE
-        , MEET_LINK
-        , MEET_YN
-        , MEM_STATUS
+        , HIRE_DATE as hireDate
+        , REG_DATE as regDate
+        , MEET_LINK as meetLink
+        , MEET_YN as meetYn
+        , MEM_STATUS as memStatus
         FROM MEMBER
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
@@ -62,7 +69,7 @@
     </select>
 
     <!--  회원 정보 수정  -->
-    <update id="modify" parameterType="com.wisein.wiselab.dto.MemberDTO">
+    <update id="modify" parameterType="MemberDTO">
         UPDATE MEMBER
         SET
         PW = #{pw}
@@ -75,12 +82,13 @@
 
 
     <!--  회원 탈퇴  -->
-    <update id="withdraw" parameterType="com.wisein.wiselab.dto.MemberDTO">
+    <update id="withdraw" parameterType="MemberDTO">
         UPDATE MEMBER
         SET
         MEM_STATUS = 'N'
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </update>
+
 
 </mapper>

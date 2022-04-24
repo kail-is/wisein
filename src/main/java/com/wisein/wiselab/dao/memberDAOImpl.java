@@ -18,6 +18,11 @@ public class memberDAOImpl implements MemberDAO {
     }
 
     @Override
+    public int idDupChk(String userId) throws Exception {
+        return sql.selectOne(NS + ".idDupChk", userId);
+    }
+
+    @Override
     public MemberDTO login(MemberDTO dto) throws Exception {
         return sql.selectOne(NS + ".login", dto);
     }
