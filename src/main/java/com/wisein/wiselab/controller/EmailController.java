@@ -33,6 +33,9 @@ public class EmailController {
 
         session.setAttribute("authUser", email);
 
+        String address = "@wiselab.co.kr";
+        email = email+address;
+
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
         emailcontent.append("<html>");
