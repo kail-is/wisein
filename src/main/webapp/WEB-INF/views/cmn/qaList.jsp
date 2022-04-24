@@ -1,110 +1,513 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
-    <link rel="stylesheet" href="resources/css/qaList.css">
+    <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
 </head>
-<div class="content-wrap">
-    <div class="info-wrap">
+<body>
 
-        <ul class="info">
-            <li>이런 내용이 궁금해요</li>
-            <li>1. 답변을 드립니다</li>
-            <li>2. 이것도 참고해 보세요</li>
-        </ul>
+<header>
+    <ul>
+        <li class="logo"><a href="#">wiseIN</a></li>
+        <li class="search-wrap">
+            <div class="select-wrap">
+                <select name="" id="search-list">
+                    <option value="front">Front</option>
+                </select>
+            </div>
+            <input type="text" class="search-bar" placeholder="Type something…" required="required">
+        </li>
+        <li class="bar">
+            <label for="bar-chk">
+                    <span class="material-icons">
+                        menu
+                    </span>
+            </label>
 
-    </div>
-    <section class="questions content-frame">
+        </li>
+    </ul>
+</header>
 
-        <div class="title">
-            이런내용 궁금해요
-        </div>
-
-        <div class="writer-wrap">
-            <p class="writer">서은빈 (OK저축은행)</p>
-            <ul class="person-function">
-                <li><a href="#">메일 전송</a></li>
-                <li><a href="#">질문 모아 보기</a></li>
-                <li><a href="#">답변 모아 보기</a></li>
+<div class="sidebar-wrap">
+    <input type="checkbox" name="" id="bar-chk" style="display: none;">
+    <div class="sidebar">
+        <div class="top">
+            <div class="info">
+                <img src="resources/image/test1.png" alt="">
+                <label for="my-function-chk">서은빈(직위)<br>OK 저축은행</label>
+                <input type="checkbox" name="" id="my-function-chk" style="display: none;">
+                <ul class="person-function">
+                    <li><a href="#">정보 수정</a></li>
+                    <li><a href="#">질문 모아 보기</a></li>
+                    <li><a href="#">답변 모아 보기</a></li>
+                </ul>
+            </div>
+            <ul class="menu">
+                <li><a href="#">질문하고 싶어요</a></li>
+                <li><a href="#">Tech Tip</a></li>
+                <li><a href="#">사이트 별 맛집 목록</a></li>
+                <li><a href="#">현재 파견 리스트</a></li>
             </ul>
-            <span class="material-icons purple">
-                    videocam
-                </span>
+            <div class="search-bar">
+                    <span class="material-icons">
+                        search
+                    </span>
+                <input type="text">
+            </div>
         </div>
+        <div class="bottom">
+            <ul class="icon">
+                <li>
+                        <span class="material-icons">
+                            perm_identity
+                        </span>
 
-        <div class="subject">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum adipisci ratione nulla mollitia accusamus repellat fugiat eius excepturi odit omnis dolore similique, aspernatur reiciendis quia et nostrum numquam expedita temporibus!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, ipsum. Quisquam, maiores praesentium tempora officia distinctio, delectus necessitatibus voluptas esse vero quasi voluptates ipsum id laudantium saepe odio hic eius?
-            <img src="../image/test2.png" alt="" style="width: 100%;">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis cumque aut in eum officiis exercitationem commodi modi quos esse, laborum dicta nobis, itaque minima amet, aperiam tenetur? Suscipit, rem dolorum.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique illo numquam veritatis voluptas fugiat perspiciatis corporis assumenda commodi facilis maxime maiores nam saepe at, distinctio vitae praesentium laborum deleniti eius.
+                </li>
+                <li>
+                        <span class="material-icons">
+                            link
+                        </span>
+                </li>
+            </ul>
         </div>
+    </div>
+</div>
 
-    </section>
-
-
-    <section class="recommend-wrap">
-        <div class="recommend-titleLine">
-            댓글 (1)
+<div class="content-wrap">
+    <section class="content-frame">
+        <div class="content-top-group">
+            <div class="category-group">
+                <p class="title-select">제목(가나다)</p>
+                <ul class="person-function">
+                    <li><a href="#">제목</a></li>
+                    <li><a href="#">카테고리</a></li>
+                    <li><a href="#">글쓴이</a></li>
+                </ul>
+                <span class="material-icons">
+                        expand_more
+                    </span>
+            </div>
+            <button type="button"></button>
         </div>
-        <ul class="recommend">
-            <li>
-                <div class="wrap">
-                    <div class="recommend-info-wrap">
-                        <div class="img"></div>
-                        <div class="info">
-                            <div class="title">서은빈(OK저축은행)</div>
-                            <div class="sub">
-                                <div class="date">
-                                    2021-10-22
-                                </div>
-                                <div class="icon">
-                                        <span class="material-icons">
-                                            border_color
-                                        </span>
-                                    <span class="material-icons">
-                                            delete
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content">유익한 글 정말 잘 읽었습니다!</div>
+        <div class="board-list">
+            <div class="board-line board-header">
+                <div class="board-cell board-no">
                 </div>
-            </li>
-        </ul>
-
-        <div class="recommend-write-wrap recommend">
-            <div class="wrap">
-                <div class="recommend-info-wrap">
-                    <div class="img"></div>
-                    <div class="info" id="writer-info">
-                        <div class="title">서은빈(OK저축은행)</div>
-                    </div>
+                <div class="board-cell board-category purple2">
+                    <p class="category-select">카테고리</p>
+                    <ul class="person-function">
+                        <li><a href="#">FRONT</a></li>
+                        <li><a href="#">BACK</a></li>
+                        <li><a href="#">DB</a></li>
+                    </ul>
+                    <span class="material-icons">
+                            expand_more
+                        </span>
                 </div>
-                <div class="content-writer-wrap">
-                    <textarea>유익한 글 정말 잘 읽었습니다!</textarea>
+                <div class="board-cell board-title">
+                    제목(가나다)
+                    <span class="material-icons">
+                            expand_more
+                        </span>
+                </div>
+                <div class="board-cell board-answer gray">
+                    답변
+                </div>
+                <div class="board-cell board-like gray">
+                    좋아요
+                </div>
+                <div class="board-cell board-writer gray">
+                    작성자
+                </div>
+                <div class="board-cell board-date gray">
+                    날짜
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    1
+                </div>
+                <div class="board-cell board-category purple">
+                    BACK
+                </div>
+                <div class="board-cell board-title">
+                    제목(가나다)
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple2">
+                            help_outline
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    2
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    3
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    4
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    5
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    6
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    7
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    8
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    9
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            <div class="board-line">
+                <div class="board-cell board-no">
+                    10
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
                 </div>
             </div>
         </div>
     </section>
-
+    <div class="search-wrap">
+        <div class="select-wrap">
+            <select name="" id="search-list">
+                <option value="front">Front</option>
+            </select>
+        </div>
+        <input type="text" class="search-bar" placeholder="Type something…" required="required">
+        <span class="material-icons">
+                <a href="#">search</a>
+            </span>
+    </div>
+    <ul class="pageno-group">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li class="current">5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+    </ul>
 </div>
 
-    <script>
-        let writer = document.getElementsByClassName("writer")
+<div class="top-arrow">
+    <a href="#">
+            <span class="material-icons purple">
+                keyboard_arrow_up
+            </span>
+    </a>
+</div>
 
-        Array.from(writer).forEach(function(element) {
-            element.addEventListener('click', function(e) {
-                if(e.target.nextElementSibling.style.display === 'block'){
-                    e.target.nextElementSibling.style.display = 'none';
-                }else{
-                    e.target.nextElementSibling.style.display = 'block';
-                }
-            });
-        });
+<script type="module" >
+    import * as event from 'resources/js/common/event.js';
+    let writer = document.getElementsByClassName("writer");
+    let categorySelect = document.getElementsByClassName("category-select");
+    let titleSelect = document.getElementsByClassName("title-select");
 
-    </script>
+    event.clickDisplayChangeListener(writer);
+    event.clickDisplayChangeListener(categorySelect);
+    event.clickDisplayChangeListener(titleSelect);
 
+</script>
 
 </body>
 </html>

@@ -17,8 +17,9 @@ public class testController2 {
 	@Autowired
 	MemberService service;
 
-	@GetMapping(value="/main")
-	public String main () throws Exception {
+	@GetMapping(value="/")
+	public String main (String a) throws Exception {
+		System.out.println(a);
 		return "cmn/main";
 	}
 
