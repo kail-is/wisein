@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:formatDate  var="hireDate" value="${member.hireDate}" type="DATE" pattern="yyyy-MM-dd"/>
 
 <script type="text/javascript">
 
 window.onload = function() {
 
-    let allChkBool = false;
     let pwChkBool = false;
 
     let pwBox = document.querySelector('#pw');
@@ -58,20 +58,20 @@ window.onload = function() {
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     updBtn.addEventListener('click', () => {
-      checkAll();
-      if (allChkBool) {
+      if (checkAll()) {
         alert("유효성 테스트 통과");
       } else {
         alert("유효성 테스트 미통과");
+        event.preventDefault();
       }
     });
 
     // 전체 유효성 체크
     function checkAll() {
         if(pwChkBool) {
-            allChkBool = true;
+            return true;
         }else {
-            allChkBool = false;
+            return false;
         }
     }
 }
@@ -123,7 +123,6 @@ window.onload = function() {
       <input type="url" id="meetLink" name="meetLink" value="${member.meetLink}" placeholder="구글 미트 링크" required="required" />
     </div>
 
-    ${member}
 
   <button type="submit" id="upd_btn" name="upd_btn">정보 수정</button>
  </form>

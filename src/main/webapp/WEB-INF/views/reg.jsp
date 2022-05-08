@@ -1,13 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="resources/js/common/emailValid.js"></script>
 
 <script type="text/javascript">
 
 window.onload = function() {
     var httpRequest;
 
-    let allChkBool = false;
     let idChkBool = false;
     let pwChkBool = false;
 
@@ -102,21 +100,39 @@ window.onload = function() {
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     signupBtn.addEventListener('click', () => {
-      checkAll();
-      if (allChkBool) {
+      if (checkAll()) {
         alert("유효성 테스트 통과");
+        emailValid();
       } else {
         alert("유효성 테스트 미통과");
+        event.preventDefault();
       }
     });
 
     // 전체 유효성 체크
     function checkAll() {
         if(idChkBool && pwChkBool) {
-            allChkBool = true;
+           return true;
         }else {
-            allChkBool = false;
+           return = false;
         }
+    }
+
+    // 이메일 인증
+    function emailValid() {
+        var email_Id = document.getElementById('id').value;
+
+        $.ajax({
+            data:{"email_Id":email_Id},
+            type:"GET",
+            url:"/authMailSend",
+            success:function(data) {
+                document.getElementById('reg_form').submit();
+            },
+            error:function(request, status, error) {
+                alert("실패");
+            }
+        })
     }
 
 }
