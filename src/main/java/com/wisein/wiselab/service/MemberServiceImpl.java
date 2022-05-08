@@ -19,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public int idDupChk(String userId) throws Exception {
+        return dao.idDupChk(userId);
+    }
+
+    @Override
     public MemberDTO login(MemberDTO dto) throws Exception {
         return dao.login(dto);
     }
