@@ -6,15 +6,6 @@
 </head>
 
     <div class="content-wrap">
-        <div class="info-wrap">
-
-            <ul class="info">
-                <li>이런 내용이 궁금해요</li>
-                <li>1. 답변을 드립니다</li>
-                <li>2. 이것도 참고해 보세요</li>
-            </ul>
-
-        </div>
         <section class="questions content-frame">
 
             <div class="title">
@@ -22,11 +13,11 @@
             </div>
 
             <div class="writer-wrap">
-                <p class="writer">서은빈 (OK저축은행)</p>
-                <ul class="person-function">
-                    <li><a href="#">메일 전송</a></li>
-                    <li><a href="#">질문 모아 보기</a></li>
-                    <li><a href="#">답변 모아 보기</a></li>
+                <p class="writer side_mapping_1">서은빈 (OK저축은행)</p>
+                <ul class="person-function side_mapping_1">
+                    <li class=" side_mapping_2"><a href="#">메일 전송</a></li>
+                    <li class=" side_mapping_2"><a href="#">질문 모아 보기</a></li>
+                    <li class=" side_mapping_2"><a href="#">답변 모아 보기</a></li>
                 </ul>
                 <span class="material-icons purple">
                     videocam

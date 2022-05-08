@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	compileOnly "org.springframework.boot:spring-boot-devtools"
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok:1.16.18'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -51,8 +52,6 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
 	testImplementation 'org.junit.jupiter:junit-jupiter-params'
-
-
 }
 
 test {

@@ -15,12 +15,16 @@
 		    <tiles:insertAttribute name="nav"/>
 		</div>
 		<!--/nav-->
-		
+		<c:if test="${side_gubun eq 'Y'}">
+			<div>
+				<tiles:insertAttribute name="leftSide"/>
+			</div>
+		</c:if>
+
+
 		<div class="container">
 		    <tiles:insertAttribute name="contents"/>
 		</div>
-		
-		
 		<!--footer-->
 		<div >
 		    <tiles:insertAttribute name="footer"/>

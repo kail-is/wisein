@@ -1,5 +1,6 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.config.MailHandler;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
