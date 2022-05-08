@@ -45,6 +45,9 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-web:5.5.3'
 	implementation 'org.springframework.security:spring-security-config:5.5.3'
 
+	implementation 'commons-io:commons-io:2.8.0'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	testImplementation 'org.junit.platform:junit-platform-launcher'

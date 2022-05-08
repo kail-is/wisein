@@ -78,7 +78,7 @@ window.onload = function() {
 </script>
 
 <section id="content">
- <form role="form" method="post" autocomplete="off">
+<form role="form" method="post" encType = "multipart/form-data" autocomplete="off">
   <div class="input_area">
 
   <input type="text" id="id" name="id" value="${member.id}" required="required" />
@@ -97,6 +97,17 @@ window.onload = function() {
   <div class="input_area">
    <label for="name">이름</label>
    <input type="text" id="name" name="name" value="${member.name}" required="required" readonly />
+  </div>
+
+  <div class="input_area">
+   <label for="name">프로필 사진</label>
+   <input type="file" id="files" name="fileName" />
+    <div class="file_list">
+        <c:forEach var="list" items="${member.fileList}">
+        <img src ="../${list.filePath}" width="100" height="100">
+        ${list.orgFileName}
+        </c:forEach>
+    </div>
   </div>
 
   <div class="input_area">
