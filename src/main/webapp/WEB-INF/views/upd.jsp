@@ -7,38 +7,73 @@
 
 window.onload = function() {
 
+    let allChkBool = false;
     let pwChkBool = false;
+
+    let pwBox = document.querySelector('#pw');
+    let pwChkBox = document.querySelector('#pwChk');
+
     let pwChkBtn = document.querySelector("#pwChkBtn");
     let updBtn = document.querySelector("#upd_btn");
-    let valiChkBtn = document.querySelector("#validation_test");
 
     // PW 유효성 컨트롤: 패스워드 일치 여부 체크
-    document.querySelector("#pwChkBtn").addEventListener('click', () => {
+    pwChkBtn.addEventListener('click', () => {
         if (pw.value === pwChk.value) {
             pwChkBool = true;
             alert("패스워드가 일치합니다.");
-            document.querySelector('#pw').readOnly = true;
-            document.querySelector('#pwChk').readOnly = true;
+            pwBox.readOnly = true;
+            pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
           alert("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
+    // 비밀번호 재설정
+    pwBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+            }
+       }
+     });
+
+    pwChkBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+            }
+       }
+     });
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
-    updBtn.disabled = true;
-
-    valiChkBtn.addEventListener('click', () => {
-      if ( (pwChkBool) == 1) {
-        updBtn.disabled = false;
+    updBtn.addEventListener('click', () => {
+      checkAll();
+      if (allChkBool) {
         alert("유효성 테스트 통과");
       } else {
-        updBtn.disabled = true;
         alert("유효성 테스트 미통과");
       }
     });
 
+    // 전체 유효성 체크
+    function checkAll() {
+        if(pwChkBool) {
+            allChkBool = true;
+        }else {
+            allChkBool = false;
+        }
+    }
 }
 </script>
 
@@ -91,6 +126,5 @@ window.onload = function() {
     ${member}
 
   <button type="submit" id="upd_btn" name="upd_btn">정보 수정</button>
-  <button type="button" id="validation_test" name="validation_test">유효성 테스트</button>
  </form>
 </section>

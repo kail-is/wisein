@@ -6,14 +6,22 @@
 
 window.onload = function() {
     var httpRequest;
+
+    let allChkBool = false;
     let idChkBool = false;
     let pwChkBool = false;
+
+    let idBox = document.querySelector('#id');
+    let pwBox = document.querySelector('#pw');
+    let pwChkBox = document.querySelector('#pwChk');
+
+    let idChkBtn = document.querySelector("#idChkBtn");
     let pwChkBtn = document.querySelector("#pwChkBtn");
     let signupBtn = document.querySelector("#signup_btn");
-    let valiChkBtn = document.querySelector("#validation_test");
+
 
     // ID 유효성 컨트롤: 회원 가입 여부 체크
-	document.querySelector("#idChkBtn").addEventListener('click', () => {
+	idChkBtn.addEventListener('click', () => {
 		var userId = document.querySelector("#id").value;
 		httpRequest = new XMLHttpRequest();
 	    httpRequest.onreadystatechange = () => {
@@ -24,7 +32,7 @@ window.onload = function() {
     			        alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
                      } else {
                         alert("사용 가능한 아이디입니다.");
-                        document.querySelector('#id').readOnly = true; // 재수정 불가를 위한 readOnly 활성화
+                        idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
                         idChkBool = true;
                      }
 			      } else {
@@ -36,34 +44,80 @@ window.onload = function() {
         httpRequest.send();
 	});
 
+    // 아이디 재설정
+    idBox.addEventListener('click', () => {
+        if (idChkBool == true) {
+            if (confirm("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.")) {
+                idChkBool = false;
+                idBox.value = "";
+                idBox.readOnly = false;
+                idBox.focus;
+            }
+       }
+     });
 
     // PW 유효성 컨트롤: 패스워드 일치 여부 체크
-    document.querySelector("#pwChkBtn").addEventListener('click', () => {
-        if (pw.value === pwChk.value) {
+    pwChkBtn.addEventListener('click', () => {
+        if ( !pw.value && !pwChk.value ) {
+            pwChkBool = false;
+            alert("패스워드를 입력하세요.");
+        } else if( pw.value === pwChk.value ) {
             pwChkBool = true;
             alert("패스워드가 일치합니다.");
-            document.querySelector('#pw').readOnly = true;
-            document.querySelector('#pwChk').readOnly = true;
+            pwBox.readOnly = true;
+            pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
           alert("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
+    // 비밀번호 재설정
+    pwBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+                alert("pwChkBool" + pwChkBool);
+            }
+       }
+     });
+
+    pwChkBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+            }
+       }
+     });
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
-    signupBtn.disabled = true;
-
-    valiChkBtn.addEventListener('click', () => {
-      if ( (idChkBool && pwChkBool) == 1) {
-        signupBtn.disabled = false;
+    signupBtn.addEventListener('click', () => {
+      checkAll();
+      if (allChkBool) {
         alert("유효성 테스트 통과");
       } else {
-        signupBtn.disabled = true;
         alert("유효성 테스트 미통과");
       }
     });
 
+    // 전체 유효성 체크
+    function checkAll() {
+        if(idChkBool && pwChkBool) {
+            allChkBool = true;
+        }else {
+            allChkBool = false;
+        }
+    }
 
 }
 </script>
@@ -98,7 +152,6 @@ window.onload = function() {
      <input type="text" id="site" name="site" placeholder="파견 사이트" required="required" />
     </div>
 
-  <button type="button" id="validation_test" name="validation_test">유효성 테스트</button>
   <button type="button" id="signup_btn" name="signup_btn">회원가입</button>
  </form>
 </section>
