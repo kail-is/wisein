@@ -1,6 +1,9 @@
 package com.wisein.wiselab.dao;
 
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
+
+import java.util.List;
 
 public interface MemberDAO {
 
@@ -19,4 +22,8 @@ public interface MemberDAO {
     public void modify(MemberDTO dto) throws Exception;
 
     public void withdraw(MemberDTO dto) throws Exception;
+
+    public void insertMemFileList(List<FileDTO> list) throws Exception;
+
+    public List<FileDTO> selectMemFileList(String brdRef) throws Exception;
 }

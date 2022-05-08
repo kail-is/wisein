@@ -36,11 +36,11 @@
         , PW
         , NAME
         , SITE
-        , HIRE_DATE as hireDate
-        , REG_DATE as regDate
-        , MEET_LINK as meetLink
-        , MEET_YN as meetYn
-        , MEM_STATUS as memStatus
+        , HIRE_DATE
+        , REG_DATE
+        , MEET_LINK
+        , MEET_YN
+        , MEM_STATUS
         FROM MEMBER
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
@@ -80,6 +80,47 @@
         WHERE ID = #{id}
     </update>
 
+    <insert id="insertMemFileList" parameterType="FileDTO">
+        <![CDATA[
+			INSERT INTO
+			FILE
+			(
+				BRD_REF,
+				ORG_FILE_NAME,
+				FILE_NAME,
+				FILE_EXTENSION,
+				FILE_PATH,
+				REG_ID
+			)
+			VALUES
+		]]>
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.brdRef},
+            #{item.orgFileName},
+            #{item.fileName},
+            #{item.fileExtension},
+            #{item.filePath},
+            #{item.regId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectMemFileList" parameterType="String" resultType="FileDTO">
+        SELECT
+        BRD_REF
+        , ORG_FILE_NAME
+        , FILE_NAME
+        , FILE_EXTENSION
+        , FILE_PATH
+        , REG_ID
+        , DLT_YN
+        FROM
+            FILE
+        WHERE
+            BRD_REF = #{brdRef}
+            AND DLT_YN = 'N'
+    </select>
 
     <!--  회원 탈퇴  -->
     <update id="withdraw" parameterType="MemberDTO">

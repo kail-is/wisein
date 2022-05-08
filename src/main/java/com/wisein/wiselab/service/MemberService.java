@@ -1,8 +1,11 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface MemberService {
 
@@ -20,7 +23,9 @@ public interface MemberService {
 
     public int authIdExist(String id) throws Exception;
 
-    public void modify(MemberDTO dto) throws Exception;
+    public void modify(MemberDTO dto, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
+
+    public List<FileDTO> memImgList(String id) throws Exception;
 
     public void withdraw(MemberDTO dto, HttpSession session) throws Exception;
 }

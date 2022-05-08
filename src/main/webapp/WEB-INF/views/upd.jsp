@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:formatDate  var="hireDate" value="${member.hireDate}" type="DATE" pattern="yyyy-MM-dd"/>
 
 <script type="text/javascript">
@@ -8,42 +9,76 @@
 window.onload = function() {
 
     let pwChkBool = false;
+
+    let pwBox = document.querySelector('#pw');
+    let pwChkBox = document.querySelector('#pwChk');
+
     let pwChkBtn = document.querySelector("#pwChkBtn");
     let updBtn = document.querySelector("#upd_btn");
-    let valiChkBtn = document.querySelector("#validation_test");
 
     // PW 유효성 컨트롤: 패스워드 일치 여부 체크
-    document.querySelector("#pwChkBtn").addEventListener('click', () => {
+    pwChkBtn.addEventListener('click', () => {
         if (pw.value === pwChk.value) {
             pwChkBool = true;
             alert("패스워드가 일치합니다.");
-            document.querySelector('#pw').readOnly = true;
-            document.querySelector('#pwChk').readOnly = true;
+            pwBox.readOnly = true;
+            pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
           alert("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
+    // 비밀번호 재설정
+    pwBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+            }
+       }
+     });
+
+    pwChkBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+            }
+       }
+     });
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
-    updBtn.disabled = true;
-
-    valiChkBtn.addEventListener('click', () => {
-      if ( (pwChkBool) == 1) {
-        updBtn.disabled = false;
+    updBtn.addEventListener('click', () => {
+      if (checkAll()) {
         alert("유효성 테스트 통과");
       } else {
-        updBtn.disabled = true;
         alert("유효성 테스트 미통과");
+        event.preventDefault();
       }
     });
 
+    // 전체 유효성 체크
+    function checkAll() {
+        if(pwChkBool) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
 </script>
 
 <section id="content">
- <form role="form" method="post" autocomplete="off">
+<form role="form" method="post" encType = "multipart/form-data" autocomplete="off">
   <div class="input_area">
 
   <input type="text" id="id" name="id" value="${member.id}" required="required" />
@@ -62,6 +97,17 @@ window.onload = function() {
   <div class="input_area">
    <label for="name">이름</label>
    <input type="text" id="name" name="name" value="${member.name}" required="required" readonly />
+  </div>
+
+  <div class="input_area">
+   <label for="name">프로필 사진</label>
+   <input type="file" id="files" name="fileName" />
+    <div class="file_list">
+        <c:forEach var="list" items="${member.fileList}">
+        <img src ="../${list.filePath}" width="100" height="100">
+        ${list.orgFileName}
+        </c:forEach>
+    </div>
   </div>
 
   <div class="input_area">
@@ -88,9 +134,7 @@ window.onload = function() {
       <input type="url" id="meetLink" name="meetLink" value="${member.meetLink}" placeholder="구글 미트 링크" required="required" />
     </div>
 
-    ${member}
 
   <button type="submit" id="upd_btn" name="upd_btn">정보 수정</button>
-  <button type="button" id="validation_test" name="validation_test">유효성 테스트</button>
  </form>
 </section>

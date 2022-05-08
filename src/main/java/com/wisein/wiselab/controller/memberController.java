@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.AuthKeyConfig;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -34,13 +37,12 @@ public class memberController {
 	}
 
 	@PostMapping(value = "/register")
-	public String postRegister (MemberDTO dto,
-								AuthKeyConfig tmpKey) throws Exception {
+	public String postRegister (MemberDTO dto, AuthKeyConfig tmpKey) throws Exception {
 
 		//회원가입 하면 이메일 인증에 필요한 임시키 생성
 		//dto의 auth_state에 저장
 		String tempKey = tmpKey.tempKeyCreate();
-		dto.setAuthstate(tempKey);
+		dto.setAuthState(tempKey);
 
 		// Password Encoding by BCryptPasswordEncoder
 		String inputPw = dto.getPw();
@@ -67,6 +69,8 @@ public class memberController {
 		if (login != null) {
 			boolean passMat = passEncoder.matches(dto.getPw(), login.getPw());
 			if(passMat) {
+				List<FileDTO> memberImgList = service.memImgList(login.getId());
+				login.setFileList(memberImgList);
 				session.setAttribute("member", login);
 			} else {
 				session.setAttribute("member", null);
@@ -94,20 +98,25 @@ public class memberController {
 
 	@GetMapping(value = "/user/update")
 	public String getModifyUser() throws Exception {
+
 		return "upd";
 	}
 
 	@PostMapping(value = "/user/update")
-	public String postModifyUser(MemberDTO dto, HttpSession session) throws Exception {
+	public String postModifyUser(MemberDTO dto, HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
 		String inputPw = dto.getPw();
 		String passEncd = passEncoder.encode(inputPw);
 		dto.setPw(passEncd);
 
-		service.modify(dto);
+		// service.modify(dto);
+
+		service.modify(dto, multipartHttpServletRequest);
 
 		// 회원 정보 수정 뒤 세션 등록 dto 수정
 		MemberDTO login = service.login(dto);
+		List<FileDTO> memberImgList = service.memImgList(login.getId());
+		login.setFileList(memberImgList);
 		session.setAttribute("member", login);
 
 		return "redirect:/login";
