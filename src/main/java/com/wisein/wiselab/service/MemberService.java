@@ -25,8 +25,11 @@ public interface MemberService {
 
     public void modify(MemberDTO dto, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
 
+    public void delUserImg(String fileNm) throws Exception;
+
     public List<FileDTO> memImgList(String id) throws Exception;
 
     public void withdraw(MemberDTO dto, HttpSession session) throws Exception;
+
 }
 

@@ -9,6 +9,7 @@
         <title>메인</title>
         <link rel="stylesheet" href="resources/iconfont/material-icons.css">
         <link rel="stylesheet" href="resources/css/main.css">
+        <script src="resources/js/jquery-3.5.1.min.js"></script>
     </head>
 <body>
 
