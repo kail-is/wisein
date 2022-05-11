@@ -9,17 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -121,6 +120,20 @@ public class memberController {
 
 		return "redirect:/login";
 	}
+
+/*
+	@ResponseBody
+	@GetMapping(value = "/delImgFile")
+	public Map<String, String> deleteUserImg(@RequestParam("delImgFileNm") String fileNm) throws Exception {
+
+		service.delUserImg(fileNm);
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("code","0000");
+		map.put("msg", "삭제 완료.");
+		return map;
+	}
+*/
 
 	@GetMapping(value = "/user/withdraw")
 	public String getWithdrawalUser() throws Exception {

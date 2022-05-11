@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:formatDate  var="hireDate" value="${member.hireDate}" type="DATE" pattern="yyyy-MM-dd"/>
 
+<script src="../resources/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 
 window.onload = function() {
@@ -74,7 +75,26 @@ window.onload = function() {
             return false;
         }
     }
+
 }
+
+    // 이미지 파일 삭제
+    function imgDel(delImgFileNm) {
+        $.ajax({
+            data:{"delImgFileNm" : delImgFileNm},
+            type:"GET",
+            url:"/delImgFile",
+            success:function(data) {
+               alert("이미지 삭제 완료");
+               let selector = 'p[id="' + delImgFileNm +'"]';
+               $(selector).parent().hide();
+            },
+            error:function(request, status, error) {
+                alert("이미지 삭제 실패");
+            }
+        })
+    }
+
 </script>
 
 <section id="content">
@@ -104,8 +124,11 @@ window.onload = function() {
    <input type="file" id="files" name="fileName" />
     <div class="file_list">
         <c:forEach var="list" items="${member.fileList}">
-        <img src ="../${list.filePath}" width="100" height="100">
-        ${list.orgFileName}
+            <div class="profile_img">
+            <img src ="../${list.filePath}" width="100" height="100">
+            ${list.orgFileName}
+            <%-- <p onclick="imgDel(this.id)" id="${list.fileName}">X</p> --%>
+            </div>
         </c:forEach>
     </div>
   </div>
