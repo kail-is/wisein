@@ -15,4 +15,12 @@ public interface QaListService {
      * */
     public List<QaListDTO> selectQaList() throws Exception;
 
+    /*
+     * 작성자 : 이형근
+     * QaBoard Insert
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-05-14
+     * */
+    public void insertQaBoard(QaListDTO qaListDTO) throws Exception;
 }

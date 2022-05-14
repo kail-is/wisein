@@ -18,5 +18,29 @@
             qa_board
     </select>
 
+    <insert id="insertQaBoard" parameterType="QaListDTO">
+        INSERT INTO qa_board
+        (
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,ADP_YN
+            ,DEL_YN
+        )
+        VALUES
+        (
+            (SELECT NVL(MAX(num), 0) + 1 FROM qa_board ALIAS_FOR_SUBQUERY)
+            , #{category}
+            , #{writer}
+            , #{subject}
+            , #{content}
+            , (SELECT date_format(now(),'%Y-%c-%d'))
+            , 'N'
+            , 'N'
+        )
+    </insert>
 
 </mapper>

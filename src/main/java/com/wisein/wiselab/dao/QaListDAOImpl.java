@@ -26,6 +26,18 @@ public class QaListDAOImpl implements QaListDAO {
         return sql.selectList(NS + ".selectQaList");
     }
 
+    /*
+     * 작성자 : 이형근
+     * QaBoard Insert
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-05-14
+     * */
+    @Override
+    public void insertQaBoard(QaListDTO qaListDTO) throws Exception {
+        sql.insert(NS + ".insertQaBoard", qaListDTO);
+    }
+
 
 
 }

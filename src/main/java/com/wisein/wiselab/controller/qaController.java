@@ -2,19 +2,23 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Controller
-public class qaListController {
+public class qaController {
 
     @Autowired
     QaListService qaListservice;
@@ -35,5 +39,24 @@ public class qaListController {
         return "cmn/qaList";
     }
 
+    @GetMapping(value="/qaBoard")
+    public String qaBoard () throws Exception {
+        return "cmn/qaBoard";
+    }
+
+    @GetMapping(value="/regQaBoard")
+    public String regQaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
+
+        qaListDTO.setCategory("DB");
+        qaListDTO.setWriter("test2");
+        qaListDTO.setSubject(request.getParameter("title"));
+        qaListDTO.setContent(request.getParameter("content"));
+
+        System.out.println(qaListDTO.toString());
+
+        qaListservice.insertQaBoard(qaListDTO);
+
+        return "redirect:/qalist";
+    }
 
 }
