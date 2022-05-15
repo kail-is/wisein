@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisein.wiselab.mapper.tipBoardMapper">
+
+    <select id="selectTipBoard" resultType="tipBoardDTO">
+        SELECT
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,UPD_DATE
+            ,DEL_YN
+            ,COUNT
+        FROM
+            tip_board
+    </select>
+
+    <insert id="insertTipBoard" parameterType="tipBoardDTO">
+        INSERT INTO tip_board
+        (
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,DEL_YN
+        )
+        VALUES
+        (
+            (SELECT NVL(MAX(num), 0) + 1 FROM tip_board ALIAS_FOR_SUBQUERY)
+            , #{category}
+            , #{writer}
+            , #{subject}
+            , #{content}
+            , (SELECT date_format(now(),'%Y-%c-%d'))
+            , 'N'
+        )
+    </insert>
+
+</mapper>
