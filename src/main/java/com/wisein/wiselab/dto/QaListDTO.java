@@ -11,7 +11,7 @@ public class QaListDTO {
     private String writer;
     private String subject;
     private String content;
-    private String reg_date;
+    private String regDate;
     private String upd_date;
     private String adp_yn;
     private String del_yn;
@@ -57,12 +57,12 @@ public class QaListDTO {
         this.content = content;
     }
 
-    public String getReg_date() {
-        return reg_date;
+    public String getRegDate() {
+        return regDate;
     }
 
-    public void setReg_date(String reg_date) {
-        this.reg_date = reg_date;
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
     }
 
     public String getUpd_date() {

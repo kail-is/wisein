@@ -110,7 +110,7 @@
                         </ul>
                     </div>
                     <div class="board-cell board-date gray">
-                        <c:out value="${qa.reg_date}" />
+                        <c:out value="${qa.regDate}" />
                     </div>
                 </div>
             </c:forEach>
