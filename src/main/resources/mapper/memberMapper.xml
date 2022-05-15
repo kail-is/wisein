@@ -3,25 +3,34 @@
 <mapper namespace="com.wisein.wiselab.mapper.memberMapper">
 
     <!-- 회원 가입 -->
-    <insert id="register" parameterType="com.wisein.wiselab.dto.MemberDTO">
+    <insert id="register" parameterType="MemberDTO">
         INSERT INTO MEMBER(
         ID
         , PW
         , NAME
         , SITE
         , REG_DATE
+        , AUTHSTATE
         )VALUES(
         #{id}
         , #{pw}
         , #{name}
         , #{site}
         , NOW()
+        , #{authstate}
         )
     </insert>
 
+    <!--회원 아이디 중복 체크-->
+    <select id="idDupChk" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
 
     <!-- 회원 로그인 -->
-    <select id="login" parameterType="String" resultType="com.wisein.wiselab.dto.MemberDTO">
+    <select id="login" parameterType="String" resultType="MemberDTO">
         SELECT
         ID
         , PW
@@ -36,5 +45,91 @@
         WHERE ID = #{id}
         AND MEM_STATUS = 'Y'
     </select>
+
+    <!-- 인증키 가져옴 -->
+    <select id="key" parameterType="String" resultType="String">
+        SELECT
+        AUTHSTATE
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="authStateUpdate" parameterType="String">
+        UPDATE
+        MEMBER
+        SET AUTHSTATE='Y'
+        WHERE ID = #{id}
+    </update>
+
+    <select id="authId" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <!--  회원 정보 수정  -->
+    <update id="modify" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        PW = #{pw}
+        , SITE = #{site}
+        , HIRE_DATE = #{hireDate}
+        , MEET_LINK = #{meetLink}
+        , MEET_YN = #{meetYn}
+        WHERE ID = #{id}
+    </update>
+
+    <insert id="insertMemFileList" parameterType="FileDTO">
+        <![CDATA[
+			INSERT INTO
+			FILE
+			(
+				BRD_REF,
+				ORG_FILE_NAME,
+				FILE_NAME,
+				FILE_EXTENSION,
+				FILE_PATH,
+				REG_ID
+			)
+			VALUES
+		]]>
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.brdRef},
+            #{item.orgFileName},
+            #{item.fileName},
+            #{item.fileExtension},
+            #{item.filePath},
+            #{item.regId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectMemFileList" parameterType="String" resultType="FileDTO">
+        SELECT
+        BRD_REF
+        , ORG_FILE_NAME
+        , FILE_NAME
+        , FILE_EXTENSION
+        , FILE_PATH
+        , REG_ID
+        , DLT_YN
+        FROM
+            FILE
+        WHERE
+            BRD_REF = #{brdRef}
+            AND DLT_YN = 'N'
+    </select>
+
+    <!--  회원 탈퇴  -->
+    <update id="withdraw" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        MEM_STATUS = 'N'
+        WHERE ID = #{id}
+        AND MEM_STATUS = 'Y'
+    </update>
+
 
 </mapper>

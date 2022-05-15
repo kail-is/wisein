@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <typeAliases>
+        <typeAlias alias="MemberDTO" type="com.wisein.wiselab.dto.MemberDTO"/>
+        <typeAlias alias="FileDTO" type="com.wisein.wiselab.dto.FileDTO"/>
+    </typeAliases>
+
     <mappers>
         <mapper resource="memberMapper.xml"/>
     </mappers>
