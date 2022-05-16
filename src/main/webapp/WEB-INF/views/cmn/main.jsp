@@ -77,6 +77,40 @@
 
         </ul>
     </div>
+<div class="popup-wrap page-center">
+    <div class="signUp-popup-wrap">
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">ID</label>
+            <input type="text" class="signUp-input pr30p">
+            <div class="email-info">@ wiselab.co.kr</div>
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">이름</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">파견 사이트</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">PASSWORD</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">PWCHECK</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-pwassword-info-wrap">
+            <p class="porintColor">패스워드가 일치합니다</p>
+            <p class="red">패스워드가 일치하지 않습니다</p>
+        </div>
+        <div class="signUp-confirm-Button-wrap">
+            <button type="button">메일 인증하고 가입하기</button>
+        </div>
+    </div>
+</div>
+
+
 
     <script>
         let writer = document.getElementsByClassName("writer")
