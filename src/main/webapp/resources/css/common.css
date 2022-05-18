@@ -808,3 +808,50 @@ body {
   min-width: 100vw;
   min-height: 100vh;
 }
+
+.popup-left-button {
+  color: white;
+  font-size: 2.5rem;
+  position: absolute;
+  left: -48px;
+  top: 50%;
+  -webkit-transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
+  cursor: pointer;
+}
+
+.popup-right-button {
+  color: white;
+  font-size: 2.5rem;
+  position: absolute;
+  right: -48px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.slide-popup-wrap {
+  background-color: white;
+  min-width: 300px;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-radius: 1.5rem;
+  -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}

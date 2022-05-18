@@ -1,7 +1,7 @@
  function $dim(){
 
     let body      = document.getElementsByTagName('body')[0];
-    let element   =  document.getElementById('dim') ?? body;
+    let element   = document.getElementById('dim') ?? body;
     let isDimming = true;
 
     for(let i = 0; i<arguments.length;i++){

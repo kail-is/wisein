@@ -37,6 +37,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/common/dim.js"></script>
 
 	<script>
-		$dim();
+		//$dim();
 	</script>
 </html>

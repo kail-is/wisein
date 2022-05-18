@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="resources/css/common.css">
 </head>
 
     <div class="content-wrap">
@@ -110,6 +111,16 @@
     </div>
 </div>
 
+
+<div class="slide-popup-wrap page-center">
+    <img src="/resources/image/pizza.jpg" class="w100" alt="">
+    <span class="material-icons popup-left-button">
+        navigate_next
+    </span>
+    <span class="material-icons popup-right-button">
+        navigate_next
+    </span>
+</div>
 
 
     <script>
