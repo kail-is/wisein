@@ -51,11 +51,6 @@ public class testController2 {
 		return "cmn/foodList";
 	}
 
-	@GetMapping(value = "/qalist")
-	public String qaList() throws Exception {
-		return "cmn/qaList";
-	}
-
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {
 		return "cmn/dataBoard";
