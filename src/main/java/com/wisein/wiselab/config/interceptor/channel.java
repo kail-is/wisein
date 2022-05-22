@@ -16,7 +16,6 @@ public class channel implements HandlerInterceptor {
 
 		String[] url = request.getRequestURI().split("/");
 		try {
-
 			EsideYn a = EsideYn.valueOf(url[url.length - 1]);
 			if(modelAndView != null){
 				modelAndView.addObject("side_gubun", a.getSideYn());

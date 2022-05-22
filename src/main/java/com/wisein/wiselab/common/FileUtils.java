@@ -18,18 +18,26 @@ import com.wisein.wiselab.dto.FileDTO;
 @Component
 public class FileUtils {
 
-    public List<FileDTO> parseFileInfo(String brdRef, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+    public List<FileDTO> parseFileInfo(String brdRef, String fileType, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
         if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
             return null;
         }
-
+        String brdType = brdRef.split("\\|\\|")[0];
         String regId = brdRef.split("\\|\\|")[1];
+
+        String savingPath, printingPath;
 
         List<FileDTO> fileList = new ArrayList<>();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
-        String savingPath = "src/main/webapp/resources/file/images/" + current.format(format);
-        String printingPath = "resources/file/images/" + current.format(format);
+
+        if (fileType.equals("image")) {
+            savingPath = "src/main/webapp/resources/file/images/" + current.format(format);
+            printingPath= "resources/file/images/" + current.format(format);
+        }else {
+            savingPath = "src/main/webapp/resources/file/" + current.format(format);
+            printingPath = "resources/file/" + current.format(format);
+        }
 
         File file = new File(savingPath);
         if(file.exists() == false) {
