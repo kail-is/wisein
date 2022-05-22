@@ -59,4 +59,19 @@ public class qaController {
         return "redirect:/qalist";
     }
 
+    @GetMapping(value="/qaDetail")
+    public String qaDetail (HttpServletRequest request, QaListDTO qaListDTO, Model model) throws Exception {
+
+        System.out.println("qaNum : " + qaListDTO.getNum());
+
+        QaListDTO dto = qaListservice.selectQaOne(qaListDTO);
+
+        System.out.println(dto.toString());
+        System.out.println(dto.getContent());
+
+        model.addAttribute("qaListDTO", dto);
+        model.addAttribute("content", dto.getContent());
+
+        return "cmn/qaDetail";
+    }
 }

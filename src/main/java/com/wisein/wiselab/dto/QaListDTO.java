@@ -12,10 +12,10 @@ public class QaListDTO {
     private String subject;
     private String content;
     private String regDate;
-    private String upd_date;
-    private String adp_yn;
-    private String del_yn;
-    private int parent_num;
+    private String updDate;
+    private String adpYn;
+    private String delYn;
+    private int parentNum;
 
     public int getNum() {
         return num;
@@ -65,36 +65,36 @@ public class QaListDTO {
         this.regDate = regDate;
     }
 
-    public String getUpd_date() {
-        return upd_date;
+    public String getUpdDate() {
+        return updDate;
     }
 
-    public void setUpd_date(String upd_date) {
-        this.upd_date = upd_date;
+    public void setUpdDate(String updDate) {
+        this.updDate = updDate;
     }
 
-    public String getAdp_yn() {
-        return adp_yn;
+    public String getAdpYn() {
+        return adpYn;
     }
 
-    public void setAdp_yn(String adp_yn) {
-        this.adp_yn = adp_yn;
+    public void setAdpYn(String adpYn) {
+        this.adpYn = adpYn;
     }
 
-    public String getDel_yn() {
-        return del_yn;
+    public String getDelYn() {
+        return delYn;
     }
 
-    public void setDel_yn(String del_yn) {
-        this.del_yn = del_yn;
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
     }
 
-    public int getParent_num() {
-        return parent_num;
+    public int getParentNum() {
+        return parentNum;
     }
 
-    public void setParent_num(int parent_num) {
-        this.parent_num = parent_num;
+    public void setParentNum(int parentNum) {
+        this.parentNum = parentNum;
     }
 }
 

@@ -23,4 +23,15 @@ public interface QaListService {
      * 날짜 : 2022-05-14
      * */
     public void insertQaBoard(QaListDTO qaListDTO) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * num에 해당하는 qa조회
+     * param : QaListDTO
+     * return : QaListDTO
+     * 날짜 : 2022-05-18
+     * */
+    public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception;
+
+
 }

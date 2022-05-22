@@ -41,7 +41,7 @@
                         expand_more
                     </span>
             </div>
-            <button type="button"></button>
+            <button type="button" onClick="location.href='qaBoard'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -87,7 +87,7 @@
                         <c:out value="${qa.category}" />
                     </div>
                     <div class="board-cell board-title">
-                        <c:out value="${qa.subject}" />
+                        <a href="/qaDetail?num=${qa.num}"><c:out value="${qa.subject}" /></a>
                     </div>
                     <div class="board-cell board-answer gray">
                             <span class="material-icons purple2">

@@ -43,4 +43,21 @@
         )
     </insert>
 
+    <select id="selectQaOne" parameterType="QaListDTO" resultType="QaListDTO">
+        SELECT
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,UPD_DATE
+            ,ADP_YN
+            ,DEL_YN
+            ,PARENT_NUM
+        FROM
+            qa_board
+        WHERE NUM=#{num}
+    </select>
+
 </mapper>
