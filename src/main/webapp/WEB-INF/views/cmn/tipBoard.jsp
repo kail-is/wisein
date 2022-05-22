@@ -42,24 +42,10 @@
     </script>
     <script>
         function submit(){
-                    const title = document.getElementById('title').value;
-                    const content = editor.getHTML();
-                    console.log(title);
-                    console.log(editor.getHTML());
-
-                    $.ajax({
-                        data:{"title":title,"content":content},
-                        type:"GET",
-                        url:"/regTipBoard",
-                        success:function(data) {
-                            alert("성공");
-                            window.location.href = "/tipList"
-                        },
-                        error:function(request, status, error) {
-                            alert("실패");
-                        }
-                    })
-                }
+            const title = document.getElementById('title').value;
+            console.log(title);
+            console.log(editor.getHTML());
+        }
     </script>
     <script>
         function cancel(){

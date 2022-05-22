@@ -50,10 +50,6 @@ public class testController2 {
 	public String foodList() throws Exception {
 		return "cmn/foodList";
 	}
-	@GetMapping(value="/tiplist")
-	public String tipList () throws Exception {
-		return "cmn/tipList";
-	}
 
 	@GetMapping(value = "/qalist")
 	public String qaList() throws Exception {
