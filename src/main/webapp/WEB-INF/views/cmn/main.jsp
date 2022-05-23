@@ -122,6 +122,30 @@
     </span>
 </div>
 
+<div class="popup-wrap page-center">
+    <div class="signUp-popup-wrap form-between">
+        <div class="w70p">
+            <div class="signUp-input-wrap">
+                <label for="" class="signUp-input-label">ID</label>
+                <input type="text" class="signUp-input">
+            </div>
+            <div class="signUp-input-wrap">
+                <label for="" class="signUp-input-label">PASSWROD</label>
+                <input type="text" class="signUp-input">
+            </div>
+        </div>
+        <div class="w30p">
+            <div class="login-button-wrap">
+                <button type="button">로그인</button>
+            </div>
+        </div>
+    </div>
+    <div class="popup-link-wrap">
+        <p><a href="#">회원가입</a></p>
+        <p><a href="#">아이디 비밀번호 찾기</a></p>
+    </div>
+</div>
+
 
     <script>
         let writer = document.getElementsByClassName("writer")
