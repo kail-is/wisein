@@ -1,5 +1,6 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.dto.PageDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
 import org.apache.catalina.filters.ExpiresFilter;
@@ -24,11 +25,13 @@ public class qaController {
     QaListService qaListservice;
 
     @GetMapping(value="/qalist")
-    public String qaList (Model model) throws Exception {
+    public String qaList (PageDTO pd, Model model) throws Exception {
 
         List<QaListDTO> qaList = new ArrayList<>();
 
-        qaList = (List<QaListDTO>) qaListservice.selectQaList();
+        qaList = (List<QaListDTO>) qaListservice.selectQaList(pd);
+        pd.setTotalCount(qaListservice.listSearchCount(pd));
+
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
                 System.out.println(i + " : " + qaList.get(i));
