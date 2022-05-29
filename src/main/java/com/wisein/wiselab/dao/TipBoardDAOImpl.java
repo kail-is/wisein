@@ -17,18 +17,19 @@ public class TipBoardDAOImpl implements TipBoardDAO {
     /* TipBoard 다건조회*/
     @Override
     public List<TipBoardDTO> selectTipList() throws Exception {
-        return null;
+        return sql.selectList(NS + ".selectTipList");
     }
 
     /* TipBoard 단건조회*/
     @Override
-    public TipBoardDTO selectTipOne(TipBoardDTO TipListDTO) throws Exception {
-        return null;
+    public TipBoardDTO selectTipOne(TipBoardDTO TipBoardDTO) throws Exception {
+        return sql.selectOne(NS + ".selectTipOne", TipBoardDTO);
     }
 
     /* TipBoard 게시글 등록*/
     @Override
-    public void insertTipBoard(TipBoardDTO TipListDTO) throws Exception {
-
+    public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
+        sql.insert(NS + ".insertTipBoard", TipBoardDTO);
     }
+
 }

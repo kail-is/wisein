@@ -1,6 +1,7 @@
 package com.wisein.wiselab.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class TipBoardDTO {
     private String writer;
     private String subject;
     private String content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regDate;
     private Date updDate;
     private String delYn;

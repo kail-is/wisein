@@ -13,7 +13,7 @@
             ,REG_DATE
             ,UPD_DATE
             ,DEL_YN
-            ,PARENT_NUM
+            ,COUNT
         FROM
             tip_board
     </select>
@@ -29,7 +29,7 @@
             ,REG_DATE
             ,UPD_DATE
             ,DEL_YN
-            ,PARENT_NUM
+            ,COUNT
         FROM
              tip_board
         WHERE NUM=#{num}
@@ -58,6 +58,5 @@
             , 'N'
         )
     </insert>
-
 
 </mapper>

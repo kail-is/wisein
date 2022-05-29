@@ -17,5 +17,4 @@ public interface TipBoardDAO {
     public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception;
 
 
-
 }
