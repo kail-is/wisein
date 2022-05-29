@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class TipListDTO {
+public class TipBoardDTO {
     private int num;
     private String category;
     private String writer;
@@ -15,6 +15,4 @@ public class TipListDTO {
     private Date updDate;
     private String delYn;
     private int count;
-
-
 }

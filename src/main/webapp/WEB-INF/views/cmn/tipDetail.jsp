@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
-    <link rel="stylesheet" href="resources/css/qaDetail.css">
+    <link rel="stylesheet" href="resources/css/tipDetail.css">
 </head>
 <div class="content-wrap">
     <div class="info-wrap">

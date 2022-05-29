@@ -7,23 +7,25 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 <body>
+    <form role="form" method="post" autocomplete="off" id="tipBoard_form">
     <div class="content-wrap">
 
         <div>제목</div>
-        <p><input type="text" size="210" id='title' placeholder="제목을 입력하세요" required></p>
+        <p><input type="text" size="210" id='title' name='title' placeholder="제목을 입력하세요" required></p>
 
         <div>내용</div>
         <div id="contents">
             <div id="editor"></div>
             <div id="viewer"></div>
+            <input type="hidden" id='content' name='content'>
         </div>
 
         <div class="button-wrap">
-            <input type="button" value="등록" onclick="submit()">
+            <input type="button" value="등록" onclick="reg()">
             <input type="button" value="취소" onclick="cancel()">
        </div>
-
     </div>
+    </form>
     <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
@@ -41,13 +43,11 @@
             });
     </script>
     <script>
-        function submit(){
-            const title = document.getElementById('title').value;
-            console.log(title);
-            console.log(editor.getHTML());
+        function reg(){
+            document.querySelector("#content").value = editor.getHTML();
+            document.getElementById('tipBoard_form').submit();
         }
-    </script>
-    <script>
+
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){
                 console.log('뒤로가기되찌롱');
