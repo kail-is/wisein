@@ -17,13 +17,16 @@ public class channel implements HandlerInterceptor {
 		String[] url = request.getRequestURI().split("/");
 		try {
 			EsideYn a = EsideYn.valueOf(url[url.length - 1]);
+			System.out.println(url[url.length - 1]);
 			if(modelAndView != null){
+				System.out.println(url[url.length - 1] + a.getSideYn());
 				modelAndView.addObject("side_gubun", a.getSideYn());
+				System.out.println(url[url.length - 1]);
 			}else{
 				//response.setHeader("side_gubun", a.getSideYn());
 			}
 		}catch (Exception e){
-			System.out.println(e.toString());
+			System.out.println(e.toString()+"zzz");
 		}
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
