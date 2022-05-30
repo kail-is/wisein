@@ -14,22 +14,34 @@ public class TipBoardDAOImpl implements TipBoardDAO {
 
     private static final String NS = "com.wisein.wiselab.mapper.tipBoardMapper";
 
-    /* TipBoard 다건조회*/
+    /* TipBoard 다건조회 */
     @Override
     public List<TipBoardDTO> selectTipList() throws Exception {
         return sql.selectList(NS + ".selectTipList");
     }
 
-    /* TipBoard 단건조회*/
+    /* TipBoard 단건조회 */
     @Override
     public TipBoardDTO selectTipOne(TipBoardDTO TipBoardDTO) throws Exception {
         return sql.selectOne(NS + ".selectTipOne", TipBoardDTO);
     }
 
-    /* TipBoard 게시글 등록*/
+    /* TipBoard 게시글 등록 */
     @Override
     public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
         sql.insert(NS + ".insertTipBoard", TipBoardDTO);
+    }
+
+    /* TipBoard 게시글 삭제 */
+    @Override
+    public void deleteTipBoard(int num) throws Exception {
+        sql.update(NS+"deleteTipBoard", num);
+    }
+
+    /* TipBoard 게시글 수정 */
+    @Override
+    public void updateTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
+        sql.update(NS+"updateTipBoard", TipBoardDTO);
     }
 
 }

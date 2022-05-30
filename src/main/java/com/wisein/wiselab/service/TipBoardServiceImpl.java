@@ -13,21 +13,33 @@ public class TipBoardServiceImpl implements TipBoardService {
     @Autowired
     private TipBoardDAO dao;
 
-    /* TipBoard 다건조회*/
+    /* TipBoard 다건조회 */
     @Override
     public List<TipBoardDTO> selectTipList() throws Exception {
         return dao.selectTipList();
     }
 
-    /* TipBoard 단건조회*/
+    /* TipBoard 단건조회 */
     @Override
     public TipBoardDTO selectTipOne(TipBoardDTO TipBoardDTO) throws Exception {
         return dao.selectTipOne(TipBoardDTO);
     }
 
-    /* TipBoard 게시글 등록*/
+    /* TipBoard 게시글 등록 */
     @Override
     public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
         dao.insertTipBoard(TipBoardDTO);
+    }
+
+    /* TipBoard 게시글 삭제 */
+    @Override
+    public void deleteTipBoard(int num) throws Exception {
+        dao.deleteTipBoard(num);
+    }
+
+    /* TipBoard 게시글 수정 */
+    @Override
+    public void updateTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
+        dao.updateTipBoard(TipBoardDTO);
     }
 }

@@ -16,11 +16,11 @@
     <section class="questions content-frame">
 
         <div class="title">
-            <c:out value="${qaListDTO.subject}" />
+            <c:out value="${tipBoardDTO.subject}" />
         </div>
 
         <div class="writer-wrap">
-            <p class="writer"><c:out value="${qaListDTO.writer}" /></p>
+            <p class="writer"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
                 <li><a href="#">메일 전송</a></li>
                 <li><a href="#">질문 모아 보기</a></li>
@@ -32,23 +32,16 @@
         </div>
 
         <div class="subject">
-            <c:out value="${qaListDTO.content}" />
             ${content}
-
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum adipisci ratione nulla mollitia accusamus repellat fugiat eius excepturi odit omnis dolore similique, aspernatur reiciendis quia et nostrum numquam expedita temporibus!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, ipsum. Quisquam, maiores praesentium tempora officia distinctio, delectus necessitatibus voluptas esse vero quasi voluptates ipsum id laudantium saepe odio hic eius?
-            <img src="../image/test2.png" alt="" style="width: 100%;">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis cumque aut in eum officiis exercitationem commodi modi quos esse, laborum dicta nobis, itaque minima amet, aperiam tenetur? Suscipit, rem dolorum.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique illo numquam veritatis voluptas fugiat perspiciatis corporis assumenda commodi facilis maxime maiores nam saepe at, distinctio vitae praesentium laborum deleniti eius.
         </div>
 
     </section>
 
         <div class="icon" align="right">
-            <span class="material-icons" onclick="location.href=/qalist">
+            <span class="material-icons" onClick="updTip()">
                 border_color
             </span>
-            <span class="material-icons">
+            <span class="material-icons" onClick="delTip()">
                 delete
             </span>
         </div>
@@ -115,10 +108,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
     <script>
@@ -133,13 +122,17 @@
                 }
             });
         });
-
     </script>
 
     <script>
-       function submit(){
+       function delTip(){
+         if(confirm('진짜 삭제하실꺼에여?🥺') == ture){
+            window.location.href="/delTip?num=${tipBoardDTO.num}"
+         }
+       }
 
-
+       function updTip(){
+            window.location.href="/updTip?num=${tipBoardDTO.num}"
        }
     </script>
 
