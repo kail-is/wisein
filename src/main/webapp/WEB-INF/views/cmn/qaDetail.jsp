@@ -32,23 +32,17 @@
         </div>
 
         <div class="subject">
-            <c:out value="${qaListDTO.content}" />
+            <!--<c:out value="${qaListDTO.content}" />-->
             ${content}
-
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum adipisci ratione nulla mollitia accusamus repellat fugiat eius excepturi odit omnis dolore similique, aspernatur reiciendis quia et nostrum numquam expedita temporibus!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, ipsum. Quisquam, maiores praesentium tempora officia distinctio, delectus necessitatibus voluptas esse vero quasi voluptates ipsum id laudantium saepe odio hic eius?
-            <img src="../image/test2.png" alt="" style="width: 100%;">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis cumque aut in eum officiis exercitationem commodi modi quos esse, laborum dicta nobis, itaque minima amet, aperiam tenetur? Suscipit, rem dolorum.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique illo numquam veritatis voluptas fugiat perspiciatis corporis assumenda commodi facilis maxime maiores nam saepe at, distinctio vitae praesentium laborum deleniti eius.
         </div>
 
     </section>
 
         <div class="icon" align="right">
-            <span class="material-icons" onclick="location.href=/qalist">
+            <span class="material-icons" id="update">
                 border_color
             </span>
-            <span class="material-icons">
+            <span class="material-icons" id="delete">
                 delete
             </span>
         </div>
@@ -120,6 +114,19 @@
 
 
 </div>
+
+    <script>
+        $("#update").click(function(){
+            window.location.href="/qaUpdate?num=${qaListDTO.num}"
+        });
+    </script>
+    <script>
+        $("#delete").click(function(){
+            if(confirm('정말 삭제하시겠습니까?') == true){
+                window.location.href="/qaDelete?num=${qaListDTO.num}"
+            }
+        });
+    </script>
 
     <script>
         let writer = document.getElementsByClassName("writer")

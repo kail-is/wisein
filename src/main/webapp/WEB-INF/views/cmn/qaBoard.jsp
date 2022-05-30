@@ -11,16 +11,27 @@
     <div class="content-wrap">
 
         <div>제목</div>
-        <p><input type="text" size="210" id='title' placeholder="제목을 입력하세요" required></p>
+        <p>
+            <input type="text" size="210" id='title' placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required>
+        </p>
 
         <div>내용</div>
         <div id="contents">
-            <div id="editor"></div>
+            <div id="editor">
+                ${qaListDTO.content}
+                <!--${content}-->
+            </div>
             <div id="viewer"></div>
         </div>
 
+        <!-- 신규/수정 여부 -->
         <div class="button-wrap">
-            <input type="button" value="등록" onclick="submit()">
+            <c:if test="${empty qaListDTO.subject}">
+                <input type="button" value="등록" onclick="submit()">
+            </c:if>
+            <c:if test="${!empty qaListDTO.subject}">
+                <input type="button" value="수정" onclick="update()">
+            </c:if>
             <input type="button" value="취소" onclick="cancel()">
        </div>
 
@@ -44,20 +55,39 @@
             editor.removeHook('addImageBlobHook');
 
     </script>
+
     <script>
         function submit(){
-            const title = document.getElementById('title').value;
+            const subject = document.getElementById('title').value;
             const content = editor.getHTML();
-            console.log(title);
-            console.log(editor.getHTML());
 
             $.ajax({
-                data:{"title":title,"content":content},
-                type:"GET",
+                data:{"subject":subject,"content":content},
+                type:"POST",
                 url:"/regQaBoard",
                 success:function(data) {
                     alert("성공");
                     window.location.href = "/qalist"
+                },
+                error:function(request, status, error) {
+                    alert("실패");
+                }
+            })
+        }
+    </script>
+    <script>
+        function update(){
+            const num = ${qaListDTO.num};
+            const subject = document.getElementById('title').value;
+            const content = editor.getHTML();
+
+            $.ajax({
+                data:{"num":num,"subject":subject,"content":content},
+                type:"POST",
+                url:"/qaUpdatePro",
+                success:function(data) {
+                    alert("성공");
+                    window.location.href = "/qaDetail?num=${qaListDTO.num}"
                 },
                 error:function(request, status, error) {
                     alert("실패");

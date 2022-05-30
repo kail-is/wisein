@@ -34,4 +34,24 @@ public interface QaListDAO {
      * */
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception;
 
+    /*
+     * 작성자 : 이형근
+     * num에 해당하는 qa삭제
+     * param : Integer
+     * return :
+     * 날짜 : 2022-05-29
+     * */
+    public void deleteQaBoard(int num) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * num에 해당하는 게시글 subject, content 수정
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-05-29
+     * */
+    public void updateQaBoard(QaListDTO qaListDTO) throws Exception;
+
+
+
 }
