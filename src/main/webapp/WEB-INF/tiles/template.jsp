@@ -6,26 +6,37 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <tiles:insertAttribute name="header"/>
+		<link rel="stylesheet" href="resources/css/common.css">
 	</head>
 	<body>
-
-		<!--nav-->
-		<div >
-		    <tiles:insertAttribute name="nav"/>
+		<div class="all-wrapper">
+			<head>
+				<tiles:insertAttribute name="header"/>
+			</head>
+			<!--nav-->
+			<div >
+				<tiles:insertAttribute name="nav"/>
+			</div>
+			<!--/nav-->
+			<c:if test="${side_gubun eq 'Y'}">
+				<div>
+					<tiles:insertAttribute name="leftSide"/>
+				</div>
+			</c:if>
+			<div class="container">
+				<tiles:insertAttribute name="contents"/>
+			</div>
+			<!--footer-->
+			<div >
+				<tiles:insertAttribute name="footer"/>
+			</div>
+			<!--/footer-->
+			<div id="dim"></div>
 		</div>
-		<!--/nav-->
-		
-		<div class="container">
-		    <tiles:insertAttribute name="contents"/>
-		</div>
-		
-		
-		<!--footer-->
-		<div >
-		    <tiles:insertAttribute name="footer"/>
-		</div>
-		<!--/footer-->
-		
 	</body>
+	<script src="${pageContext.request.contextPath}/resources/js/common/dim.js"></script>
+
+	<script>
+		//$dim();
+	</script>
 </html>

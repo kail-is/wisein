@@ -5,7 +5,7 @@
         <div class="sidebar">
             <div class="top">
                 <div class="info">
-                    <img src="../image/test1.png" alt="">
+                    <img src="resources/image/test1.png" alt="">
                     <label for="my-function-chk">서은빈(직위)<br>OK 저축은행</label>
                     <input type="checkbox" name="" id="my-function-chk" style="display: none;">
                     <ul class="person-function">
