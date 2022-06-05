@@ -25,7 +25,7 @@
 
         </li>
     </ul>
-    <style>
+<!--     <style>
     	.pagination {
 		padding: 10px;
 		text-align: center;
@@ -45,7 +45,7 @@
 		.pagination a:hover:not(.active) {
 			/* background-color: #e5e7f5; */
 		}
-    </style>
+    </style> -->
 </header>
 
 <div class="content-wrap">
@@ -108,7 +108,7 @@
                         <c:out value="${qa.category}" />
                     </div>
                     <div class="board-cell board-title">
-                        <a href="/qaDetail${pageDTO.makeSearch()}&num=${qa.num}"><c:out value="${qa.subject}" /></a>
+                        <a href="/qaDetail${qaListDTO.makeQueryString(qaListDTO.getCurrentPageNo())}&num=${qa.num}"><c:out value="${qa.subject}" /></a>
                     </div>
                     <div class="board-cell board-answer gray">
                             <span class="material-icons purple2">
@@ -456,27 +456,7 @@
             </span>
     </div>
     <ul class="pageno-group">
-        <div class="pagination">
-            <c:if test="${pageDTO.page != 1}">
-                <a href='qalist${pageDTO.makeSearch(1)}'>&laquo;</a>
-            </c:if>
-
-            <c:if test="${pageDTO.prev}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.startPage-1)}'>&lt;</a>
-            </c:if>
-
-            <c:forEach begin="${pageDTO.startPage}" end="${pageDTO.endPage}" var="idx">
-                <a href='qalist${pageDTO.makeSearch(idx)}' <c:out value="${pageDTO.page==idx?' class=active ':''}"/>> ${idx}</a>
-            </c:forEach>
-
-            <c:if test="${pageDTO.next}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.endPage+1)}'>&gt;</a>
-            </c:if>
-
-            <c:if test="${pageDTO.page != pageDTO.totalEndPage && qaList.size()>0}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.totalEndPage)}'>&raquo;</a>
-            </c:if>
-        </div>
+    	<jsp:include page="/WEB-INF/views/include/paging.jsp"/>
     </ul>
 </div>
 

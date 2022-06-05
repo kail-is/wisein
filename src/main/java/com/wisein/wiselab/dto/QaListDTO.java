@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class QaListDTO {
+public class QaListDTO extends CommonDTO {
     private int num;
     private String category;
     private String writer;

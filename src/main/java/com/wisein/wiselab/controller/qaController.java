@@ -1,14 +1,15 @@
 package com.wisein.wiselab.controller;
 
-import com.wisein.wiselab.dto.PageDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
+
 import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,12 +26,9 @@ public class qaController {
     QaListService qaListservice;
 
     @GetMapping(value="/qalist")
-    public String qaList (PageDTO pd, Model model) throws Exception {
-
+    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
-
-        qaList = (List<QaListDTO>) qaListservice.selectQaList(pd);
-        pd.setTotalCount(qaListservice.listSearchCount(pd));
+        qaList = (List<QaListDTO>) qaListservice.selectQaList(qaListDTO);
 
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
@@ -39,6 +37,8 @@ public class qaController {
         }
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("qaListDTO", qaListDTO);
+        
         return "cmn/qaList";
     }
 

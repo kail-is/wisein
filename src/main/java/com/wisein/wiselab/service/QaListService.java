@@ -1,6 +1,5 @@
 package com.wisein.wiselab.service;
 
-import com.wisein.wiselab.dto.PageDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 
 import java.util.List;
@@ -10,13 +9,13 @@ public interface QaListService {
     /*
      * 작성자 : 이형근
      * QA 목록 조회
-     * param : PageDTO
+     * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
      * 수정자 : 박혜림
-     * 수정일 : 2022-05-30
+     * 수정일 : 2022-06-04
      * */
-    public List<QaListDTO> selectQaList(PageDTO pd) throws Exception;
+    public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception;
 
     /*
      * 작성자 : 이형근
@@ -39,10 +38,10 @@ public interface QaListService {
     /*
      * 작성자 : 박혜림
      * 게시글 총 개수
-     * param : PageDTO
+     * param : QaListDTO
      * return : int
-     * 날짜 : 2022-05-30
+     * 날짜 : 2022-06-04
      * */
-    public int listSearchCount(PageDTO pd) throws Exception;
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 
 }
