@@ -11,16 +11,16 @@ public interface TipBoardDAO {
     public List<TipBoardDTO> selectTipList() throws Exception;
 
     /* TipBoard 단건조회 */
-    public TipBoardDTO selectTipOne(TipBoardDTO TipBoardDTO) throws Exception;
+    public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception;
 
     /* TipBoard 게시글 등록 */
-    public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception;
+    public void insertTipBoard(TipBoardDTO dto) throws Exception;
 
     /* TipBoard 게시글 삭제 */
     public void deleteTipBoard(int num) throws Exception;
 
     /* TipBoard 게시글 수정 */
-    public void updateTipBoard(TipBoardDTO TipBoardDTO) throws Exception;
+    public void updateTipBoard(TipBoardDTO dto) throws Exception;
 
 
 }

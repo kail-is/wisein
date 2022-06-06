@@ -62,17 +62,24 @@
 
     <!--TipBoard 게시글 삭제-->
     <update id="deleteTipBoard" parameterType="Integer">
-        UPDATE tip_board SET DEL_YN = 'Y' WHERE num = #{num}
+        UPDATE
+            tip_board
+        SET
+            DEL_YN = 'Y'
+            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+        WHERE NUM = #{num}
     </update>
 
     <!--TipBoard 게시글 수정-->
     <update id="updateTipBoard" parameterType="TipBoardDTO">
         UPDATE
-        tip_board
+           tip_board
         SET
-        subject = #{subject}
-        , content = #{content}
-        WHERE num = #{num}
+            CATEGORY = #{category}
+            , SUBJECT = #{subject}
+            , CONTENT = #{content}
+            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+        WHERE NUM = #{num}
     </update>
 
 

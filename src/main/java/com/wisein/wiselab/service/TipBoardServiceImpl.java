@@ -21,14 +21,14 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 단건조회 */
     @Override
-    public TipBoardDTO selectTipOne(TipBoardDTO TipBoardDTO) throws Exception {
-        return dao.selectTipOne(TipBoardDTO);
+    public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception {
+        return dao.selectTipOne(dto);
     }
 
     /* TipBoard 게시글 등록 */
     @Override
-    public void insertTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
-        dao.insertTipBoard(TipBoardDTO);
+    public void insertTipBoard(TipBoardDTO dto) throws Exception {
+        dao.insertTipBoard(dto);
     }
 
     /* TipBoard 게시글 삭제 */
@@ -39,7 +39,7 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 게시글 수정 */
     @Override
-    public void updateTipBoard(TipBoardDTO TipBoardDTO) throws Exception {
-        dao.updateTipBoard(TipBoardDTO);
+    public void updateTipBoard(TipBoardDTO dto) throws Exception {
+        dao.updateTipBoard(dto);
     }
 }

@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -38,6 +35,8 @@ public class tipController {
     //단건 조회
     @GetMapping(value="/tipDetail")
     public String qaDetail (HttpServletRequest request, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
+        System.out.println(dto);
+        System.out.println(dto.getNum());
         TipBoardDTO TipBoardDTO = null;
 
         if(dto.getNum() !=0){
@@ -56,23 +55,20 @@ public class tipController {
     //등록
     @GetMapping(value="/regTip")
     public String regTip () throws Exception {
-        return "cmn/tipBoard";
+        return "cmn/regTip";
     }
 
     @PostMapping(value="/regTip")
     public String regTip (HttpServletRequest request, TipBoardDTO dto) throws Exception {
-       // 카테고리 / writer 받아와서 넣도록 나중에 수정
-        dto.setCategory("DB");
         dto.setWriter("test2");
-
         tipBoardService.insertTipBoard(dto);
 
         return "redirect:/tipList";
     }
 
     //삭제
-    @GetMapping(value = "/delTip")
-    public String delTip (int num) throws Exception {
+    @GetMapping(value="/delTip")
+    public String delTip (@RequestParam("num") int num) throws Exception {
         tipBoardService.deleteTipBoard(num);
         return "redirect:/tipList";
     }
@@ -81,16 +77,17 @@ public class tipController {
     //수정
     @GetMapping(value="/updTip")
     public String updTip (TipBoardDTO dto, Model model) throws Exception {
-
         dto = tipBoardService.selectTipOne(dto);
         model.addAttribute("TipBoardDTO", dto);
-        return "cmn/regTip";
-    }
-    @ResponseBody
-    @PostMapping(value = "/updTip")
-    public String updTip(TipBoardDTO dto) throws Exception {
 
-        tipBoardService.updateTipBoard(dto);
-        return  "redirect:/updTip";
+        return "cmn/updTip";
     }
+
+    @PostMapping(value="/updTip")
+    public String updTip(HttpServletRequest request, TipBoardDTO dto) throws Exception {
+        tipBoardService.updateTipBoard(dto);
+
+        return "redirect:/tipDetail?num=${dto.num}";
+    }
+
 }

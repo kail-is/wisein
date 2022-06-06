@@ -10,24 +10,25 @@
     <form role="form" method="post" autocomplete="off" id="tipBoard_form">
     <div class="content-wrap">
 
-        <div>제목</div>
-        <p><input type="text" size="210" id='title' name='title' placeholder="제목을 입력하세요"value="${tipListDTO.subject}" required></p>
+         <div class="select-wrap" style="position: absolute;">
+            <select name="category" id="category">
+                <option value="FRONT">Front</option>
+                <option value="BACK">Back</option>
+                <option value="DB">DB</option>
+            </select>
+        </div>
+
+        <p><input type="text" size="210" id='subject' name='subject' placeholder="제목을 입력하세요" required style="width: 95%; margin-left: 73px;"></p>
 
         <div>내용</div>
         <div id="contents">
             <div id="editor"></div>
             <div id="viewer"></div>
-            ${tipListDTO.content}
             <input type="hidden" id='content' name='content'>
         </div>
 
         <div class="button-wrap">
-             <c:if test="${empty tipListDTO.subject}">
-                <input type="button" value="등록" onclick="reg()">
-             </c:if>
-            <c:if test="${!empty tipListDTO.subject}">
-                <input type="button" value="수정" onclick="update()">
-            </c:if>
+            <input type="button" value="등록" onclick="reg()">
             <input type="button" value="취소" onclick="cancel()">
        </div>
     </div>
@@ -53,12 +54,6 @@
             document.querySelector("#content").value = editor.getHTML();
             document.getElementById('tipBoard_form').submit();
         }
-
-        function update(){
-         document.querySelector("#content").value = editor.getHTML();
-         document.getElementById('tipBoard_form').submit();
-        }
-
 
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){

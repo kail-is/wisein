@@ -115,7 +115,6 @@
                     </div>
                 </div>
             </c:forEach>
-            </div>
         </div>
     </section>
     <div class="search-wrap">
@@ -129,7 +128,6 @@
                 <a href="#">search</a>
             </span>
     </div>
-
     <ul class="pageno-group">
         <li>1</li>
         <li>2</li>
@@ -144,7 +142,7 @@
     </ul>
 </div>
 
-<div class="top-arrow">
+    <div class="top-arrow">
     <a href="#">
             <span class="material-icons purple">
                 keyboard_arrow_up
@@ -161,7 +159,6 @@
     event.clickDisplayChangeListener(writer);
     event.clickDisplayChangeListener(categorySelect);
     event.clickDisplayChangeListener(titleSelect);
-
 </script>
 
 </body>
