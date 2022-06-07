@@ -87,7 +87,7 @@ public class tipController {
     public String updTip(HttpServletRequest request, TipBoardDTO dto) throws Exception {
         tipBoardService.updateTipBoard(dto);
 
-        return "redirect:/tipDetail?num=${dto.num}";
+        return "redirect:/tipDetail?num="+dto.getNum();
     }
 
 }
