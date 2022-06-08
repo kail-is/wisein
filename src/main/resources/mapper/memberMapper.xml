@@ -80,6 +80,7 @@
         WHERE ID = #{id}
     </update>
 
+    <!-- 회원 정보 이미지 파일 업로드  -->
     <insert id="insertMemFileList" parameterType="FileDTO">
         <![CDATA[
 			INSERT INTO
@@ -106,6 +107,15 @@
         </foreach>
     </insert>
 
+    <!--  회원 정보 이미지 파일 삭제  -->
+    <update id="delUserImg" parameterType="String">
+        UPDATE FILE
+        SET
+        DLT_YN = 'Y'
+        WHERE FILE_NAME = #{fileName}
+    </update>
+
+    <!-- 회원 정보 이미지 파일 조회 -->
     <select id="selectMemFileList" parameterType="String" resultType="FileDTO">
         SELECT
         BRD_REF

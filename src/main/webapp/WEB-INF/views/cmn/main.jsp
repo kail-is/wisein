@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="resources/css/common.css">
 </head>
 
     <div class="content-wrap">
@@ -77,6 +78,74 @@
 
         </ul>
     </div>
+<div class="popup-wrap page-center">
+    <div class="signUp-popup-wrap">
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">ID</label>
+            <input type="text" class="signUp-input pr30p">
+            <div class="email-info">@ wiselab.co.kr</div>
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">이름</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">파견 사이트</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">PASSWORD</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">PWCHECK</label>
+            <input type="text" class="signUp-input">
+        </div>
+        <div class="signUp-pwassword-info-wrap">
+            <p class="porintColor">패스워드가 일치합니다</p>
+            <p class="red">패스워드가 일치하지 않습니다</p>
+        </div>
+        <div class="signUp-confirm-Button-wrap">
+            <button type="button">메일 인증하고 가입하기</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-popup-wrap page-center">
+    <img src="/resources/image/pizza.jpg" class="w100" alt="">
+    <span class="material-icons popup-left-button">
+        navigate_next
+    </span>
+    <span class="material-icons popup-right-button">
+        navigate_next
+    </span>
+</div>
+
+<div class="popup-wrap page-center">
+    <div class="signUp-popup-wrap form-between">
+        <div class="w70p">
+            <div class="signUp-input-wrap">
+                <label for="" class="signUp-input-label">ID</label>
+                <input type="text" class="signUp-input">
+            </div>
+            <div class="signUp-input-wrap">
+                <label for="" class="signUp-input-label">PASSWROD</label>
+                <input type="text" class="signUp-input">
+            </div>
+        </div>
+        <div class="w30p">
+            <div class="login-button-wrap">
+                <button type="button">로그인</button>
+            </div>
+        </div>
+    </div>
+    <div class="popup-link-wrap">
+        <p><a href="#">회원가입</a></p>
+        <p><a href="#">아이디 비밀번호 찾기</a></p>
+    </div>
+</div>
+
 
     <script>
         let writer = document.getElementsByClassName("writer")

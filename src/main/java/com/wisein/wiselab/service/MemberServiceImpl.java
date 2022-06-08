@@ -89,10 +89,15 @@ public class MemberServiceImpl implements MemberService {
 
         dao.modify(dto);
         String brdRef =  "mem||" + dto.getId();
-        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, multipartHttpServletRequest);
+        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {
             dao.insertMemFileList(list);
         }
+    }
+
+    @Override
+    public void delUserImg(String fileNm) throws Exception {
+        dao.delUserImg(fileNm);
     }
 
     @Override

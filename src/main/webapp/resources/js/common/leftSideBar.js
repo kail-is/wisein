@@ -1,7 +1,5 @@
-function tagToList(tag,depth,parentArr){
+function tagToList(tag,depth = 1,parentArr = []){
     //초기화
-    depth        = depth ? depth : 1;
-    parentArr    = parentArr ? parentArr : [];
     var exceptionMap = {'ul' : '예외zdzdazzz'}
 
     if(!tag) return;
@@ -10,7 +8,7 @@ function tagToList(tag,depth,parentArr){
     [...tag].forEach((el,idx) => {
         let subArr = [];
         let subTag = el.getElementsByClassName('side_mapping_' + (depth + 1));
-        let tagTitle = el.innerText.replaceAll(/[\r||\n||' ']/g,'');
+        let tagTitle = el.innerText.replaceAll(/[\r|\n|' ']/g,'');
         if(Object.keys(exceptionMap).indexOf(el.localName) > -1){//예외 태그
             tagTitle = exceptionMap[el.localName];
         }

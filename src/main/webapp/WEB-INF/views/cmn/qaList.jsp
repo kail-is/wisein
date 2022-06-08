@@ -25,6 +25,27 @@
 
         </li>
     </ul>
+<!--     <style>
+    	.pagination {
+		padding: 10px;
+		text-align: center;
+		}
+		.pagination a {
+			color : black;
+			text-decoration : none;
+			font-size: 16px;
+			padding: 5px;
+			/* border: 1px solid #ddd; */
+			border-radius: 5px;
+		}
+		.pagination a.active {
+			font-weight: 500;
+			color : red;
+		}
+		.pagination a:hover:not(.active) {
+			/* background-color: #e5e7f5; */
+		}
+    </style> -->
 </header>
 
 <div class="content-wrap">
@@ -41,7 +62,7 @@
                         expand_more
                     </span>
             </div>
-            <button type="button"></button>
+            <button type="button" onClick="location.href='qaBoard'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -77,41 +98,45 @@
                     날짜
                 </div>
             </div>
-            <div class="board-line">
-                <div class="board-cell board-no">
-                    1
+
+            <c:forEach var="qa" items="${qaList}">
+                <div class="board-line">
+                    <div class="board-cell board-no">
+                        <c:out value="${qa.num}" />
+                    </div>
+                    <div class="board-cell board-category purple">
+                        <c:out value="${qa.category}" />
+                    </div>
+                    <div class="board-cell board-title">
+                        <a href="/qaDetail${qaListDTO.makeQueryString(qaListDTO.getCurrentPageNo())}&num=${qa.num}"><c:out value="${qa.subject}" /></a>
+                    </div>
+                    <div class="board-cell board-answer gray">
+                            <span class="material-icons purple2">
+                                help_outline
+                            </span>
+                        1
+                    </div>
+                    <div class="board-cell board-like gray">
+                            <span class="material-icons">
+                                thumb_up
+                            </span>
+                        1
+                    </div>
+                    <div class="board-cell board-writer gray">
+                        <p class="writer"><c:out value="${qa.writer}" /><br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                        <ul class="person-function">
+                            <li><a href="#">메일 전송</a></li>
+                            <li><a href="#">질문 모아 보기</a></li>
+                            <li><a href="#">답변 모아 보기</a></li>
+                        </ul>
+                    </div>
+                    <div class="board-cell board-date gray">
+                        <c:out value="${qa.regDate}" />
+                    </div>
                 </div>
-                <div class="board-cell board-category purple">
-                    BACK
-                </div>
-                <div class="board-cell board-title">
-                    제목(가나다)
-                </div>
-                <div class="board-cell board-answer gray">
-                        <span class="material-icons purple2">
-                            help_outline
-                        </span>
-                    1
-                </div>
-                <div class="board-cell board-like gray">
-                        <span class="material-icons">
-                            thumb_up
-                        </span>
-                    1
-                </div>
-                <div class="board-cell board-writer gray">
-                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
-                    <ul class="person-function">
-                        <li><a href="#">메일 전송</a></li>
-                        <li><a href="#">질문 모아 보기</a></li>
-                        <li><a href="#">답변 모아 보기</a></li>
-                    </ul>
-                </div>
-                <div class="board-cell board-date gray">
-                    21-10-24
-                </div>
-            </div>
-            <div class="board-line">
+            </c:forEach>
+
+            <!-- <div class="board-line">
                 <div class="board-cell board-no">
                     2
                 </div>
@@ -416,7 +441,7 @@
                 <div class="board-cell board-date gray">
                     21-10-24
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     <div class="search-wrap">
@@ -431,16 +456,7 @@
             </span>
     </div>
     <ul class="pageno-group">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li class="current">5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
+    	<jsp:include page="/WEB-INF/views/include/paging.jsp"/>
     </ul>
 </div>
 
