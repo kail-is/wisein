@@ -46,28 +46,36 @@
                  initialEditType: 'markdown',
                  previewStyle: 'vertical',
                  placeholder: '📌욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요📌',
-                 plugins: [colorSyntax]
-                 hooks :{
-                          addImageBlobHook: (blob, callback) => {
-                          	const img_url = uploadImage(blob);
-                          	callback(img_url, "alt text");
-                          	}
+                 plugins: [colorSyntax],
+                 hooks : {
+                           addImageBlobHook: (blob, callback) => {
+                           	    const imgURL  = uploadImage(blob);
+                                callback(imgURL , "alt-text");
+                           	}
                           }
             });
 
-            const uploadImage = async (blob) => {
-            	const formData = new FormData();
-                formData.append('image', blob);
-
-                // 서버로부터 이미지 주소 받아옴
-                const url = await fetch(api, {
-                	method: 'POST',
-                    body : formData
-                });
-
-                return url;
-            };
-
+            function uploadImage(blob){
+                  let dataImgUrl;
+                  let formData = new FormData();
+                  formData.append('image', blob);
+                  $.ajax({
+                        url : '/imgUrlReg',
+                        enctype: 'multipart/form-data',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        async: false,
+                    })
+                    .done(function(data) {
+                        dataImgUrl = data;
+                    })
+                    .fail(function(err) {
+                        alert(err);
+                    });
+                        return dataImgUrl;
+                 };
     </script>
     <script>
         function reg(){

@@ -1,5 +1,7 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.common.FileUtils;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import com.wisein.wiselab.service.TipBoardService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +93,13 @@ public class tipController {
 
         return "redirect:/tipDetail?num="+dto.getNum();
     }
+
+    //이미지 url 반환
+    @ResponseBody
+    @RequestMapping(value="/imgUrlReg")
+    public String imgUrlReg(HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+        return tipBoardService.imgUrlReg(multipartHttpServletRequest, session);
+    }
+
 
 }

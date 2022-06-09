@@ -83,4 +83,10 @@
     </update>
 
 
+    <!--TipBoard 게시글 번호 조회-->
+    <select id="selectTipNum" resultType="Integer">
+        SELECT NVL(MAX(num), 0)+1 AS NUM FROM tip_board ALIAS_FOR_SUBQUERY ;
+    </select>
+
+
 </mapper>

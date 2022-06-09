@@ -1,6 +1,7 @@
 package com.wisein.wiselab.dao;
 
 
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public interface TipBoardDAO {
 
     /* TipBoard 게시글 수정 */
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
+
+    /* TipBoard 게시글 번호 조회*/
+    public int selectTipNum() throws Exception;
+
 
 
 }

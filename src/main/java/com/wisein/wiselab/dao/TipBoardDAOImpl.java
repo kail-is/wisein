@@ -1,4 +1,5 @@
 package com.wisein.wiselab.dao;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,12 @@ public class TipBoardDAOImpl implements TipBoardDAO {
     @Override
     public void updateTipBoard(TipBoardDTO dto) throws Exception {
         sql.update(NS+ ".updateTipBoard", dto);
+    }
+
+    /* TipBoard 게시글 번호 조회*/
+    @Override
+    public int selectTipNum() throws Exception{
+        return sql.selectOne(NS + ".selectTipNum");
     }
 
 }

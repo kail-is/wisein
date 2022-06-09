@@ -1,8 +1,11 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface TipBoardService {
@@ -21,5 +24,8 @@ public interface TipBoardService {
 
     /* TipBoard 게시글 수정 */
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
+
+    /* TipBoard 이미지 url */
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception;
 
 }
