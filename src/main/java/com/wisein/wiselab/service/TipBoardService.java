@@ -26,6 +26,6 @@ public interface TipBoardService {
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
 
     /* TipBoard 이미지 url */
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception;
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
 
 }

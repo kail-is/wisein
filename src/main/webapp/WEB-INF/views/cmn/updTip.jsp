@@ -48,18 +48,51 @@
                  initialEditType: 'markdown',
                  previewStyle: 'vertical',
                  placeholder: '📌욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요📌',
-                 plugins: [colorSyntax]
-            });
-    </script>
+                 plugins: [colorSyntax],
+                  hooks : {
+                            addImageBlobHook: (blob, callback) => {
+                                 const alt = blob.name
+                                 const imgURL  = uploadImage(blob);
+                                 callback(imgURL , alt);
+                                }
+                           }
+             });
+
+             function uploadImage(blob){
+                   let dataImgUrl;
+                   let formData = new FormData();
+                   formData.append('image', blob);
+                   $.ajax({
+                         url : '/imgUrlReg',
+                         enctype: 'multipart/form-data',
+                         type: 'POST',
+                         data: formData,
+                         processData: false,
+                         contentType: false,
+                         async: false,
+                     })
+                     .done(function(data) {
+                         dataImgUrl = data;
+                     })
+                     .fail(function(err) {
+                         alert(err);
+                     });
+                         return dataImgUrl;
+                  };
+     </script>
     <script>
         function update(){
-            document.querySelector("#content").value = editor.getHTML();
-            document.getElementById('tipBoard_form').submit();
+             document.querySelector("#content").value = editor.getHTML();
+
+             if(document.querySelector("#subject").value !== '' && document.querySelector("#content").value !== ''){
+                document.getElementById('tipBoard_form').submit();
+            }else{
+                alert("제목과 내용을 확인하세요👀")
+            }
         }
 
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){
-                console.log('뒤로가기되찌롱');
                 window.history.back()
             }
         }

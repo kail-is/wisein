@@ -97,8 +97,8 @@ public class tipController {
     //이미지 url 반환
     @ResponseBody
     @RequestMapping(value="/imgUrlReg")
-    public String imgUrlReg(HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-        return tipBoardService.imgUrlReg(multipartHttpServletRequest, session);
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+        return tipBoardService.imgUrlReg(multipartHttpServletRequest);
     }
 
 

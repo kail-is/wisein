@@ -60,7 +60,7 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 이미지 url*/
     @Override
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception{
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
         if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
 
             Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
