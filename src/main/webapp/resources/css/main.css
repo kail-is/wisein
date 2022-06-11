@@ -550,7 +550,6 @@ input, select {
 }
 
 .info-wrap {
-  margin-top: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

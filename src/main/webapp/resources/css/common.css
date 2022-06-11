@@ -550,7 +550,6 @@ input, select {
 }
 
 .info-wrap {
-  margin-top: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -943,6 +942,14 @@ body {
 
 .pr30p {
   padding-right: 30% !important;
+}
+
+.jaju {
+  color: #9E0061 !important;
+}
+
+.dark-purple {
+  color: #523781 !important;
 }
 
 .signUp-popup-wrap {
