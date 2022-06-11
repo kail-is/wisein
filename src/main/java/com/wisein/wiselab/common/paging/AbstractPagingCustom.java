@@ -23,7 +23,7 @@ public abstract class AbstractPagingCustom {
 			if(pageInfo.isHasPreviousPage() == true) {				
 				Map<String, Object> map2 = new HashMap<String, Object>();
 					
-				map2.put("currentPageNo", pageInfo.getFirstPage()-1);
+				map2.put("currentPageNo", pageInfo.getFirstPage()-1); 
 				map2.put("searchType", pageInfo.getSearchType()); 
 				map2.put("keyword", pageInfo.getKeyword()); 
 					
