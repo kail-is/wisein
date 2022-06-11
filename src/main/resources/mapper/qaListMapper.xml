@@ -29,13 +29,14 @@
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
+				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
+           		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
                    AND DEL_YN = 'N'
-                   AND 'RNUM' <= 1 * 10
                    AND QB.NUM > 0
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
-        LIMIT #{paginationInfo.firstRecordIndex}, #{recordsPerPage}
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>
     
@@ -44,6 +45,8 @@
 		SELECT COUNT(NUM) 
 		  FROM QA_BOARD 
 		 WHERE 1=1 
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
 		]]>

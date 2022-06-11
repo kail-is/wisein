@@ -1,68 +1,59 @@
 package com.wisein.wiselab.common.paging;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class PaginationInfo {
-	private Criteria criteria;
 	
+	private static int RECORDSPERPAGE = 10;
+	private static int PAGESIZE       = 10;
+	
+	private int currentPageNo = 1;
 	private int totalRecordCount;
-	private int totalPageCount;
-	private int firstPage;
-	private int lastPage;
-	private int firstRecordIndex;
-	private int lastRecordIndex;
-	private boolean hasPreviousPage;
-	private boolean hasNextPage;
 	
-	public PaginationInfo(Criteria criteria) {
-		if (criteria.getCurrentPageNo() < 1) {
-			criteria.setCurrentPageNo(1);
-		}
-		if (criteria.getRecordsPerPage() < 1 || criteria.getRecordsPerPage() > 100) {
-			criteria.setRecordsPerPage(10);
-		}
-		if (criteria.getPageSize() < 5 || criteria.getPageSize() > 20) {
-			criteria.setPageSize(10);
-		}
-
-		this.criteria = criteria;
+	private String searchType;
+	private String keyword;
+	
+	public int getCurrentPageNo() {
+		return currentPageNo;
 	}
-
-
+	public void setCurrentPageNo(int currentPageNo) {
+		this.currentPageNo = currentPageNo;
+	}
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
-
-		if (totalRecordCount > 0) {
-			calculation();
-		}
 	}
-
-	
-	private void calculation() {
-		totalPageCount = (int)Math.ceil(totalRecordCount / (double)criteria.getRecordsPerPage());
-		
-		if (criteria.getCurrentPageNo() > totalPageCount) {
-			criteria.setCurrentPageNo(totalPageCount);
-		}
-
-		firstPage = (((criteria.getCurrentPageNo() - 1) / criteria.getPageSize()) * criteria.getPageSize()) + 1;
-
-		lastPage = criteria.getCurrentPageNo() - (criteria.getCurrentPageNo() % criteria.getPageSize()) + criteria.getPageSize();
-		
-		if (lastPage > totalPageCount) {
-			lastPage = totalPageCount;
-		}
-
-		firstRecordIndex = (criteria.getCurrentPageNo() - 1) * criteria.getRecordsPerPage();
-
-		lastRecordIndex = criteria.getCurrentPageNo() * criteria.getRecordsPerPage();
-
-		hasPreviousPage = firstPage == 1 ? false : true;
-
-		hasNextPage = (lastPage * criteria.getRecordsPerPage()) < totalRecordCount ? true : false;
-	
+	public String getSearchType() {
+		return searchType == null ? "all" : searchType;
 	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	public String getKeyword() {
+		return keyword == null ? "" : keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
+	public int getFirstPage() {
+		return ((currentPageNo - 1) / PAGESIZE) * (PAGESIZE) + 1;
+	}
+	public int getLastPage() {
+		int calcPageSize = (((this.currentPageNo - 1) / PAGESIZE) + 1) * PAGESIZE;
+		return getTotalPageCount() < calcPageSize ? getTotalPageCount() : calcPageSize ;
+	}
+	public int getTotalPageCount() {
+		return (int) Math.ceil((this.totalRecordCount / (double)PAGESIZE));
+	}
+	public int getFirstRecordIndex() {
+		return (currentPageNo- 1) * RECORDSPERPAGE;
+	}
+	public int getLastRecordIndex() {
+		return currentPageNo * RECORDSPERPAGE;
+	}
+	public boolean isHasPreviousPage() {
+		return getFirstPage() == 1 ? false : true;
+	}
+	public boolean isHasNextPage() {
+		return (getLastPage() * RECORDSPERPAGE) < totalRecordCount ? true : false;
+	}
+	
 }

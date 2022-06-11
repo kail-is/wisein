@@ -1,6 +1,5 @@
 package com.wisein.wiselab.service;
 
-import com.wisein.wiselab.common.paging.PaginationInfo;
 import com.wisein.wiselab.dao.QaListDAO;
 import com.wisein.wiselab.dto.QaListDTO;
 
@@ -28,22 +27,16 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
-
         int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
         
-        PaginationInfo paginationInfo = new PaginationInfo(qaListDTO);
-        paginationInfo.setTotalRecordCount(boardTotalCount);
-        
-        qaListDTO.setPaginationInfo(paginationInfo);
-
         if(boardTotalCount > 0) {
         	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
         }
-    	
+
         return qaList;
     }
 
-    /*
+	/*
      * 작성자 : 이형근
      * QaBoard Insert
      * param : QaListDTO
@@ -78,4 +71,5 @@ public class QaListServiceImpl implements QaListService {
 	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
 		return dao.selectBoardTotalCount(qaListDTO);
 	}
+	
 }

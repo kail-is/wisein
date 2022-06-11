@@ -21,8 +21,6 @@ public class QaListDAOImpl implements QaListDAO {
      * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
-     * 수정자 : 박혜림
-     * 수정일 : 2022-06-04
      * */
     @Override
     public List<QaListDTO> selectQaList(QaListDTO qaListDTO) {
