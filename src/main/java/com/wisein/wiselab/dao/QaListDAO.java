@@ -52,6 +52,40 @@ public interface QaListDAO {
      * */
     public void updateQaBoard(QaListDTO qaListDTO) throws Exception;
 
+    /*
+     * 작성자 : 이형근
+     * 해당 게시글 num select
+     * param :
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    public int selectQaNum2() throws Exception;
 
+    /*
+     * 작성자 : 이형근
+     * 해당 게시글 num select
+     * param :
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    public QaListDTO selectQaNum(QaListDTO qaListDTO) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * QaBoard Comment Insert
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-06-12
+     * */
+    public void insertCommentQaBoard(QaListDTO qaListDTO) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * QA 댓글 목록 조회
+     * param : int num
+     * return : qaList
+     * 날짜 : 2022-06-12
+     * */
+    public List<QaListDTO> selectCommentQaList(int num) throws Exception;
 
 }

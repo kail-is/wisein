@@ -1,7 +1,10 @@
 package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dto.QaListDTO;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface QaListService {
@@ -51,5 +54,40 @@ public interface QaListService {
      * */
     public void updateQaBoard(QaListDTO qaListDTO) throws Exception;
 
+    /*
+     * 작성자 : 이형근
+     * qaboard 이미지 url
+     * param :
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session, Model model) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * qaboard num select
+     * param : qaListDTO
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    public QaListDTO selectQaNum(QaListDTO qaListDTO) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * QaBoard Comment Insert
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-06-12
+     * */
+    public void insertCommentQaBoard(QaListDTO qaListDTO) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * QA 댓글 목록 조회
+     * param : int num
+     * return : qaList
+     * 날짜 : 2022-06-12
+     * */
+    public List<QaListDTO> selectCommentQaList(int num) throws Exception;
 
 }

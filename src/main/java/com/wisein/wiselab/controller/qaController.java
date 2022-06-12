@@ -3,17 +3,17 @@ package com.wisein.wiselab.controller;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,14 +47,12 @@ public class qaController {
         return "cmn/qaBoard";
     }
 
-    @PostMapping(value="/regQaBoard")
+    @PostMapping(value="/qaBoard")
     public String regQaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
 
-        qaListDTO.setCategory("DB");
         qaListDTO.setWriter("test2");
 
-
-//        System.out.println(qaListDTO.toString());
+        System.out.println(qaListDTO.toString());
 
         qaListservice.insertQaBoard(qaListDTO);
 
@@ -68,21 +66,28 @@ public class qaController {
                             , @RequestParam("num") int num) throws Exception {
 
         QaListDTO qaListDTO = null;
+        List<QaListDTO> commentQaList = new ArrayList<>();
 
         if (dto.getNum() != 0){
 //            System.out.println("/qaDetail qaListDTO.getNum() : " + qaListDTO.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
+            // 댓글 목록 조회
+            commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
         } else {
 //            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
             qaListDTO = qaListservice.selectQaOne(dto);
         }
 
-//        System.out.println(qaListDTO.toString());
+        System.out.println("qaListDTO : " + qaListDTO.toString());
+        System.out.println("commentQaList : " + commentQaList.toString());
 //        System.out.println(qaListDTO.getContent());
+
+
 
         model.addAttribute("qaListDTO", qaListDTO);
         model.addAttribute("content", qaListDTO.getContent());
+        model.addAttribute("commentQaList", commentQaList);
 
         return "cmn/qaDetail";
     }
@@ -125,6 +130,37 @@ public class qaController {
 
         qaListservice.updateQaBoard(qaListDTO);
     }
+    //, @RequestParam @Nullable String num
+    //이미지 url 반환
+    @ResponseBody
+    @RequestMapping(value="/qaImgUrlReg")
+    public String qaImgUrlReg(HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest, QaListDTO qaListDTO, Model model) throws Exception {
+        System.out.println("qaImgUrlReg : " + qaListDTO.toString());
+        return qaListservice.imgUrlReg(multipartHttpServletRequest, session, model);
+    }
+    @ResponseBody
+    @PostMapping(value = "/selectQaNum")
+    public void selectQaNum (QaListDTO qaListDTO, HttpSession session) throws Exception {
+        System.out.println("/selectQaNum qaListDTO : " + qaListDTO.toString());
+
+        qaListDTO = qaListservice.selectQaNum(qaListDTO);
+
+        System.out.println("qaListDTO : " + qaListDTO.toString());
+
+        session.setAttribute("qaListDTO", qaListDTO);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/qaRegComment")
+    public void qaRegComment (QaListDTO qaListDTO) throws Exception {
+
+        System.out.println("/qaRegComment qaListDTO : " + qaListDTO.toString());
+
+        qaListservice.insertCommentQaBoard(qaListDTO);
+    }
+
+
+
 }
 
 

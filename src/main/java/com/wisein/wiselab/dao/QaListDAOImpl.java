@@ -74,5 +74,53 @@ public class QaListDAOImpl implements QaListDAO {
         sql.update(NS + ".updateQaBoard", qaListDTO);
     }
 
+    /*
+     * 작성자 : 이형근
+     * 해당 게시글 num select
+     * param :
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    @Override
+    public int selectQaNum2() throws Exception {
+        return sql.selectOne(NS + ".selectQaNum2");
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 해당 게시글 num select
+     * param :
+     * return :
+     * 날짜 : 2022-06-09
+     * */
+    @Override
+    public QaListDTO selectQaNum(QaListDTO qaListDTO) throws Exception {
+        return sql.selectOne(NS + ".selectQaNum", qaListDTO);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * QaBoard Comment Insert
+     * param : QaListDTO
+     * return :
+     * 날짜 : 2022-06-12
+     * */
+    @Override
+    public void insertCommentQaBoard(QaListDTO qaListDTO) throws Exception {
+        sql.insert(NS + ".insertCommentQaBoard", qaListDTO);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * QA 댓글 목록 조회
+     * param : int num
+     * return : qaList
+     * 날짜 : 2022-06-12
+     * */
+    @Override
+    public List<QaListDTO> selectCommentQaList(int num) throws Exception {
+        return sql.selectList(NS + ".selectCommentQaList", num);
+    }
+
 
 }
