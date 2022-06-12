@@ -171,7 +171,7 @@ header ul li:nth-child(2) .select-wrap select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(../image/select_arrow.jpg) no-repeat right;
+  background: url(../image/select_arrow.jpg) no-repeat right #1c1c1c;
 }
 
 header ul li:nth-child(2) input[type=text] {
