@@ -35,6 +35,6 @@
   font-feature-settings: 'liga';
 }
 
-.material-icons.purple{
-  color: purple;
+.material-icons .purple{
+  color: #7102a5;
 }

@@ -41,6 +41,11 @@ public class testController2 {
 		return "cmn/main";
 	}
 
+	@GetMapping(value = "/totalSearch")
+	public String totalSearch() throws Exception {
+		return "cmn/totalSearch";
+	}
+
 	@GetMapping(value = "/fooddetail")
 	public String foodDetail() throws Exception {
 		return "cmn/foodDetail";
