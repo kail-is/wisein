@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -52,7 +53,7 @@ public class matzipController {
 		recmDTO.setContent(request.getParameter("content"));
 		recmDTO.setStar(Integer.parseInt(request.getParameter("star")));
 
-		matzipDTO.setCategory("category");
+		matzipDTO.setCategory(request.getParameter("category"));
 		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
 		matzipDTO.setMatzipData(request.getParameter("matzipData"));
 
@@ -61,9 +62,48 @@ public class matzipController {
 		return "redirect:/matzipList";
 	}
 
+	@GetMapping(value="/updRecm")
+	public String updRecm(@RequestParam int id, Model model) throws Exception {
+
+		RecmDTO recmDTO = service.selectRecm(id);
+		model.addAttribute("recm", recmDTO);
+
+		return "cmn/matzipUpd";
+	}
+
+	@GetMapping(value="/putRecm")
+	public String putRecm(HttpServletRequest request, RecmDTO recmDTO) throws Exception {
+
+		recmDTO.setNum(Integer.parseInt(request.getParameter("num")));
+		recmDTO.setSubject(request.getParameter("subject"));
+		recmDTO.setContent(request.getParameter("content"));
+		recmDTO.setStar(Integer.parseInt(request.getParameter("star")));
+
+		service.updRecm(recmDTO);
+
+		return "cmn/foodDetail";
+	}
+
+	@GetMapping(value="/delRecm")
+	public String delRecm (@RequestParam int num) throws Exception {
+		service.delRecm(num);
+		return "cmn/foodDetail";
+	}
+
+	@GetMapping(value="/recmCnt")
+	public String recmCnt (@RequestParam int id, RedirectAttributes ra) throws Exception {
+		int cnt = service.recmCnt(id);
+		if (cnt == 0) {
+			return "redirect:/matzipList";
+		} else {
+			ra.addAttribute("id", id);
+			return "redirect:/matzip";
+		}
+
+	}
+
 	@ExceptionHandler(NullPointerException.class)
 	public String nullCheck(){
-
 		return "redirect:/matzipList";
 	}
 

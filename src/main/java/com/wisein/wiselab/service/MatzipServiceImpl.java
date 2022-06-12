@@ -42,4 +42,29 @@ public class MatzipServiceImpl implements MatzipService{
     public List<RecmDTO> selectMzRecm(int matzipId) throws Exception {
         return dao.selectRecmList(matzipId);
     }
+
+    @Override
+    public RecmDTO selectRecm(int recmId) throws Exception {
+        return dao.selectRecm(recmId);
+    }
+
+    @Override
+    public int delRecm(int num) throws Exception {
+
+       dao.delRecm(num);
+       int cnt = dao.recmCnt(num);
+
+       return 0;
+    }
+
+    @Override
+    public int updRecm(RecmDTO dto) throws Exception {
+        dao.updRecm(dto);
+        return 0;
+    }
+
+    @Override
+    public int recmCnt(int matzipId) throws Exception {
+        return dao.recmCnt(matzipId);
+    }
 }

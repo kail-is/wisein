@@ -28,6 +28,22 @@
         AND DEL_YN = 'N'
     </select>
 
+    <select id="selectRecm" parameterType="Integer" resultType="recmDTO">
+        SELECT
+        NUM
+        , REF_MATZIP
+        , WRITER
+        , SUBJECT
+        , STAR
+        , CONTENT
+        , DEL_YN
+        , REG_DATE
+        , UPD_DATE
+        FROM RECM_BOARD
+        WHERE NUM = #{num}
+        AND DEL_YN = 'N'
+    </select>
+
     <select id="avgRate" parameterType="Integer" resultType="Integer">
         SELECT
           AVG(STAR)
@@ -41,6 +57,7 @@
             COUNT(*)
         FROM RECM_BOARD
         WHERE REF_MATZIP = #{matzipId}
+        AND DEL_YN = 'N'
     </select>
 
     <insert id="insertMatzip" parameterType="MatzipDTO">
@@ -56,7 +73,7 @@
         )
     </insert>
 
-    <insert id="insertRecm" parameterType="RecmDTO">
+    <insert id="insertRecm" parameterType="Integer">
         INSERT INTO RECM_BOARD
         ( REF_MATZIP
         , WRITER
@@ -73,6 +90,22 @@
         )
     </insert>
 
+
+    <update id="delRecm" parameterType="Integer">
+        UPDATE RECM_BOARD
+        SET
+        DEL_YN = 'Y'
+        WHERE NUM = #{num}
+    </update>
+
+    <update id="updateRecm" parameterType="RecmDTO">
+        UPDATE RECM_BOARD
+        SET
+        SUBJECT = #{subject}
+        , STAR = #{star}
+        , CONTENT = #{content}
+        WHERE NUM = #{num}
+    </update>
 
 
 </mapper>

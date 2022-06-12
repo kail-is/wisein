@@ -78,6 +78,9 @@ ${matzip.matzipData}
             </div>
             <div class="food-board-writer gray">
                 <c:out value="${recm.writer}" />
+                <p class="recm-upd" id="upd-${recm.num}">
+                  <a href="/updRecm?id=${recm.num}"> 수정 </a> </p>
+                <p class="recm-del" id="del-${recm.num}" onclick="delRecm(${recm.num})"> 삭제 </p>
             </div>
             <div class="food-board-img">
                 <img src="../image/pizza.jpg" alt="">
@@ -110,7 +113,35 @@ ${matzip.matzipData}
          document.getElementById('info-wrap-title').innerText = matzip_obj.documents[0].place_name;
          document.getElementById('food-info-content').innerText = matzip_obj.documents[0].place_url;
 
-        debugger;
+    </script>
+
+    <script>
+
+    let upd = document.getElementsByClassName("recm-upd")
+    let del = document.getElementsByClassName("recm-del")
+
+    function delRecm(recmId) {
+
+       let delConfirm = confirm('삭제하시겠습니까?');
+
+       if (delConfirm) {
+            $.ajax({
+                data:{"num": recmId},
+                type:"GET",
+                url:"/delRecm",
+                success:function(data) {
+                    alert('삭제 완료');
+                    window.location.href = "recmCnt?id=${matzip.id}"
+                },
+                error:function(request, status, error) {
+                    alert("실패");
+                }
+            })
+       }else {
+          alert('삭제 취소');
+       }
+    }
+
     </script>
 
 </body>
