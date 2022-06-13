@@ -113,7 +113,7 @@ window.onload = function() {
         if(idChkBool && pwChkBool) {
            return true;
         }else {
-           return = false;
+           return false;
         }
     }
 

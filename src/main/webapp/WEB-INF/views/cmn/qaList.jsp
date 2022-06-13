@@ -4,29 +4,6 @@
     <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
 </head>
 <body>
-
-<header>
-    <ul>
-        <li class="logo"><a href="#">wiseIN</a></li>
-        <li class="search-wrap">
-            <div class="select-wrap">
-                <select name="" id="search-list">
-                    <option value="front">Front</option>
-                </select>
-            </div>
-            <input type="text" class="search-bar" placeholder="Type something…" required="required">
-        </li>
-        <li class="bar">
-            <label for="bar-chk">
-                    <span class="material-icons">
-                        menu
-                    </span>
-            </label>
-
-        </li>
-    </ul>
-</header>
-
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
@@ -114,42 +91,6 @@
                     </div>
                 </div>
             </c:forEach>
-
-            <div class="board-line">
-                <div class="board-cell board-no">
-                    10
-                </div>
-                <div class="board-cell board-category purple2">
-                    FRONT
-                </div>
-                <div class="board-cell board-title">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
-                </div>
-                <div class="board-cell board-answer gray">
-                        <span class="material-icons purple">
-                            check_circle
-                        </span>
-                    1
-                </div>
-                <div class="board-cell board-like gray">
-                        <span class="material-icons">
-                            thumb_up
-                        </span>
-                    1
-                </div>
-                <div class="board-cell board-writer gray">
-                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
-                    <ul class="person-function">
-                        <li><a href="#">메일 전송</a></li>
-                        <li><a href="#">질문 모아 보기</a></li>
-                        <li><a href="#">답변 모아 보기</a></li>
-                    </ul>
-                </div>
-                <div class="board-cell board-date gray">
-                    21-10-24
-                </div>
-            </div>
-
         </div>
     </section>
     <div class="search-wrap">
@@ -164,16 +105,9 @@
             </span>
     </div>
     <ul class="pageno-group">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li class="current">5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
+	    <div class="pagination">
+	    	${pagination}
+    	</div>
     </ul>
 </div>
 

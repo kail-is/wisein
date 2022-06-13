@@ -23,7 +23,7 @@ public class channel implements HandlerInterceptor {
 				//response.setHeader("side_gubun", a.getSideYn());
 			}
 		}catch (Exception e){
-			System.out.println(e.toString());
+			System.out.println(e.toString()+"zzz");
 		}
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}

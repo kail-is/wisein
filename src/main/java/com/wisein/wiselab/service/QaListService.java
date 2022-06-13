@@ -9,11 +9,11 @@ public interface QaListService {
     /*
      * 작성자 : 이형근
      * QA 목록 조회
-     * param :
+     * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
      * */
-    public List<QaListDTO> selectQaList() throws Exception;
+    public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception;
 
     /*
      * 작성자 : 이형근
@@ -34,22 +34,12 @@ public interface QaListService {
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception;
 
     /*
-     * 작성자 : 이형근
-     * num에 해당하는 qa삭제
-     * param : Integer
-     * return :
-     * 날짜 : 2022-05-29
-     * */
-    public void deleteQaBoard(int num) throws Exception;
-
-    /*
-     * 작성자 : 이형근
-     * num에 해당하는 게시글 subject, content 수정
+     * 작성자 : 박혜림
+     * 게시글 총 개수
      * param : QaListDTO
-     * return :
-     * 날짜 : 2022-05-29
+     * return : int
+     * 날짜 : 2022-06-04
      * */
-    public void updateQaBoard(QaListDTO qaListDTO) throws Exception;
-
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 
 }

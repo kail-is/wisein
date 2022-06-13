@@ -2,9 +2,11 @@ package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dao.QaListDAO;
 import com.wisein.wiselab.dto.QaListDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,16 +18,25 @@ public class QaListServiceImpl implements QaListService {
     /*
      * 작성자 : 이형근
      * QA 목록 조회
-     * param :
+     * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
+     * 수정자 : 박혜림
+     * 수정일 : 2022-06-04
      * */
     @Override
-    public List<QaListDTO> selectQaList() throws Exception {
-        return dao.selectQaList();
+    public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception {
+        List<QaListDTO> qaList = new ArrayList<>();
+        int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
+        
+        if(boardTotalCount > 0) {
+        	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
+        }
+
+        return qaList;
     }
 
-    /*
+	/*
      * 작성자 : 이형근
      * QaBoard Insert
      * param : QaListDTO
@@ -50,26 +61,15 @@ public class QaListServiceImpl implements QaListService {
     }
 
     /*
-     * 작성자 : 이형근
-     * num에 해당하는 qa삭제
-     * param : Integer
-     * return :
-     * 날짜 : 2022-05-29
-     * */
-    @Override
-    public void deleteQaBoard(int num) throws Exception {
-        dao.deleteQaBoard(num);
-    }
-
-    /*
-     * 작성자 : 이형근
-     * num에 해당하는 게시글 subject, content 수정
+     * 작성자 : 박혜림
+     * 게시글 총 개수
      * param : QaListDTO
-     * return :
-     * 날짜 : 2022-05-29
+     * return : int
+     * 날짜 : 2022-06-04
      * */
-    @Override
-    public void updateQaBoard(QaListDTO qaListDTO) throws Exception {
-        dao.updateQaBoard(qaListDTO);
-    }
+	@Override
+	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+		return dao.selectBoardTotalCount(qaListDTO);
+	}
+	
 }
