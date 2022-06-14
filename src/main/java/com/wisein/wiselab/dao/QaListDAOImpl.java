@@ -63,6 +63,11 @@ public class QaListDAOImpl implements QaListDAO {
 		return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
 	}
 
+    @Override
+    public void deleteQaBoard(int num) throws Exception {
+        sql.delete(NS + ".deleteQaBoard", num);
+    }
+
     /*
      * 작성자 : 이형근
      * num에 해당하는 게시글 subject, content 수정
@@ -122,13 +127,6 @@ public class QaListDAOImpl implements QaListDAO {
     public List<QaListDTO> selectCommentQaList(int num) throws Exception {
         return sql.selectList(NS + ".selectCommentQaList", num);
     }
-    /*
-     * 작성자 : 박혜림
-     * 게시글 총 개수
-     * param : PageDTO
-     * return : int
-     * 날짜 : 2022-05-30
-     * */
 
 
 }

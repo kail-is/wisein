@@ -1,5 +1,6 @@
 package com.wisein.wiselab.dao;
 import com.wisein.wiselab.dto.FileDTO;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class TipBoardDAOImpl implements TipBoardDAO {
 
     /* TipBoard 다건조회 */
     @Override
-    public List<TipBoardDTO> selectTipList() throws Exception {
+    public List<TipBoardDTO> selectTipList(TipBoardDTO dto) throws Exception {
         return sql.selectList(NS + ".selectTipList");
     }
 
@@ -45,10 +46,34 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         sql.update(NS+ ".updateTipBoard", dto);
     }
 
-    /* TipBoard 게시글 번호 조회*/
+    /* TipBoard 현재 게시글 번호 조회*/
     @Override
-    public int selectTipNum() throws Exception{
+    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception{
         return sql.selectOne(NS + ".selectTipNum");
+    }
+
+    /* TipBoard 다음 게시글 번호 조회*/
+    @Override
+    public int selectNextTipNum() throws Exception{
+        return sql.selectOne(NS + ".selectNextTipNum");
+    }
+
+    /* 전체 게시글 개수 조회 */
+    @Override
+    public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectBoardTotalCount", dto);
+    }
+
+    /* TipBoard 댓글 조회*/
+    @Override
+    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
+        return sql.selectList(NS + ".selectTipComment", num);
+    }
+
+    /* TipBoard 댓글 등록*/
+    @Override
+    public void insertTipComment(TipBoardDTO dto) throws Exception {
+        sql.insert(NS + ".insertTipComment", dto);
     }
 
 }

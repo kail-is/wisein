@@ -7,12 +7,14 @@ import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,8 +32,15 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 다건조회 */
     @Override
-    public List<TipBoardDTO> selectTipList() throws Exception {
-        return dao.selectTipList();
+    public List<TipBoardDTO> selectTipList(TipBoardDTO dto) throws Exception {
+        List<TipBoardDTO> tipList = new ArrayList<>();
+        int boardTotalCount = dao.selectBoardTotalCount(dto);
+
+        if(boardTotalCount > 0) {
+            tipList = (List<TipBoardDTO>) dao.selectTipList(dto);
+        }
+
+        return tipList;
     }
 
     /* TipBoard 단건조회 */
@@ -60,7 +69,7 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 이미지 url*/
     @Override
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest,TipBoardDTO dto, HttpSession session) throws Exception{
         if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
 
             Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
@@ -78,14 +87,49 @@ public class TipBoardServiceImpl implements TipBoardService {
             }
         }
 
-        String brdRef =  "tip||"+dao.selectTipNum();
+        int chkNum = dto.getNum();
+        System.out.println("꺄아아아ㅏ아아ㅏ아아앙"+chkNum);
+
+        String brdRef = "";
+        if(chkNum != 0){ //기존게시글 수정
+            brdRef = "tip||"+chkNum;
+        }else { //새글등록
+            brdRef = "tip||"+dao.selectNextTipNum();
+        }
+        System.out.println("꺄아아아ㅏ아아ㅏ아아앙333333"+brdRef);
+
         List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {
             memDao.insertMemFileList(list);
         }
         String imgUrl = list.get(0).getFilePath();
 
+        session.removeAttribute("TipBoardDTO");
+
         return imgUrl;
+    }
+
+    /* TipBoard 현재 게시글 번호 조회*/
+    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception {
+        return dao.selectTipNum(dto);
+    }
+
+    /* 게시글 개수 조회 */
+    @Override
+    public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
+        return dao.selectBoardTotalCount(dto);
+    }
+
+    /* TipBoard 댓글 조회*/
+    @Override
+    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
+        return dao.selectTipComment(num);
+    }
+
+    /* TipBoard 댓글 등록*/
+    @Override
+    public void insertTipComment(TipBoardDTO dto) throws Exception {
+        dao.insertTipComment(dto);
     }
 
 

@@ -168,6 +168,11 @@
             ,PARENT_NUM
         FROM
             qa_board
+
+
+
+
+
         WHERE PARENT_NUM = #{num}
     </select>
 
