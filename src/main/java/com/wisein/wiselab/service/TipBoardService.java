@@ -24,10 +24,7 @@ public interface TipBoardService {
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
 
     /* TipBoard 이미지 url */
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest,TipBoardDTO dto, HttpSession session) throws Exception;
-
-    /* TipBoard 현재 게시글 번호 조회*/
-    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception;
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception;
 
     /* 게시글 총 개수*/
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;

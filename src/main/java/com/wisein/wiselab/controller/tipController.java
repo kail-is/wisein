@@ -87,32 +87,25 @@ public class tipController {
 
     //수정
     @GetMapping(value="/updTip")
-    public String updTip (TipBoardDTO dto, Model model) throws Exception {
+    public String updTip (TipBoardDTO dto, Model model, HttpSession session) throws Exception {
         dto = tipBoardService.selectTipOne(dto);
         model.addAttribute("TipBoardDTO", dto);
-
+        session.setAttribute("TipBoardDTO", dto);
         return "cmn/updTip";
     }
 
     @PostMapping(value="/updTip")
-    public String updTip(HttpServletRequest request, TipBoardDTO dto) throws Exception {
+    public String updTip(HttpServletRequest request, TipBoardDTO dto, HttpSession session) throws Exception {
         tipBoardService.updateTipBoard(dto);
-
+        session.removeAttribute("TipBoardDTO");
         return "redirect:/tipDetail?num="+dto.getNum();
     }
 
     //이미지 url 반환
     @ResponseBody
     @RequestMapping(value="/imgUrlReg")
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest,TipBoardDTO dto, HttpSession session) throws Exception {
-        return tipBoardService.imgUrlReg(multipartHttpServletRequest, dto, session);
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/selectTipNum")
-    public void selectTipNum (TipBoardDTO dto, HttpSession session) throws Exception {
-        dto = tipBoardService.selectTipNum(dto);
-        session.setAttribute("TipBoardDTO", dto);
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception {
+        return tipBoardService.imgUrlReg(multipartHttpServletRequest, session);
     }
 
     @ResponseBody
@@ -120,6 +113,4 @@ public class tipController {
     public void tipRegComment (TipBoardDTO dto) throws Exception {
         tipBoardService.insertTipComment(dto);
     }
-
-
 }

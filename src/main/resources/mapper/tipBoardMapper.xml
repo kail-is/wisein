@@ -105,15 +105,9 @@
         WHERE NUM = #{num}
     </update>
 
-
-    <!--TipBoard 현재 게시글 번호 조회-->
-    <select id="selectTipNum" parameterType="Integer" resultType="Integer">
-        SELECT NVL(MAX(num), 0) AS NUM FROM tip_board WHERE num = #{num}
-    </select>
-
     <!--TipBoard 다음 게시글 번호 조회-->
     <select id="selectNextTipNum" resultType="Integer">
-        SELECT NVL(MAX(num), 0)+1 AS NUM FROM tip_board ALIAS_FOR_SUBQUERY
+        SELECT NVL(MAX(num), 0)+1 AS NUM FROM tip_board
     </select>
 
     <!--전체 게시글 개수 조회-->
@@ -139,7 +133,6 @@
 		   AND NUM > 0
 		]]>
     </select>
-
 
     <!-- 댓글 등록 -->
     <insert id="insertTipComment" parameterType="TipBoardDTO">

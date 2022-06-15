@@ -69,7 +69,7 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* TipBoard 이미지 url*/
     @Override
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest,TipBoardDTO dto, HttpSession session) throws Exception{
+    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception{
         if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
 
             Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
@@ -87,32 +87,30 @@ public class TipBoardServiceImpl implements TipBoardService {
             }
         }
 
-        int chkNum = dto.getNum();
-        System.out.println("꺄아아아ㅏ아아ㅏ아아앙"+chkNum);
-
+        int tipNum = 0;
         String brdRef = "";
-        if(chkNum != 0){ //기존게시글 수정
-            brdRef = "tip||"+chkNum;
-        }else { //새글등록
-            brdRef = "tip||"+dao.selectNextTipNum();
+
+        TipBoardDTO dto = (TipBoardDTO) session.getAttribute("TipBoardDTO");
+        if(dto != null){
+            tipNum = dto.getNum();
+            brdRef = "tip||"+tipNum;
+            System.out.println("!11111111111111"+tipNum);
+            System.out.println("222222222222222"+brdRef);
+        }else{
+            tipNum = dao.selectNextTipNum();
+            brdRef = "tip||"+tipNum;
+            System.out.println("333333333333"+tipNum);
+            System.out.println("44444444444444"+brdRef);
         }
-        System.out.println("꺄아아아ㅏ아아ㅏ아아앙333333"+brdRef);
 
         List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {
             memDao.insertMemFileList(list);
         }
         String imgUrl = list.get(0).getFilePath();
-
-        session.removeAttribute("TipBoardDTO");
-
         return imgUrl;
     }
 
-    /* TipBoard 현재 게시글 번호 조회*/
-    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception {
-        return dao.selectTipNum(dto);
-    }
 
     /* 게시글 개수 조회 */
     @Override

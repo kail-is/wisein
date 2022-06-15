@@ -46,12 +46,6 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         sql.update(NS+ ".updateTipBoard", dto);
     }
 
-    /* TipBoard 현재 게시글 번호 조회*/
-    @Override
-    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception{
-        return sql.selectOne(NS + ".selectTipNum");
-    }
-
     /* TipBoard 다음 게시글 번호 조회*/
     @Override
     public int selectNextTipNum() throws Exception{

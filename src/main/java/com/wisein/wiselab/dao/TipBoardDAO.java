@@ -24,9 +24,6 @@ public interface TipBoardDAO {
     /* TipBoard 게시글 수정 */
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
 
-    /* TipBoard 현재 게시글 번호 조회*/
-    public TipBoardDTO selectTipNum(TipBoardDTO dto) throws Exception;
-
     /* TipBoard 다음 게시글 번호 조회*/
     public int selectNextTipNum() throws Exception;
 

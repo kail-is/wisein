@@ -52,32 +52,12 @@
                  plugins: [colorSyntax],
                   hooks : {
                             addImageBlobHook: (blob, callback) => {
-                                 selectTipNum();
                                  const alt = blob.name
                                  const imgURL  = uploadImage(blob);
                                  callback(imgURL , alt);
                                 }
                            }
              });
-
-             function selectTipNum(){
-                 let num = document.querySelector("#num").value;
-                 if(num == ""){
-                    num = 0;
-                 }
-                 $.ajax({
-                     data:{"num": num},
-                     type:"POST",
-                     url:"/selectTipNum",
-                     async: false,
-                 })
-                 .done(function(data) {
-                   alert("성공");
-                 })
-                 .fail(function(err) {
-                   alert(err);
-                 });
-             };
 
              function uploadImage(blob){
                    let dataImgUrl;
