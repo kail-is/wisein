@@ -100,6 +100,7 @@
             </div>
 
             <c:forEach var="qa" items="${qaList}">
+                <c:if test="${qa.parentNum == 0}">
                 <div class="board-line">
                     <div class="board-cell board-no">
                         <c:out value="${qa.num}" />
@@ -134,6 +135,7 @@
                         <c:out value="${qa.regDate}" />
                     </div>
                 </div>
+                </c:if>
             </c:forEach>
 
             <!-- <div class="board-line">

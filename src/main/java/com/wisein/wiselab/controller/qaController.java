@@ -30,11 +30,6 @@ public class qaController {
 
         List<QaListDTO> qaList = new ArrayList<>();
 
-//        if(qaList.size() > 0) {
-//            for (int i = 0; i < qaList.size(); i++) {
-//                System.out.println(i + " : " + qaList.get(i));
-//            }
-//        }
         qaList = (List<QaListDTO>) qaListservice.selectQaList(pd);
         pd.setTotalCount(qaListservice.listSearchCount(pd));
 

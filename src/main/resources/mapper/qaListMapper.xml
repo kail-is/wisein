@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.qaListMapper">
-<<<<<<< HEAD
     <!-- 다건 조회 -->
-    <select id="selectQaList" resultType="QaListDTO">
-        SELECT
-            NUM
-            ,CATEGORY
-            ,WRITER
-            ,SUBJECT
-            ,CONTENT
-            ,REG_DATE
-            ,UPD_DATE
-            ,ADP_YN
-            ,DEL_YN
-            ,PARENT_NUM
-        FROM
-            qa_board
-=======
-
     <select id="selectQaList" parameterType="PageDTO" resultType="QaListDTO">
         <![CDATA[
         SELECT A.RNUM
@@ -52,7 +35,6 @@
                 ) AS A
         LIMIT #{pageCnt}, #{perPageNum}
         ]]>
->>>>>>> origin/eunbin
     </select>
     <!-- 게시글 등록 -->
     <insert id="insertQaBoard" parameterType="QaListDTO">
