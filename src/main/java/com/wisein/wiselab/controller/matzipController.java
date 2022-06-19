@@ -51,7 +51,7 @@ public class matzipController {
 		recmDTO.setRefMatzip(Integer.parseInt(request.getParameter("matzipId")));
 		recmDTO.setSubject(request.getParameter("subject"));
 		recmDTO.setContent(request.getParameter("content"));
-		recmDTO.setStar(Integer.parseInt(request.getParameter("star")));
+		recmDTO.setStar(Float.parseFloat(request.getParameter("star")));
 
 		matzipDTO.setCategory(request.getParameter("category"));
 		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
