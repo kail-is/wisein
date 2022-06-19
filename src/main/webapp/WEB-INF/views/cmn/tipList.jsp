@@ -5,29 +5,6 @@
     <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
 </head>
 <body>
-
-<header>
-    <ul>
-        <li class="logo"><a href="#">wiseIN</a></li>
-        <li class="search-wrap">
-            <div class="select-wrap">
-                <select name="" id="search-list">
-                    <option value="front">Front</option>
-                </select>
-            </div>
-            <input type="text" class="search-bar" placeholder="Type something…" required="required">
-        </li>
-        <li class="bar">
-            <label for="bar-chk">
-                    <span class="material-icons">
-                        menu
-                    </span>
-            </label>
-
-        </li>
-    </ul>
-</header>
-
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
@@ -126,27 +103,20 @@
         <input type="text" class="search-bar" placeholder="Type something…" required="required">
         <span class="material-icons">
                 <a href="#">search</a>
-            </span>
+        </span>
     </div>
     <ul class="pageno-group">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li class="current">5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
+        <div class="pagination">
+            ${pagination}
+        </div>
     </ul>
 </div>
 
-    <div class="top-arrow">
+<div class="top-arrow">
     <a href="#">
-            <span class="material-icons purple">
-                keyboard_arrow_up
-            </span>
+        <span class="material-icons purple">
+            keyboard_arrow_up
+        </span>
     </a>
 </div>
 

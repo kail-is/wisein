@@ -4,50 +4,6 @@
     <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
 </head>
 <body>
-
-<header>
-    <ul>
-        <li class="logo"><a href="#">wiseIN</a></li>
-        <li class="search-wrap">
-            <div class="select-wrap">
-                <select name="" id="search-list">
-                    <option value="front">Front</option>
-                </select>
-            </div>
-            <input type="text" class="search-bar" placeholder="Type something…" required="required">
-        </li>
-        <li class="bar">
-            <label for="bar-chk">
-                    <span class="material-icons">
-                        menu
-                    </span>
-            </label>
-
-        </li>
-    </ul>
-    <style>
-    	.pagination {
-		padding: 10px;
-		text-align: center;
-		}
-		.pagination a {
-			color : black;
-			text-decoration : none;
-			font-size: 16px;
-			padding: 5px;
-			/* border: 1px solid #ddd; */
-			border-radius: 5px;
-		}
-		.pagination a.active {
-			font-weight: 500;
-			color : red;
-		}
-		.pagination a:hover:not(.active) {
-			/* background-color: #e5e7f5; */
-		}
-    </style>
-</header>
-
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
@@ -109,7 +65,7 @@
                         <c:out value="${qa.category}" />
                     </div>
                     <div class="board-cell board-title">
-                        <a href="/qaDetail${pageDTO.makeSearch()}&num=${qa.num}"><c:out value="${qa.subject}" /></a>
+                        <a href="/qaDetail?num=${qa.num}"><c:out value="${qa.subject}" /></a>
                     </div>
                     <div class="board-cell board-answer gray">
                             <span class="material-icons purple2">
@@ -187,27 +143,9 @@
             </span>
     </div>
     <ul class="pageno-group">
-        <div class="pagination">
-            <c:if test="${pageDTO.page != 1}">
-                <a href='qalist${pageDTO.makeSearch(1)}'>&laquo;</a>
-            </c:if>
-
-            <c:if test="${pageDTO.prev}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.startPage-1)}'>&lt;</a>
-            </c:if>
-
-            <c:forEach begin="${pageDTO.startPage}" end="${pageDTO.endPage}" var="idx">
-                <a href='qalist${pageDTO.makeSearch(idx)}' <c:out value="${pageDTO.page==idx?' class=active ':''}"/>> ${idx}</a>
-            </c:forEach>
-
-            <c:if test="${pageDTO.next}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.endPage+1)}'>&gt;</a>
-            </c:if>
-
-            <c:if test="${pageDTO.page != pageDTO.totalEndPage && qaList.size()>0}">
-                <a href='qalist${pageDTO.makeSearch(pageDTO.totalEndPage)}'>&raquo;</a>
-            </c:if>
-        </div>
+	    <div class="pagination">
+	    	${pagination}
+    	</div>
     </ul>
 </div>
 
