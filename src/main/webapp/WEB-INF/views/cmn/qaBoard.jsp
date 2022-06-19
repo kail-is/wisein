@@ -24,12 +24,7 @@
         <div id="contents">
             <div id="editor">${qaListDTO.content}</div>
             <div id="viewer"></div>
-            <c:if test="${empty qaListDTO.num}">
-                <input type="hidden" id='num' name='num' value='<c:out value="${qaListDTO.num}"/>'>
-            </c:if>
-            <c:if test="${!empty qaListDTO.num}">
-                <input type="hidden" id='num' name='num' value='0'>
-            </c:if>
+            <input type="hidden" id='num' name='num' value='<c:out value="${qaListDTO.num}"/>'>
             <input type="hidden" id='content' name='content'>
         </div>
 

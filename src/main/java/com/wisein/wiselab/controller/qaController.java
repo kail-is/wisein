@@ -70,12 +70,15 @@ public class qaController {
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
 
+        System.out.println("================================================================");
         if (dto.getNum() != 0){
+            System.out.println("11111111111111111111111111111111");
 //            System.out.println("/qaDetail qaListDTO.getNum() : " + qaListDTO.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
         } else {
+            System.out.println("2222222222222222222222222222222222222222222");
 //            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
             qaListDTO = qaListservice.selectQaOne(dto);
@@ -90,6 +93,11 @@ public class qaController {
         model.addAttribute("qaListDTO", qaListDTO);
         model.addAttribute("content", qaListDTO.getContent());
         model.addAttribute("commentQaList", commentQaList);
+        for(int i=0; i<commentQaList.size(); i++){
+            System.out.println(commentQaList.get(i).getContent());
+            model.addAttribute( "content"+commentQaList.get(i).getNum(), commentQaList.get(i).getContent());
+        }
+
 
         return "cmn/qaDetail";
     }

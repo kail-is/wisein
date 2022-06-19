@@ -14,11 +14,9 @@
 
     </div>
     <section class="questions content-frame">
-
         <div class="title">
             <c:out value="${qaListDTO.subject}" />
         </div>
-
         <div class="writer-wrap">
             <p class="writer"><c:out value="${qaListDTO.writer}" /></p>
             <ul class="person-function">
@@ -30,29 +28,62 @@
                     videocam
                 </span>
         </div>
-
         <div class="subject">
-            <!--<c:out value="${qaListDTO.content}" />-->
             ${content}
         </div>
-
+        <c:if test="${qaListDTO.writer eq 'test2'}">
+            <div class="icon" align="right">
+                <span class="material-icons" id="update_btn">
+                    border_color
+                </span>
+                <span class="material-icons" id="delete_btn">
+                    delete
+                </span>
+            </div>
+        </c:if>
     </section>
 
-        <div class="icon" align="right">
-            <span class="material-icons" id="update_btn">
-                border_color
-            </span>
-            <span class="material-icons" id="delete_btn">
-                delete
-            </span>
-        </div>
+    <c:forEach var="commentQa" items="${commentQaList}">
+        <section class="questions content-frame">
+            <div class="title">
+                <c:out value="${commentQa.subject}" />
+            </div>
+            <div class="writer-wrap">
+                <p class="writer">
+                    <c:out value="${commentQa.writer}" />
+                </p>
+                <ul class="person-function">
+                    <li><a href="#">메일 전송</a></li>
+                    <li><a href="#">질문 모아 보기</a></li>
+                    <li><a href="#">답변 모아 보기</a></li>
+                </ul>
+                <span class="material-icons purple">
+                        videocam
+                    </span>
+            </div>
+            <div class="subject">
+                <!--<c:out value="${commentQa.content}" />-->
+                <!--${content+commentQa.num}-->
+            </div>
+            <c:if test="${commentQa.writer eq 'test2'}">
+                <div class="icon" align="right">
+                    <span class="material-icons" id="update_btn">
+                        border_color
+                    </span>
+                    <span class="material-icons" id="delete_btn">
+                        delete
+                    </span>
+                </div>
+            </c:if>
+        </section>
+    </c:forEach>
 
 
+<!--
     <section class="recommend-wrap">
         <div class="recommend-titleLine">
             댓글 (1)
         </div>
-        <!-- 댓글 목록 조회 -->
         <c:forEach var="commentQa" items="${commentQaList}">
             <ul class="recommend">
                 <li>
@@ -82,7 +113,9 @@
             </ul>
         </c:forEach>
     </section>
+-->
 
+<!--
     <div data-v-3b426d7d="" class="CommentWriter">
         <div data-v-3b426d7d="" class="comment_inbox">
             <strong data-v-3b426d7d="" class="blind">댓글을 입력하세요</strong>
@@ -96,7 +129,7 @@
             </div>
         </div>
     </div>
-
+-->
 
 
 
@@ -125,7 +158,7 @@
 
             $.ajax({
                 data:{
-                    "parentNum":parentNum
+                        "parentNum":parentNum
                     ,"category":category
                     ,"writer":writer
                     ,"subject":subject
