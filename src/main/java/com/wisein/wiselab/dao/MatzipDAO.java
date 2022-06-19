@@ -24,6 +24,6 @@ public interface MatzipDAO {
 
     public int recmCnt(int matzipId) throws Exception;
 
-    public int avgRate(int matzipId) throws Exception;
+    public float avgRate(int matzipId) throws Exception;
 
 }

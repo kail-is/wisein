@@ -59,7 +59,7 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
-    public int avgRate(int matzipId) throws Exception {
+    public float avgRate(int matzipId) throws Exception {
         return sql.selectOne(NS + ".avgRate", matzipId);
     }
 

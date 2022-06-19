@@ -2,7 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <link rel="stylesheet" href="resources/css/foodDetail.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
 </head>
+
+<style>
+.inner-star::before{color: #FF9600;}
+.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
+.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
+.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
+.RatingStar { margin-bottom: 0 !important;}
+
+</style>
 
 <div id='matzip_data' style='display:none'>
 ${matzip.matzipData}
@@ -17,9 +27,7 @@ ${matzip.matzipData}
     </div>
     <section class="content-frame">
         <div class="map-wrap">
-            <div id="map" >
-                <img style="width: inherit;" src="https://devtalk.kakao.com/uploads/default/original/2X/5/5396f4466d7ba5ebeab81fe7d4e1d6b98ae19b34.png">
-            </div>
+            <div id="map" style="width:100%;height:350px;"></div>
         </div>
         <div class="food-info-wrap">
             <div id="food-info-title" class="food-info-title">
@@ -36,21 +44,11 @@ ${matzip.matzipData}
     </section>
     <div class="score-wrap">
         <p class="purple">평가</p>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons gray">
-                star
-            </span>
+        <div class='RatingStar'>
+          <div class='RatingScore'>
+            <div class='outer-star'><div class='inner-star'>${matzip.rate}</div></div>
+          </div>
+        </div>
         <p class="purple">${matzip.rate} (${matzip.count})</p>
     </div>
 
@@ -59,28 +57,18 @@ ${matzip.matzipData}
         <div class="food-board-wrap">
             <div class="food-board-title">
                 <c:out value="${recm.subject}" />
-                <span class="material-icons purple">
-                       star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons gray">
-                        star_border
-                    </span>
+                <div class='RatingStar'>
+                  <div class='RatingScore'>
+                    <div class='outer-star'><div class='inner-star'>${recm.star}</div></div>
+                  </div>
+                </div>
                 <c:out value="${recm.star}" />
             </div>
             <div class="food-board-writer gray">
                 <c:out value="${recm.writer}" />
                 <p class="recm-upd" id="upd-${recm.num}">
-                  <a href="/updRecm?id=${recm.num}"> 수정 </a> </p>
-                <p class="recm-del" id="del-${recm.num}" onclick="delRecm(${recm.num})"> 삭제 </p>
+                  <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt"></i> </a> </p>
+                <p class="recm-del" id="del-${recm.num}" onclick="delRecm(${recm.num})"> X </p>
             </div>
             <div class="food-board-img">
                 <img src="../image/pizza.jpg" alt="">
@@ -93,6 +81,8 @@ ${matzip.matzipData}
     </c:forEach>
 </div>
 
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31a7b466aaed9176525d555ca8a9644e"></script>
     <script>
         let writer = document.getElementsByClassName("writer")
 
@@ -112,10 +102,6 @@ ${matzip.matzipData}
          document.getElementById('food-info-title').innerText = matzip_obj.documents[0].place_name;
          document.getElementById('info-wrap-title').innerText = matzip_obj.documents[0].place_name;
          document.getElementById('food-info-content').innerText = matzip_obj.documents[0].place_url;
-
-    </script>
-
-    <script>
 
     let upd = document.getElementsByClassName("recm-upd")
     let del = document.getElementsByClassName("recm-del")
@@ -142,7 +128,53 @@ ${matzip.matzipData}
        }
     }
 
+
+    var xDis = matzip_obj.documents[0].x
+    var yDis = matzip_obj.documents[0].y
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+        mapOption = {
+            center: new kakao.maps.LatLng(yDis, xDis), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 마커가 표시될 위치입니다
+    var markerPosition  = new kakao.maps.LatLng(yDis, xDis);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+
+    var iwContent = '<div style="padding:5px;">' + matzip_obj.documents[0].place_name +  '<br> <a href="' + matzip_obj.documents[0].place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        iwPosition = new kakao.maps.LatLng(yDis, xDis); //인포윈도우 표시 위치입니다
+
+    // 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        position : iwPosition,
+        content : iwContent
+    });
+
+    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+    infowindow.open(map, marker);
+
+    let starCnt = document.querySelectorAll('.inner-star').length
+    let starGrp = document.querySelectorAll('.inner-star')
+
+    for (let z of starGrp ) {
+            ratingPercentage = z.getInnerHTML() / 5 * 100
+            ratingRounded = ratingPercentage + '%'
+            z.style.width = ratingRounded
+    }
+
+
     </script>
+
 
 </body>
 </html>

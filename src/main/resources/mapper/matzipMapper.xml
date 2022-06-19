@@ -44,7 +44,7 @@
         AND DEL_YN = 'N'
     </select>
 
-    <select id="avgRate" parameterType="Integer" resultType="Integer">
+    <select id="avgRate" parameterType="Integer" resultType="Float">
         SELECT
           AVG(STAR)
         FROM RECM_BOARD
