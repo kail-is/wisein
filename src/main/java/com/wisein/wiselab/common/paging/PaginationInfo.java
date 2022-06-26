@@ -8,9 +8,17 @@ public class PaginationInfo {
 	private int currentPageNo = 1;
 	private int totalRecordCount;
 	
+	private String viewAddr;
+	
 	private String searchType;
 	private String keyword;
 	
+	public String getViewAddr() {
+		return viewAddr != null ? viewAddr.replace("/", "") : null;
+	}
+	public void setViewAddr(String viewAddr) {
+		this.viewAddr = viewAddr;
+	}
 	public int getCurrentPageNo() {
 		return currentPageNo;
 	}
