@@ -17,7 +17,7 @@ public abstract class AbstractPagingCustom {
 				map1.put("searchType", pageInfo.getSearchType());
 				map1.put("keyword", pageInfo.getKeyword());
 				
-				sbuilder.append(replacesTag(getFirstPagetag(), "qalist?"+makeQueryString(map1)));
+				sbuilder.append(replacesTag(getFirstPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map1)));
 			}
 			
 			if(pageInfo.isHasPreviousPage() == true) {				
@@ -27,7 +27,7 @@ public abstract class AbstractPagingCustom {
 				map2.put("searchType", pageInfo.getSearchType()); 
 				map2.put("keyword", pageInfo.getKeyword()); 
 					
-				sbuilder.append(replacesTag(getPreviousPagetag(), "qalist?"+makeQueryString(map2)));
+				sbuilder.append(replacesTag(getPreviousPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map2)));
 			}
 			
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -36,7 +36,7 @@ public abstract class AbstractPagingCustom {
 				map.put("searchType", pageInfo.getSearchType()); 
 				map.put("keyword", pageInfo.getKeyword()); 
 
-				sbuilder.append(replacesTag(getPageNumTag(), "qalist?"+makeQueryString(map) , pageInfo.getCurrentPageNo()==idx ? "active":"", idx+""));
+				sbuilder.append(replacesTag(getPageNumTag(), pageInfo.getViewAddr()+"?"+makeQueryString(map) , pageInfo.getCurrentPageNo()==idx ? "active":"", idx+""));
 			}
 			
 			if(pageInfo.isHasNextPage() == true) {
@@ -46,7 +46,7 @@ public abstract class AbstractPagingCustom {
 				map3.put("searchType", pageInfo.getSearchType()); 
 				map3.put("keyword", pageInfo.getKeyword()); 
 					
-				sbuilder.append(replacesTag(getNextPagetag(), "qalist?"+makeQueryString(map3)));
+				sbuilder.append(replacesTag(getNextPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map3)));
 			}
 			
 			if(pageInfo.isHasNextPage() == true) {				
@@ -56,7 +56,7 @@ public abstract class AbstractPagingCustom {
 				map4.put("searchType", pageInfo.getSearchType()); 
 				map4.put("keyword", pageInfo.getKeyword()); 
 				
-				sbuilder.append(replacesTag(getLastPagetag(), "qalist?"+makeQueryString(map4)));
+				sbuilder.append(replacesTag(getLastPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map4)));
 			}
 			
 			return sbuilder.toString();
