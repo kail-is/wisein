@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisein.wiselab.mapper.matzipMapper">
+
+    <select id="selectMatzip" parameterType="Integer" resultType="MatzipDTO">
+        SELECT
+         ID
+        ,CATEGORY
+        ,MATZIP_DATA
+        FROM
+        MATZIP_BOARD
+        WHERE ID = #{matzipId}
+    </select>
+
+    <select id="selectRecmList" parameterType="Integer" resultType="recmDTO">
+        SELECT
+          NUM
+        , REF_MATZIP
+        , WRITER
+        , SUBJECT
+        , STAR
+        , CONTENT
+        , DEL_YN
+        , REG_DATE
+        , UPD_DATE
+        FROM RECM_BOARD
+        WHERE REF_MATZIP = #{matzipId}
+        AND DEL_YN = 'N'
+    </select>
+
+    <select id="selectRecm" parameterType="Integer" resultType="recmDTO">
+        SELECT
+        NUM
+        , REF_MATZIP
+        , WRITER
+        , SUBJECT
+        , STAR
+        , CONTENT
+        , DEL_YN
+        , REG_DATE
+        , UPD_DATE
+        FROM RECM_BOARD
+        WHERE NUM = #{num}
+        AND DEL_YN = 'N'
+    </select>
+
+    <select id="avgRate" parameterType="Integer" resultType="Float">
+        SELECT
+          AVG(STAR)
+        FROM RECM_BOARD
+        WHERE REF_MATZIP = #{matzipId}
+        AND DEL_YN = 'N'
+    </select>
+
+    <select id="recmCnt" parameterType="Integer" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM RECM_BOARD
+        WHERE REF_MATZIP = #{matzipId}
+        AND DEL_YN = 'N'
+    </select>
+
+    <insert id="insertMatzip" parameterType="MatzipDTO">
+        INSERT INTO MATZIP_BOARD
+        (   ID
+            , CATEGORY
+            , MATZIP_DATA
+        )
+        VALUES
+        (   #{id}
+            , #{category}
+            , #{matzipData}
+        )
+    </insert>
+
+    <insert id="insertRecm" parameterType="Integer">
+        INSERT INTO RECM_BOARD
+        ( REF_MATZIP
+        , WRITER
+        , SUBJECT
+        , STAR
+        , CONTENT
+        )
+        VALUES
+        ( #{refMatzip}
+        , #{writer}
+        , #{subject}
+        , #{star}
+        , #{content}
+        )
+    </insert>
+
+
+    <update id="delRecm" parameterType="Integer">
+        UPDATE RECM_BOARD
+        SET
+        DEL_YN = 'Y'
+        WHERE NUM = #{num}
+    </update>
+
+    <update id="updateRecm" parameterType="RecmDTO">
+        UPDATE RECM_BOARD
+        SET
+        SUBJECT = #{subject}
+        , STAR = #{star}
+        , CONTENT = #{content}
+        WHERE NUM = #{num}
+    </update>
+
+
+</mapper>

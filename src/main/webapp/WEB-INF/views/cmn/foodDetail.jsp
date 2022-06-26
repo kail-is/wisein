@@ -2,27 +2,41 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <link rel="stylesheet" href="resources/css/foodDetail.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
 </head>
-<div class="content-wrap">
-    <div class="info-wrap">
 
+<style>
+.inner-star::before{color: #FF9600;}
+.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
+.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
+.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
+.RatingStar { margin-bottom: 0 !important;}
+
+</style>
+
+<div id='matzip_data' style='display:none'>
+${matzip.matzipData}
+</div>
+
+<div class="content-wrap">
+    <div class="info-wrap" style="margin-top:0">
         <ul class="info">
-            <li>홍대 쌀국수 회현점</li>
+            <li id="info-wrap-title">회현 쌀국수</li>
             <li>평가</li>
         </ul>
     </div>
     <section class="content-frame">
         <div class="map-wrap">
-            <div id="map"></div>
+            <div id="map" style="width:100%;height:350px;"></div>
         </div>
         <div class="food-info-wrap">
-            <div class="food-info-title">
-                홍대 쌀국수 회현점
+            <div id="food-info-title" class="food-info-title">
+                ${matzip.id}
             </div>
-            <div class="food-info-addr gray">
-                서울특별시 중구 덕계로 72 지하상가 B104호
+            <div id="food-info-addr" class="food-info-addr gray">
+                ${matzip.matzipData}
             </div>
-            <div class="food-info-content">
+            <div id="food-info-content" class="food-info-content">
                 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 모든 국민은 학문과 예술의 자유를 가진다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다.대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.
             </div>
 
@@ -30,94 +44,45 @@
     </section>
     <div class="score-wrap">
         <p class="purple">평가</p>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons purple">
-                star
-            </span>
-        <span class="material-icons gray">
-                star
-            </span>
-        <p class="purple">4.0(2)</p>
+        <div class='RatingStar'>
+          <div class='RatingScore'>
+            <div class='outer-star'><div class='inner-star'>${matzip.rate}</div></div>
+          </div>
+        </div>
+        <p class="purple">${matzip.rate} (${matzip.count})</p>
     </div>
 
+    <c:forEach var="recm" items="${recmList}">
     <section class="content-frame">
         <div class="food-board-wrap">
             <div class="food-board-title">
-                분짜가 진짜 최고!
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons gray">
-                        star_border
-                    </span>
+                <c:out value="${recm.subject}" />
+                <div class='RatingStar'>
+                  <div class='RatingScore'>
+                    <div class='outer-star'><div class='inner-star'>${recm.star}</div></div>
+                  </div>
+                </div>
+                <c:out value="${recm.star}" />
             </div>
             <div class="food-board-writer gray">
-                서은빈(OK저축은행)
+                <c:out value="${recm.writer}" />
+                <p class="recm-upd" id="upd-${recm.num}">
+                  <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt"></i> </a> </p>
+                <p class="recm-del" id="del-${recm.num}" onclick="delRecm(${recm.num})"> X </p>
             </div>
             <div class="food-board-img">
                 <img src="../image/pizza.jpg" alt="">
             </div>
             <div class="food-board-content">
-                모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 모든 국민은 학문과 예술의 자유를 가진다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다.대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.
+                <c:out value="${recm.content}" escapeXml="false" />
             </div>
         </div>
     </section>
-    <section class="content-frame">
-        <div class="food-board-wrap">
-            <div class="food-board-title">
-                분짜가 진짜 최고!
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons purple">
-                        star_border
-                    </span>
-                <span class="material-icons gray">
-                        star_border
-                    </span>
-            </div>
-            <div class="food-board-writer gray">
-                <p>서은빈(OK저축은행)</p>
-                <span class="material-icons purple">
-                        border_color
-                    </span>
-                <span class="material-icons purple">
-                        delete
-                    </span>
-            </div>
-            <div class="food-board-img">
-                <img src="../image/pizza.jpg" alt="">
-            </div>
-            <div class="food-board-content">
-                모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 모든 국민은 학문과 예술의 자유를 가진다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다.대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.
-            </div>
-        </div>
-    </section>
+    </c:forEach>
 </div>
 
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31a7b466aaed9176525d555ca8a9644e"></script>
     <script>
         let writer = document.getElementsByClassName("writer")
 
@@ -130,6 +95,83 @@
                 }
             });
         });
+
+         const matzip_obj = JSON.parse(document.getElementById('matzip_data').innerText)
+         const matzip_id = matzip_obj.documents[0].id;
+         document.getElementById('food-info-addr').innerText = matzip_obj.documents[0].address_name;
+         document.getElementById('food-info-title').innerText = matzip_obj.documents[0].place_name;
+         document.getElementById('info-wrap-title').innerText = matzip_obj.documents[0].place_name;
+         document.getElementById('food-info-content').innerText = matzip_obj.documents[0].place_url;
+
+    let upd = document.getElementsByClassName("recm-upd")
+    let del = document.getElementsByClassName("recm-del")
+
+    function delRecm(recmId) {
+
+       let delConfirm = confirm('삭제하시겠습니까?');
+
+       if (delConfirm) {
+            $.ajax({
+                data:{"num": recmId},
+                type:"GET",
+                url:"/delRecm",
+                success:function(data) {
+                    alert('삭제 완료');
+                    window.location.href = "recmCnt?id=${matzip.id}"
+                },
+                error:function(request, status, error) {
+                    alert("실패");
+                }
+            })
+       }else {
+          alert('삭제 취소');
+       }
+    }
+
+
+    var xDis = matzip_obj.documents[0].x
+    var yDis = matzip_obj.documents[0].y
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+        mapOption = {
+            center: new kakao.maps.LatLng(yDis, xDis), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 마커가 표시될 위치입니다
+    var markerPosition  = new kakao.maps.LatLng(yDis, xDis);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+
+    var iwContent = '<div style="padding:5px;">' + matzip_obj.documents[0].place_name +  '<br> <a href="' + matzip_obj.documents[0].place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        iwPosition = new kakao.maps.LatLng(yDis, xDis); //인포윈도우 표시 위치입니다
+
+    // 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        position : iwPosition,
+        content : iwContent
+    });
+
+    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+    infowindow.open(map, marker);
+
+    let starCnt = document.querySelectorAll('.inner-star').length
+    let starGrp = document.querySelectorAll('.inner-star')
+
+    for (let z of starGrp ) {
+            ratingPercentage = z.getInnerHTML() / 5 * 100
+            ratingRounded = ratingPercentage + '%'
+            z.style.width = ratingRounded
+    }
+
 
     </script>
 
