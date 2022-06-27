@@ -24,6 +24,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public RecmDTO selectRecm(int recmId) throws Exception {
+        return sql.selectOne(NS + ".selectRecm", recmId);
+    }
+
+    @Override
     public List<RecmDTO> selectRecmList(int matzipId) throws Exception {
         return sql.selectList(NS + ".selectRecmList", matzipId);
     }
@@ -39,12 +44,22 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public void delRecm(int num) throws Exception {
+        sql.update(NS + ".delRecm", num);
+    }
+
+    @Override
+    public void updRecm(RecmDTO recmDTO) throws Exception {
+        sql.update(NS + ".updateRecm", recmDTO);
+    }
+
+    @Override
     public int recmCnt(int matzipId) throws Exception {
         return sql.selectOne(NS + ".recmCnt", matzipId);
     }
 
     @Override
-    public int avgRate(int matzipId) throws Exception {
+    public float avgRate(int matzipId) throws Exception {
         return sql.selectOne(NS + ".avgRate", matzipId);
     }
 
