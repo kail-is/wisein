@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
+import com.wisein.wiselab.common.paging.PaginationInfo;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import com.wisein.wiselab.service.TipBoardService;
 
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -32,23 +34,18 @@ public class tipController {
     //다건 조회
     @GetMapping(value="/tipList")
     public String tipList (@ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
-
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
 
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
-        if(tipList.size() > 0) {
-            for (int i = 0; i < tipList.size(); i++) {
-                System.out.println(i + " : " + tipList.get(i));
-            }
-        }
+        System.out.println(pagination);
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
 
-        System.out.println("==============pagination: " + pagination);
+
         return "cmn/tipList";
     }
 
@@ -115,9 +112,9 @@ public class tipController {
         return tipBoardService.imgUrlReg(multipartHttpServletRequest, session);
     }
 
-    @ResponseBody
-    @PostMapping(value = "/tipComment")
-    public void tipRegComment (TipBoardDTO dto) throws Exception {
-        tipBoardService.insertTipComment(dto);
-    }
+//    @ResponseBody
+//    @PostMapping(value = "/tipComment")
+//    public void tipRegComment (TipBoardDTO dto) throws Exception {
+//        tipBoardService.insertTipComment(dto);
+//    }
 }

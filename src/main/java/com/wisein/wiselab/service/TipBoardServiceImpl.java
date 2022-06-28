@@ -5,6 +5,7 @@ import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.TipBoardDAO;
 import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
+import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -94,13 +95,9 @@ public class TipBoardServiceImpl implements TipBoardService {
         if(dto != null){
             tipNum = dto.getNum();
             brdRef = "tip||"+tipNum;
-            System.out.println("!11111111111111"+tipNum);
-            System.out.println("222222222222222"+brdRef);
         }else{
             tipNum = dao.selectNextTipNum();
             brdRef = "tip||"+tipNum;
-            System.out.println("333333333333"+tipNum);
-            System.out.println("44444444444444"+brdRef);
         }
 
         List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
@@ -117,18 +114,18 @@ public class TipBoardServiceImpl implements TipBoardService {
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
         return dao.selectBoardTotalCount(dto);
     }
-
-    /* TipBoard 댓글 조회*/
-    @Override
-    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
-        return dao.selectTipComment(num);
-    }
-
-    /* TipBoard 댓글 등록*/
-    @Override
-    public void insertTipComment(TipBoardDTO dto) throws Exception {
-        dao.insertTipComment(dto);
-    }
+//
+//    /* TipBoard 댓글 조회*/
+//    @Override
+//    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
+//        return dao.selectTipComment(num);
+//    }
+//
+//    /* TipBoard 댓글 등록*/
+//    @Override
+//    public void insertTipComment(TipBoardDTO dto) throws Exception {
+//        dao.insertTipComment(dto);
+//    }
 
 
 }

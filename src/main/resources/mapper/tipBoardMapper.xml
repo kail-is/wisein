@@ -36,7 +36,8 @@
                    AND DEL_YN = 'N'
                    AND TB.NUM > 0
                 GROUP BY TB.NUM
-                ORDER BY NUM DESC) AS A
+                ORDER BY NUM DESC
+                ) AS A
            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
            ]]>
         </select>
@@ -115,7 +116,7 @@
         <![CDATA[
 		SELECT COUNT(NUM)
 		  FROM tip_board
-		 WHERE 1=1
+		WHERE 1=1
 		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
 		   AND DEL_YN = 'N'
@@ -128,53 +129,9 @@
         <![CDATA[
 		SELECT COUNT(NUM)
 		  FROM tip_board
-
-		 WHERE 1=1
+		WHERE 1=1
 		   AND NUM > 0
 		]]>
-    </select>
-
-    <!-- 댓글 등록 -->
-    <insert id="insertTipComment" parameterType="TipBoardDTO">
-        INSERT INTO tip_board
-            (
-                NUM
-                ,CATEGORY
-                ,WRITER
-                ,SUBJECT
-                ,CONTENT
-                ,REG_DATE
-                ,DEL_YN
-                ,PARENT_NUM
-              )
-        VALUES
-            (
-                (SELECT NVL(MAX(num), 0) + 1 FROM qa_board ALIAS_FOR_SUBQUERY)
-                , #{category}
-                , #{writer}
-                , #{subject}
-                , #{content}
-                , (SELECT date_format(now(),'%Y-%c-%d'))
-                , 'N'
-                , #{parentNum}
-            )
-    </insert>
-
-    <!-- 댓글 조회 -->
-    <select id="selectTipComment" resultType="TipBoardDTO">
-        SELECT
-            NUM
-            ,CATEGORY
-            ,WRITER
-            ,SUBJECT
-            ,CONTENT
-            ,REG_DATE
-            ,UPD_DATE
-            ,DEL_YN
-            ,PARENT_NUM
-        FROM
-            tip_board
-        WHERE PARENT_NUM = #{num}
     </select>
 
 </mapper>

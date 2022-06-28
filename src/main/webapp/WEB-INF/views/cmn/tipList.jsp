@@ -102,7 +102,7 @@
         </div>
         <input type="text" class="search-bar" placeholder="Type something…" required="required">
         <span class="material-icons">
-                <a href="#">search</a>
+           <a href="#">search</a>
         </span>
     </div>
     <ul class="pageno-group">
@@ -120,7 +120,7 @@
     </a>
 </div>
 
-<script type="module" >
+<script type="module">
     import * as event from 'resources/js/common/event.js';
     let writer = document.getElementsByClassName("writer");
     let categorySelect = document.getElementsByClassName("category-select");

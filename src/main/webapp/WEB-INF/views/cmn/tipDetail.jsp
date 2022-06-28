@@ -51,48 +51,31 @@
         <div class="recommend-titleLine">
             댓글 (1)
         </div>
-        <ul class="recommend">
-            <li>
-                <div class="wrap">
-                    <div class="recommend-info-wrap">
-                        <div class="img"></div>
-                        <div class="info">
-                            <div class="title">서은빈(OK저축은행)</div>
-                            <div class="sub">
-                                <div class="date">
-                                    2021-10-22
-                                </div>
-                                <div class="icon">
-                                        <span class="material-icons">
-                                            border_color
-                                        </span>
-                                    <span class="material-icons">
-                                            delete
-                                        </span>
+        <c:forEach var="tipComment" items="${tipComment}">
+            <ul class="recommend">
+                <li>
+                    <div class="wrap">
+                        <div class="recommend-info-wrap">
+                            <div class="img"></div>
+                            <div class="info">
+                                <div class="title" value="${tipComment.writer}"></div>
+                                <div class="sub">
+                                    <div class="date">
+                                        <c:out value="${tipComment.regDate}"/>
+                                    </div>
+                                    <div class="icon">
+                                        <span class="material-icons"> border_color </span>
+                                        <span class="material-icons"> delete </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="content">
+                            <c:out value="${tipComment.content}"/>
+                        </div>
                     </div>
-                    <div class="content">유익한 글 정말 잘 읽었습니다!</div>
-                </div>
-            </li>
-        </ul>
-
-        <div class="recommend-write-wrap recommend">
-            <div class="wrap">
-                <div class="recommend-info-wrap">
-                    <div class="img"></div>
-                    <div class="info" id="writer-info">
-                        <div class="title">서은빈(OK저축은행)</div>
-                    </div>
-                </div>
-                <div class="content-writer-wrap">
-                    <textarea>유익한 글 정말 잘 읽었습니다!</textarea>
-                </div>
-            </div>
-        </div>
-
-
+                </li>
+            </ul>
     </section>
 
     <div data-v-3b426d7d="" class="CommentWriter">
