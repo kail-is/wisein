@@ -90,7 +90,6 @@
             tip_board
         SET
             DEL_YN = 'Y'
-            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
         WHERE NUM = #{num}
     </update>
 

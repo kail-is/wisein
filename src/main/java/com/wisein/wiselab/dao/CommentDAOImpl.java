@@ -17,8 +17,8 @@ public class CommentDAOImpl implements CommentDAO {
 
     /* comment 다건조회 */
     @Override
-    public List<CommentDTO> selectComment(CommentDTO dto) throws Exception {
-        return sql.selectList(NS + ".selectComment", dto);
+    public List<CommentDTO> selectComment(String brdRef) throws Exception {
+        return sql.selectList(NS + ".selectComment", brdRef);
     }
 
     /* comment 등록 */
@@ -41,8 +41,8 @@ public class CommentDAOImpl implements CommentDAO {
 
     /* 전체 comment 개수 조회 */
     @Override
-    public int selectCommentTotalCount(CommentDTO dto) throws Exception {
-        return sql.selectOne(NS + ".selectCommentTotalCount", dto);
+    public int selectCommentTotalCount(String brdRef) throws Exception {
+        return sql.selectOne(NS + ".selectCommentTotalCount", brdRef);
     }
 
 }

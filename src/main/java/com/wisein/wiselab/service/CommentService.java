@@ -1,11 +1,13 @@
-package com.wisein.wiselab.dao;
-
+package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dto.CommentDTO;
+import com.wisein.wiselab.dto.TipBoardDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public interface CommentDAO {
+public interface CommentService {
 
     /* comment 다건조회 */
     public List<CommentDTO> selectComment(String brdRef) throws Exception;

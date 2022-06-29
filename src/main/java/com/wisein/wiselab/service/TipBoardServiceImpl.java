@@ -108,24 +108,10 @@ public class TipBoardServiceImpl implements TipBoardService {
         return imgUrl;
     }
 
-
     /* 게시글 개수 조회 */
     @Override
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
         return dao.selectBoardTotalCount(dto);
     }
-//
-//    /* TipBoard 댓글 조회*/
-//    @Override
-//    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
-//        return dao.selectTipComment(num);
-//    }
-//
-//    /* TipBoard 댓글 등록*/
-//    @Override
-//    public void insertTipComment(TipBoardDTO dto) throws Exception {
-//        dao.insertTipComment(dto);
-//    }
-
 
 }

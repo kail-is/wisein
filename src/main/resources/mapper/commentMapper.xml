@@ -3,7 +3,7 @@
 <mapper namespace="com.wisein.wiselab.mapper.commentMapper">
 
     <!--comment 다건조회-->
-    <select id="selectComment" parameterType="CommentDTO" resultType="CommentDTO">
+    <select id="selectComment" parameterType="String" resultType="CommentDTO">
         SELECT
             NUM
             ,BRD_REF
@@ -14,7 +14,7 @@
             ,DEL_YN
         FROM
              comment
-        WHERE BRD_REF=#{brdRef}
+        WHERE BRD_REF = #{brdRef}
         AND DEL_YN = 'N'
     </select>
 
@@ -46,8 +46,8 @@
             comment
         SET
             DEL_YN = 'Y'
-            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
-        WHERE NUM = #{num}
+        WHERE  BRD_REF=#{brdRef}
+        AND NUM = #{num}
     </update>
 
     <!--comment 수정-->
@@ -55,14 +55,20 @@
         UPDATE
             comment
         SET
-            , CONTENT = #{content}
+            CONTENT = #{content}
             , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
-        WHERE NUM = #{num}
+        WHERE BRD_REF=#{brdRef}
+        AND NUM = #{num}
     </update>
 
     <!--전체 comment 개수 조회 -->
-    <select id="selectCommentTotalCount" resultType="Integer">
-        SELECT NVL(MAX(num), 0) AS NUM FROM comment
+    <select id="selectCommentTotalCount" parameterType="String" resultType="Integer">
+        SELECT
+            NVL(MAX(num), 0)
+        FROM
+            comment
+        WHERE BRD_REF = #{brdRef}
+        AND DEL_YN = 'N'
     </select>
 
 </mapper>
