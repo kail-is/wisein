@@ -2,7 +2,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -35,6 +34,9 @@
 		</div>
 	</body>
 	<script src="${pageContext.request.contextPath}/resources/js/common/dim.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common/authCheck.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common/util.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common/login.js"></script>
 
 	<script>
 		//$dim();

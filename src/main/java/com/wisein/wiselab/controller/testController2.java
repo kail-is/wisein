@@ -37,7 +37,7 @@ public class testController2 {
 
 	@GetMapping(value = "/main")
 	public String main() throws Exception {
-		return "cmn/main";
+		return "cmn/main2";
 	}
 
 	@GetMapping(value = "/totalSearch")
