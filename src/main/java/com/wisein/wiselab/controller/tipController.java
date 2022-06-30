@@ -127,14 +127,16 @@ public class tipController {
     }
 
     //댓글 등록
+    @ResponseBody
     @PostMapping(value = "/regTipComm")
     public void tipRegComment (CommentDTO dto) throws Exception {
         commentService.insertComment(dto);
     }
 
     //댓글 삭제
+    @ResponseBody
     @PostMapping(value = "/delTipComm")
-    public void tipDelComment (int num) throws Exception {
-        commentService.deleteComment(num);
+    public void tipDelComment (CommentDTO dto) throws Exception {
+        commentService.deleteComment(dto);
     }
 }

@@ -43,8 +43,8 @@ public class CommentServiceImpl implements CommentService {
 
     /* comment 삭제 */
     @Override
-    public void deleteComment(int num) throws Exception {
-        dao.deleteComment(num);
+    public void deleteComment(CommentDTO dto) throws Exception {
+        dao.deleteComment(dto);
     }
 
     /* comment 수정 */

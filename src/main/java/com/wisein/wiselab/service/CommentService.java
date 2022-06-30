@@ -16,7 +16,7 @@ public interface CommentService {
     public void insertComment(CommentDTO dto) throws Exception;
 
     /* comment 삭제 */
-    public void deleteComment(int num) throws Exception;
+    public void deleteComment(CommentDTO dto) throws Exception;
 
     /* comment 수정 */
     public void updateComment(CommentDTO dto) throws Exception;

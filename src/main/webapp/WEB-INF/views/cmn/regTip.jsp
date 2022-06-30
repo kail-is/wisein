@@ -84,11 +84,11 @@
             var content = editor.getMarkdown();
 
             if(subject == ''){
-                alert('제목을 입력하세요👀')
+                alert('제목을 입력하세요✍')
                 document.querySelector("#subject").focus();
                 return;
             }if(content == ''){
-                alert('내용을 입력하세요👀')
+                alert('내용을 입력하세요✍')
                 editor.focus();
                 return;
             }else{

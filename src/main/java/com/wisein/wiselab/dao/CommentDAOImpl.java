@@ -29,8 +29,8 @@ public class CommentDAOImpl implements CommentDAO {
 
     /* comment 삭제 */
     @Override
-    public void deleteComment(int num) throws Exception {
-        sql.update(NS+ ".deleteComment", num);
+    public void deleteComment(CommentDTO dto) throws Exception {
+        sql.update(NS+ ".deleteComment", dto);
     }
 
     /* comment 수정 */

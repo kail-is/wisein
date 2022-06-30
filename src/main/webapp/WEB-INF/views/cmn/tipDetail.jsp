@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="icon">
                                         <span class="material-icons">border_color </span>
-                                        <span class="material-icons">delete </span>
+                                        <span class="material-icons" onClick="delComm(${commentList.num})" >delete </span>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
 
             if(commContent.length==0){
                 alert("댓글을 입력하세요👀");
-                document.getElementById('comment_content').focus;
+                document.getElementById('comment_content').focus();
                 return;
             }
 
@@ -138,9 +138,28 @@
                }
             })
          }
+
+          function delComm(num){
+             var num = num;
+             var brdRef = "tip||" + ${tipBoardDTO.num};
+
+             $.ajax({
+                data:{
+                    "num": num
+                    ,"brdRef": brdRef
+                 },
+                type:"POST",
+                url:"/delTipComm",
+                success:function(data) {
+                    window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                },
+                error:function(request, status, error) {
+                    alert("댓글 삭제 실패😢");
+                }
+             })
+          }
+
    </script>
-
-
 
 </body>
 </html>

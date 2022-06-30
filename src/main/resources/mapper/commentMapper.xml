@@ -41,7 +41,7 @@
     </insert>
 
     <!--comment 삭제-->
-    <update id="deleteComment" parameterType="Integer">
+    <update id="deleteComment" parameterType="CommentDTO">
         UPDATE
             comment
         SET
@@ -64,7 +64,7 @@
     <!--전체 comment 개수 조회 -->
     <select id="selectCommentTotalCount" parameterType="String" resultType="Integer">
         SELECT
-            NVL(MAX(num), 0)
+            COUNT(*) AS Count
         FROM
             comment
         WHERE BRD_REF = #{brdRef}
