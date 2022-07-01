@@ -72,7 +72,6 @@ public class tipController {
             commentList = commentService.selectComment(brdRef);
         }
 
-
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
@@ -98,7 +97,11 @@ public class tipController {
     //삭제
     @GetMapping(value="/delTip")
     public String delTip (@RequestParam("num") int num) throws Exception {
+        String brdRef = "tip||"+num;
+
         tipBoardService.deleteTipBoard(num);
+        commentService.deleteAllComment(brdRef);
+
         return "redirect:/tipList";
     }
 

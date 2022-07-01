@@ -40,7 +40,16 @@
         )
     </insert>
 
-    <!--comment 삭제-->
+    <!--comment 다건삭제-->
+    <update id="deleteAllComment" parameterType="CommentDTO">
+        UPDATE
+            comment
+        SET
+            DEL_YN = 'Y'
+        WHERE  BRD_REF=#{brdRef}
+    </update>
+
+    <!--comment 단건삭제-->
     <update id="deleteComment" parameterType="CommentDTO">
         UPDATE
             comment

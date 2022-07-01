@@ -27,7 +27,13 @@ public class CommentDAOImpl implements CommentDAO {
         sql.insert(NS + ".insertComment", dto);
     }
 
-    /* comment 삭제 */
+    /* comment 다건삭제 */
+    @Override
+    public void deleteAllComment(String brdRef) throws Exception {
+        sql.update(NS+ ".deleteAllComment", brdRef);
+    }
+
+    /* comment 단건삭제 */
     @Override
     public void deleteComment(CommentDTO dto) throws Exception {
         sql.update(NS+ ".deleteComment", dto);

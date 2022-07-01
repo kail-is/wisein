@@ -32,13 +32,13 @@
             ${content}
         </div>
     </section>
-
+        <!-- 게시글 수정삭제 -->
         <div class="icon" align="right">
             <span class="material-icons" onClick="updTip()">border_color</span>
             <span class="material-icons" onClick="delTip()">delete</span>
         </div>
 
-
+    <!-- 댓글 -->
     <section class="recommend-wrap">
         <div class="recommend-titleLine">
             댓글 (${commentNum})
@@ -55,10 +55,13 @@
                                     <div class="date">
                                         <fmt:formatDate value="${commentList.regDate}" pattern="yyyy-MM-dd"/>
                                     </div>
-                                    <div class="icon">
-                                        <span class="material-icons">border_color </span>
-                                        <span class="material-icons" onClick="delComm(${commentList.num})" >delete </span>
-                                    </div>
+                                    <!-- 댓글 수정삭제 -->
+                                    <c:if test="${commentList.writer = 'hannah94'}">
+                                        <div class="icon">
+                                            <span class="material-icons">border_color </span>
+                                            <span class="material-icons" onClick="delComm(${commentList.num})" >delete </span>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
