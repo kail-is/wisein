@@ -714,13 +714,12 @@ input, select {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-  margin-right: 10px;
   width: 80px;
   height: 30px;
 }
 
 .signUp-popup-wrap .signUp-input {
-  width: calc(100% - 100px);
+  width: calc(100% - 175px);
   padding-left: 8px;
   border: 0px;
   position: relative;
@@ -796,7 +795,7 @@ input, select {
   height: 100%;
   -webkit-filter: opacity(0.3);
   filter: opacity(0.3);
-  background-color: gray;
+  background-color: black;
   z-index: 99;
 }
 
@@ -985,10 +984,15 @@ body {
 .signUp-popup-wrap .signUp-input-wrap .email-info {
   position: absolute;
   right: 1rem;
-  font-size: 80%;
+  font-size: 100%;
   top: 50%;
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
+  right: 5.5rem;
+  font-size: 120%;
+  font-weight: bold;
+  letter-spacing: -1.5px;
+  font-style: italic;
 }
 
 .signUp-popup-wrap .signUp-input-wrap::after {
@@ -997,12 +1001,12 @@ body {
   right: 0;
   content: '';
   width: calc(100% - 100px);
-  height: 1px;
-  background: #7E57C2;
+  height: 2px;
+  background: #523781;
 }
 
 .signUp-popup-wrap .signUp-input-label {
-  border: 1px solid #7E57C2;
+  border: 2px solid #6b6b6b;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1021,10 +1025,12 @@ body {
   margin-right: 10px;
   width: 80px;
   height: 30px;
+  border-radius: 4px;
+
 }
 
 .signUp-popup-wrap .signUp-input {
-  width: calc(100% - 100px);
+  width: calc(100% - 175px);
   padding-left: 8px;
   border: 0px;
   position: relative;
@@ -1045,6 +1051,7 @@ body {
 
 .signUp-popup-wrap .signUp-confirm-Button-wrap button {
   padding: 0.375rem;
+  color:white;
   background-color: gray;
   cursor: pointer;
   -webkit-box-shadow: 2px 2px 2px #b1a5a5;
@@ -1213,6 +1220,7 @@ body {
   height: 100%;
   text-align: center;
   background-color: gray;
+  color: white;
   cursor: pointer;
   -webkit-box-shadow: 2px 2px 2px #b1a5a5;
   box-shadow: 2px 2px 2px #b1a5a5;
@@ -1261,4 +1269,12 @@ body {
 }
 .pagination a:hover:not(.active) {
 	/* background-color: #e5e7f5; */
+}
+
+.none {
+    display: none;
+ }
+
+.mg0 {
+    margin: 0 !important;
 }
