@@ -50,10 +50,10 @@ public class testController2 {
 		return "cmn/foodDetail";
 	}
 
-	@GetMapping(value = "/foodlist")
-	public String foodList() throws Exception {
-		return "cmn/foodList";
-	}
+//	@GetMapping(value = "/foodlist")
+//	public String foodList() throws Exception {
+//		return "cmn/foodList";
+//	}
 
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {

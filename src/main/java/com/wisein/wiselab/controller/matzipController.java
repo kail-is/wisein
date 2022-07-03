@@ -1,5 +1,6 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
@@ -23,12 +24,19 @@ public class matzipController {
 	MatzipService service;
 
 	@GetMapping(value = "/matzipList")
-	public String main() throws Exception {
+	public String main(Model model, CompanyDTO companyDTO) throws Exception {
+
+		List<CompanyDTO> selectCompany = service.company();
+
+		model.addAttribute("selectCompany", selectCompany);
+
 		return "cmn/foodList";
 	}
 
 	@GetMapping(value = "/matzip")
 	public String getMatzip(@RequestParam int id, Model model) throws Exception {
+
+		System.out.println("di : " +id);
 
 		MatzipDTO matzipDTO = service.selectMatzip(id);
 

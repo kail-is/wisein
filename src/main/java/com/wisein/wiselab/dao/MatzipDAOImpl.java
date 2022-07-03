@@ -1,4 +1,5 @@
 package com.wisein.wiselab.dao;
+import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import org.apache.ibatis.session.SqlSession;
@@ -61,6 +62,36 @@ public class MatzipDAOImpl implements MatzipDAO {
     @Override
     public float avgRate(int matzipId) throws Exception {
         return sql.selectOne(NS + ".avgRate", matzipId);
+    }
+
+    @Override
+    public List<CompanyDTO> companyList() {
+        return sql.selectList(NS + ".company");
+    }
+
+    @Override
+    public List<CompanyDTO> matzipCount(String location) {
+        return sql.selectList(NS+ ".matzipCount", location);
+    }
+
+    @Override
+    public List<CompanyDTO> matzipList(String location) {
+        return sql.selectList(NS + ".matzipList", location);
+    }
+
+    @Override
+    public List<CompanyDTO> recmMatzipCount(int id) {
+        return sql.selectList(NS + ".recmMatzip", id);
+    }
+
+    @Override
+    public List<CompanyDTO> company() {
+        return sql.selectList(NS + ".selectCompany");
+    }
+
+    @Override
+    public List<CompanyDTO> selectCompany(String location) {
+        return sql.selectList(NS + ".selectCompany2", location);
     }
 
 }
