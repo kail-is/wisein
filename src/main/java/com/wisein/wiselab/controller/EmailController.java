@@ -74,7 +74,7 @@ public class EmailController {
 
         model.addAttribute("checkId", id);
 
-        String path = "login";
+        String path = "/";
 
         session.removeAttribute("authUser");
 
