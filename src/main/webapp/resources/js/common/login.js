@@ -4,13 +4,19 @@ window.onload = function() {
 
     let idChkBool = false;
     let pwChkBool = false;
+    let upd_pwChkBool = false;
 
     let idBox = document.querySelector('#id');
     let pwBox = document.querySelector('#pw');
     let pwChkBox = document.querySelector('#pwChk');
 
+    let updPwBox = document.querySelector('#upd_pw');
+    let updPwChkBox = document.querySelector('#upd_pwChk');
+    let pwModBtn = document.querySelector('#upd_pwModBtn');
+
     let idChkBtn = document.querySelector("#idChkBtn");
     let pwChkBtn = document.querySelector("#pwChkBtn");
+    let updPwChkBtn = document.querySelector("#upd_pwChkBtn");
     let signupBtn = document.querySelector("#signup_btn");
 
 
@@ -32,6 +38,7 @@ window.onload = function() {
                         // alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
                      } else {
                         document.querySelector("#idChkAlert > .porintColor").classList.remove('none');
+                        document.querySelector("#idChkAlert > .red").classList.add('none');
                         // alert("사용 가능한 아이디입니다.");
                         idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
                         idChkBool = true;
@@ -67,30 +74,53 @@ window.onload = function() {
         } else if( pw.value === pwChk.value ) {
             pwChkBool = true;
             document.querySelector("#pwChkAlert > .porintColor").classList.remove('none');
-           // alert("패스워드가 일치합니다.");
+            document.querySelector("#pwChkAlert > .red").classList.add('none');
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
           document.querySelector("#pwChkAlert > .red").classList.remove('none');
-          // alert("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
+    // 비밀번호 수정 유효성 체크
+   upd_pwChkBtn.addEventListener('click', () => {
+        if ( !upd_pw.value && !upd_pwChk.value ) {
+            upd_pwChkBool = false;
+            alert("패스워드를 입력하세요.");
+        } else if( upd_pw.value === upd_pwChk.value ) {
+            upd_pwChkBool = true;
+            document.querySelector("#upd_pwChkAlert > .porintColor").classList.remove('none');
+            document.querySelector("#upd_pwChkAlert > .red").classList.add('none');
+            updPwBox.readOnly = true;
+            updPwChkBox.readOnly = true;
+        } else {
+          upd_pwChkBool = false;
+          document.querySelector("#upd_pwChkAlert > .red").classList.remove('none');
+        }
+    });
+
+
     // 비밀번호 재설정
-    pwBox.addEventListener('click', () => {
-        if (pwChkBool == true) {
+    updPwBox.addEventListener('click', () => {
+        if (upd_pwChkBool == true) {
             if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
-                pwChkBool = false;
-                pwBox.value = "";
-                pwBox.readOnly = false;
-                pwChkBox.value = "";
-                pwChkBox.readOnly = false;
-                pwBox.focus;
-                document.querySelector("#pwChkAlert > .porintColor").classList.add('none');
+                upd_pwChkBool = false;
+                updPwBox.value = "";
+                updPwBox.readOnly = false;
+                updPwChkBox.value = "";
+                updPwChkBox.readOnly = false;
+                updPwBox.focus;
+                document.querySelector("#upd_pwChkAlert > .porintColor").classList.add('none');
             }
        }
      });
+
+
+    pwModBtn.addEventListener('click', () => {
+        updPwBox.disabled = false;
+        updPwChkBox.disabled = false;
+    })
 
 
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
@@ -136,14 +166,33 @@ window.onload = function() {
 function login() {
     document.querySelector('#loginBox').classList.remove('none');
     document.querySelector('#joinBox').classList.add('none');
+    document.querySelector('#userUpdBox').classList.add('none');
 }
 
 function signUp() {
     document.querySelector('#signUpBox').classList.remove('none');
     document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
+    document.querySelector('#userUpdBox').classList.add('none');
 }
 
 function userUpd() {
     document.querySelector('#userUpdBox').classList.remove('none');
+    document.querySelector('#bar-chk').checked = false;
+    $dim();
 }
+
+function memPopUpClose() {
+    document.querySelector('#signUpBox').classList.add('none');
+    document.querySelector('#loginBox').classList.add('none');
+    document.querySelector('#userUpdBox').classList.add('none');
+    $dim(false);
+    location.reload();
+}
+
+function userUpdCmn() {
+    document.querySelector('#userUpdBox').classList.add('none');
+    $dim(false);
+    document.getElementById('upd_form').submit();
+}
+

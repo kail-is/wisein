@@ -15,10 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -76,22 +73,22 @@ public class memberController {
 				lgFailMessage ="로그인에 실패했습니다.";
 				rttr.addFlashAttribute("msg", lgFailMessage);
 
-				return "redirect:/login";
+				return "redirect:/";
 			}
 		} else {
 			lgFailMessage ="로그인에 실패했습니다.";
 			rttr.addFlashAttribute("msg", lgFailMessage);
 
-			return "redirect:/login";
+			return "redirect:/";
 		}
 
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	@GetMapping(value = "/user/logout")
 	public String logout(HttpSession session) throws Exception {
 		service.logout(session);
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 
@@ -118,7 +115,7 @@ public class memberController {
 		login.setFileList(memberImgList);
 		session.setAttribute("member", login);
 
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 /*
@@ -144,7 +141,7 @@ public class memberController {
 	public String withdrawal(MemberDTO dto, HttpSession session) throws Exception {
 		service.withdraw(dto, session);
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 }

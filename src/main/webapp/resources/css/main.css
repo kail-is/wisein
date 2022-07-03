@@ -426,9 +426,6 @@ input, select {
   margin-bottom: 2em;
 }
 
-.sidebar-wrap .sidebar .info img {
-  height: 45px;
-}
 
 .sidebar-wrap .sidebar .info label {
   cursor: pointer;
@@ -646,8 +643,9 @@ input, select {
 }
 
 .close {
-    margin-bottom: 1em;
-    float: right;
+    position: absolute;
+    top: 15px;
+    right: 15px;
     display: inline-block;
 }
 

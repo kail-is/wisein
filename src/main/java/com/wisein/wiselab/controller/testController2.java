@@ -35,9 +35,9 @@ public class testController2 {
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 
-	@GetMapping(value = "/main")
+	@GetMapping(value = "/")
 	public String main() throws Exception {
-		return "cmn/main2";
+		return "redirect:qalist";
 	}
 
 	@GetMapping(value = "/totalSearch")
