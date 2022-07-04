@@ -41,8 +41,6 @@ public class IntegratedController {
     @GetMapping(value = "/writer")
     public String integrationWriter(IntegrationSearchDTO integrationSearchDTO, Model model) throws Exception {
         model.addAttribute("viewRecordsPerPage",INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE);
-        model.addAttribute("searchType",integrationSearchDTO.getSearchType());
-        model.addAttribute("keyword",integrationSearchDTO.getKeyword());
         return "cmn/totalSearch";
     }
 
