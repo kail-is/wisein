@@ -1,14 +1,21 @@
  function $dim(){
 
-    let body      = document.getElementsByTagName('body')[0];
-    let element   = document.getElementById('dim') ?? body;
-    let isDimming = true;
+    let body         = document.getElementsByTagName('body')[0];
+    let element      = document.getElementById('dim');
+    let elDimWrapper = document.getElementById('dim-wrapper');
+    let loadingImg   = document.getElementById('loading-img');
+    let isDimming    = true;
+    let option       = {};
+
+    option.isLoading = true; //로딩처리는 딤말고 다른데서 처리할것.
 
     for(let i = 0; i<arguments.length;i++){
         switch (typeof(arguments[i])) {
             case 'object':
                 if(arguments[i].nodeType === 1){
                     element = arguments[i];
+                }else{
+                    option = arguments[i];
                 }
                 break;
             case 'boolean':
@@ -18,12 +25,15 @@
                 break;
         }
     }
-
     if(isDimming){
-        element.className   += ' dim';
-        body.style.overflowY = 'hidden';
+        loadingImg.style.display   = option.isLoading ? 'block' : 'none';
+        element.className         += ' dim';
+        elDimWrapper.style.display = 'block';
+        body.style.overflowY       = 'hidden';
     }else{
         element.classList.remove('dim');
-        body.style.overflowY = 'auto';
+        loadingImg.style.display   = option.isLoading ? 'block' : 'none';
+        elDimWrapper.style.display = 'none';
+        body.style.overflowY       = 'auto';
     }
 }
