@@ -24,7 +24,7 @@ public class IntegratedController {
     private static final int INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE = 35;
 
     @GetMapping(value = "/board")
-    public String integrationBoard (IntegrationSearchDTO integrationSearchDTO, Model model) throws Exception {
+    public String integrationBoard (IntegrationSearchDTO integrationSearchDTO, Model model){
         model.addAttribute("viewRecordsPerPage",INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE);
         model.addAttribute("searchType",integrationSearchDTO.getSearchType());
         model.addAttribute("keyword",integrationSearchDTO.getKeyword());
@@ -33,20 +33,20 @@ public class IntegratedController {
 
     @ResponseBody
     @GetMapping(value = "/board-data")
-    public Map<String,List<IntegrationSearchDTO>> integrationBoardData (IntegrationSearchDTO integrationSearchDTO) throws Exception {
+    public Map<String,List<IntegrationSearchDTO>> integrationBoardData (IntegrationSearchDTO integrationSearchDTO){
         integrationSearchDTO.setViewRecordsPerPage(INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE);
         return integrationSearchService.findIntegrationBoard(integrationSearchDTO);
     }
 
     @GetMapping(value = "/writer")
-    public String integrationWriter(IntegrationSearchDTO integrationSearchDTO, Model model) throws Exception {
+    public String integrationWriter(IntegrationSearchDTO integrationSearchDTO, Model model){
         model.addAttribute("viewRecordsPerPage",INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE);
         return "cmn/totalSearch";
     }
 
     @ResponseBody
     @GetMapping(value = "/writer-data")
-    public Map<String,List<IntegrationSearchDTO>> integrationWriterData(IntegrationSearchDTO integrationSearchDTO) throws Exception {
+    public Map<String,List<IntegrationSearchDTO>> integrationWriterData(IntegrationSearchDTO integrationSearchDTO){
         integrationSearchDTO.setViewRecordsPerPage(INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE);
         return integrationSearchService.findIntegrationWriter(integrationSearchDTO);
     }
