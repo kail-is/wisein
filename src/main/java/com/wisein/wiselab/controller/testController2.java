@@ -35,9 +35,9 @@ public class testController2 {
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 
-	@GetMapping(value = "/main")
+	@GetMapping(value = "/")
 	public String main() throws Exception {
-		return "cmn/main2";
+		return "redirect:qalist";
 	}
 
 	@GetMapping(value = "/totalSearch")
@@ -50,10 +50,10 @@ public class testController2 {
 		return "cmn/foodDetail";
 	}
 
-	@GetMapping(value = "/foodlist")
-	public String foodList() throws Exception {
-		return "cmn/foodList";
-	}
+//	@GetMapping(value = "/foodlist")
+//	public String foodList() throws Exception {
+//		return "cmn/foodList";
+//	}
 
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {

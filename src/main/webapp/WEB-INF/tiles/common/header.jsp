@@ -1,4 +1,3 @@
-<%@ page import="javax.naming.Context" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <% String url =  request.getServerName().toString(); %>
 <!DOCTYPE html>
@@ -15,9 +14,9 @@
 <body>
     <header>
         <ul>
-            <li class="logo"><a href="#">wiseIN</a></li>
+            <li class="logo"><a href="/">wiseIN</a></li>
             <li class="search-wrap">
-                <div class="select-wrap">  
+                <div class="select-wrap">
                     <select name="searchType" class="searchType" id="search-list">
 	                    <option value="all"   ${searchType eq 'all' ? 'selected':''}>카테고리 검색 </option>
 						<option value="front" ${searchType eq 'front'?'selected':''}>FRONT</option>
@@ -37,12 +36,12 @@
             </li>
         </ul>
     </header>
-    
+
     <script>
        function enterkey() {
     	   var selectedSearchType = document.getElementById('search-list');
     	   var inputKeyword = document.getElementById('keywordInput');
-    	   console.log('asdas');
+    	   
            if(window.event.keyCode == 13) {
        		   self.location = "/integration/board"
        						 + '?searchType=' + selectedSearchType.value

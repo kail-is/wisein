@@ -7,6 +7,9 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="resources/css/common.css">
+        <link rel="stylesheet" href="resources/iconfont/material-icons.css">
+        <link rel="stylesheet" href="resources/css/main.css">
+        <script src="resources/js/jquery-3.5.1.min.js"></script>
 		<script src="${url}/resources/js/common/dim.js"></script>
 	</head>
 	<body>
@@ -48,7 +51,7 @@
 				<tiles:insertAttribute name="contents"/>
 			</div>
 			<!--footer-->
-			<div >
+			<div>
 				<tiles:insertAttribute name="footer"/>
 			</div>
 			<!--/footer-->
@@ -61,6 +64,22 @@
     <script src="${url}/resources/js/common/login.js"></script>
 
 	<script>
-		//$dim();
+	<c:if test="${empty member}">
+	    $dim();
+	    document.querySelector('#joinBox').classList.remove('none');
+	</c:if>
 	</script>
+
+    <script>
+       function enterkey() {
+    	   var selectedSearchType = document.getElementById('search-list');
+    	   var inputKeyword = document.getElementById('keywordInput');
+
+           if(window.event.keyCode == 13) {
+       		   self.location = "qalist"
+       						 + '?searchType=' + selectedSearchType.value
+       	   					 + "&keyword=" + inputKeyword.value
+           }
+       }
+    </script>
 </html>

@@ -404,7 +404,7 @@ input, select {
 
 .sidebar-wrap .sidebar .info {
   position: relative;
-  width: 170px;
+  width: 185px !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -426,8 +426,12 @@ input, select {
   margin-bottom: 2em;
 }
 
+
+
 .sidebar-wrap .sidebar .info img {
+  width: 45px;
   height: 45px;
+  border-radius: 70%;
 }
 
 .sidebar-wrap .sidebar .info label {
@@ -458,6 +462,7 @@ input, select {
   margin: 1em;
   display: none;
 }
+
 
 @media screen and (max-width: 576px) {
   .sidebar-wrap .sidebar .search-bar {
@@ -725,12 +730,21 @@ input, select {
   position: relative;
 }
 
+
+.signUp-popup-wrap .login-input {
+  width: calc(100% - 110px);
+  padding-left: 8px;
+  border: 0px;
+  position: relative;
+}
+
 .signUp-popup-wrap .signUp-input.email {
   padding-right: 110px;
 }
 
 .signUp-popup-wrap .signUp-pwassword-info-wrap {
-  text-align: center;
+  margin-left: 100px;
+  text-align: left;
 }
 
 .signUp-popup-wrap .signUp-confirm-Button-wrap {
@@ -1041,7 +1055,12 @@ body {
 }
 
 .signUp-popup-wrap .signUp-pwassword-info-wrap {
-  text-align: center;
+  margin-left: 100px;
+  text-align: left;
+}
+
+.signUp-popup-wrap .signUp-pwassword-info-wrap .chk-alert {
+    font-size: 14px;
 }
 
 .signUp-popup-wrap .signUp-confirm-Button-wrap {
@@ -1273,7 +1292,7 @@ body {
 }
 
 .none {
-    display: none;
+    display: none !important;
  }
 
 .mg0 {
