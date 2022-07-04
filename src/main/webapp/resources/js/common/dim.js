@@ -7,7 +7,7 @@
     let isDimming    = true;
     let option       = {};
 
-    option.isLoading = true; //로딩처리는 딤말고 다른데서 처리할것.
+    //option.isLoading = true; //로딩처리는 딤말고 다른데서 처리필요
 
     for(let i = 0; i<arguments.length;i++){
         switch (typeof(arguments[i])) {
@@ -32,7 +32,7 @@
         body.style.overflowY       = 'hidden';
     }else{
         element.classList.remove('dim');
-        loadingImg.style.display   = option.isLoading ? 'block' : 'none';
+        loadingImg.style.display   = 'none';
         elDimWrapper.style.display = 'none';
         body.style.overflowY       = 'auto';
     }

@@ -37,9 +37,9 @@
                     //요청을 보낼 방식, 주소, 비동기여부 설정
                     xhr.open('GET', callAddr, true);
                     //요청 전송
-                    $dim(true);
+                    $dim(true,{isLoading : true});
                     //통신후 작업
-                    setTimeout(()=>{//화면 딜레이로 의미없는 스크롤시 서버 부하 줄임 --필요없으면 삭제 해도됨.
+                    setTimeout(()=>{//화면 딜레이로 의미없는 스크롤시 줄이는 --필요없으면 삭제 해도됨.
                         xhr.send();
                         xhr.onload = () => {
                             //통신 성공
