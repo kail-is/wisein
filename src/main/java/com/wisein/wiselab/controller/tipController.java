@@ -142,4 +142,11 @@ public class tipController {
     public void tipDelComment (CommentDTO dto) throws Exception {
         commentService.deleteComment(dto);
     }
+
+    //댓글 수정
+    @ResponseBody
+    @PostMapping(value = "/udpTipComm")
+    public void tipUpdComment (CommentDTO dto) throws Exception {
+        commentService.updateComment(dto);
+    }
 }

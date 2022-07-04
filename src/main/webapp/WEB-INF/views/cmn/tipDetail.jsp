@@ -56,17 +56,24 @@
                                         <fmt:formatDate value="${commentList.regDate}" pattern="yyyy-MM-dd"/>
                                     </div>
                                     <!-- 댓글 수정삭제 -->
-                                    <c:if test="${commentList.writer = 'hannah94'}">
+                                    <c:if test="${commentList.writer == 'hannah94'}">
                                         <div class="icon">
-                                            <span class="material-icons">border_color </span>
-                                            <span class="material-icons" onClick="delComm(${commentList.num})" >delete </span>
+                                            <span class="material-icons" onClick="openModi(${commentList.num}, ${commentList.content})">border_color</span>
+                                            <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
                                         </div>
                                     </c:if>
                                 </div>
                             </div>
                         </div>
-                        <div class="content">
+                        <!--댓글보기-->
+                        <div class="content" id="comm${commentList.num}" name="comm${commentList.num}">
                             <c:out value="${commentList.content}"/>
+                        </div>
+                        <!--댓글수정-->
+                        <div class="content" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
+                            <textarea data-v-3b426d7d="" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
+                            <a data-v-3b426d7d="" href="#" role="button" class="button btn_register" onClick="modComm(${commentList.num})">수정</a>
+                            <a data-v-3b426d7d="" href="#" role="button" class="button btn_register" onClick="modCancel(${commentList.num})">취소</a>
                         </div>
                     </div>
                 </li>
@@ -120,7 +127,7 @@
             var brdRef = "tip||"+${tipBoardDTO.num};
 
             if(commContent.length==0){
-                alert("댓글을 입력하세요👀");
+                alert("댓글을 입력하세요✍");
                 document.getElementById('comment_content').focus();
                 return;
             }
@@ -145,23 +152,68 @@
           function delComm(num){
              var num = num;
              var brdRef = "tip||" + ${tipBoardDTO.num};
-
-             $.ajax({
-                data:{
-                    "num": num
-                    ,"brdRef": brdRef
-                 },
-                type:"POST",
-                url:"/delTipComm",
-                success:function(data) {
-                    window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
-                },
-                error:function(request, status, error) {
-                    alert("댓글 삭제 실패😢");
-                }
-             })
+             if(confirm('진짜 삭제하실꺼에여?🥺') == true){
+                 $.ajax({
+                    data:{
+                        "num": num
+                        ,"brdRef": brdRef
+                     },
+                    type:"POST",
+                    url:"/delTipComm",
+                    success:function(data) {
+                        window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                    },
+                    error:function(request, status, error) {
+                        alert("댓글 삭제 실패😢");
+                    }
+                 })
+             }
           }
 
+          var isMod = false;
+
+          function openModi(num, content){
+            if(isMod==false){
+                document.getElementById('comm'+num).style.display = 'none';
+                document.getElementById('modComm'+num).style.display = 'block';
+                document.getElementById('modComm_content'+num).value = content;
+                isMod = true;
+            }else{
+                alert("이미 수정중인 댓글이 있어용🤔")
+            }
+          }
+
+          function modCancel(num){
+            isMod = false;
+            document.getElementById('modComm'+num).style.display = 'none';
+            document.getElementById('comm'+num).style.display = 'block';
+          }
+
+          function modComm(num){
+              var num = num;
+              var content = document.getElementById('modComm_content'+num).value;
+
+              if(content.length==0){
+                  alert("수정할 댓글 내용을 입력하세요✍");
+                  document.getElementById('modComm_content'+num).focus();
+                  return;
+              }
+
+              $.ajax({
+                 data:{
+                     "num" : num
+                     ,"content": content
+                 },
+                 type:"POST",
+                 url:"/udpTipComm",
+                 success:function(data) {
+                     window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                 },
+                 error:function(request, status, error) {
+                     alert("댓글 수정 실패😢");
+                 }
+              })
+          }
    </script>
 
 </body>

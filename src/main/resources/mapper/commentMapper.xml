@@ -66,8 +66,7 @@
         SET
             CONTENT = #{content}
             , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
-        WHERE BRD_REF=#{brdRef}
-        AND NUM = #{num}
+        WHERE NUM = #{num}
     </update>
 
     <!--전체 comment 개수 조회 -->
