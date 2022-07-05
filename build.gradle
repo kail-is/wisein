@@ -11,6 +11,10 @@ apply plugin: 'war'
 
 //bootWar.enabled = false
 //war.enabled = true
+//
+//bootWar{
+//	archiveName("ui.war")
+//}
 
 configurations {
 	compileOnly {
