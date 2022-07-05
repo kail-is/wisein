@@ -58,7 +58,7 @@
                                     <!-- 댓글 수정삭제 -->
                                     <c:if test="${commentList.writer == 'hannah94'}">
                                         <div class="icon">
-                                            <span class="material-icons" onClick="openModi(${commentList.num}, ${commentList.content})">border_color</span>
+                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content})'">border_color</span>
                                             <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
                                         </div>
                                     </c:if>
