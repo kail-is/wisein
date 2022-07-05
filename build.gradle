@@ -9,6 +9,13 @@ group = 'com.wiselab'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+bootWar.enabled = false
+war.enabled = true
+
+bootWar{
+	archiveName("ui.war")
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -27,7 +34,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok:1.16.18'
 	annotationProcessor 'org.projectlombok:lombok'
-
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	runtimeOnly 'com.h2database:h2'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
