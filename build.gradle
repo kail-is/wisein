@@ -9,12 +9,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 apply plugin: 'war'
 
-bootWar.enabled = false
-war.enabled = true
-
-bootWar{
-	archiveName("ui.war")
-}
+//bootWar.enabled = false
+//war.enabled = true
 
 configurations {
 	compileOnly {
