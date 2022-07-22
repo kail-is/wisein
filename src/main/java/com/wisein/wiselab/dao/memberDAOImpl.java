@@ -51,9 +51,15 @@ public class memberDAOImpl implements MemberDAO {
     }
 
     @Override
+    public void modifyPass(MemberDTO dto) throws Exception {
+        sql.update(NS + ".modifyPass", dto);
+    }
+
+    @Override
     public void delUserImg(String fileNm) throws Exception {
         sql.update(NS + ".delUserImg", fileNm);
     }
+
 
     @Override
     public void withdraw(MemberDTO dto) throws Exception {

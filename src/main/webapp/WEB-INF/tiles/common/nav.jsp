@@ -10,10 +10,10 @@
             <div class="top">
                 <div class="info">
                     <c:if test="${not empty member.fileList[0]}">
-                    <img src ="../${member.fileList[0].filePath}">
+                        <img src ="../${member.fileList[0].filePath}">
                     </c:if>
                     <c:if test="${empty member.fileList[0]}">
-                    <img src ="../resources/image/Conic.png">
+                        <img src ="../resources/image/Conic.png">
                     </c:if>
                     <label for="my-function-chk">반가워요, ${member.name}!<br>${member.site}</label>
                     <input type="checkbox" name="" id="my-function-chk" style="display: none;">
@@ -24,8 +24,8 @@
                      </c:if>
                      <c:if test="${not empty member}">
                          <li><a href="#">작성 글 모아 보기</a> </li>
-                         <li><a href="user/logout">로그아웃</a> </li>
                          <li onclick="userUpd()">정보 수정 </li>
+                         <li><a href="user/logout">로그아웃</a></li>
                          <li><a href="user/withdraw">탈퇴</a> </li>
                      </c:if>
                     </ul>
@@ -104,6 +104,8 @@
 </div>
 
 
+
+<%-- 메인 --%>
 <div id="joinBox" class="popup-wrap page-center none">
     <div class="signUp-popup-wrap form-between">
         <div class="w50p">
@@ -143,12 +145,13 @@
             </div>
         </div>
     </div>
-    <%-- <div class="popup-link-wrap">
-        <p onclick="signUp()">회원가입</a></p>
-        <p><a href="#">아이디 비밀번호 찾기</a></p>
-    </div> --%>
+    <div class="popup-link-wrap">
+        <p onclick="signUp()">회원가입</p>
+        <p onclick="findPw()">비밀번호 찾기</p>
+    </div>
 </form>
 </div>
+
 
 
 
@@ -174,6 +177,7 @@
                     <div class="profile_img">
                     <img src ="../${member.fileList[0].filePath}" width="25" height="25">
                     ${list.orgFileName}
+                    <p onclick="imgDel(this.id)" id="${list.fileName}">X</p>
                     </div>
                 </c:forEach>
             </div>
@@ -192,21 +196,22 @@
         </div>
         <div class="signUp-input-wrap">
             <label for="" class="signUp-input-label">PASSWORD</label>
-            <input type="password" class="signUp-input" id="upd_pw" name="pw" required="required" placeholder="비밀번호" disabled>
-            <p id="upd_pwModBtn" class="signUp-input-label" style="position: absolute; right: 0; margin: 0;">변경하기</p>
+            <input type="password" class="signUp-input" id="upd_pw" name="pw" required="required" placeholder="비밀번호">
+            <%--- <p id="upd_pwModBtn" class="signUp-input-label" style="position: absolute; right: 0; margin: 0;">변경하기</p> ---%>
         </div>
         <div class="signUp-input-wrap">
             <label class="signUp-input-label">PWCHECK</label>
-            <input type="password" class="signUp-input" id="upd_pwChk" name="pwChk" required="required" placeholder="비밀번호 확인" disabled>
+            <input type="password" class="signUp-input" id="upd_pwChk" name="pwChk" required="required" placeholder="비밀번호 확인">
             <p id="upd_pwChkBtn" class="signUp-input-label" style="position: absolute; right: 0; margin: 0;">check</p>
         </div>
         <div id="upd_pwChkAlert" class="signUp-pwassword-info-wrap">
             <p class="porintColor none"> <span class="material-icons chk-alert">check_circle</span> 패스워드가 일치합니다</p>
             <p class="red none"> <span class="material-icons chk-alert"> report_problem </span> 패스워드가 일치하지 않습니다</p>
         </div>
+        </form>
         <div class="signUp-confirm-Button-wrap">
-            <button type="button" id="upd_btn" name="upd_btn" onclick="userUpdCmn()">정보 수정</button>
+            <button type="button" id="upd_btn" name="upd_btn">정보 수정</button>
         </div>
     </div>
-    </form>
+
 </div>

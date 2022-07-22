@@ -65,29 +65,25 @@ public class MemberServiceImpl implements MemberService {
     public void modify(MemberDTO dto, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
         if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
-
             Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
             String name;
             while(iterator.hasNext()) {
                 name = iterator.next();
-                System.out.println("file tag name : " + name);
                 List<MultipartFile> list = multipartHttpServletRequest.getFiles(name);
                 for(MultipartFile multipartFile : list) {
-
                     String contType =  multipartFile.getContentType();
                     String[] contArr = contType.split("/");
                     String extension = contArr[1];
-
-                    System.out.println("start file information");
-                    System.out.println("ORG_FILE_NAME: " + multipartFile.getOriginalFilename());
-                    System.out.println("FILE_EXTENSION : " + extension);
-                    System.out.println("end file information.\n");
                 }
-
             }
         }
 
-        dao.modify(dto);
+        if(dto.getPw() != null) {
+            dao.modifyPass(dto);
+        }else {
+            dao.modify(dto);
+        }
+
         String brdRef =  "mem||" + dto.getId();
         List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {

@@ -68,8 +68,19 @@
         WHERE ID = #{id}
     </select>
 
-    <!--  회원 정보 수정  -->
+    <!--  회원 정보 PW 제외 수정  -->
     <update id="modify" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        SITE = #{site}
+        , HIRE_DATE = #{hireDate}
+        , MEET_LINK = #{meetLink}
+        , MEET_YN = #{meetYn}
+        WHERE ID = #{id}
+    </update>
+
+    <!--  회원 정보 PW 포함 수정  -->
+    <update id="modifyPass" parameterType="MemberDTO">
         UPDATE MEMBER
         SET
         PW = #{pw}

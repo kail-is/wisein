@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -98,14 +100,17 @@ public class memberController {
 		return "upd";
 	}
 
+
 	@PostMapping(value = "/user/update")
 	public String postModifyUser(MemberDTO dto, HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
-		String inputPw = dto.getPw();
-		String passEncd = passEncoder.encode(inputPw);
-		dto.setPw(passEncd);
-
-		// service.modify(dto);
+		if (dto.getPw().length() > 1) {
+			String inputPw = dto.getPw();
+			String passEncd = passEncoder.encode(inputPw);
+			dto.setPw(passEncd);
+		}else {
+			dto.setPw(null);
+		}
 
 		service.modify(dto, multipartHttpServletRequest);
 
@@ -118,7 +123,7 @@ public class memberController {
 		return "redirect:/";
 	}
 
-/*
+
 	@ResponseBody
 	@GetMapping(value = "/delImgFile")
 	public Map<String, String> deleteUserImg(@RequestParam("delImgFileNm") String fileNm) throws Exception {
@@ -130,7 +135,6 @@ public class memberController {
 		map.put("msg", "삭제 완료.");
 		return map;
 	}
-*/
 
 	@GetMapping(value = "/user/withdraw")
 	public String getWithdrawalUser() throws Exception {

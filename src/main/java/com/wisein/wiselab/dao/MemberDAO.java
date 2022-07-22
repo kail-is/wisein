@@ -21,6 +21,8 @@ public interface MemberDAO {
 
     public void modify(MemberDTO dto) throws Exception;
 
+    public void modifyPass(MemberDTO dto) throws Exception;
+
     public void delUserImg(String fileNm) throws Exception;
 
     public void withdraw(MemberDTO dto) throws Exception;
