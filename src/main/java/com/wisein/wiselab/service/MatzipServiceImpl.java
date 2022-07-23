@@ -70,6 +70,11 @@ public class MatzipServiceImpl implements MatzipService{
     }
 
     @Override
+    public void updClosedStat(int matzipId) throws Exception {
+        dao.updClosedStat(matzipId);
+    }
+
+    @Override
     public List<CompanyDTO> companyList() {
         return dao.companyList();
     }

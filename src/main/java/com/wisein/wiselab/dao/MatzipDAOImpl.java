@@ -65,6 +65,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public void updClosedStat(int matzipId) throws Exception {
+        sql.update(NS + ".updClosedStat", matzipId);
+    }
+
+    @Override
     public List<CompanyDTO> companyList() {
         return sql.selectList(NS + ".company");
     }

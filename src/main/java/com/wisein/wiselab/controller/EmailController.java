@@ -202,4 +202,54 @@ public class EmailController {
         writer.println("<script>alert('임시 패스워드로 변경되었습니다.'); location.href='"+path+"' </script>;");
     }
 
+
+    // 폐업 신고 메일 전송
+    @ResponseBody
+    @GetMapping(value = "/reportClosed")
+    public void reportClosed(@RequestParam("matzip_id") String matzipId) throws Exception {
+
+        String address = "wisein.adm@gmail.com";
+
+        StringBuffer emailcontent = new StringBuffer();
+        emailcontent.append("<!DOCTYPE html>");
+        emailcontent.append("<html>");
+        emailcontent.append("<head>");
+        emailcontent.append("</head>");
+        emailcontent.append("<body>");
+        emailcontent.append(" <div" +
+                "	style=\"font-family: 'Apple SD Gothic Neo', 'sans-serif' !important; width: 400px; height: 600px; border-top: 4px solid black; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">" +
+                "	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">" +
+                "		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">WISN IN</span><br />" +
+                "		<span style=\"color: #02b875\">폐업 신고</span> 안내" +
+                "	</h1>\n" +
+                "	</p>" +
+                "	<p" +
+                "	 style=\"text-align: center; margin: 2em;\">" +
+                "			해당 맛집 확인</p>" +
+                "	<p" +
+                "	 style=\"text-align: center; margin: 2em; font-weight: bold;\">" +
+                "	<a style=\"color: black; text-decoration: none; text-align: center;\" href=\"http://localhost:8080/matzip?id=" +
+                matzipId +
+                "\">" +
+                " 맛집 이동" +
+                "	</p>" +
+                "	</a>" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://localhost:8080/addClosed?matzipId=" +
+                matzipId +
+                "\">" +
+                "		<p" +
+                "			style=\"display: inline-block; width: 210px; height: 45px; margin: 30px 5px 40px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">" +
+                "			폐업 처리</p>" +
+                "	</a>" +
+                "	<div style=\"border-top: 1px solid #DDD; padding: 5px;\"></div>" +
+                " </div>"
+        );
+        emailcontent.append("</body>");
+        emailcontent.append("</html>");
+        mailHandler.send(address, "WISE IN 맛집 폐업 신고", emailcontent.toString());
+
+
+    }
+
+
 }
