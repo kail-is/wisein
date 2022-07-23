@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
     <link rel="stylesheet" href="resources/css/foodDetail.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
 </head>
 
-<style>
-.inner-star::before{color: #FF9600;}
-.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
-.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
-.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
-.RatingStar { margin-bottom: 0 !important;}
-
-</style>
 
 <div id='matzip_data' style='display:none'>
 ${matzip.matzipData}
@@ -39,36 +32,46 @@ ${matzip.matzipData}
             <div id="food-info-content" class="food-info-content">
                 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 모든 국민은 학문과 예술의 자유를 가진다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다.대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.
             </div>
-
+            <div class="ban-button">
+                <i class="fas fa-exclamation-circle"></i> 폐업 신고
+            </div>
         </div>
     </section>
     <div class="score-wrap">
-        <p class="purple">평가</p>
-        <div class='RatingStar'>
-          <div class='RatingScore'>
-            <div class='outer-star'><div class='inner-star'>${matzip.rate}</div></div>
-          </div>
+        <div class="rate-wrap">
+            <p>평가</p>
+            <div class="rating-star">
+              <div class="rating-score">
+                <div class="outer-star">
+                    <div class="inner-star">${matzip.rate}</div>
+                </div>
+              </div>
+            </div>
+            <p> ${matzip.rate} (${matzip.count}) </p>
         </div>
-        <p class="purple">${matzip.rate} (${matzip.count})</p>
     </div>
 
     <c:forEach var="recm" items="${recmList}">
     <section class="content-frame">
         <div class="food-board-wrap">
             <div class="food-board-title">
-                <c:out value="${recm.subject}" />
-                <div class='RatingStar'>
-                  <div class='RatingScore'>
-                    <div class='outer-star'><div class='inner-star'>${recm.star}</div></div>
+                <p><c:out value="${recm.subject}" /></p>
+                <div class="rating-star">
+                  <div class="rating-score">
+                    <div class="outer-star">
+                        <div class="inner-star">${recm.star}</div>
+                    </div>
                   </div>
                 </div>
-                <c:out value="${recm.star}" />
+                <p class="recm-upd recm-icon" id="upd-${recm.num}">
+                <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt"></i> </a> </p>
+                <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
+                    <i class="fas fa-trash-alt"></i>
+                </p>
             </div>
             <div class="food-board-writer gray">
-                <c:out value="${recm.writer}" />
-                <p class="recm-upd" id="upd-${recm.num}">
-                  <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt"></i> </a> </p>
-                <p class="recm-del" id="del-${recm.num}" onclick="delRecm(${recm.num})"> X </p>
+                <p class=""> <c:out value="${recm.writer}" /></p>
+                <p class=""> <fmt:formatDate value="${recm.regDate}" pattern="yyyy-MM-dd" /></p>
             </div>
             <div class="food-board-img">
                 <img src="../image/pizza.jpg" alt="">

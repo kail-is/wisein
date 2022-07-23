@@ -944,12 +944,70 @@ body {
   margin: 0 auto;
 }
 
-.inner-star::before{color: #FF9600;}
-.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
-.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
-.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
-.RatingStar { margin-bottom: 0 !important;}
+.inner-star::before {
+    color: #7102a5;
+    padding-top: 1em;
+}
 
+
+.inner-star {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.outer-star {
+    position: relative;
+    display: inline-block;
+    color: #CCCCCC;
+}
+
+.outer-star::before, .inner-star::before {
+    content: '\f005 \f005 \f005 \f005 \f005';
+    font-family: 'Font Awesome 5 free';
+    font-weight: 900;
+}
+
+.rating-star {
+    margin-bottom: 0 !important;
+    margin-right: 0.3em;
+}
+
+
+.rating-star *{
+    margin-bottom: 0 !important;
+}
+
+.food-board-title {
+    font-size: 16px;
+}
+
+
+.food-board-title p{
+    font-size: 16px;
+    margin: 0.2em;
+    font-weight: 500;
+}
+
+.food-board-title .recm-icon {
+    font-size: 14px;
+    color: #7E57C2;
+    margin: 0 0.2em;
+}
+
+.food-board-writer p{
+  margin-right: 0.3em
+}
+
+
+.content-frame * {
+    font-family: 'Noto Sans KR';
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+}
 
 .matzip-write input {
     display: inline-block;
@@ -1051,6 +1109,23 @@ body {
 
 .content-frame .food-info-wrap .food-info-title {
   font-size: 18px;
+  font-weight: 500;
+}
+
+.ban-button {
+    border: 2px solid purple;
+    color: white;
+    background: gray;
+    border-radius: 5em;
+    display: inline-block;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    opacity: 0.4;
+}
+
+.ban-button:hover {
+    transition: 1s ease-out;
+    opacity: 1;
 }
 
 .content-frame .food-info-wrap .food-info-addr {
@@ -1062,7 +1137,13 @@ body {
 }
 
 .score-wrap {
-  display: -webkit-box;
+  border-bottom: 2px solid #7E57C2;
+  margin-bottom: 1.5em;
+  padding-bottom: 0.5vh;
+}
+
+.score-wrap .rate-wrap {
+ display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: start;
@@ -1077,9 +1158,15 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-  border-bottom: 2px solid #7E57C2;
-  margin-bottom: 1.5em;
-  padding-bottom: 0.5vh;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+.score-wrap .rate-wrap p {
+    color: #7102a5;
+    margin-right: 0.3em;
 }
 
 .food-board-wrap .food-board-title {
