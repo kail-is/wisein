@@ -802,7 +802,7 @@ input, select {
 }
 
 .dim {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -1164,7 +1164,7 @@ body {
 }
 
 .dim {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -1173,6 +1173,7 @@ body {
   filter: opacity(0.3);
   background-color: gray;
   z-index: 99;
+  overflow: hidden;
 }
 
 body {

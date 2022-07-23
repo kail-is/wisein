@@ -7,6 +7,7 @@ public class PaginationInfo {
 	
 	private int currentPageNo = 1;
 	private int totalRecordCount;
+	private int viewRecordsPerPage = RECORDSPERPAGE;
 	
 	private String viewAddr;
 	
@@ -23,7 +24,7 @@ public class PaginationInfo {
 		return currentPageNo;
 	}
 	public void setCurrentPageNo(int currentPageNo) {
-		this.currentPageNo = currentPageNo;
+		this.currentPageNo = currentPageNo > 0 ? currentPageNo : 1;
 	}
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
@@ -52,16 +53,23 @@ public class PaginationInfo {
 		return (int) Math.ceil((this.totalRecordCount / (double)PAGESIZE));
 	}
 	public int getFirstRecordIndex() {
-		return (currentPageNo- 1) * RECORDSPERPAGE;
+		return (currentPageNo - 1) * getViewRecordsPerPage();
 	}
 	public int getLastRecordIndex() {
-		return currentPageNo * RECORDSPERPAGE;
+		return currentPageNo * getViewRecordsPerPage();
 	}
 	public boolean isHasPreviousPage() {
 		return getFirstPage() == 1 ? false : true;
 	}
 	public boolean isHasNextPage() {
-		return (getLastPage() * RECORDSPERPAGE) < totalRecordCount ? true : false;
+		return (getLastPage() * getViewRecordsPerPage()) < totalRecordCount ? true : false;
 	}
-	
+
+	public int getViewRecordsPerPage() {
+		return viewRecordsPerPage < 1 ? RECORDSPERPAGE : viewRecordsPerPage;
+	}
+
+	public void setViewRecordsPerPage(int viewRecordsPerPage) {
+		this.viewRecordsPerPage = viewRecordsPerPage;
+	}
 }
