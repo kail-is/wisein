@@ -311,7 +311,7 @@ function chgePwEmail(userId) {
 
 // 이미지 삭제
 function imgDel(delImgFileNm) {
-        let selector = 'p[id="' + delImgFileNm +'"]';
-        $(selector).parent().hide();
-        delImgArr.push(delImgFileNm)
+    let selector = 'p[id="' + delImgFileNm +'"]';
+    $(selector).parent().hide();
+    delImgArr.push(delImgFileNm)
 }
