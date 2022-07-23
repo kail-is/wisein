@@ -227,8 +227,7 @@ window.onload = function() {
                 if (data == 0) {
                   document.querySelector("#findPwAlert > .red").classList.remove('none');
                 }else{
-                  alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
-                  // chgePwEmail();
+                  chgePwEmail(id);
                 }
             },
             error:function(request, status, error) {
@@ -254,6 +253,11 @@ function signUp() {
     document.querySelector('#userUpdBox').classList.add('none');
 }
 
+function findPw() {
+    document.querySelector('#findPwBox').classList.remove('none');
+    document.querySelector('#loginBox').classList.add('none');
+}
+
 function userUpd() {
     document.querySelector('#userUpdBox').classList.remove('none');
     document.querySelector('#bar-chk').checked = false;
@@ -264,11 +268,12 @@ function memPopUpClose() {
     document.querySelector('#signUpBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
+    document.querySelector('#findPwBox').classList.add('none');
     $dim(false);
     location.reload();
 }
 
-// 이메일 인증
+// 회원가입 이메일 인증
 function emailValid() {
     var email_Id = document.getElementById('id').value;
 
@@ -284,6 +289,25 @@ function emailValid() {
         }
     })
 }
+
+
+// 비밀번호 이메일 인증
+function chgePwEmail(userId) {
+
+    $.ajax({
+        data:{"user_id":userId},
+        type:"GET",
+        url:"/pwMailSend",
+        success:function(data) {
+            alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
+        },
+        error:function(request, status, error) {
+            alert("실패");
+        }
+    })
+}
+
+
 
 // 이미지 삭제
 function imgDel(delImgFileNm) {

@@ -103,6 +103,23 @@
     </form>
 </div>
 
+<%-- 비밀번호 찾기 --%>
+<div id="findPwBox" class="popup-wrap page-center none">
+    <div class="signUp-popup-wrap" style="min-width: 450px">
+    <p class="close" onclick="memPopUpClose()"> </p>
+        <div class="signUp-input-wrap">
+            <label for="" class="signUp-input-label">ID</label>
+            <input type="text" class="signUp-input pr30p" id="findpw_Id" name="findpw_Id" required="required" placeholder="아이디">
+            <div class="email-info" style="right: 0.7em;">@ wiselab.co.kr</div>
+        </div>
+        <div id ="findPwAlert" class="signUp-pwassword-info-wrap">
+            <p class="red none"> <span class="material-icons chk-alert"> report_problem </span>존재하지 않는 아이디입니다.</p>
+        </div>
+        <div class="signUp-confirm-Button-wrap">
+            <button type="button" id="findpw_btn" name="findpw_btn">비밀번호 찾기</button>
+        </div>
+    </div>
+</div>
 
 
 <%-- 메인 --%>

@@ -37,12 +37,9 @@ public class memberController {
 	@PostMapping(value = "/register")
 	public String postRegister (MemberDTO dto, AuthKeyConfig tmpKey) throws Exception {
 
-		//회원가입 하면 이메일 인증에 필요한 임시키 생성
-		//dto의 auth_state에 저장
 		String tempKey = tmpKey.tempKeyCreate();
 		dto.setAuthState(tempKey);
 
-		// Password Encoding by BCryptPasswordEncoder
 		String inputPw = dto.getPw();
 		String passEncd = passEncoder.encode(inputPw);
 		dto.setPw(passEncd);

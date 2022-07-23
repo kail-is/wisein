@@ -54,12 +54,16 @@ public class memberDAOImpl implements MemberDAO {
     public void modifyPass(MemberDTO dto) throws Exception {
         sql.update(NS + ".modifyPass", dto);
     }
+    
+    @Override
+    public void modifyPwOnly(MemberDTO dto) throws Exception {
+        sql.update(NS + ".modifyPwOnly", dto);
+    }
 
     @Override
     public void delUserImg(String fileNm) throws Exception {
         sql.update(NS + ".delUserImg", fileNm);
     }
-
 
     @Override
     public void withdraw(MemberDTO dto) throws Exception {
@@ -75,5 +79,27 @@ public class memberDAOImpl implements MemberDAO {
     public List<FileDTO> selectMemFileList(String brdRef) throws Exception {
         return sql.selectList(NS + ".selectMemFileList", brdRef);
     }
+
+    @Override
+    public void addChgePw(MemberDTO dto) throws Exception {
+        sql.insert(NS + ".addChgePw", dto);
+    }
+
+    @Override
+    public void addChgePwPlus(MemberDTO dto) throws Exception {
+        sql.update(NS + ".addChgePwPlus", dto);
+    }
+
+    @Override
+    public int chgePassDupChk(String userId) throws Exception {
+        return sql.selectOne(NS + ".chgePassDupChk", userId);
+    }
+
+    @Override
+    public MemberDTO findModMemData(String token) throws Exception {
+        return sql.selectOne(NS + ".findModMemData", token);
+    }
+
+
 
 }

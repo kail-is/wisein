@@ -91,6 +91,14 @@
         WHERE ID = #{id}
     </update>
 
+    <!--  회원 정보 PW only 수정  -->
+    <update id="modifyPwOnly" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        PW = #{pw}
+        WHERE ID = #{id}
+    </update>
+
     <!-- 회원 정보 이미지 파일 업로드  -->
     <insert id="insertMemFileList" parameterType="FileDTO">
         <![CDATA[
@@ -152,5 +160,44 @@
         AND MEM_STATUS = 'Y'
     </update>
 
+    <!-- 패스워드 신청 추가 -->
+    <insert id="addChgePw" parameterType="MemberDTO">
+        INSERT INTO CHANGE_PW(
+        MEMBER_TOKEN
+        , ID
+        , PW
+        )VALUES(
+        #{memberToken}
+        , #{id}
+        , #{pw}
+        )
+    </insert>
+
+    <!-- 패스워드 신청 중복 시 값 업데이트 -->
+    <update id="addChgePwPlus" parameterType="MemberDTO">
+        UPDATE CHANGE_PW
+        SET
+        MEMBER_TOKEN = #{memberToken}
+        , PW = #{pw}
+        , REG_DATE = NOW()
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 패스워드 신청 중복 체크-->
+    <select id="chgePassDupChk" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM CHANGE_PW
+        WHERE ID = #{id}
+    </select>
+
+    <!-- 비밀번호 찾기 테이블 조회 -->
+    <select id="findModMemData" parameterType="String" resultType="MemberDto">
+        SELECT
+        ID
+        , PW
+        FROM CHANGE_PW
+        WHERE MEMBER_TOKEN = #{memberToken}
+    </select>
 
 </mapper>

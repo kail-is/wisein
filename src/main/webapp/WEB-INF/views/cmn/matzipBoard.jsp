@@ -12,7 +12,7 @@
         <p><input type="text" size="210" id='writer' placeholder="아이디입니다" required></p>
         <p><input type="text" size="210" id='subject' placeholder="제목을 입력하세요" required></p>
 
-        <p><select name="star" id='star'>
+        <p><select name="star" id="star">
              <option value="1">☆☆☆☆☆</option>
              <option value="2">★☆☆☆☆</option>
              <option value="3">★★★☆☆</option>
@@ -20,13 +20,14 @@
              <option value="5">★★★★★</option>
         </select></p>
 
-         <p><select name="category" id='category'>
+         <p><select name="category" id="category">
              <option value="인덕원">인덕원</option>
              <option value="회현">회현</option>
              <option value="을지로">을지로</option>
          </select></p>
 
-        <p><input type="text" size="210" id='matzip_data' placeholder="맛집데이터" required></p>
+        <p><input type="text" size="210" id="matzip_data" placeholder="맛집데이터" required></p>
+        <input type="button" value="맛집 찾기" onclick="find()">
 
         <div>내용</div>
         <div id="contents">
@@ -34,9 +35,9 @@
             <div id="viewer"></div>
         </div>
 
-        <div class="button-wrap">
-            <input type="button" value="등록" onclick="submit()">
-            <input type="button" value="취소" onclick="cancel()">
+       <div class="button-wrap">
+           <input type="button" value="등록" onclick="submit()">
+           <input type="button" value="취소" onclick="cancel()">
        </div>
 
     </div>
