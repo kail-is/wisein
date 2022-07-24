@@ -39,6 +39,7 @@ public interface QaListDAO {
      * param : QaListDTO
      * return : int
      * 날짜 : 2022-06-04
+<<<<<<< HEAD
      * */
     public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 
@@ -95,5 +96,9 @@ public interface QaListDAO {
      * 날짜 : 2022-06-12
      * */
     public List<QaListDTO> selectCommentQaList(int num) throws Exception;
+=======
+     * */
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
+>>>>>>> master
 
 }

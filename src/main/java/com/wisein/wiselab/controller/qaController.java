@@ -1,6 +1,10 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
+<<<<<<< HEAD
+=======
+import com.wisein.wiselab.common.paging.PagingTagCustom;
+>>>>>>> master
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
 
@@ -9,14 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
+=======
+>>>>>>> master
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
+=======
+>>>>>>> master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +38,19 @@ public class qaController {
 
     @Autowired
     QaListService qaListservice;
-
+    
     private final AbstractPagingCustom PagingTagCustom;
 
+<<<<<<< HEAD
+    private final AbstractPagingCustom PagingTagCustom;
+
+=======
+>>>>>>> master
     @GetMapping(value="/qalist")
     public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
+<<<<<<< HEAD
 
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
@@ -42,13 +59,18 @@ public class qaController {
 //                System.out.println(i + " : " + qaList.get(i));
 //            }
 //        }
+=======
+        
+        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
+>>>>>>> master
 
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
                 System.out.println(i + " : " + qaList.get(i));
             }
         }
-
+        
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
 

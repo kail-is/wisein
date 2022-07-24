@@ -99,9 +99,9 @@ public interface QaListService {
     /*
      * 작성자 : 박혜림
      * 게시글 총 개수
-     * param : PageDTO
+     * param : QaListDTO
      * return : int
-     * 날짜 : 2022-05-30
+     * 날짜 : 2022-06-04
      * */
     public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 

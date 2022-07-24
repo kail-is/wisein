@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $("#login_btn").click(function(){
-        var id = document.getElementById("id").value;
+        var id = document.getElementById("login_id").value;
 
         $.ajax({
             url:"/authCheck",

@@ -93,6 +93,7 @@
                 </div>
                 </c:if>
             </c:forEach>
+<<<<<<< HEAD
 
             <!-- <div class="board-line">
                 <div class="board-cell board-no">
@@ -129,6 +130,8 @@
                 </div>
             </div>
             </div> -->
+=======
+>>>>>>> master
         </div>
     </section>
     <div class="search-wrap">

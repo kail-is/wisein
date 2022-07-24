@@ -3,7 +3,10 @@ package com.wisein.wiselab.service;
 import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.QaListDAO;
+<<<<<<< HEAD
 import com.wisein.wiselab.dto.FileDTO;
+=======
+>>>>>>> master
 import com.wisein.wiselab.dto.QaListDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
+=======
+>>>>>>> master
 import java.util.List;
 
 @Service
@@ -44,7 +50,11 @@ public class QaListServiceImpl implements QaListService {
     public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> master
         if(boardTotalCount > 0) {
         	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
         }
@@ -101,6 +111,7 @@ public class QaListServiceImpl implements QaListService {
 	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
 		return dao.selectBoardTotalCount(qaListDTO);
 	}
+<<<<<<< HEAD
 
     /*
      * 작성자 : 이형근
@@ -204,4 +215,7 @@ public class QaListServiceImpl implements QaListService {
         return dao.selectCommentQaList(num);
     }
 
+=======
+	
+>>>>>>> master
 }

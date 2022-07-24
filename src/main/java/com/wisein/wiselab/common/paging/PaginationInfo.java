@@ -7,15 +7,34 @@ public class PaginationInfo {
 	
 	private int currentPageNo = 1;
 	private int totalRecordCount;
+<<<<<<< HEAD
+=======
+	private int viewRecordsPerPage = RECORDSPERPAGE;
+	
+	private String viewAddr;
+>>>>>>> master
 	
 	private String searchType;
 	private String keyword;
 	
+<<<<<<< HEAD
+=======
+	public String getViewAddr() {
+		return viewAddr != null ? viewAddr.replace("/", "") : null;
+	}
+	public void setViewAddr(String viewAddr) {
+		this.viewAddr = viewAddr;
+	}
+>>>>>>> master
 	public int getCurrentPageNo() {
 		return currentPageNo;
 	}
 	public void setCurrentPageNo(int currentPageNo) {
+<<<<<<< HEAD
 		this.currentPageNo = currentPageNo;
+=======
+		this.currentPageNo = currentPageNo > 0 ? currentPageNo : 1;
+>>>>>>> master
 	}
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
@@ -44,16 +63,36 @@ public class PaginationInfo {
 		return (int) Math.ceil((this.totalRecordCount / (double)PAGESIZE));
 	}
 	public int getFirstRecordIndex() {
+<<<<<<< HEAD
 		return (currentPageNo- 1) * RECORDSPERPAGE;
 	}
 	public int getLastRecordIndex() {
 		return currentPageNo * RECORDSPERPAGE;
+=======
+		return (currentPageNo - 1) * getViewRecordsPerPage();
+	}
+	public int getLastRecordIndex() {
+		return currentPageNo * getViewRecordsPerPage();
+>>>>>>> master
 	}
 	public boolean isHasPreviousPage() {
 		return getFirstPage() == 1 ? false : true;
 	}
 	public boolean isHasNextPage() {
+<<<<<<< HEAD
 		return (getLastPage() * RECORDSPERPAGE) < totalRecordCount ? true : false;
 	}
 	
+=======
+		return (getLastPage() * getViewRecordsPerPage()) < totalRecordCount ? true : false;
+	}
+
+	public int getViewRecordsPerPage() {
+		return viewRecordsPerPage < 1 ? RECORDSPERPAGE : viewRecordsPerPage;
+	}
+
+	public void setViewRecordsPerPage(int viewRecordsPerPage) {
+		this.viewRecordsPerPage = viewRecordsPerPage;
+	}
+>>>>>>> master
 }

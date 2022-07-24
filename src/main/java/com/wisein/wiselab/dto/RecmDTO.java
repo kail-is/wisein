@@ -9,7 +9,7 @@ public class RecmDTO {
     private int num;
     private int refMatzip;
     private String writer;
-    private int star;
+    private float star;
     private String subject;
     private String content;
     private Date regDate;

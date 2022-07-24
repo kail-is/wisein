@@ -4,7 +4,12 @@ import lombok.Data;
 
 import java.util.Date;
 import com.wisein.wiselab.common.paging.PaginationInfo;
+<<<<<<< HEAD
+=======
+import lombok.EqualsAndHashCode;
+>>>>>>> master
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class QaListDTO extends PaginationInfo {
     private int num;

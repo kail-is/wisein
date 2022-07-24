@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisein.wiselab.mapper.IntegrationSearchMapper">
+    <!--회원 아이디 중복 체크-->
+    <select id="findIntegrationBoard" parameterType="IntegrationSearchDTO" resultType="IntegrationSearchDTO">
+        SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+             , BOARD_TYPE         AS BOARD_TYPE
+             , NUM                AS NUM
+             , CATEGORY           AS CATEGORY
+             , WRITER             AS WRITER
+             , SUBJECT            AS SUBJECT
+             , CONTENT            AS CONTENT
+             , REG_DATE           AS REG_DATE
+             , UPD_DATE           AS UPD_DATE
+             , DEL_YN             AS DEL_YN
+             , PARENT_NUM         AS PARENT_NUM
+          FROM(SELECT "QA"        AS BOARD_TYPE
+                    , NUM         AS NUM
+                    , CATEGORY    AS CATEGORY
+                    , WRITER      AS WRITER
+                    , SUBJECT     AS SUBJECT
+                    , CONTENT     AS CONTENT
+                    , REG_DATE    AS REG_DATE
+                    , UPD_DATE    AS UPD_DATE
+                    , DEL_YN      AS DEL_YN
+                    , PARENT_NUM  AS PARENT_NUM
+                 FROM QA_BOARD QB
+                WHERE QB.WRITER   = IFNULL(#{writer},QB.WRITER)
+                  AND QB.DEL_YN   = 'N'
+                  AND QB.CATEGORY = CASE WHEN IFNULL(#{searchType},'all') != 'all' THEN #{searchType} ELSE QB.CATEGORY END
+                  AND QB.SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+                UNION ALL
+                SELECT "TIP"      AS TYPE
+                     , NUM        AS NUM
+                     , CATEGORY   AS CATEGORY
+                     , WRITER     AS WRITER
+                     , SUBJECT    AS SUBJECT
+                     , CONTENT    AS CONTENT
+                     , REG_DATE   AS REG_DATE
+                     , UPD_DATE   AS UPD_DATE
+                     , DEL_YN     AS DEL_YN
+                     , PARENT_NUM AS PARENT_NUM
+                  FROM TIP_BOARD TB
+                 WHERE TB.WRITER   = IFNULL(#{writer},TB.WRITER)
+                   AND TB.DEL_YN   = 'N'
+                   AND TB.CATEGORY = CASE WHEN IFNULL(#{searchType},'all') != 'all' THEN #{searchType} ELSE TB.CATEGORY END
+                   AND TB.SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+              ) AS A,
+              (SELECT @ROWNUM:=0) RNUM
+          LIMIT #{firstRecordIndex}, #{viewRecordsPerPage}
+    </select>
+
+    <select id="findIntegrationWriter" parameterType="IntegrationSearchDTO" resultType="IntegrationSearchDTO">
+        SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+             , "작성글"            AS BOARD_TYPE
+             , NUM                AS NUM
+             , CATEGORY           AS CATEGORY
+             , WRITER             AS WRITER
+             , SUBJECT            AS SUBJECT
+             , CONTENT            AS CONTENT
+             , REG_DATE           AS REG_DATE
+             , UPD_DATE           AS UPD_DATE
+             , DEL_YN             AS DEL_YN
+             , PARENT_NUM         AS PARENT_NUM
+        FROM(SELECT NUM           AS NUM
+                  , CATEGORY      AS CATEGORY
+                  , WRITER        AS WRITER
+                  , SUBJECT       AS SUBJECT
+                  , CONTENT       AS CONTENT
+                  , REG_DATE      AS REG_DATE
+                  , UPD_DATE      AS UPD_DATE
+                  , DEL_YN        AS DEL_YN
+                  , PARENT_NUM    AS PARENT_NUM
+             FROM QA_BOARD QB
+            WHERE QB.WRITER   = IFNULL(#{writer},QB.WRITER)
+              AND DEL_YN      = 'N'
+              AND QB.CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE QB.CATEGORY END
+              AND QB.SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+            ) AS A,
+            (SELECT @ROWNUM:=0) RNUM
+        LIMIT #{firstRecordIndex}, #{viewRecordsPerPage}
+    </select>
+
+</mapper>

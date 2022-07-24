@@ -29,7 +29,11 @@
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
+<<<<<<< HEAD
 				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+=======
+				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
+>>>>>>> master
            		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
                    AND DEL_YN = 'N'
                    AND QB.NUM > 0
@@ -39,6 +43,18 @@
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>
+    
+	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
+		<![CDATA[ 
+		SELECT COUNT(NUM) 
+		  FROM QA_BOARD 
+		 WHERE 1=1 
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		]]>
+	</select>
 
 	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
 		<![CDATA[
@@ -93,6 +109,7 @@
             qa_board
         WHERE NUM=#{num}
     </select>
+<<<<<<< HEAD
     <!-- 게시글 삭제 -->
     <delete id="deleteQaBoard" parameterType="Integer">
         UPDATE
@@ -186,4 +203,7 @@
 		]]>
 	</select>
 
+=======
+    
+>>>>>>> master
 </mapper>

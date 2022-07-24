@@ -1,4 +1,5 @@
 package com.wisein.wiselab.dao;
+import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import org.apache.ibatis.session.SqlSession;
@@ -24,6 +25,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public RecmDTO selectRecm(int recmId) throws Exception {
+        return sql.selectOne(NS + ".selectRecm", recmId);
+    }
+
+    @Override
     public List<RecmDTO> selectRecmList(int matzipId) throws Exception {
         return sql.selectList(NS + ".selectRecmList", matzipId);
     }
@@ -39,13 +45,53 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public void delRecm(int num) throws Exception {
+        sql.update(NS + ".delRecm", num);
+    }
+
+    @Override
+    public void updRecm(RecmDTO recmDTO) throws Exception {
+        sql.update(NS + ".updateRecm", recmDTO);
+    }
+
+    @Override
     public int recmCnt(int matzipId) throws Exception {
         return sql.selectOne(NS + ".recmCnt", matzipId);
     }
 
     @Override
-    public int avgRate(int matzipId) throws Exception {
+    public float avgRate(int matzipId) throws Exception {
         return sql.selectOne(NS + ".avgRate", matzipId);
+    }
+
+    @Override
+    public List<CompanyDTO> companyList() {
+        return sql.selectList(NS + ".company");
+    }
+
+    @Override
+    public List<CompanyDTO> matzipCount(String location) {
+        return sql.selectList(NS+ ".matzipCount", location);
+    }
+
+    @Override
+    public List<CompanyDTO> matzipList(String location) {
+        return sql.selectList(NS + ".matzipList", location);
+    }
+
+    @Override
+    public List<CompanyDTO> recmMatzipCount(int id) {
+        return sql.selectList(NS + ".recmMatzip", id);
+    }
+
+    @Override
+    public List<CompanyDTO> company() {
+        return sql.selectList(NS + ".selectCompany");
+    }
+
+    @Override
+    public List<CompanyDTO> selectCompany(String location) {
+        return sql.selectList(NS + ".selectCompany2", location);
     }
 
 }
