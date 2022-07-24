@@ -26,7 +26,7 @@
                          <li><a href="#">작성 글 모아 보기</a> </li>
                          <li onclick="userUpd()">정보 수정 </li>
                          <li><a href="user/logout">로그아웃</a></li>
-                         <li><a href="user/withdraw">탈퇴</a> </li>
+                         <li onclick="userWithdraw()">탈퇴</a> </li>
                      </c:if>
                     </ul>
                 </div>

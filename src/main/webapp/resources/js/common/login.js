@@ -244,6 +244,7 @@ function login() {
     document.querySelector('#loginBox').classList.remove('none');
     document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
+    $dim();
 }
 
 function signUp() {
@@ -251,17 +252,27 @@ function signUp() {
     document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
+    $dim();
 }
 
 function findPw() {
     document.querySelector('#findPwBox').classList.remove('none');
     document.querySelector('#loginBox').classList.add('none');
+    $dim();
 }
 
 function userUpd() {
     document.querySelector('#userUpdBox').classList.remove('none');
     document.querySelector('#bar-chk').checked = false;
     $dim();
+}
+
+function userWithdraw() {
+    let withdrawal = confirm("탈퇴하시겠습니까?")
+
+    if (withdrawal) {
+        location.href = "/user/withdraw"
+    }
 }
 
 function memPopUpClose() {

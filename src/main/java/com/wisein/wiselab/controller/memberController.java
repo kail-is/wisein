@@ -139,9 +139,8 @@ public class memberController {
 	}
 
 	@PostMapping(value = "/user/withdraw")
-	public String withdrawal(MemberDTO dto, HttpSession session) throws Exception {
+	public String postWithdrawalUser(MemberDTO dto, HttpSession session) throws Exception {
 		service.withdraw(dto, session);
-		session.invalidate();
 		return "redirect:/";
 	}
 
