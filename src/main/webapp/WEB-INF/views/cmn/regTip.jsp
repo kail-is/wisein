@@ -49,8 +49,9 @@
                  plugins: [colorSyntax],
                  hooks : {
                            addImageBlobHook: (blob, callback) => {
+                                const alt = blob.name
                            	    const imgURL  = uploadImage(blob);
-                                callback(imgURL , "alt-text");
+                                callback(imgURL , alt);
                            	}
                           }
             });
@@ -80,12 +81,16 @@
     <script>
         function reg(){
             document.querySelector("#content").value = editor.getHTML();
-            document.getElementById('tipBoard_form').submit();
+
+            if(document.querySelector("#subject").value !== '' && document.querySelector("#content").value !== ''){
+                document.getElementById('tipBoard_form').submit();
+            }else{
+                alert('제목과 내용을 확인하세요👀')
+            }
         }
 
         function cancel(){
             if(confirm('진짜 취소하실꺼에여?🥺') == true){
-                console.log('뒤로가기되찌롱');
                 window.history.back()
             }
         }

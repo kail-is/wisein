@@ -1,6 +1,6 @@
 package com.wisein.wiselab.dao;
-import com.wisein.wiselab.dto.PageDTO;
 import com.wisein.wiselab.dto.QaListDTO;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,15 +18,13 @@ public class QaListDAOImpl implements QaListDAO {
     /*
      * 작성자 : 이형근
      * QA 목록 조회
-     * param : PageDTO
+     * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
-     * 수정자 : 박혜림
-     * 수정일 : 2022-05-30
      * */
     @Override
-    public List<QaListDTO> selectQaList(PageDTO pd) {
-        return sql.selectList(NS + ".selectQaList", pd);
+    public List<QaListDTO> selectQaList(QaListDTO qaListDTO) {
+        return sql.selectList(NS + ".selectQaList", qaListDTO);
     }
 
     /*
@@ -54,13 +52,17 @@ public class QaListDAOImpl implements QaListDAO {
     }
 
     /*
-<<<<<<< HEAD
-     * 작성자 : 이형근
-     * num에 해당하는 qa삭제
-     * param : Integer
-     * return :
-     * 날짜 : 2022-05-29
+     * 작성자 : 박혜림
+     * 게시글 총 개수
+     * param : QaListDTO
+     * return : int
+     * 날짜 : 2022-06-04
      * */
+	@Override
+	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+		return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
+	}
+
     @Override
     public void deleteQaBoard(int num) throws Exception {
         sql.delete(NS + ".deleteQaBoard", num);
@@ -125,17 +127,6 @@ public class QaListDAOImpl implements QaListDAO {
     public List<QaListDTO> selectCommentQaList(int num) throws Exception {
         return sql.selectList(NS + ".selectCommentQaList", num);
     }
-    /*
-     * 작성자 : 박혜림
-     * 게시글 총 개수
-     * param : PageDTO
-     * return : int
-     * 날짜 : 2022-05-30
-     * */
-	@Override
-	public int listSearchCount(PageDTO pd) throws Exception {
-		return sql.selectOne(NS + ".listSearchCount", pd);
-	}
 
 
 }

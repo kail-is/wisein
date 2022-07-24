@@ -1,17 +1,19 @@
 package com.wisein.wiselab.controller;
 
-import com.wisein.wiselab.dto.PageDTO;
+import com.wisein.wiselab.common.paging.AbstractPagingCustom;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.*;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,19 +21,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class qaController {
 
     @Autowired
     QaListService qaListservice;
 
+    private final AbstractPagingCustom PagingTagCustom;
+
     @GetMapping(value="/qalist")
-    public String qaList (PageDTO pd, Model model) throws Exception {
-
+    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
+        qaList = qaListservice.selectQaList(qaListDTO);
 
-        qaList = (List<QaListDTO>) qaListservice.selectQaList(pd);
-        pd.setTotalCount(qaListservice.listSearchCount(pd));
+        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
+//        if(qaList.size() > 0) {
+//            for (int i = 0; i < qaList.size(); i++) {
+//                System.out.println(i + " : " + qaList.get(i));
+//            }
+//        }
 
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
@@ -40,6 +50,7 @@ public class qaController {
         }
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/qaList";
     }
@@ -49,10 +60,12 @@ public class qaController {
         return "cmn/qaBoard";
     }
 
-    @PostMapping(value="/qaBoard")
+    @GetMapping(value="/regQaBoard")
     public String regQaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
 
         qaListDTO.setWriter("test2");
+        qaListDTO.setSubject(request.getParameter("title"));
+        qaListDTO.setContent(request.getParameter("content"));
 
         System.out.println(qaListDTO.toString());
 
@@ -62,27 +75,26 @@ public class qaController {
     }
 
     @GetMapping(value="/qaDetail")
-    public String qaDetail (HttpServletRequest request
-                            , QaListDTO dto
-                            , Model model
-                            , @RequestParam("num") int num) throws Exception {
+    public String qaDetail (HttpServletRequest request, QaListDTO dto, Model model, @RequestParam("num") int num) throws Exception {
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
 
+        System.out.println("================================================================");
         if (dto.getNum() != 0){
+            System.out.println("11111111111111111111111111111111");
 //            System.out.println("/qaDetail qaListDTO.getNum() : " + qaListDTO.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
         } else {
+            System.out.println("2222222222222222222222222222222222222222222");
 //            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
             qaListDTO = qaListservice.selectQaOne(dto);
         }
 
-        System.out.println("qaListDTO : " + qaListDTO.toString());
-        System.out.println("commentQaList : " + commentQaList.toString());
+//        System.out.println(qaListDTO.toString());
 //        System.out.println(qaListDTO.getContent());
 
 
@@ -90,6 +102,11 @@ public class qaController {
         model.addAttribute("qaListDTO", qaListDTO);
         model.addAttribute("content", qaListDTO.getContent());
         model.addAttribute("commentQaList", commentQaList);
+        for(int i=0; i<commentQaList.size(); i++){
+            System.out.println(commentQaList.get(i).getContent());
+            model.addAttribute( "content"+commentQaList.get(i).getNum(), commentQaList.get(i).getContent());
+        }
+
 
         return "cmn/qaDetail";
     }

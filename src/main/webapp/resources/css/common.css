@@ -171,7 +171,7 @@ header ul li:nth-child(2) .select-wrap select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(../image/select_arrow.jpg) no-repeat right;
+  background: url(../image/select_arrow.jpg) no-repeat right #1c1c1c;
 }
 
 header ul li:nth-child(2) input[type=text] {
@@ -550,7 +550,6 @@ input, select {
 }
 
 .info-wrap {
-  margin-top: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -945,6 +944,14 @@ body {
   padding-right: 30% !important;
 }
 
+.jaju {
+  color: #9E0061 !important;
+}
+
+.dark-purple {
+  color: #523781 !important;
+}
+
 .signUp-popup-wrap {
   position: relative;
   padding: 2rem;
@@ -1234,4 +1241,24 @@ body {
   flex-direction: row;
   width: 50%;
   margin: 1rem auto;
+}
+
+/* 페이징 */
+.pagination {
+	padding: 10px;
+	text-align: center;
+}
+.pagination a {
+	color : black;
+	text-decoration : none;
+	font-size: 16px;
+	padding: 5px;
+	border-radius: 5px;
+}
+.pagination a.active {
+	font-weight: 500;
+	color : red;
+}
+.pagination a:hover:not(.active) {
+	/* background-color: #e5e7f5; */
 }

@@ -4,8 +4,8 @@ import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.QaListDAO;
 import com.wisein.wiselab.dto.FileDTO;
-import com.wisein.wiselab.dto.PageDTO;
 import com.wisein.wiselab.dto.QaListDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,6 +14,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
@@ -33,18 +34,25 @@ public class QaListServiceImpl implements QaListService {
     /*
      * 작성자 : 이형근
      * QA 목록 조회
-     * param : PageDTO
+     * param : QaListDTO
      * return : qaList
      * 날짜 : 2022-04-03
      * 수정자 : 박혜림
-     * 수정일 : 2022-05-30
+     * 수정일 : 2022-06-04
      * */
     @Override
-    public List<QaListDTO> selectQaList(PageDTO pd) throws Exception {
-        return dao.selectQaList(pd);
+    public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception {
+        List<QaListDTO> qaList = new ArrayList<>();
+        int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
+
+        if(boardTotalCount > 0) {
+        	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
+        }
+
+        return qaList;
     }
 
-    /*
+	/*
      * 작성자 : 이형근
      * QaBoard Insert
      * param : QaListDTO
@@ -80,6 +88,19 @@ public class QaListServiceImpl implements QaListService {
     public void deleteQaBoard(int num) throws Exception {
         dao.deleteQaBoard(num);
     }
+
+
+        /*
+     * 작성자 : 박혜림
+     * 게시글 총 개수
+     * param : QaListDTO
+     * return : int
+     * 날짜 : 2022-06-04
+     * */
+	@Override
+	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+		return dao.selectBoardTotalCount(qaListDTO);
+	}
 
     /*
      * 작성자 : 이형근
@@ -118,8 +139,6 @@ public class QaListServiceImpl implements QaListService {
 
             }
         }
-
-
 
         QaListDTO qaListDTO = (QaListDTO) session.getAttribute("qaListDTO");
         QaListDTO chkNum = new QaListDTO();
@@ -185,15 +204,4 @@ public class QaListServiceImpl implements QaListService {
         return dao.selectCommentQaList(num);
     }
 
-    /*
-     * 작성자 : 박혜림
-     * 게시글 총 개수
-     * param : PageDTO
-     * return : int
-     * 날짜 : 2022-05-30
-     * */
-	@Override
-	public int listSearchCount(PageDTO pd) throws Exception {
-		return dao.listSearchCount(pd);
-	}
 }

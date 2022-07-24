@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.qaListMapper">
-    <!-- 다건 조회 -->
-    <select id="selectQaList" parameterType="PageDTO" resultType="QaListDTO">
+
+    <select id="selectQaList" parameterType="QaListDTO" resultType="QaListDTO">
         <![CDATA[
         SELECT A.RNUM
              , A.NUM
@@ -29,13 +29,28 @@
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
-                   AND 'RNUM' <= 1 * 10
+				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+                   AND DEL_YN = 'N'
                    AND QB.NUM > 0
                  GROUP BY QB.NUM
+                 ORDER BY NUM DESC
                 ) AS A
-        LIMIT #{pageCnt}, #{perPageNum}
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>
+
+	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
+		<![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+		 WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		]]>
+	</select>
     <!-- 게시글 등록 -->
     <insert id="insertQaBoard" parameterType="QaListDTO">
         INSERT INTO qa_board
@@ -153,15 +168,20 @@
             ,PARENT_NUM
         FROM
             qa_board
+
+
+
+
+
         WHERE PARENT_NUM = #{num}
     </select>
 
     <!-- 게시글 총 개수 -->
 	<select id="listSearchCount" resultType="int">
-		<![CDATA[ 
-		SELECT COUNT(NUM) 
-		  FROM QA_BOARD 
-		 WHERE 1=1 
+		<![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+		 WHERE 1=1
 		   AND NUM > 0
 		]]>
 	</select>
