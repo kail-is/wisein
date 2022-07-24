@@ -111,10 +111,11 @@ public class matzipController {
 
 	}
 
-	@ResponseBody
 	@GetMapping(value="/addClosed")
-	public void updClosedStat (@RequestParam int matzipId) throws Exception {
+	public String updClosedStat (@RequestParam int matzipId, RedirectAttributes ra) throws Exception {
 		service.updClosedStat(matzipId);
+		ra.addAttribute("id", matzipId);
+		return "redirect:/matzip";
 	}
 
 	@ExceptionHandler(NullPointerException.class)
