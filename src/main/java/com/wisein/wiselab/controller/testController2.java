@@ -37,12 +37,7 @@ public class testController2 {
 
 	@GetMapping(value = "/")
 	public String main() throws Exception {
-<<<<<<< HEAD
-
-		return "cmn/main";
-=======
 		return "redirect:qalist";
->>>>>>> master
 	}
 
 	@GetMapping(value = "/totalSearch")
@@ -63,6 +58,22 @@ public class testController2 {
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {
 		return "cmn/dataBoard";
+	}
+
+	@GetMapping(value="/reg")
+	public String getRegister () throws Exception {
+		return "reg";
+	}
+
+	@GetMapping(value="/tipboard")
+	public String tipBoard () throws Exception {
+		return "cmn/tipBoard";
+	}
+
+	@PostMapping(value = "/reg")
+	public String postRegister (MemberDTO dto) throws Exception {
+		service.register(dto);
+		return "redirect:/";
 	}
 
 }

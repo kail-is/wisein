@@ -3,11 +3,10 @@ package com.wisein.wiselab.service;
 import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.QaListDAO;
-<<<<<<< HEAD
-import com.wisein.wiselab.dto.FileDTO;
-=======
->>>>>>> master
+import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
+import com.wisein.wiselab.dto.FileDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Iterator;
-=======
->>>>>>> master
 import java.util.List;
 
 @Service
@@ -50,11 +47,7 @@ public class QaListServiceImpl implements QaListService {
     public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> master
         if(boardTotalCount > 0) {
         	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
         }
@@ -87,7 +80,6 @@ public class QaListServiceImpl implements QaListService {
     }
 
     /*
-<<<<<<< HEAD
      * 작성자 : 이형근
      * num에 해당하는 qa삭제
      * param : Integer
@@ -99,8 +91,7 @@ public class QaListServiceImpl implements QaListService {
         dao.deleteQaBoard(num);
     }
 
-
-        /*
+    /*
      * 작성자 : 박혜림
      * 게시글 총 개수
      * param : QaListDTO
@@ -111,7 +102,6 @@ public class QaListServiceImpl implements QaListService {
 	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
 		return dao.selectBoardTotalCount(qaListDTO);
 	}
-<<<<<<< HEAD
 
     /*
      * 작성자 : 이형근
@@ -215,7 +205,90 @@ public class QaListServiceImpl implements QaListService {
         return dao.selectCommentQaList(num);
     }
 
-=======
-	
->>>>>>> master
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public LikeBoardDTO checkLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return dao.checkLikeQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public int insertLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return dao.insertLikeQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public int updateLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return dao.updateLikeQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public List<LikeBoardDTO> selectLikeQaBoardList(MemberDTO member) throws Exception{
+        return dao.selectLikeQaBoardList(member);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public LikeBoardDTO selectOneLikeQaBoard(LikeBoardDTO member) throws Exception{
+        return dao.selectOneLikeQaBoard(member);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public void adoptQaBoard(QaListDTO dto) throws Exception {
+        dao.adoptQaBoard(dto);
+    }
+
+    @Override
+    public void likeAddCount(LikeBoardDTO likeDTO) throws Exception {
+        dao.likeAddCount(likeDTO);
+    }
+
+    @Override
+    public void likeMinusCount(LikeBoardDTO likeDTO) throws Exception {
+        dao.likeMinusCount(likeDTO);
+    }
+
+    @Override
+    public int selectAdpCount(QaListDTO qaListDTO) throws Exception{
+        return dao.selectAdpCount(qaListDTO);
+    }
 }

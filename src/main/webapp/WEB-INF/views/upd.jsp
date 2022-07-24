@@ -80,20 +80,11 @@ window.onload = function() {
 
     // 이미지 파일 삭제
     function imgDel(delImgFileNm) {
-        $.ajax({
-            data:{"delImgFileNm" : delImgFileNm},
-            type:"GET",
-            url:"/delImgFile",
-            success:function(data) {
-               alert("이미지 삭제 완료");
-               let selector = 'p[id="' + delImgFileNm +'"]';
-               $(selector).parent().hide();
-            },
-            error:function(request, status, error) {
-                alert("이미지 삭제 실패");
-            }
-        })
+        let selector = 'p[id="' + delImgFileNm +'"]';
+        $(selector).parent().hide();
+
     }
+
 
 </script>
 
@@ -125,9 +116,9 @@ window.onload = function() {
     <div class="file_list">
         <c:forEach var="list" items="${member.fileList}">
             <div class="profile_img">
-            <img src ="../${list.filePath}" width="100" height="100">
+            <img src ="../${member.fileList[0].filePath}" width="100" height="100">
             ${list.orgFileName}
-            <%-- <p onclick="imgDel(this.id)" id="${list.fileName}">X</p> --%>
+            <p onclick="imgDel(this.id)" id="${list.fileName}">X</p>
             </div>
         </c:forEach>
     </div>

@@ -63,13 +63,6 @@
     <script src="${url}/resources/js/common/util.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
 
-	<script>
-	<c:if test="${empty member}">
-	    $dim();
-	    document.querySelector('#joinBox').classList.remove('none');
-	</c:if>
-	</script>
-
     <script>
        function enterkey() {
     	   var selectedSearchType = document.getElementById('search-list');

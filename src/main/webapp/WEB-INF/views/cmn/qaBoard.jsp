@@ -10,21 +10,28 @@
     <form role="form" method="post" autocomplete="off" id="qaBoard_form">
     <div class="content-wrap">
          <div class="select-wrap" style="position: absolute;">
-            <select id="category" name="category" >
-                <option value="FRONT">Front</option>
-                <option value="BACK">Back</option>
-                <option value="DB">DB</option>
-            </select>
+            <c:if test="${empty qaListDTO.category}">
+                <select id="category" name="category" >
+                   <option value="FRONT">Front</option>
+                   <option value="BACK">Back</option>
+                   <option value="DB">DB</option>
+                </select>
+            </c:if>
+            <c:if test="${!empty qaListDTO.category}">
+                <c:out value="${qaListDTO.category}" />
+            </c:if>
         </div>
         <p>
-            <input type="text" size="210" id='subject' name='subject' placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;>
+            <input type="text" size="210" id='subject' name='subject' placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;">
         </p>
 
         <div>내용</div>
         <div id="contents">
             <div id="editor">${qaListDTO.content}</div>
             <div id="viewer"></div>
-            <input type="hidden" id='num' name='num' value='<c:out value="${qaListDTO.num}"/>'>
+
+            <input type="hidden" id='num' name='num' value="${qaListDTO.num}">
+            <input type="hidden" id='parentNum' name='parentNum' value="${qaListDTO.parentNum}">
             <input type="hidden" id='content' name='content'>
         </div>
 
@@ -76,7 +83,6 @@
                     async: false,
                 })
                 .done(function(data) {
-                  alert("성공");
                 })
                 .fail(function(err) {
                   alert(err);
@@ -108,16 +114,22 @@
 
     <script>
         function reg(){
-            document.querySelector("#content").value = editor.getHTML();
-            document.getElementById('qaBoard_form').submit();
+            var writer = '<c:out value="${member.id}" />';
+            if(writer != ""){
+                document.querySelector("#content").value = editor.getHTML();
+                document.getElementById('qaBoard_form').submit();
+            } else if(writer == ""){
+               alert("로그인 후 이용가능합니다.");
+            }
         }
     </script>
     <script>
         function update(){
-            const num = ${qaListDTO.num};
+            Debugger
+            const num = '<c:out value="${qaListDTO.num}" />';
             const subject = document.getElementById('subject').value;
             const content = editor.getHTML();
-
+            Debugger
             $.ajax({
                 data:{"num":num,"subject":subject,"content":content},
                 type:"POST",

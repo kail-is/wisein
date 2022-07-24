@@ -654,3 +654,20 @@ input, select {
     content: "\00d7";
     font-size:15pt;
 }
+
+.signUp-input-wrap #files {
+    width: 50%
+}
+
+
+.file_list .profile_img * {
+    display: inline-block;
+}
+
+
+.file_list .profile_img p {
+    font-weight: bold;
+    color: gray;
+    padding: 2px 5px;
+}
+

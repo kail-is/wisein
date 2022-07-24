@@ -1,22 +1,16 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
-<<<<<<< HEAD
-=======
 import com.wisein.wiselab.common.paging.PagingTagCustom;
->>>>>>> master
+import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.service.QaListService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
-=======
->>>>>>> master
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +18,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
-=======
->>>>>>> master
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,36 +34,31 @@ public class qaController {
     
     private final AbstractPagingCustom PagingTagCustom;
 
-<<<<<<< HEAD
-    private final AbstractPagingCustom PagingTagCustom;
-
-=======
->>>>>>> master
     @GetMapping(value="/qalist")
     public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
-<<<<<<< HEAD
-
-        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
-        String pagination = PagingTagCustom.render(qaListDTO);
-//        if(qaList.size() > 0) {
-//            for (int i = 0; i < qaList.size(); i++) {
-//                System.out.println(i + " : " + qaList.get(i));
-//            }
-//        }
-=======
         
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
->>>>>>> master
 
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
-                System.out.println(i + " : " + qaList.get(i));
+           //     System.out.println(i + " : " + qaList.get(i));
             }
         }
-        
+
+        // 답변개수 구하는 로직
+//        Map<String, Integer> adpCount = new HashMap<>();
+//        List<Map> adpCountList = new ArrayList<>();
+//        int adpCnt = 0;
+//        for (int i=0; i<qaList.size(); i++){
+//            int cnt = qaListservice.selectAdpCount(qaList.get(i));
+//            String num = String.valueOf(qaList.get(i).getNum());
+//            adpCount.put(num, cnt);
+//            adpCountList.add(adpCount);
+//        }
+
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
 
@@ -82,55 +70,108 @@ public class qaController {
         return "cmn/qaBoard";
     }
 
-    @GetMapping(value="/regQaBoard")
+    @PostMapping(value="/qaBoard")
     public String regQaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        qaListDTO.setWriter("test2");
-        qaListDTO.setSubject(request.getParameter("title"));
-        qaListDTO.setContent(request.getParameter("content"));
+        qaListDTO.setWriter(member.getId());
 
-        System.out.println(qaListDTO.toString());
+        System.out.println("/qaBoard post : " + qaListDTO.toString());
 
-        qaListservice.insertQaBoard(qaListDTO);
+        if(qaListDTO.getParentNum() == 0){
+            qaListservice.insertQaBoard(qaListDTO);
+        }else if(qaListDTO.getParentNum() != 0){
+            qaListservice.insertCommentQaBoard(qaListDTO);
+        }
 
         return "redirect:/qalist";
     }
 
     @GetMapping(value="/qaDetail")
-    public String qaDetail (HttpServletRequest request, QaListDTO dto, Model model, @RequestParam("num") int num) throws Exception {
+    public String qaDetail (HttpServletRequest request
+            , QaListDTO dto
+            , Model model
+            , @RequestParam("num") int num) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        System.out.println("member : " + session.getAttribute("member"));
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
+        List<String> commentContent = new ArrayList<>();
+        List<LikeBoardDTO> likeQaBoardList = new ArrayList<>();
 
-        System.out.println("================================================================");
         if (dto.getNum() != 0){
-            System.out.println("11111111111111111111111111111111");
-//            System.out.println("/qaDetail qaListDTO.getNum() : " + qaListDTO.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
         } else {
-            System.out.println("2222222222222222222222222222222222222222222");
-//            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
             qaListDTO = qaListservice.selectQaOne(dto);
         }
+        likeQaBoardList = qaListservice.selectLikeQaBoardList(member);
 
-//        System.out.println(qaListDTO.toString());
-//        System.out.println(qaListDTO.getContent());
-
-
+        System.out.println("qaListDTO : " + qaListDTO.toString());
+        System.out.println("commentQaList : " + commentQaList.toString());
 
         model.addAttribute("qaListDTO", qaListDTO);
         model.addAttribute("content", qaListDTO.getContent());
         model.addAttribute("commentQaList", commentQaList);
-        for(int i=0; i<commentQaList.size(); i++){
-            System.out.println(commentQaList.get(i).getContent());
-            model.addAttribute( "content"+commentQaList.get(i).getNum(), commentQaList.get(i).getContent());
+
+        if(likeQaBoardList != null){
+            model.addAttribute("likeQaBoardList", likeQaBoardList);
         }
 
+        for (int i=0; i<commentQaList.size(); i++){
+            commentContent.add(commentQaList.get(i).getContent());
+        }
+        model.addAttribute("commentContent", commentContent);
 
         return "cmn/qaDetail";
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/qaLike")
+    public Object qaLike (HttpServletRequest request, int num, int boardNum) throws Exception {
+        HttpSession session= request.getSession();
+
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        System.out.println(member.toString());
+
+        // 처음 좋아요시 insert 용도
+        LikeBoardDTO dto = new LikeBoardDTO();
+        dto.setBoardIdx(num);
+        dto.setParentNum(boardNum);
+        dto.setUserId(member.getId());
+
+        // 해당 글에 좋아요 한적있을시 update 용도
+        LikeBoardDTO likeDTO = qaListservice.checkLikeQaBoard(dto);
+
+        int likeBoardNum = 0;
+
+        if(likeDTO != null){ // 좋아요 한적있을시 update
+            qaListservice.updateLikeQaBoard(likeDTO);
+            System.out.println("updateDto : " + likeDTO.toString());
+            likeBoardNum = likeDTO.getBoardIdx();
+            likeDTO = qaListservice.selectOneLikeQaBoard(dto);
+            System.out.println("likeDTO : " + likeDTO.toString());
+            // 좋아요 여부에따른 게시글 좋아요 개수 증가
+            if(likeDTO.getLikeCheck() == 1){
+                qaListservice.likeAddCount(likeDTO);
+            }else if(likeDTO.getLikeCheck() == 0){
+                qaListservice.likeMinusCount(likeDTO);
+            }
+            return likeDTO;
+        } else if (likeDTO == null){ // 좋아요한적 없을시 insert
+            qaListservice.insertLikeQaBoard(dto);
+            System.out.println("insertDto : " + dto.toString());
+            likeBoardNum = dto.getBoardIdx();
+            likeDTO = qaListservice.selectOneLikeQaBoard(dto);
+            // 게시글 좋아요개수 +1
+            qaListservice.likeAddCount(likeDTO);
+        }
+        return likeDTO;
     }
 
     @GetMapping(value = "/qaDelete")
@@ -145,7 +186,7 @@ public class qaController {
 
     @GetMapping(value = "/qaUpdate")
     public String qaUpdate (QaListDTO qaListDTO
-                            , Model model) throws Exception {
+            , Model model) throws Exception {
 
 //        System.out.println("/qaUpdate qaListDTO.getNum() : " + qaListDTO.getNum());
 
@@ -171,6 +212,7 @@ public class qaController {
 
         qaListservice.updateQaBoard(qaListDTO);
     }
+
     //, @RequestParam @Nullable String num
     //이미지 url 반환
     @ResponseBody
@@ -193,15 +235,19 @@ public class qaController {
 
     @ResponseBody
     @PostMapping(value = "/qaRegComment")
-    public void qaRegComment (QaListDTO qaListDTO) throws Exception {
-
-        System.out.println("/qaRegComment qaListDTO : " + qaListDTO.toString());
-
-        qaListservice.insertCommentQaBoard(qaListDTO);
+    public void qaRegComment (QaListDTO qaListDTO, HttpSession session) throws Exception {
+        System.out.println("11/qaRegComment qaListDTO : " + qaListDTO.toString());
+        session.setAttribute("qaRegListDTO", qaListDTO);
     }
 
-
-
+    @ResponseBody
+    @PostMapping(value = "/qaAdopt")
+    public void qaAdopt (int boardNum, int commentNum) throws Exception {
+        QaListDTO dto = new QaListDTO();
+        dto.setNum(commentNum);
+        dto.setParentNum(boardNum);
+        qaListservice.adoptQaBoard(dto);
+    }
 }
 
 

@@ -1,5 +1,7 @@
 package com.wisein.wiselab.dao;
 
+import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 
 import java.util.List;
@@ -39,7 +41,6 @@ public interface QaListDAO {
      * param : QaListDTO
      * return : int
      * 날짜 : 2022-06-04
-<<<<<<< HEAD
      * */
     public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 
@@ -96,9 +97,64 @@ public interface QaListDAO {
      * 날짜 : 2022-06-12
      * */
     public List<QaListDTO> selectCommentQaList(int num) throws Exception;
-=======
-     * */
-    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
->>>>>>> master
 
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    public LikeBoardDTO checkLikeQaBoard(LikeBoardDTO qa) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    public int insertLikeQaBoard(LikeBoardDTO qa) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    public int updateLikeQaBoard(LikeBoardDTO qa) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    public List<LikeBoardDTO> selectLikeQaBoardList(MemberDTO member) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    public LikeBoardDTO selectOneLikeQaBoard(LikeBoardDTO member) throws Exception;
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    public void adoptQaBoard(QaListDTO dto) throws Exception;
+
+    public void likeAddCount(LikeBoardDTO likeDTO) throws Exception;
+
+    public void likeMinusCount(LikeBoardDTO likeDTO) throws Exception;
+
+    public int selectAdpCount(QaListDTO qaListDTO) throws Exception;
 }
