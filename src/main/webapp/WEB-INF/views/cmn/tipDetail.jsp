@@ -12,7 +12,6 @@
             <li>2. 이것도 참고해 보세요</li>
         </ul>
     </div>
-
     <section class="questions content-frame">
         <div class="title">
             <c:out value="${tipBoardDTO.subject}"/>
@@ -58,7 +57,7 @@
                                     <!-- 댓글 수정삭제 -->
                                     <c:if test="${commentList.writer == 'hannah94'}">
                                         <div class="icon">
-                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content})'">border_color</span>
+                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content}')">border_color</span>
                                             <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
                                         </div>
                                     </c:if>
@@ -70,27 +69,31 @@
                             <c:out value="${commentList.content}"/>
                         </div>
                         <!--댓글수정-->
-                        <div class="content" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
-                            <textarea data-v-3b426d7d="" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
-                            <a data-v-3b426d7d="" href="#" role="button" class="button btn_register" onClick="modComm(${commentList.num})">수정</a>
-                            <a data-v-3b426d7d="" href="#" role="button" class="button btn_register" onClick="modCancel(${commentList.num})">취소</a>
+                        <div class="content-mod" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
+                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
                         </div>
+                         <div class="comment_attach" id="mod_comment_attach" style='display: none;'>
+                            <div class="register_box">
+                                <a href="#" role="button" class="button btn_register" onClick="modComm(${commentList.num})">수정</a>
+                                <a href="#" role="button" class="button btn_register" onClick="modCancel(${commentList.num})">취소</a>
+                            </div>
+                         </div>
                     </div>
                 </li>
             </ul>
         </c:forEach>
     </section>
-
-    <div data-v-3b426d7d="" class="CommentWriter">
-        <div data-v-3b426d7d="" class="comment_inbox">
-            <strong data-v-3b426d7d="" class="blind">댓글을 입력하세요</strong>
-            <em><div data-v-3b426d7d="" id="comment_writer" name="comment_writer" class="comment_inbox_name">hannah94</div></em>
-            <textarea data-v-3b426d7d="" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
+    <!--댓글입력-->
+    <div class="CommentWriter">
+        <div class="comment_inbox">
+            <strong class="blind">댓글을 입력하세요</strong>
+            <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">hannah94</div></em>
+            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
         </div>
 
-        <div data-v-3b426d7d="" class="comment_attach">
-            <div data-v-3b426d7d="" class="register_box">
-                <a data-v-3b426d7d="" href="#" role="button" class="button btn_register" onClick="regComm()">등록</a>
+        <div class="comment_attach">
+            <div class="register_box">
+                <a href="#" role="button" class="button btn_register" onClick="regComm()">등록</a>
             </div>
         </div>
     </div>
@@ -176,6 +179,7 @@
             if(isMod==false){
                 document.getElementById('comm'+num).style.display = 'none';
                 document.getElementById('modComm'+num).style.display = 'block';
+                document.getElementById('mod_comment_attach').style.display = 'block';
                 document.getElementById('modComm_content'+num).value = content;
                 isMod = true;
             }else{
@@ -186,6 +190,7 @@
           function modCancel(num){
             isMod = false;
             document.getElementById('modComm'+num).style.display = 'none';
+            document.getElementById('mod_comment_attach').style.display = 'none';
             document.getElementById('comm'+num).style.display = 'block';
           }
 
