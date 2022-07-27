@@ -70,7 +70,7 @@
                 <c:if test="${member.id == qaListDTO.writer && qaListDTO.adpYn eq 'N'}">
                     <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn(${commentQaNum})" style="float: right;">채택하기!</a>
                 </c:if>
-                <c:if test="${qaListDTO.adpNum == commentQa.num && qaListDTO.adpYn eq 'Y'}">
+                <c:if test="${qaListDTO.adpNum == commentQaNum && qaListDTO.adpYn eq 'Y'}">
                    <a href="#" style="float: right;">질문자채택!</a>
                 </c:if>
             </div>
@@ -120,6 +120,7 @@
                    })
                } else if(writer == ""){
                    alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
                }
         }
     </script>
@@ -185,7 +186,7 @@
             var boardNum = '<c:out value="${qaListDTO.num}" />';
             var commentNum = num;
                if(writer != ""){
-                   if(confirm('정말 삭제하시겠습니까?') == true){
+                   if(confirm('정말 채택하시겠습니까?') == true){
                        $.ajax({
                            data:{
                                "boardNum":boardNum,

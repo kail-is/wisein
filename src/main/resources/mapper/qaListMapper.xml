@@ -90,6 +90,8 @@
             ,ADP_YN
             ,DEL_YN
             ,PARENT_NUM
+            ,like_count
+            ,ADP_NUM
         FROM
             qa_board
         WHERE NUM=#{num}
@@ -157,17 +159,18 @@
     <!-- 댓글 조회 -->
     <select id="selectCommentQaList" resultType="QaListDTO">
         SELECT
-        NUM
-        ,CATEGORY
-        ,WRITER
-        ,SUBJECT
-        ,CONTENT
-        ,REG_DATE
-        ,UPD_DATE
-        ,ADP_YN
-        ,DEL_YN
-        ,PARENT_NUM
-        ,ADP_NUM
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,UPD_DATE
+            ,ADP_YN
+            ,DEL_YN
+            ,PARENT_NUM
+            ,like_count
+            ,ADP_NUM
         FROM
         qa_board
         WHERE PARENT_NUM = #{num}
@@ -222,14 +225,14 @@
         UPDATE qa_board
         SET
         like_count = like_count+1
-        WHERE boardIdx = #{boardIdx}
+        WHERE num = #{parentNum}
     </update>
 
     <update id="likeMinusCount" parameterType="LikeBoardDTO">
         UPDATE qa_board
         SET
         like_count = like_count-1
-        WHERE boardIdx = #{boardIdx}
+        WHERE num = #{parentNum}
     </update>
 
     <select id="selectAdpCount" parameterType="QaListDTO" resultType="LikeBoardDTO">

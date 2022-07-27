@@ -71,18 +71,24 @@ public class qaController {
     }
 
     @PostMapping(value="/qaBoard")
-    public String regQaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
-        HttpSession session= request.getSession();
+    public String qaBoard (HttpServletRequest request, QaListDTO qaListDTO) throws Exception {
+        System.out.println("========================= qaBoard Post 시작 ====================================");
+        HttpSession session = request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        qaListDTO.setWriter(member.getId());
 
+        QaListDTO dto = (QaListDTO) session.getAttribute("qaRegListDTO");
+        if(dto != null){
+            qaListDTO.setParentNum(dto.getParentNum());
+        }
+        qaListDTO.setWriter(member.getId());
         System.out.println("/qaBoard post : " + qaListDTO.toString());
 
         if(qaListDTO.getParentNum() == 0){
             qaListservice.insertQaBoard(qaListDTO);
         }else if(qaListDTO.getParentNum() != 0){
             qaListservice.insertCommentQaBoard(qaListDTO);
+            session.removeAttribute("qaRegListDTO");
         }
 
         return "redirect:/qalist";
@@ -147,7 +153,7 @@ public class qaController {
 
         // 해당 글에 좋아요 한적있을시 update 용도
         LikeBoardDTO likeDTO = qaListservice.checkLikeQaBoard(dto);
-
+        System.out.println("if문 전 likeDTO : " + likeDTO.toString());
         int likeBoardNum = 0;
 
         if(likeDTO != null){ // 좋아요 한적있을시 update
@@ -155,7 +161,7 @@ public class qaController {
             System.out.println("updateDto : " + likeDTO.toString());
             likeBoardNum = likeDTO.getBoardIdx();
             likeDTO = qaListservice.selectOneLikeQaBoard(dto);
-            System.out.println("likeDTO : " + likeDTO.toString());
+            System.out.println("if(likeDTO != null) likeDTO : " + likeDTO.toString());
             // 좋아요 여부에따른 게시글 좋아요 개수 증가
             if(likeDTO.getLikeCheck() == 1){
                 qaListservice.likeAddCount(likeDTO);
