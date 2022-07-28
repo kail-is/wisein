@@ -1,4 +1,6 @@
 package com.wisein.wiselab.dao;
+import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
 
 import org.apache.ibatis.session.SqlSession;
@@ -50,18 +52,6 @@ public class QaListDAOImpl implements QaListDAO {
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception {
         return sql.selectOne(NS + ".selectQaOne", qaListDTO);
     }
-
-    /*
-     * 작성자 : 박혜림
-     * 게시글 총 개수
-     * param : QaListDTO
-     * return : int
-     * 날짜 : 2022-06-04
-     * */
-	@Override
-	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
-		return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
-	}
 
     @Override
     public void deleteQaBoard(int num) throws Exception {
@@ -127,6 +117,102 @@ public class QaListDAOImpl implements QaListDAO {
     public List<QaListDTO> selectCommentQaList(int num) throws Exception {
         return sql.selectList(NS + ".selectCommentQaList", num);
     }
+    /*
+     * 작성자 : 박혜림
+     * 게시글 총 개수
+     * param : QaListDTO
+     * return : int
+     * 날짜 : 2022-06-04
+     * */
+	@Override
+	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+		return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
+	}
 
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public LikeBoardDTO checkLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return sql.selectOne(NS + ".checkLikeQaBoard", qa);
+    }
 
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public int insertLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return sql.insert(NS + ".insertLikeQaBoard", qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public int updateLikeQaBoard(LikeBoardDTO qa) throws Exception {
+        return sql.update(NS + ".updateLikeQaBoard", qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public List<LikeBoardDTO> selectLikeQaBoardList(MemberDTO member) throws Exception{
+        return sql.selectList(NS + ".selectLikeQaBoardList", member);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public LikeBoardDTO selectOneLikeQaBoard(LikeBoardDTO member) throws Exception {
+        return sql.selectOne(NS + ".selectOneLikeQaBoard", member);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public void adoptQaBoard(QaListDTO dto) throws Exception {
+        sql.update(NS + ".adoptQaBoard", dto);
+    }
+
+    @Override
+    public void likeAddCount(LikeBoardDTO likeDTO) throws Exception {
+        System.out.println("likeDTO : " + likeDTO);
+        sql.update(NS + ".likeAddCount", likeDTO);
+    }
+    @Override
+    public void likeMinusCount(LikeBoardDTO likeDTO) throws Exception {
+        System.out.println("likeDTO : " + likeDTO);
+        sql.update(NS + ".likeMinusCount", likeDTO);
+    }
+    @Override
+    public int selectAdpCount(QaListDTO qaListDTO) throws Exception{
+        return sql.selectOne(NS + ".selectAdpCount", qaListDTO);
+    }
 }

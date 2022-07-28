@@ -7,33 +7,34 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 <body>
-    <form role="form" method="post" autocomplete="off" id="qaBoard_form">
+    <form autocomplete="off" id="qaBoardForm">
     <div class="content-wrap">
          <div class="select-wrap" style="position: absolute;">
-            <select id="category" name="category" >
-                <option value="FRONT">Front</option>
-                <option value="BACK">Back</option>
-                <option value="DB">DB</option>
-            </select>
+            <c:if test="${empty qaListDTO.category}">
+                <select id="category" name="category" >
+                   <option value="FRONT">Front</option>
+                   <option value="BACK">Back</option>
+                   <option value="DB">DB</option>
+                </select>
+            </c:if>
+            <c:if test="${!empty qaListDTO.category}">
+                <c:out value="${qaListDTO.category}" />
+            </c:if>
         </div>
         <p>
-            <input type="text" size="210" id='subject' name='subject' placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;>
+            <input type="text" size="210" id="subject" name="subject" placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;">
         </p>
 
         <div>내용</div>
         <div id="contents">
             <div id="editor">${qaListDTO.content}</div>
             <div id="viewer"></div>
-            <c:if test="${empty qaListDTO.num}">
-                <input type="hidden" id='num' name='num' value='<c:out value="${qaListDTO.num}"/>'>
-            </c:if>
-            <c:if test="${!empty qaListDTO.num}">
-                <input type="hidden" id='num' name='num' value='0'>
-            </c:if>
-            <input type="hidden" id='content' name='content'>
+
+            <input type="hidden" id="num" name="num" value="${qaListDTO.num}">
+            <input type="hidden" id="parentNum" name="parentNum" value="${qaListDTO.parentNum}">
+            <input type="hidden" id="content" name="content">
         </div>
 
-        <!-- 신규/수정 여부 -->
         <div class="button-wrap">
             <c:if test="${empty qaListDTO.subject}">
                 <input type="button" value="등록" onclick="reg()">
@@ -81,7 +82,6 @@
                     async: false,
                 })
                 .done(function(data) {
-                  alert("성공");
                 })
                 .fail(function(err) {
                   alert(err);
@@ -113,16 +113,31 @@
 
     <script>
         function reg(){
-            document.querySelector("#content").value = editor.getHTML();
-            document.getElementById('qaBoard_form').submit();
+            var writer = '<c:out value="${member.id}" />';
+            if(writer != ""){
+                document.querySelector("#content").value = editor.getHTML();
+                var num = document.querySelector("#num").value;
+                var parentNum = document.querySelector("#parentNum").value;
+
+                if(num == ""){document.querySelector("#num").value = 0;}
+                if(parentNum == ""){document.querySelector("#parentNum").value = 0;}
+
+                var form = document.getElementById("qaBoardForm");
+                form.action = "/qaBoard";
+                form.method = "POST";
+                form.submit();
+            } else if(writer == ""){
+               alert("로그인 후 이용가능합니다.");
+            }
         }
     </script>
     <script>
         function update(){
-            const num = ${qaListDTO.num};
+            Debugger
+            const num = '<c:out value="${qaListDTO.num}" />';
             const subject = document.getElementById('subject').value;
             const content = editor.getHTML();
-
+            Debugger
             $.ajax({
                 data:{"num":num,"subject":subject,"content":content},
                 type:"POST",

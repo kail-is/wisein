@@ -2,12 +2,19 @@ plugins {
 	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
 }
 
 group = 'com.wiselab'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+apply plugin: 'war'
+
+//bootWar.enabled = false
+//war.enabled = true
+//
+//bootWar{
+//	archiveName("ui.war")
+//}
 
 configurations {
 	compileOnly {
@@ -27,7 +34,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok:1.16.18'
 	annotationProcessor 'org.projectlombok:lombok'
-
+	compileOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 	runtimeOnly 'com.h2database:h2'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
@@ -55,8 +62,12 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
 	testImplementation 'org.junit.jupiter:junit-jupiter-params'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+	compileOnly group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
 }
 
 test {
-	useJUnitPlatform()
+//	useJUnitPlatform()
 }

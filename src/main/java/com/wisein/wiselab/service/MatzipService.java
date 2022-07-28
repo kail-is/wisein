@@ -1,5 +1,6 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 
@@ -21,4 +22,11 @@ public interface MatzipService {
     public int updRecm(RecmDTO recmDTO) throws Exception;
 
     public int recmCnt(int matzipId) throws Exception;
+
+    public List<CompanyDTO> companyList();
+    public List<CompanyDTO> matzipCount(String location);
+    public List<CompanyDTO> matzipList(String location);
+    public List<CompanyDTO> recmMatzipCount(int id);
+    public List<CompanyDTO> company();
+    public List<CompanyDTO> selectCompany(String location);
 }

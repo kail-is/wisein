@@ -35,10 +35,9 @@ public class testController2 {
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 
-	@GetMapping(value = "/main")
+	@GetMapping(value = "/")
 	public String main() throws Exception {
-
-		return "cmn/main";
+		return "redirect:qalist";
 	}
 
 	@GetMapping(value = "/totalSearch")
@@ -51,14 +50,30 @@ public class testController2 {
 		return "cmn/foodDetail";
 	}
 
-	@GetMapping(value = "/foodlist")
-	public String foodList() throws Exception {
-		return "cmn/foodList";
-	}
+//	@GetMapping(value = "/foodlist")
+//	public String foodList() throws Exception {
+//		return "cmn/foodList";
+//	}
 
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {
 		return "cmn/dataBoard";
+	}
+
+	@GetMapping(value="/reg")
+	public String getRegister () throws Exception {
+		return "reg";
+	}
+
+	@GetMapping(value="/tipboard")
+	public String tipBoard () throws Exception {
+		return "cmn/tipBoard";
+	}
+
+	@PostMapping(value = "/reg")
+	public String postRegister (MemberDTO dto) throws Exception {
+		service.register(dto);
+		return "redirect:/";
 	}
 
 }

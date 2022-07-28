@@ -18,7 +18,7 @@
                         expand_more
                     </span>
             </div>
-            <button type="button" onClick="location.href='qaBoard'" ></button>
+            <button type="button" onClick="location.href='/qaBoard'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -67,9 +67,16 @@
                         <a href="/qaDetail?num=${qa.num}"><c:out value="${qa.subject}" /></a>
                     </div>
                     <div class="board-cell board-answer gray">
+                        <c:if test="${qa.adpYn eq 'Y'}">
+                            <span class="material-icons" style="color:purple;">
+                                check_circle
+                            </span>
+                        </c:if>
+                        <c:if test="${qa.adpYn eq 'N'}">
                             <span class="material-icons purple2">
                                 help_outline
                             </span>
+                        </c:if>
                         1
                     </div>
                     <div class="board-cell board-like gray">

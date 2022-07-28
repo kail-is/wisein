@@ -426,9 +426,6 @@ input, select {
   margin-bottom: 2em;
 }
 
-.sidebar-wrap .sidebar .info img {
-  height: 45px;
-}
 
 .sidebar-wrap .sidebar .info label {
   cursor: pointer;
@@ -620,3 +617,57 @@ input, select {
     position: static;
   }
 }
+
+
+ .join-box-btn {
+  box-sizing: border-box;
+  width: 150px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1em;
+  color: white;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(270deg, #ed3551 0%, #009FFF 100%);
+  overflow: visible;
+  border-radius: 100px;
+  border: 2px solid #8d72bb;
+}
+
+.join-box-txt {
+    margin: 0 auto;
+    padding: 1.5em 0;
+    padding-top: 0;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: inline-block;
+}
+
+.close:after {
+    display: inline-block;
+    content: "\00d7";
+    font-size:15pt;
+}
+
+.signUp-input-wrap #files {
+    width: 50%
+}
+
+
+.file_list .profile_img * {
+    display: inline-block;
+}
+
+
+.file_list .profile_img p {
+    font-weight: bold;
+    color: gray;
+    padding: 2px 5px;
+}
+

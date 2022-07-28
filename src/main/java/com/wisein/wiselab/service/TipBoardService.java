@@ -1,5 +1,7 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.FileDTO;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

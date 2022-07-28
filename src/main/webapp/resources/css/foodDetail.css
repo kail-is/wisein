@@ -789,7 +789,11 @@ input, select {
 }
 
 .dim {
+<<<<<<< HEAD
   position: absolute;
+=======
+  position: fixed;
+>>>>>>> master
   top: 0;
   right: 0;
   width: 100%;

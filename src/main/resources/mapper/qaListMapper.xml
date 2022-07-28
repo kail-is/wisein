@@ -41,16 +41,17 @@
     </select>
 
 	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
-		<![CDATA[
-		SELECT COUNT(NUM)
-		  FROM QA_BOARD
-		 WHERE 1=1
-		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+		<![CDATA[ 
+		SELECT COUNT(NUM) 
+		  FROM QA_BOARD 
+		 WHERE 1=1 
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
 		]]>
 	</select>
+
     <!-- 게시글 등록 -->
     <insert id="insertQaBoard" parameterType="QaListDTO">
         INSERT INTO qa_board
@@ -89,6 +90,8 @@
             ,ADP_YN
             ,DEL_YN
             ,PARENT_NUM
+            ,like_count
+            ,ADP_NUM
         FROM
             qa_board
         WHERE NUM=#{num}
@@ -166,13 +169,10 @@
             ,ADP_YN
             ,DEL_YN
             ,PARENT_NUM
+            ,like_count
+            ,ADP_NUM
         FROM
-            qa_board
-
-
-
-
-
+        qa_board
         WHERE PARENT_NUM = #{num}
     </select>
 
@@ -184,6 +184,59 @@
 		 WHERE 1=1
 		   AND NUM > 0
 		]]>
-	</select>
+    </select>
+
+    <select id="checkLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
+        SELECT * FROM like_board WHERE boardIdx = #{boardIdx} AND userId = #{userId}
+    </select>
+
+    <insert id="insertLikeQaBoard" parameterType="LikeBoardDTO">
+        INSERT like_board (boardIdx, boardtype, userId, PARENT_NUM) VALUES( #{boardIdx}, 'qa', #{userId}, #{parentNum})
+    </insert>
+
+    <update id="updateLikeQaBoard" parameterType="LikeBoardDTO">
+        UPDATE like_board
+        <if test="likeCheck == 1">
+            SET likeCheck = 0
+        </if>
+        <if test="likeCheck == 0">
+            SET likeCheck = 1
+        </if>
+        WHERE boardIdx = #{boardIdx}
+    </update>
+
+    <select id="selectLikeQaBoardList" parameterType="MemberDTO" resultType="LikeBoardDTO">
+        SELECT * FROM like_board WHERE userId = #{id};
+    </select>
+
+    <select id="selectOneLikeQaBoard" parameterType="MemberDTO" resultType="LikeBoardDTO">
+        SELECT * FROM like_board WHERE boardIdx = #{boardIdx} AND userId = #{userId}
+    </select>
+
+    <update id="adoptQaBoard" parameterType="QaListDTO">
+        UPDATE qa_board
+        SET
+        ADP_YN = 'Y'
+        , ADP_NUM = #{num}
+        WHERE num = #{parentNum}
+    </update>
+
+    <update id="likeAddCount" parameterType="LikeBoardDTO">
+        UPDATE qa_board
+        SET
+        like_count = like_count+1
+        WHERE num = #{parentNum}
+    </update>
+
+    <update id="likeMinusCount" parameterType="LikeBoardDTO">
+        UPDATE qa_board
+        SET
+        like_count = like_count-1
+        WHERE num = #{parentNum}
+    </update>
+
+    <select id="selectAdpCount" parameterType="QaListDTO" resultType="LikeBoardDTO">
+        SELECT count(*) FROM like_board WHERE boardIdx = #{num}
+    </select>
 
 </mapper>

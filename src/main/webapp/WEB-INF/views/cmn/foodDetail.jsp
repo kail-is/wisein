@@ -44,11 +44,29 @@ ${matzip.matzipData}
     </section>
     <div class="score-wrap">
         <p class="purple">평가</p>
+<<<<<<< HEAD
+        <span class="material-icons purple">
+                star
+            </span>
+        <span class="material-icons purple">
+                star
+            </span>
+        <span class="material-icons purple">
+                star
+            </span>
+        <span class="material-icons purple">
+                star
+            </span>
+        <span class="material-icons gray">
+                star
+            </span>
+=======
         <div class='RatingStar'>
           <div class='RatingScore'>
             <div class='outer-star'><div class='inner-star'>${matzip.rate}</div></div>
           </div>
         </div>
+>>>>>>> master
         <p class="purple">${matzip.rate} (${matzip.count})</p>
     </div>
 
