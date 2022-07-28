@@ -13,10 +13,19 @@
         </ul>
     </div>
     <section class="questions content-frame">
+        <!--좋아요북마크-->
+        <div class="icon" style="float:right;">
+            <span class="material-icons" id="like_btn" onclick="like(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+        </div>
+
+        <!--제목-->
         <div class="title">
             <c:out value="${tipBoardDTO.subject}"/>
         </div>
 
+
+        <!--작성자-->
         <div class="writer-wrap">
             <p class="writer"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
@@ -31,6 +40,7 @@
             ${content}
         </div>
     </section>
+
         <!-- 게시글 수정삭제 -->
         <div class="icon" align="right">
             <span class="material-icons" onClick="updTip()">border_color</span>
@@ -219,6 +229,34 @@
                  }
               })
           }
+
+          function like(num){
+             var brdRef = "tip||" + ${tipBoardDTO.num};
+             var writer = 'hannah94'
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "brdRef" : brdRef,
+                           "writer" : writer
+                       },
+                       type:"GET",
+                       url:"/likeTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("좋아요 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+          function bookmark(num){
+          }
+
    </script>
 
 </body>

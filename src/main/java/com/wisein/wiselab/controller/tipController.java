@@ -149,4 +149,11 @@ public class tipController {
     public void tipUpdComment (CommentDTO dto) throws Exception {
         commentService.updateComment(dto);
     }
+
+    //좋아요 등록
+    @ResponseBody
+    @PostMapping(value = "/likeTip")
+    public void likeTip (CommentDTO dto) throws Exception {
+        commentService.insertComment(dto);
+    }
 }

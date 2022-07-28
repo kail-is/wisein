@@ -19,4 +19,5 @@ public class TipBoardDTO extends PaginationInfo  {
     private String delYn;
     private int count;
     private int parentNum;
+    private int likeCount;
 }
