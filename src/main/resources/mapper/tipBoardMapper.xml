@@ -16,6 +16,7 @@
                 ,A.UPD_DATE
                 ,A.DEL_YN
                 ,A.PARENT_NUM
+                ,A.LIKE_COUNT
             FROM
                 (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                     ,TB.NUM
@@ -28,6 +29,7 @@
                     ,TB.DEL_YN
                     ,TB.COUNT
                     ,TB.PARENT_NUM
+                    ,TB.LIKE_COUNT
                 FROM tip_board TB
                     ,(SELECT @ROWNUM:=0) R
                 WHERE 1=1
@@ -55,6 +57,7 @@
                 ,DEL_YN
                 ,COUNT
                 ,PARENT_NUM
+                ,LIKE_COUNT
             FROM
                  tip_board
             WHERE NUM=#{num}

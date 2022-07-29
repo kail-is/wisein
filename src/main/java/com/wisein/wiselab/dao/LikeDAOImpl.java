@@ -1,5 +1,6 @@
 package com.wisein.wiselab.dao;
-import com.wisein.wiselab.dto.CommentDTO;
+import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.TipBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,47 +8,40 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class LikeDAOImpl implements CommentDAO {
+public class LikeDAOImpl implements LikeDAO {
 
     @Autowired
     private SqlSession sql;
 
-    private static final String NS = "com.wisein.wiselab.mapper.commentMapper";
+    private static final String NS = "com.wisein.wiselab.mapper.LikeMapper";
 
-    /* comment 다건조회 */
+    /* like 여부 조회 */
     @Override
-    public List<CommentDTO> selectComment(String brdRef) throws Exception {
-        return sql.selectList(NS + ".selectComment", brdRef);
+    public String checkLikeTipBoard(LikeBoardDTO dto) throws Exception {
+        return sql.selectOne(NS + ".checkLikeTipBoard", dto);
     }
 
-    /* comment 등록 */
+    /* like 등록 */
     @Override
-    public void insertComment(CommentDTO dto) throws Exception {
-        sql.insert(NS + ".insertComment", dto);
+    public void doLike(LikeBoardDTO dto) throws Exception {
+        sql.insert(NS + ".doLike", dto);
     }
 
-    /* comment 다건삭제 */
+    /* like 해제 */
     @Override
-    public void deleteAllComment(String brdRef) throws Exception {
-        sql.update(NS+ ".deleteAllComment", brdRef);
+    public void undoLike(LikeBoardDTO dto) throws Exception {
+        sql.update(NS+ ".undoLike", dto);
     }
 
-    /* comment 단건삭제 */
+    /* like 등록시 게시글 likeCount 증가- */
     @Override
-    public void deleteComment(CommentDTO dto) throws Exception {
-        sql.update(NS+ ".deleteComment", dto);
+    public void addTipLikeCount(int num) throws Exception {
+        sql.update(NS+ ".addTipLikeCount", num);
     }
 
-    /* comment 수정 */
+    /* like 해제시 게시글 likeCount 감소- */
     @Override
-    public void updateComment(CommentDTO dto) throws Exception {
-        sql.update(NS+ ".updateComment", dto);
+    public void delTipLikeCount(int num) throws Exception {
+        sql.update(NS+ ".delTipLikeCount", num);
     }
-
-    /* 전체 comment 개수 조회 */
-    @Override
-    public int selectCommentTotalCount(String brdRef) throws Exception {
-        return sql.selectOne(NS + ".selectCommentTotalCount", brdRef);
-    }
-
 }

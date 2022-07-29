@@ -15,15 +15,19 @@
     <section class="questions content-frame">
         <!--좋아요북마크-->
         <div class="icon" style="float:right;">
-            <span class="material-icons" id="like_btn" onclick="like(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
-            <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
-        </div>
+            <c:if test="${checkLike == 'N'}">
+                <span class="material-icons" id="like_btn" onclick="doLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            </c:if>
+            <c:if test="${checkLike == 'Y'}">
+                <span class="material-icons" id="like_btn" onclick="undoLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
+            </c:if>
+                <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+            </div>
 
         <!--제목-->
         <div class="title">
             <c:out value="${tipBoardDTO.subject}"/>
         </div>
-
 
         <!--작성자-->
         <div class="writer-wrap">
@@ -230,17 +234,43 @@
               })
           }
 
-          function like(num){
-             var brdRef = "tip||" + ${tipBoardDTO.num};
-             var writer = 'hannah94'
+          function doLike(num){
+             var brdRef = "tip||" + num;
+             var userId = 'hannah94'
               if(writer != ""){
                    $.ajax({
                        data:{
+                           "num"    : num,
                            "brdRef" : brdRef,
-                           "writer" : writer
+                           "userId" : userId
                        },
-                       type:"GET",
-                       url:"/likeTip",
+                       type:"POST",
+                       url:"/doLikeTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("좋아요 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+          function undoLike(num){
+             var brdRef = "tip||" + num;
+             var userId = 'hannah94'
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                           "brdRef" : brdRef,
+                           "userId" : userId
+                       },
+                       type:"POST",
+                       url:"/doLikeTip",
                        success:function(data) {
                            window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
                        },

@@ -54,7 +54,7 @@
                         <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
                     </div>
                     <div class="board-cell board-like gray">
-                        <span class="material-icons">thumb_up</span>1
+                        <span class="material-icons">thumb_up</span>${tip.likeCount}
                     </div>
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>

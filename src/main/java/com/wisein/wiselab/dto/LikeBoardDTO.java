@@ -10,5 +10,8 @@ public class LikeBoardDTO {
     private String userId;
     private int likeCheck;
     private int parentNum;
+    private String brdRef;
+    private String delYn;
+
 }
 

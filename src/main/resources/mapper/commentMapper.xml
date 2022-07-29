@@ -23,11 +23,11 @@
         INSERT INTO comment
         (
             NUM
-            ,BRD_REF
-            ,CONTENT
-            ,WRITER
-            ,REG_DATE
-            ,DEL_YN
+            , BRD_REF
+            , CONTENT
+            , WRITER
+            , REG_DATE
+            , DEL_YN
         )
         VALUES
         (
@@ -46,7 +46,7 @@
             comment
         SET
             DEL_YN = 'Y'
-        WHERE  BRD_REF=#{brdRef}
+        WHERE BRD_REF=#{brdRef}
     </update>
 
     <!--comment 단건삭제-->
@@ -55,7 +55,7 @@
             comment
         SET
             DEL_YN = 'Y'
-        WHERE  BRD_REF=#{brdRef}
+        WHERE  BRD_REF = #{brdRef}
         AND NUM = #{num}
     </update>
 

@@ -1,10 +1,11 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
-import com.wisein.wiselab.common.paging.PaginationInfo;
 import com.wisein.wiselab.dto.CommentDTO;
+import com.wisein.wiselab.dto.LikeBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import com.wisein.wiselab.service.CommentService;
+import com.wisein.wiselab.service.LikeService;
 import com.wisein.wiselab.service.TipBoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -34,6 +33,10 @@ public class tipController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    LikeService likeService;
+
 
     private final AbstractPagingCustom PagingTagCustom;
 
@@ -57,7 +60,7 @@ public class tipController {
 
     //단건 조회
     @GetMapping(value="/tipDetail")
-    public String tipDetail (HttpServletRequest request, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
+    public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
         TipBoardDTO TipBoardDTO = null;
         List<CommentDTO> commentList = new ArrayList<>();
         String brdRef = "tip||"+num;
@@ -72,10 +75,18 @@ public class tipController {
             commentList = commentService.selectComment(brdRef);
         }
 
+        LikeBoardDTO likeBoardDTO =  null;
+//        String id = (String) session.getAttribute("authUser");
+//        likeBoardDTO.setUserId(id);
+        likeBoardDTO.setBrdRef(brdRef);
+        likeBoardDTO.setUserId("hannah94");
+        String checkLike = likeService.checkLikeTipBoard(likeBoardDTO);
+
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
         model.addAttribute("commentList", commentList);
+        model.addAttribute("checkLike", checkLike);
 
         return "cmn/tipDetail";
     }
@@ -150,10 +161,21 @@ public class tipController {
         commentService.updateComment(dto);
     }
 
-    //좋아요 등록
+    //like 등록
     @ResponseBody
-    @PostMapping(value = "/likeTip")
-    public void likeTip (CommentDTO dto) throws Exception {
-        commentService.insertComment(dto);
+    @PostMapping(value = "/doLikeTip")
+    public void doLike (int num, LikeBoardDTO dto) throws Exception {
+        likeService.doLike(dto);
+        likeService.addTipLikeCount(num);
     }
+
+    //like 해제
+    @ResponseBody
+    @PostMapping(value = "/udoLikeTip")
+    public void undoLike (int num, LikeBoardDTO dto) throws Exception {
+        likeService.undoLike(dto);
+        likeService.delTipLikeCount(num);
+    }
+
+
 }
