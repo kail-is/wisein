@@ -30,30 +30,6 @@ public class testController2 {
 
 	@Autowired
 	MemberService service;
-	@Autowired
-	MailHandler mailHandler;
-	@Autowired
-	BCryptPasswordEncoder passEncoder;
-
-	@GetMapping(value = "/")
-	public String main() throws Exception {
-		return "redirect:qalist";
-	}
-
-	@GetMapping(value = "/totalSearch")
-	public String totalSearch() throws Exception {
-		return "cmn/totalSearch";
-	}
-
-	@GetMapping(value = "/fooddetail")
-	public String foodDetail() throws Exception {
-		return "cmn/foodDetail";
-	}
-
-//	@GetMapping(value = "/foodlist")
-//	public String foodList() throws Exception {
-//		return "cmn/foodList";
-//	}
 
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {
@@ -62,12 +38,12 @@ public class testController2 {
 
 	@GetMapping(value="/reg")
 	public String getRegister () throws Exception {
-		return "reg";
+		return "backup/reg";
 	}
 
 	@GetMapping(value="/tipboard")
 	public String tipBoard () throws Exception {
-		return "cmn/tipBoard";
+		return "board/tipBoard";
 	}
 
 	@PostMapping(value = "/reg")

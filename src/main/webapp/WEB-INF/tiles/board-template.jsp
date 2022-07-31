@@ -77,6 +77,7 @@
     <script src="${url}/resources/js/common/authCheck.js"></script>
     <script src="${url}/resources/js/common/util.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
+    <tiles:insertAttribute name="editor"/>
 
 	<script>
 	<c:if test="${empty member}">

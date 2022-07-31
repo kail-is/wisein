@@ -51,7 +51,7 @@ public class qaController {
 
     @GetMapping(value="/qaBoard")
     public String qaBoard () throws Exception {
-        return "cmn/qaBoard";
+        return "board/qaBoard";
     }
 
     @GetMapping(value="/regQaBoard")

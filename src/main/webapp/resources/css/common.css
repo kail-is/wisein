@@ -702,27 +702,6 @@ input, select {
   background: #7E57C2;
 }
 
-.signUp-popup-wrap .signUp-input-label {
-  border: 1px solid #7E57C2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  width: 80px;
-  height: 30px;
-}
-
 .signUp-popup-wrap .signUp-input {
   width: calc(100% - 175px);
   padding-left: 8px;
@@ -1297,4 +1276,8 @@ body {
 
 .mg0 {
     margin: 0 !important;
+}
+
+.font-awe {
+    font-family: "Font Awesome 5 Free" !important;
 }

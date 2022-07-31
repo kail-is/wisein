@@ -37,8 +37,6 @@ public class matzipController {
 	@GetMapping(value = "/matzip")
 	public String getMatzip(@RequestParam int id, Model model) throws Exception {
 
-		System.out.println("di : " +id);
-
 		MatzipDTO matzipDTO = service.selectMatzip(id);
 
 		List<RecmDTO> recmDTOList = service.selectMzRecm(id);
@@ -50,7 +48,7 @@ public class matzipController {
 
 	@GetMapping(value="/matzipBoard")
 	public String matzipBoard () throws Exception {
-		return "cmn/matzipBoard";
+		return "board/matzipBoard";
 	}
 
 	@GetMapping(value="/regMatzip")
@@ -77,7 +75,7 @@ public class matzipController {
 		RecmDTO recmDTO = service.selectRecm(id);
 		model.addAttribute("recm", recmDTO);
 
-		return "cmn/matzipUpd";
+		return "board/matzipUpd";
 	}
 
 	@GetMapping(value="/putRecm")
