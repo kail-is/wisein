@@ -103,4 +103,10 @@ public class MatzipServiceImpl implements MatzipService{
     public List<CompanyDTO> selectCompany(String location) {
         return dao.selectCompany(location);
     }
+
+    @Override
+    public int matzipId(String loc) {
+        return dao.matzipId(loc);
+    }
+
 }
