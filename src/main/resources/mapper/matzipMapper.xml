@@ -7,6 +7,7 @@
          ID
         ,CATEGORY
         ,MATZIP_DATA
+        ,CLOSED_STATE
         FROM
         MATZIP_BOARD
         WHERE ID = #{matzipId}
@@ -89,6 +90,14 @@
         , #{content}
         )
     </insert>
+
+
+    <update id="updClosedStat" parameterType="Int">
+        UPDATE MATZIP_BOARD
+        SET
+        CLOSED_STATE = 'Y'
+        WHERE ID = #{id}
+    </update>
 
 
     <update id="delRecm" parameterType="Integer">

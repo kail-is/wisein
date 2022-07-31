@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,6 +109,12 @@ public class matzipController {
 			return "redirect:/matzip";
 		}
 
+	}
+
+	@ResponseBody
+	@GetMapping(value="/addClosed")
+	public void updClosedStat (@RequestParam int matzipId) throws Exception {
+		service.updClosedStat(matzipId);
 	}
 
 	@ExceptionHandler(NullPointerException.class)

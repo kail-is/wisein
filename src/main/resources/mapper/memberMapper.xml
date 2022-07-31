@@ -68,8 +68,19 @@
         WHERE ID = #{id}
     </select>
 
-    <!--  회원 정보 수정  -->
+    <!--  회원 정보 PW 제외 수정  -->
     <update id="modify" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        SITE = #{site}
+        , HIRE_DATE = #{hireDate}
+        , MEET_LINK = #{meetLink}
+        , MEET_YN = #{meetYn}
+        WHERE ID = #{id}
+    </update>
+
+    <!--  회원 정보 PW 포함 수정  -->
+    <update id="modifyPass" parameterType="MemberDTO">
         UPDATE MEMBER
         SET
         PW = #{pw}
@@ -77,6 +88,14 @@
         , HIRE_DATE = #{hireDate}
         , MEET_LINK = #{meetLink}
         , MEET_YN = #{meetYn}
+        WHERE ID = #{id}
+    </update>
+
+    <!--  회원 정보 PW only 수정  -->
+    <update id="modifyPwOnly" parameterType="MemberDTO">
+        UPDATE MEMBER
+        SET
+        PW = #{pw}
         WHERE ID = #{id}
     </update>
 
@@ -141,5 +160,44 @@
         AND MEM_STATUS = 'Y'
     </update>
 
+    <!-- 패스워드 신청 추가 -->
+    <insert id="addChgePw" parameterType="MemberDTO">
+        INSERT INTO CHANGE_PW(
+        MEMBER_TOKEN
+        , ID
+        , PW
+        )VALUES(
+        #{memberToken}
+        , #{id}
+        , #{pw}
+        )
+    </insert>
+
+    <!-- 패스워드 신청 중복 시 값 업데이트 -->
+    <update id="addChgePwPlus" parameterType="MemberDTO">
+        UPDATE CHANGE_PW
+        SET
+        MEMBER_TOKEN = #{memberToken}
+        , PW = #{pw}
+        , REG_DATE = NOW()
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 패스워드 신청 중복 체크-->
+    <select id="chgePassDupChk" parameterType="String" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM CHANGE_PW
+        WHERE ID = #{id}
+    </select>
+
+    <!-- 비밀번호 찾기 테이블 조회 -->
+    <select id="findModMemData" parameterType="String" resultType="MemberDto">
+        SELECT
+        ID
+        , PW
+        FROM CHANGE_PW
+        WHERE MEMBER_TOKEN = #{memberToken}
+    </select>
 
 </mapper>

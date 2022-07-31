@@ -2,42 +2,57 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <link rel="stylesheet" href="resources/css/tipBoard.css">
+    <link rel="stylesheet" href="resources/css/foodDetail.css">
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css">
     <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css">
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 <body>
-    <div class="content-wrap">
+    <div class="content-wrap ">
+            <div id="contents" class="matzip-write">
 
-        <p><input type="text" size="210" id='writer' placeholder="아이디입니다" required></p>
-        <p><input type="text" size="210" id='subject' placeholder="제목을 입력하세요" required></p>
+            <input type="text" size="210" id="writer" value="${member.id}" placeholder="아이디입니다" required>
 
-        <p><select name="star" id='star'>
-             <option value="1">☆☆☆☆☆</option>
-             <option value="2">★☆☆☆☆</option>
-             <option value="3">★★★☆☆</option>
-             <option value="4">★★★★☆</option>
-             <option value="5">★★★★★</option>
-        </select></p>
+            <div class="content-inner-box">
+                <select name="star" id="star">
+                     <option value="1">☆☆☆☆☆</option>
+                     <option value="2">★☆☆☆☆</option>
+                     <option value="3" selected>★★★☆☆</option>
+                     <option value="4">★★★★☆</option>
+                     <option value="5">★★★★★</option>
+                </select>
 
-         <p><select name="category" id='category'>
-             <option value="인덕원">인덕원</option>
-             <option value="회현">회현</option>
-             <option value="을지로">을지로</option>
-         </select></p>
+                 <select name="category" id="category">
+                     <option value="인덕원">인덕원</option>
+                     <option value="회현">회현</option>
+                     <option value="을지로">을지로</option>
+                 </select>
 
-        <p><input type="text" size="210" id='matzip_data' placeholder="맛집데이터" required></p>
+                <input type="text" size="210" id="matzip-name" class= "none" placeholder="맛집 이름" required>
 
-        <div>내용</div>
-        <div id="contents">
+                <input type="text" size="210" class="address" placeholder="주소" required>
+
+
+                 <div class="button-wrap">
+                    <input type="button" value="주소 검색" onclick="find()">
+                </div>
+
+            </div>
+
+
+            <input type="text" size="210" id="subject" placeholder="제목을 입력하세요" required>
+
+            <input type="text" size="210" id="matzip_data" onchange="matzipDataSet(this)" placeholder="맛집데이터" required>
+
             <div id="editor"></div>
             <div id="viewer"></div>
+
+            <div class="button-wrap">
+               <input type="button" value="등록" onclick="submit()">
+               <input type="button" value="취소" onclick="cancel()">
+            </div>
         </div>
 
-        <div class="button-wrap">
-            <input type="button" value="등록" onclick="submit()">
-            <input type="button" value="취소" onclick="cancel()">
-       </div>
 
     </div>
     <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
@@ -87,32 +102,46 @@
           }`
     </script>
     <script>
-            function submit(){
-                const writer = document.getElementById('writer').value;
-                const subject = document.getElementById('subject').value;
-                const content = editor.getHTML();
-                const star = document.getElementById('star').value;
 
-                const matzip_data = document.getElementById('matzip_data').value;
-                const matzip_obj = JSON.parse(matzip_data);
-                debugger;
-                const matzip_id = matzip_obj.documents[0].id;
+        function matzipDataSet(obj) {
+        // TODO - api 통신 이후 변경
+           const address = document.querySelector('.content-inner-box .address');
+           const matzip_name = document.querySelector('#matzip-name');
+           if (obj.value.length > 0) {
+                address.style.width = "50%"
+                matzip_name.classList.remove('none');
+           }else {
+                address.style.width = "70%"
+                matzip_name.classList.add('none');
+           }
+        }
 
-                debugger;
+        function submit(){
+            const writer = document.getElementById('writer').value;
+            const subject = document.getElementById('subject').value;
+            const content = editor.getHTML();
+            const star = document.getElementById('star').value;
 
-                $.ajax({
-                    data:{ "writer": writer, "subject":subject,"content":content, "star":star, "matzipData": matzip_data, "matzipId": matzip_id},
-                    type:"GET",
-                    url:"/regMatzip",
-                    success:function(data) {
-                        alert("성공");
-                        window.location.href = "/matzipList"
-                    },
-                    error:function(request, status, error) {
-                        alert("실패");
-                    }
-                })
-            }
-        </script>
+            const matzip_data = document.getElementById('matzip_data').value;
+            const matzip_obj = JSON.parse(matzip_data);
+            debugger;
+            const matzip_id = matzip_obj.documents[0].id;
+
+            debugger;
+
+            $.ajax({
+                data:{ "writer": writer, "subject":subject,"content":content, "star":star, "matzipData": matzip_data, "matzipId": matzip_id},
+                type:"GET",
+                url:"/regMatzip",
+                success:function(data) {
+                    alert("성공");
+                    window.location.href = "/matzipList"
+                },
+                error:function(request, status, error) {
+                    alert("실패");
+                }
+            })
+        }
+    </script>
 </body>
 </html>

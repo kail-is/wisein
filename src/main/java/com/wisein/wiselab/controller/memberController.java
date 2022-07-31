@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -35,12 +37,9 @@ public class memberController {
 	@PostMapping(value = "/register")
 	public String postRegister (MemberDTO dto, AuthKeyConfig tmpKey) throws Exception {
 
-		//회원가입 하면 이메일 인증에 필요한 임시키 생성
-		//dto의 auth_state에 저장
 		String tempKey = tmpKey.tempKeyCreate();
 		dto.setAuthState(tempKey);
 
-		// Password Encoding by BCryptPasswordEncoder
 		String inputPw = dto.getPw();
 		String passEncd = passEncoder.encode(inputPw);
 		dto.setPw(passEncd);
@@ -98,14 +97,17 @@ public class memberController {
 		return "upd";
 	}
 
+
 	@PostMapping(value = "/user/update")
 	public String postModifyUser(MemberDTO dto, HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
-		String inputPw = dto.getPw();
-		String passEncd = passEncoder.encode(inputPw);
-		dto.setPw(passEncd);
-
-		// service.modify(dto);
+		if (dto.getPw().length() > 1) {
+			String inputPw = dto.getPw();
+			String passEncd = passEncoder.encode(inputPw);
+			dto.setPw(passEncd);
+		}else {
+			dto.setPw(null);
+		}
 
 		service.modify(dto, multipartHttpServletRequest);
 
@@ -118,7 +120,7 @@ public class memberController {
 		return "redirect:/";
 	}
 
-/*
+
 	@ResponseBody
 	@GetMapping(value = "/delImgFile")
 	public Map<String, String> deleteUserImg(@RequestParam("delImgFileNm") String fileNm) throws Exception {
@@ -130,7 +132,6 @@ public class memberController {
 		map.put("msg", "삭제 완료.");
 		return map;
 	}
-*/
 
 	@GetMapping(value = "/user/withdraw")
 	public String getWithdrawalUser() throws Exception {
@@ -138,9 +139,8 @@ public class memberController {
 	}
 
 	@PostMapping(value = "/user/withdraw")
-	public String withdrawal(MemberDTO dto, HttpSession session) throws Exception {
+	public String postWithdrawalUser(MemberDTO dto, HttpSession session) throws Exception {
 		service.withdraw(dto, session);
-		session.invalidate();
 		return "redirect:/";
 	}
 

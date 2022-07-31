@@ -9,4 +9,5 @@ public class MatzipDTO {
     private String category;
     private String matzipData;
     private int count;
+    private String closedState;
 }

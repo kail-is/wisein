@@ -21,6 +21,10 @@ public interface MemberDAO {
 
     public void modify(MemberDTO dto) throws Exception;
 
+    public void modifyPass(MemberDTO dto) throws Exception;
+
+    public void modifyPwOnly(MemberDTO dto) throws Exception;
+
     public void delUserImg(String fileNm) throws Exception;
 
     public void withdraw(MemberDTO dto) throws Exception;
@@ -28,4 +32,13 @@ public interface MemberDAO {
     public void insertMemFileList(List<FileDTO> list) throws Exception;
 
     public List<FileDTO> selectMemFileList(String brdRef) throws Exception;
+
+    public void addChgePw(MemberDTO dto) throws Exception;
+
+    public void addChgePwPlus(MemberDTO dto) throws Exception;
+
+    public int chgePassDupChk(String userId) throws Exception;
+
+    public MemberDTO findModMemData(String token) throws Exception;
+
 }

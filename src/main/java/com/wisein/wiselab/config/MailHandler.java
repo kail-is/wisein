@@ -19,7 +19,7 @@ public class MailHandler {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            messageHelper.setFrom("ehdrms235@gmail.com", "WISEADMIN");
+            messageHelper.setFrom("wisein@gmail.com", "WISEADMIN");
             messageHelper.setTo(toEmail);
             messageHelper.setSubject(subject);
             messageHelper.setText(message, true);

@@ -20,5 +20,6 @@ public class MemberDTO {
     private List<FileDTO> fileList;
     private String memStatus;
     private String authState;
+    private String memberToken;
 
 }
