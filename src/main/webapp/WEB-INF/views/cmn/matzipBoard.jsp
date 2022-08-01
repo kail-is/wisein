@@ -30,11 +30,11 @@
 
                 <input type="text" size="210" id="matzip-name" class= "none" placeholder="맛집 이름" required>
 
-                <input type="text" size="210" class="address" placeholder="주소" required>
+                <input type="text" size="210" class="address" id='keyword' placeholder="키워드" required>
 
 
                  <div class="button-wrap">
-                    <input type="button" value="주소 검색" onclick="find()">
+                    <input type="button" value="주소 검색" onclick="findKeyword()">
                 </div>
 
             </div>
@@ -70,36 +70,6 @@
                  placeholder: '📌욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요📌',
                  plugins: [colorSyntax]
             });
-
-         document.getElementById('matzip_data').value =
-         `{
-            "documents": [
-              {
-                "address_name": "서울 중구 회현동1가 206",
-                "category_group_code": "FD6",
-                "category_group_name": "음식점",
-                "category_name": "음식점 > 아시아음식 > 동남아음식 > 베트남음식",
-                "distance": "",
-                "id": "1710196369",
-                "phone": "02-318-7768",
-                "place_name": "홍대쌀국수 회현점",
-                "place_url": "http://place.map.kakao.com/1710196369",
-                "road_address_name": "서울 중구 퇴계로 72",
-                "x": "126.980640745963",
-                "y": "37.5591237285706"
-              }
-            ],
-            "meta": {
-              "is_end": true,
-              "pageable_count": 1,
-              "same_name": {
-                "keyword": "홍대쌀국수 회현점",
-                "region": [],
-                "selected_region": ""
-              },
-              "total_count": 1
-            }
-          }`
     </script>
     <script>
 
@@ -142,6 +112,30 @@
                 }
             })
         }
+    </script>
+    <script>
+    	
+    	function findKeyword() {
+    		
+    		const categoryEl   = document.getElementById('category');
+    		const keywordEl    = document.getElementById('keyword');
+    		const matzipDataEl = document.getElementById('matzip_data');
+    		let keyword = `\${categoryEl.value} \${keywordEl.value}`
+    		
+    		$.ajax({
+    			type : 'get',
+    			url : 'https://dapi.kakao.com/v2/local/search/keyword.JSON?query='+keyword,
+    			beforeSend : function(xhr){
+    				xhr.setRequestHeader("Authorization", "KakaoAK {REST_API_KEY}");
+    			},
+    			error: function(xhr, status, error){ 
+    				alert(error+'error'); 
+    			},
+    			success : function(data){
+    				matzipDataEl.value = JSON.stringify(data);
+    			},
+    		});
+    	}
     </script>
 </body>
 </html>
