@@ -64,6 +64,15 @@ public class tipController {
         TipBoardDTO TipBoardDTO = null;
         List<CommentDTO> commentList = new ArrayList<>();
         String brdRef = "tip||"+num;
+
+//        String id = (String) session.getAttribute("authUser");
+//        likeBoardDTO.setUserId(id);
+        LikeBoardDTO LikeDTO = new LikeBoardDTO();
+        LikeDTO.setBrdRef(brdRef);
+        LikeDTO.setUserId("hannah94");
+
+        String likeYN = likeService.TipLikeYN(LikeDTO);
+        System.out.println(likeYN);
         int commentNum = commentService.selectCommentTotalCount(brdRef);
 
         if(dto.getNum() !=0){
@@ -75,18 +84,12 @@ public class tipController {
             commentList = commentService.selectComment(brdRef);
         }
 
-        LikeBoardDTO likeBoardDTO =  null;
-//        String id = (String) session.getAttribute("authUser");
-//        likeBoardDTO.setUserId(id);
-        likeBoardDTO.setBrdRef(brdRef);
-        likeBoardDTO.setUserId("hannah94");
-        String checkLike = likeService.checkLikeTipBoard(likeBoardDTO);
 
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
         model.addAttribute("commentList", commentList);
-        model.addAttribute("checkLike", checkLike);
+        model.addAttribute("likeYN", likeYN);
 
         return "cmn/tipDetail";
     }
@@ -163,17 +166,17 @@ public class tipController {
 
     //like 등록
     @ResponseBody
-    @PostMapping(value = "/doLikeTip")
-    public void doLike (int num, LikeBoardDTO dto) throws Exception {
-        likeService.doLike(dto);
+    @PostMapping(value = "/regLikeTip")
+    public void tipRegLike (int num, LikeBoardDTO dto) throws Exception {
+        likeService.insertLike(dto);
         likeService.addTipLikeCount(num);
     }
 
     //like 해제
     @ResponseBody
-    @PostMapping(value = "/udoLikeTip")
-    public void undoLike (int num, LikeBoardDTO dto) throws Exception {
-        likeService.undoLike(dto);
+    @PostMapping(value = "/udpLikeTip")
+    public void tipUdpLike (int num, LikeBoardDTO dto) throws Exception {
+        likeService.updateLike(dto);
         likeService.delTipLikeCount(num);
     }
 

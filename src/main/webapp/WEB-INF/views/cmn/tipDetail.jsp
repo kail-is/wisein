@@ -15,11 +15,14 @@
     <section class="questions content-frame">
         <!--좋아요북마크-->
         <div class="icon" style="float:right;">
-            <c:if test="${checkLike == 'N'}">
-                <span class="material-icons" id="like_btn" onclick="doLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            <c:if test="${likeYN == null}">
+                <span class="material-icons" id="like_btn" onclick="regLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
             </c:if>
-            <c:if test="${checkLike == 'Y'}">
-                <span class="material-icons" id="like_btn" onclick="undoLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
+            <c:if test="${likeYN == 'Y'}">
+                <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            </c:if>
+            <c:if test="${likeYN == 'N'}">
+                <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
             </c:if>
                 <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
             </div>
@@ -144,7 +147,7 @@
             var brdRef = "tip||"+${tipBoardDTO.num};
 
             if(commContent.length==0){
-                alert("댓글을 입력하세요✍");
+                alert("댓글을 입력하세요👀");
                 document.getElementById('comment_content').focus();
                 return;
             }
@@ -234,7 +237,7 @@
               })
           }
 
-          function doLike(num){
+          function regLike(num){
              var brdRef = "tip||" + num;
              var userId = 'hannah94'
               if(writer != ""){
@@ -245,12 +248,12 @@
                            "userId" : userId
                        },
                        type:"POST",
-                       url:"/doLikeTip",
+                       url:"/regLikeTip",
                        success:function(data) {
                            window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
                        },
                        error:function(request, status, error) {
-                           alert("좋아요 실패😢");
+                           alert("좋아요 등록 실패😢");
                        }
                    })
               } else if(writer == ""){
@@ -259,23 +262,25 @@
               }
           }
 
-          function undoLike(num){
+          function udpLike(num){
              var brdRef = "tip||" + num;
-             var userId = 'hannah94'
+             var userId = 'hannah94';
+             var delYN = ${likeYN};
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
                            "brdRef" : brdRef,
                            "userId" : userId
+                           "delYN" : delYN
                        },
                        type:"POST",
-                       url:"/doLikeTip",
+                       url:"/udpLikeTip",
                        success:function(data) {
                            window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
                        },
                        error:function(request, status, error) {
-                           alert("좋아요 실패😢");
+                           alert("좋아요 상태변경 실패😢");
                        }
                    })
               } else if(writer == ""){

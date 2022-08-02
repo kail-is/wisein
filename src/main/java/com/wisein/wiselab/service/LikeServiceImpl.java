@@ -15,20 +15,20 @@ public class LikeServiceImpl implements LikeService {
 
     /* like 여부 조회 */
     @Override
-    public String checkLikeTipBoard(LikeBoardDTO dto) throws Exception {
-        return dao.checkLikeTipBoard(dto);
+    public String TipLikeYN(LikeBoardDTO dto) throws Exception {
+        return dao.TipLikeYN(dto);
     }
 
     /* like 등록 */
     @Override
-    public void doLike(LikeBoardDTO dto) throws Exception {
-        dao.doLike(dto);
+    public void insertLike(LikeBoardDTO dto) throws Exception {
+        dao.insertLike(dto);
     }
 
-    /* like 해제 */
+    /* like 상태변경 */
     @Override
-    public void undoLike(LikeBoardDTO dto) throws Exception {
-        dao.undoLike(dto);
+    public void updateLike(LikeBoardDTO dto) throws Exception {
+        dao.updateLike(dto);
     }
 
     /* like 등록시 게시글 likeCount 증가 */
