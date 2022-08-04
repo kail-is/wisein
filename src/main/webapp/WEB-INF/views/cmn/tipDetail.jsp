@@ -15,13 +15,13 @@
     <section class="questions content-frame">
         <!--좋아요북마크-->
         <div class="icon" style="float:right;">
-            <c:if test="${likeYN == null}">
+            <c:if test="${likeDelYn == 'none'}">
                 <span class="material-icons" id="like_btn" onclick="regLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
             </c:if>
-            <c:if test="${likeYN == 'Y'}">
+            <c:if test="${likeDelYn == 'Y'}">
                 <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
             </c:if>
-            <c:if test="${likeYN == 'N'}">
+            <c:if test="${likeDelYn == 'N'}">
                 <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
             </c:if>
                 <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
@@ -154,9 +154,9 @@
 
             $.ajax({
                data:{
-                   "writer": writer
-                   ,"content": commContent
-                   ,"brdRef" : brdRef
+                   "writer": writer,
+                   "content": commContent,
+                   "brdRef" : brdRef
                },
                type:"POST",
                url:"/regTipComm",
@@ -175,8 +175,8 @@
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){
                  $.ajax({
                     data:{
-                        "num": num
-                        ,"brdRef": brdRef
+                        "num": num,
+                        "brdRef": brdRef
                      },
                     type:"POST",
                     url:"/delTipComm",
@@ -223,8 +223,8 @@
 
               $.ajax({
                  data:{
-                     "num" : num
-                     ,"content": content
+                     "num" : num,
+                     "content": content
                  },
                  type:"POST",
                  url:"/udpTipComm",
@@ -238,13 +238,11 @@
           }
 
           function regLike(num){
-             var brdRef = "tip||" + num;
              var userId = 'hannah94'
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "brdRef" : brdRef,
                            "userId" : userId
                        },
                        type:"POST",
@@ -263,16 +261,12 @@
           }
 
           function udpLike(num){
-             var brdRef = "tip||" + num;
              var userId = 'hannah94';
-             var delYN = ${likeYN};
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "brdRef" : brdRef,
-                           "userId" : userId
-                           "delYN" : delYN
+                           "userId" : userId,
                        },
                        type:"POST",
                        url:"/udpLikeTip",

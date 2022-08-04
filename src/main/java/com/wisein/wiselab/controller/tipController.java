@@ -49,11 +49,8 @@ public class tipController {
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
-        System.out.println(pagination);
-
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
-
 
         return "cmn/tipList";
     }
@@ -65,15 +62,16 @@ public class tipController {
         List<CommentDTO> commentList = new ArrayList<>();
         String brdRef = "tip||"+num;
 
+        int commentNum = commentService.selectCommentTotalCount(brdRef);
+
 //        String id = (String) session.getAttribute("authUser");
 //        likeBoardDTO.setUserId(id);
         LikeBoardDTO LikeDTO = new LikeBoardDTO();
         LikeDTO.setBrdRef(brdRef);
         LikeDTO.setUserId("hannah94");
 
-        String likeYN = likeService.TipLikeYN(LikeDTO);
-        System.out.println(likeYN);
-        int commentNum = commentService.selectCommentTotalCount(brdRef);
+        String likeDelYn = likeService.TipLikeYN(LikeDTO);
+        if(likeDelYn==null){ likeDelYn = "none"; }
 
         if(dto.getNum() !=0){
             TipBoardDTO = tipBoardService.selectTipOne(dto);
@@ -89,7 +87,7 @@ public class tipController {
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
         model.addAttribute("commentList", commentList);
-        model.addAttribute("likeYN", likeYN);
+        model.addAttribute("likeDelYn", likeDelYn);
 
         return "cmn/tipDetail";
     }
@@ -168,16 +166,26 @@ public class tipController {
     @ResponseBody
     @PostMapping(value = "/regLikeTip")
     public void tipRegLike (int num, LikeBoardDTO dto) throws Exception {
+        String brdRef = "tip||"+num;
+        dto.setBrdRef(brdRef);
         likeService.insertLike(dto);
         likeService.addTipLikeCount(num);
     }
 
-    //like 해제
+    //like 상태 변경
     @ResponseBody
     @PostMapping(value = "/udpLikeTip")
     public void tipUdpLike (int num, LikeBoardDTO dto) throws Exception {
-        likeService.updateLike(dto);
-        likeService.delTipLikeCount(num);
+        String brdRef = "tip||"+num;
+        dto.setBrdRef(brdRef);
+        String likeDelYn = likeService.TipLikeYN(dto);
+        if(likeDelYn.equals("N")){ //해제
+            likeService.undoLike(dto);
+            likeService.delTipLikeCount(num);
+        }else{//재등록
+            likeService.doLike(dto);
+            likeService.addTipLikeCount(num);
+        }
     }
 
 

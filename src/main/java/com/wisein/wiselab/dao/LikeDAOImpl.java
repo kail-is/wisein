@@ -26,10 +26,16 @@ public class LikeDAOImpl implements LikeDAO {
         sql.insert(NS + ".insertLike", dto);
     }
 
-    /* like 상태변경 */
+    /* like 재등록 */
     @Override
-    public void updateLike(LikeBoardDTO dto) throws Exception {
-        sql.update(NS+ ".updateLike", dto);
+    public void doLike(LikeBoardDTO dto) throws Exception {
+        sql.update(NS+ ".doLike", dto);
+    }
+
+    /* like 해제 */
+    @Override
+    public void undoLike(LikeBoardDTO dto) throws Exception {
+        sql.update(NS+ ".undoLike", dto);
     }
 
     /* like 등록시 게시글 likeCount 증가- */

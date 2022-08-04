@@ -25,10 +25,16 @@ public class LikeServiceImpl implements LikeService {
         dao.insertLike(dto);
     }
 
-    /* like 상태변경 */
+    /* like 재등록 */
     @Override
-    public void updateLike(LikeBoardDTO dto) throws Exception {
-        dao.updateLike(dto);
+    public void doLike(LikeBoardDTO dto) throws Exception {
+        dao.doLike(dto);
+    }
+
+    /* like 해제 */
+    @Override
+    public void undoLike(LikeBoardDTO dto) throws Exception {
+        dao.undoLike(dto);
     }
 
     /* like 등록시 게시글 likeCount 증가 */

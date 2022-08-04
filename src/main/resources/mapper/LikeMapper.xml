@@ -25,16 +25,22 @@
         )
     </insert>
 
-    <!-- like 상태변경-->
-    <update id="updateLike" parameterType="LikeBoardDTO">
+    <!-- like 재등록-->
+    <update id="doLike" parameterType="LikeBoardDTO">
         UPDATE
             like_board
-        <if test="delYN == 'N'">
-            SET DEL_YN = 'Y'
-        </if>
-        <if test="delYN == 'Y'">
-            SET DEL_YN = 'N'
-        </if>
+        SET
+            DEL_YN = 'N'
+        WHERE BRD_REF = #{brdRef}
+        AND USER_ID = #{userId}
+    </update>
+
+    <!-- like 해제-->
+    <update id="undoLike" parameterType="LikeBoardDTO">
+        UPDATE
+            like_board
+        SET
+            DEL_YN = 'Y'
         WHERE BRD_REF = #{brdRef}
         AND USER_ID = #{userId}
     </update>
@@ -48,7 +54,7 @@
         WHERE num = #{num}
     </update>
 
-    <!-- like 등록시 게시글 likeCount 감소-->
+    <!-- like 해제시 게시글 likeCount 감소-->
     <update id="delTipLikeCount" parameterType="int">
         UPDATE
             tip_board
