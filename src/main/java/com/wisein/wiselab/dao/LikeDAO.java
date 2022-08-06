@@ -19,10 +19,10 @@ public interface LikeDAO {
     /* like 해제 */
     public void undoLike(LikeBoardDTO dto) throws Exception;
 
-    /* like 등록시 게시글 likeCount 증가*/
+    /* like 등록시 게시글 likeCount 증가 */
     public void addTipLikeCount(int num) throws Exception;
 
-    /* like 해제시 게시글 likeCount 감소- */
+    /* like 해제시 게시글 likeCount 감소 */
     public void delTipLikeCount(int num) throws Exception;
 
 }

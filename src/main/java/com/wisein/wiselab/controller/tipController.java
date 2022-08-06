@@ -3,9 +3,11 @@ package com.wisein.wiselab.controller;
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
 import com.wisein.wiselab.dto.CommentDTO;
 import com.wisein.wiselab.dto.LikeBoardDTO;
+import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import com.wisein.wiselab.service.CommentService;
 import com.wisein.wiselab.service.LikeService;
+import com.wisein.wiselab.service.ScrapService;
 import com.wisein.wiselab.service.TipBoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,9 @@ public class tipController {
     @Autowired
     LikeService likeService;
 
+    @Autowired
+    ScrapService scrapService;
+
 
     private final AbstractPagingCustom PagingTagCustom;
 
@@ -61,11 +66,12 @@ public class tipController {
         TipBoardDTO TipBoardDTO = null;
         List<CommentDTO> commentList = new ArrayList<>();
         String brdRef = "tip||"+num;
-
+        //댓글 갯수
         int commentNum = commentService.selectCommentTotalCount(brdRef);
 
-//        String id = (String) session.getAttribute("authUser");
-//        likeBoardDTO.setUserId(id);
+        //좋아요 체크 확인
+        // String id = (String) session.getAttribute("authUser");
+        // likeBoardDTO.setUserId(id);
         LikeBoardDTO LikeDTO = new LikeBoardDTO();
         LikeDTO.setBrdRef(brdRef);
         LikeDTO.setUserId("hannah94");
@@ -73,6 +79,17 @@ public class tipController {
         String likeDelYn = likeService.TipLikeYN(LikeDTO);
         if(likeDelYn==null){ likeDelYn = "none"; }
 
+        //스크랩 체크 확인
+        //String id = (String) session.getAttribute("authUser");
+        //scrapBoardDTO.setUserId(id);
+        ScrapBoardDTO ScrapDTO = new  ScrapBoardDTO();
+        ScrapDTO.setBrdRef(brdRef);
+        ScrapDTO.setUserId("hannah94");
+
+        String scrapDelYn = scrapService.TipScrapYN(ScrapDTO);
+        if(scrapDelYn==null){ scrapDelYn = "none"; }
+
+        //팁 단건 내용+코멘트 내용 리스트
         if(dto.getNum() !=0){
             TipBoardDTO = tipBoardService.selectTipOne(dto);
             commentList = commentService.selectComment(brdRef);
@@ -88,6 +105,7 @@ public class tipController {
         model.addAttribute("commentNum", commentNum);
         model.addAttribute("commentList", commentList);
         model.addAttribute("likeDelYn", likeDelYn);
+        model.addAttribute("scrapDelYn", scrapDelYn);
 
         return "cmn/tipDetail";
     }
@@ -185,6 +203,32 @@ public class tipController {
         }else{//재등록
             likeService.doLike(dto);
             likeService.addTipLikeCount(num);
+        }
+    }
+
+    //scrap 등록
+    @ResponseBody
+    @PostMapping(value = "/regScrapTip")
+    public void tipRegScrap (int num, ScrapBoardDTO dto) throws Exception {
+        String brdRef = "tip||"+num;
+        dto.setBrdRef(brdRef);
+        scrapService.insertScrap(dto);
+        scrapService.addTipScrapCount(num);
+    }
+
+    //scrap 상태 변경
+    @ResponseBody
+    @PostMapping(value = "/udpScrapTip")
+    public void tipUdpScrap (int num, ScrapBoardDTO dto) throws Exception {
+        String brdRef = "tip||"+num;
+        dto.setBrdRef(brdRef);
+        String scrapDelYn = scrapService.TipScrapYN(dto);
+        if(scrapDelYn.equals("N")){ //해제
+            scrapService.undoScrap(dto);
+            scrapService.delTipScrapCount(num);
+        }else{//재등록
+            scrapService.doScrap(dto);
+            scrapService.addTipScrapCount(num);
         }
     }
 

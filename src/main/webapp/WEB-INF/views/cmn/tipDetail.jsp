@@ -13,8 +13,8 @@
         </ul>
     </div>
     <section class="questions content-frame">
-        <!--좋아요북마크-->
         <div class="icon" style="float:right;">
+            <!--좋아요-->
             <c:if test="${likeDelYn == 'none'}">
                 <span class="material-icons" id="like_btn" onclick="regLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
             </c:if>
@@ -24,8 +24,18 @@
             <c:if test="${likeDelYn == 'N'}">
                 <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
             </c:if>
-                <span class="material-icons" id="bookmark_btn" onclick="bookmark(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
-            </div>
+
+            <!--북마크-->
+            <c:if test="${scrapDelYn == 'none'}">
+                <span class="material-icons" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+            </c:if>
+            <c:if test="${scrapDelYn == 'Y'}">
+                <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+            </c:if>
+            <c:if test="${scrapDelYn == 'N'}">
+                <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:purple;" >bookmarks</span>
+            </c:if>
+        </div>
 
         <!--제목-->
         <div class="title">
@@ -212,6 +222,8 @@
           }
 
           function modComm(num){
+
+
               var num = num;
               var content = document.getElementById('modComm_content'+num).value;
 
@@ -283,8 +295,53 @@
               }
           }
 
-          function bookmark(num){
+          function regScrap(num){
+             var userId = 'hannah94'
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                           "userId" : userId
+                       },
+                       type:"POST",
+                       url:"/regScrapTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("스크랩 등록 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
           }
+
+          function udpScrap(num){
+             var userId = 'hannah94';
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                           "userId" : userId,
+                       },
+                       type:"POST",
+                       url:"/udpScrapTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("스크랩 상태변경 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+
 
    </script>
 
