@@ -4,7 +4,8 @@ var pointIndex=0;
 var companyLength;
 var marker;
 
-window.onload = function() {
+window.addEventListener('DOMContentLoaded', function(){
+
     $.ajax({
         url:"/companyList",
         type:"GET",
@@ -27,13 +28,11 @@ window.onload = function() {
             alert("Fail");
         }
     });
-}
+});
 
-//수정1
 $("#category").blur(function() {
 
     var place = $("#category option:selected").val()
-    console.log(place);
 
     if (place!="") {
         $.ajax({
@@ -69,7 +68,9 @@ $("#category").blur(function() {
 
 });
 
+//수정1
 function test(local,place) {
+
     $.ajax({
         url:"/placeMatzip",
         data : {"place":place},
@@ -97,6 +98,7 @@ function test(local,place) {
         }
     });
         selectFoodLocal(local);
+
 }
 
 function selectFoodLocal(local)  {
@@ -111,7 +113,7 @@ function selectFoodLocal(local)  {
             local2 = JSON.parse(locatePoint);
             x = local2['documents'][0].address.x;
             y = local2['documents'][0].address.y;
-            console.log(local2);
+
             local="";
             panTo(local2['documents'][0].address.address_name);
         },
@@ -133,6 +135,7 @@ var mapContainer = document.getElementById('map'),
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
 function panTo(loc) {
+
     var moveLatLon = new kakao.maps.LatLng(y, x);
     map.panTo(moveLatLon);
     localCheckPoint(loc);
@@ -157,6 +160,8 @@ function localCheckPoint(loc) {
             datatype:"json",
             success:function(data) {
 
+                var url = "http://localhost:8080/matzip?id="+data;
+                location.href = url;
             },
             error:function(request, status, error) {
                 alert("Fail");

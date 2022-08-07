@@ -172,4 +172,10 @@
         WHERE LOCATION=#{location}
     </select>
 
+    <select id="matzipId" resultType="Integer">
+        SELECT
+        ID FROM MATZIP_BOARD
+        WHERE ADDRESS_NAME = #{loc}
+    </select>
+
 </mapper>

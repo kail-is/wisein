@@ -99,4 +99,10 @@ public class MatzipDAOImpl implements MatzipDAO {
         return sql.selectList(NS + ".selectCompany2", location);
     }
 
+    @Override
+    public int matzipId(String loc) {
+        return sql.selectOne(NS + ".matzipId",loc);
+    }
+
+
 }

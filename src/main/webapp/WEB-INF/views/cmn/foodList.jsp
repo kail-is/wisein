@@ -63,6 +63,8 @@
 
             <script src="resources/js/common/foodlist.js"></script>
 
+
+
             <div class="button-wrap">
                 <input type="button" value="추천">
             </div>
