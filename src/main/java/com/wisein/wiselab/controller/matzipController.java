@@ -109,6 +109,7 @@ public class matzipController {
 		matzipDTO.setCategory(request.getParameter("category"));
 		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
 		matzipDTO.setMatzipData(request.getParameter("matzipData"));
+		matzipDTO.setAddressName(request.getParameter("addressName"));
 
 		service.insertMzBoard(matzipDTO, recmDTO);
 

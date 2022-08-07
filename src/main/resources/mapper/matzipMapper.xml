@@ -66,15 +66,17 @@
         (   ID
             , CATEGORY
             , MATZIP_DATA
+            , ADDRESS_NAME
         )
         VALUES
         (   #{id}
             , #{category}
             , #{matzipData}
+            , #{addressName}
         )
     </insert>
 
-    <insert id="insertRecm" parameterType="Integer">
+    <insert id="insertRecm" parameterType="RecmDTO">
         INSERT INTO RECM_BOARD
         ( REF_MATZIP
         , WRITER

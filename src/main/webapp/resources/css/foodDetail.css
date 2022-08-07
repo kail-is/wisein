@@ -972,7 +972,7 @@ body {
     width: auto;
 }
 
- .content-inner-box .address{
+ .content-inner-box .keyword{
     width: 70%;
     color: gray;
  }
@@ -981,13 +981,26 @@ body {
     width: 20%;
  }
 
-
-
 .content-inner-box .button-wrap input[type='button']{
     width: 80px;
     height: 35px;
     border: none;
 }
+
+.content-radio {
+    display: none;
+}
+
+.content-radio-checked:checked+label {
+    background-color: #ebebeb;
+}
+
+.content-label {
+    display: block;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 576px) {
   .content-frame {

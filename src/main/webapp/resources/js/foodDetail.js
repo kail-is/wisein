@@ -14,11 +14,11 @@
 
     // 데이터 적재
     const matzip_obj = JSON.parse(document.getElementById('matzip_data').innerText)
-    const matzip_id = matzip_obj.documents[0].id;
-    document.getElementById('food-info-addr').innerText = matzip_obj.documents[0].address_name;
-    document.getElementById('food-info-title').innerText = matzip_obj.documents[0].place_name;
-    document.getElementById('info-wrap-title').innerText = matzip_obj.documents[0].place_name;
-    document.getElementById('food-info-content').innerText = matzip_obj.documents[0].place_url;
+    const matzip_id = matzip_obj.id;
+    document.getElementById('food-info-addr').innerText = matzip_obj.address_name
+    document.getElementById('food-info-title').innerText = matzip_obj.place_name;
+    document.getElementById('info-wrap-title').innerText = matzip_obj.place_name;
+    document.getElementById('food-info-content').innerText = matzip_obj.place_url;
 
     // 댓글 삭제
     let upd = document.getElementsByClassName("recm-upd")
@@ -47,8 +47,8 @@
     }
 
     // 지도
-    var xDis = matzip_obj.documents[0].x
-    var yDis = matzip_obj.documents[0].y
+    var xDis = matzip_obj.x
+    var yDis = matzip_obj.y
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
         mapOption = {
@@ -69,7 +69,7 @@
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
 
-    var iwContent = '<div style="padding:5px;">' + matzip_obj.documents[0].place_name +  '<br> <a href="' + matzip_obj.documents[0].place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    var iwContent = '<div style="padding:5px;">' + matzip_obj.place_name +  '<br> <a href="' + matzip_obj.place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(yDis, xDis); //인포윈도우 표시 위치입니다
 
     // 인포윈도우를 생성합니다
