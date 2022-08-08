@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisein.wiselab.mapper.likeMapper">
+
+    <!-- like 여부 조회-->
+    <select id="TipLikeYN" parameterType="LikeBoardDTO" resultType="String">
+        SELECT DEL_YN FROM like_board WHERE BRD_REF = #{brdRef} AND USER_ID = #{userId}
+    </select>
+
+    <!-- like 등록-->
+    <insert id="insertLike" parameterType="LikeBoardDTO">
+        INSERT INTO like_board
+        (
+            IDX
+            ,USER_ID
+            ,BRD_REF
+            ,DEL_YN
+        )
+        VALUES
+        (
+            (SELECT NVL(MAX(idx), 0) + 1 FROM like_board ALIAS_FOR_SUBQUERY)
+            , #{userId}
+            , #{brdRef}
+            , 'N'
+        )
+    </insert>
+
+    <!-- like 재등록-->
+    <update id="doLike" parameterType="LikeBoardDTO">
+        UPDATE
+            like_board
+        SET
+            DEL_YN = 'N'
+        WHERE BRD_REF = #{brdRef}
+        AND USER_ID = #{userId}
+    </update>
+
+    <!-- like 해제-->
+    <update id="undoLike" parameterType="LikeBoardDTO">
+        UPDATE
+            like_board
+        SET
+            DEL_YN = 'Y'
+        WHERE BRD_REF = #{brdRef}
+        AND USER_ID = #{userId}
+    </update>
+
+    <!-- like 등록시 게시글 likeCount 증가-->
+    <update id="addTipLikeCount" parameterType="int">
+        UPDATE
+            tip_board
+        SET
+            LIKE_COUNT = LIKE_COUNT+1
+        WHERE num = #{num}
+    </update>
+
+    <!-- like 해제시 게시글 likeCount 감소-->
+    <update id="delTipLikeCount" parameterType="int">
+        UPDATE
+            tip_board
+        SET
+            LIKE_COUNT = LIKE_COUNT-1
+        WHERE num = #{num}
+    </update>
+
+</mapper>

@@ -18,7 +18,7 @@
                         expand_more
                     </span>
             </div>
-            <button type="button" onClick="location.href='qaBoard'" ></button>
+            <button type="button" onClick="location.href='/qaBoard'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -67,9 +67,16 @@
                         <a href="/qaDetail?num=${qa.num}"><c:out value="${qa.subject}" /></a>
                     </div>
                     <div class="board-cell board-answer gray">
+                        <c:if test="${qa.adpYn eq 'Y'}">
+                            <span class="material-icons" style="color:purple;">
+                                check_circle
+                            </span>
+                        </c:if>
+                        <c:if test="${qa.adpYn eq 'N'}">
                             <span class="material-icons purple2">
                                 help_outline
                             </span>
+                        </c:if>
                         1
                     </div>
                     <div class="board-cell board-like gray">
@@ -91,6 +98,42 @@
                     </div>
                 </div>
             </c:forEach>
+
+            <!-- <div class="board-line">
+                <div class="board-cell board-no">
+                    10
+                </div>
+                <div class="board-cell board-category purple2">
+                    FRONT
+                </div>
+                <div class="board-cell board-title">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae placeat iusto quidem assumenda eum quibusdam cupiditate, inventore tempore fugiat in incidunt labore illum consequuntur facere. Reiciendis provident impedit libero quos.
+                </div>
+                <div class="board-cell board-answer gray">
+                        <span class="material-icons purple">
+                            check_circle
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-like gray">
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    1
+                </div>
+                <div class="board-cell board-writer gray">
+                    <p class="writer">서은빈<br><span class="xs-off">(OK저축은행)</span><span class="xs-on">21-10-24</span></p>
+                    <ul class="person-function">
+                        <li><a href="#">메일 전송</a></li>
+                        <li><a href="#">질문 모아 보기</a></li>
+                        <li><a href="#">답변 모아 보기</a></li>
+                    </ul>
+                </div>
+                <div class="board-cell board-date gray">
+                    21-10-24
+                </div>
+            </div>
+            </div> -->
         </div>
     </section>
     <div class="search-wrap">
