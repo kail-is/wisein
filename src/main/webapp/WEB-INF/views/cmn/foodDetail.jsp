@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <div id='matzip_data' style='display:none'>
 ${matzip.matzipData}
 </div>
+
 
 <div class="content-wrap">
     <div class="info-wrap" style="margin-top:0">
@@ -73,7 +77,17 @@ ${matzip.matzipData}
                 <p class=""> <fmt:formatDate value="${recm.regDate}" pattern="yyyy-MM-dd" /></p>
             </div>
             <div class="food-board-img">
-                <img src="../image/pizza.jpg" alt="">
+                <div class="swiper matzipSwiper" style=" ">
+                    <div class="swiper-wrapper">
+                    <c:forEach var="file" items="${fileList}">
+                      <div class="swiper-slide">
+                        <img src="${file.filePath}" />
+                      </div>
+                    </c:forEach>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
             </div>
             <div class="food-board-content">
                 <c:out value="${recm.content}" escapeXml="false" />
@@ -83,3 +97,13 @@ ${matzip.matzipData}
     </c:forEach>
 </div>
     <script src="${url}/resources/js/foodDetail.js"></script>
+
+    <script>
+        var swiper = new Swiper(".matzipSwiper", {
+        navigation: {
+         nextEl: ".swiper-button-next",
+         prevEl: ".swiper-button-prev",
+        },
+       });
+
+      </script>

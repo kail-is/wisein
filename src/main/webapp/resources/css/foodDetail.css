@@ -1136,7 +1136,13 @@ body {
   font-size: 14px;
 }
 
-.food-board-wrap .food-board-img img {
+
+.food-board-wrap .food-board-img {
+    width: 400px;
+    height: 300px;
+}
+
+.food-board-wrap .food-board-img div {
   max-width: 100%;
   max-height: 300px;
 }
@@ -1160,4 +1166,26 @@ body {
 
 .matzip-upd.address {
     width: 57%;
+}
+
+
+.swiper {
+   width: 400px;
+   height: 350px;
+   margin: 0
+}
+
+.swiper-slide {
+	text-align:center;
+}
+
+.swiper-slide img {
+	width: 99%;
+    height: 95%;
+	object-fit: contain;
+}
+
+:root {
+    --swiper-theme-color: lightgray !important;
+    --swiper-navigation-size: 30px !important;
 }

@@ -2,9 +2,11 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.JsonInstance;
 import com.wisein.wiselab.dto.CompanyDTO;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
+import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,6 +31,10 @@ public class matzipController {
 
 	@Autowired
 	MatzipService service;
+
+
+	@Autowired
+	MemberService memberService;
 
 	JSONObject jObject;
 	JSONParser jParser;
@@ -88,6 +94,10 @@ public class matzipController {
 		List<RecmDTO> recmDTOList = service.selectMzRecm(id);
 		model.addAttribute("matzip", matzipDTO);
 		model.addAttribute("recmList", recmDTOList);
+
+		// test
+		List<FileDTO> memberImgList = memberService.memImgList("jeansuh42");
+		model.addAttribute("fileList", memberImgList);
 
 		return "cmn/foodDetail";
 	}

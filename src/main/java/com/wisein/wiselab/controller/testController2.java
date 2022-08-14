@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.MailHandler;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -50,6 +52,13 @@ public class testController2 {
 	public String postRegister (MemberDTO dto) throws Exception {
 		service.register(dto);
 		return "redirect:/";
+	}
+
+	@GetMapping(value="/matzipPhoto")
+	public String matzipPhoto (Model model) throws Exception {
+		List<FileDTO> memberImgList = service.memImgList("jeansuh42");
+		model.addAttribute("fileList", memberImgList);
+		return "matzipPhoto";
 	}
 
 }
