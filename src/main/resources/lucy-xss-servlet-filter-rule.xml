@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.navercorp.com/lucy-xss-servlet">
+    <defenders>
+        <!-- XssPreventer -->
+        <defender>
+            <name>xssPreventerDefender</name>
+            <class>com.navercorp.lucy.security.xss.servletfilter.defender.XssPreventerDefender</class>
+        </defender>
+    </defenders>
+
+    <!-- default defender -->
+    <default>
+        <defender>xssPreventerDefender</defender>
+    </default>
+
+    <!-- url Fiterling Rule-->
+    <url-rule-set>
+        <url-rule>
+            <url disable="true">/</url>
+        </url-rule>
+        <url-rule>
+            <url>/app/admin</url>
+            <params>
+                <param name="title" useDefender="false" />
+            </params>
+        </url-rule>
+    </url-rule-set>
+</config>
