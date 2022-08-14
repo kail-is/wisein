@@ -231,7 +231,7 @@ window.onload = function() {
     function pwExp(pw) {
          let num = pw.search(/[0-9]/g);
          let eng = pw.search(/[a-z]/ig);
-         let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+         let spe = chkSpecialChar(pw) ? 0 : -1;
 
         if(num < 0 || eng < 0 || spe < 0 ){
             return false;

@@ -376,3 +376,48 @@ function isHHMMSS(input) {
 
     return true
 }
+
+
+ /*
+ * 작성자 : 서은빈
+ * 숫자 범위 사이의 난수 반환
+ * param : Number 1 ~ Number 2 (정수)
+ * return : Number (정수)
+ * 날짜 : 2022-08-14
+ * */
+
+function getRandomNum(min, max) {
+    let randomNum = Math.random() * (max - min + 1) + min
+	return Math.floor(randomNum)
+}
+
+
+ /*
+ * 작성자 : 서은빈
+ * 문자열의 좌측에서 지정 길이 반환
+ * param : String, Number (정수)
+ * return : String
+ * 날짜 : 2022-08-14
+ * */
+
+function substrLeft(str, length) {
+	return str.substr(0, length);
+}
+
+
+ /*
+ * 작성자 : 서은빈
+ * 문자열 포함 여부 확인
+ * param : String
+ * return : Bool
+ * 날짜 : 2022-08-14
+ * */
+
+function chkSpecialChar(str) {
+    let specialRule = /[`~!@#$%^&*|\\\'\";:₩/?]/ig;
+    if(specialRule.test(str)) {
+    	return true
+    }else {
+        return false
+    }
+}
