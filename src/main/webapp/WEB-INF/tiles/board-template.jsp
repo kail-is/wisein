@@ -26,6 +26,7 @@
 
         <script src="resources/js/jquery-3.5.1.min.js"></script>
 
+        <script src="${url}/resources/js/common/util.js"></script>
 		<script src="${url}/resources/js/common/dim.js"></script>
 	</head>
 	<body>
@@ -65,6 +66,7 @@
 			</c:if>
 			<div class="container">
 				<tiles:insertAttribute name="contents"/>
+                <tiles:insertAttribute name="editor"/>
 			</div>
 			<!--footer-->
 			<div>
@@ -74,10 +76,10 @@
 		</div>
 	</body>
 
+    <script src="${url}/resources/js/matzip.js"></script>
     <script src="${url}/resources/js/common/authCheck.js"></script>
-    <script src="${url}/resources/js/common/util.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
-    <tiles:insertAttribute name="editor"/>
+
 
 	<script>
 	<c:if test="${empty member}">

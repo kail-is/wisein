@@ -21,7 +21,7 @@
                  </select>
 
                 <input type="text" size="210" id="matzip-name" class= "none" placeholder="맛집 이름" required>
-                <input type="text" size="210" class="keyword" id='keyword' placeholder="키워드" required>
+                <input type="text" size="210" class="keyword" id='keyword' placeholder="키워드" autocomplete=off required>
 
                  <div class="button-wrap">
                     <input type="button" value="주소 검색" onclick="findKeyword()">
@@ -30,7 +30,7 @@
             </div>
 
 
-            <input type="text" size="210" id="subject" placeholder="제목을 입력하세요" required>
+            <input type="text" size="210" id="subject" placeholder="제목을 입력하세요" autocomplete=off required>
             <input type="text" size="210" id="matzip_upload_data" placeholder="맛집데이터" required>
 
             <div id="editor"></div>
@@ -62,7 +62,6 @@
 				originalData : '',
 				callback     : () => {},
 				popupConfirm : function(e){
-				    debugger;
 					var formData1 = new FormData(e);
 			    	this.popupClose();
 			    	this.selectedData = formData1.get('content-radio');
@@ -72,7 +71,6 @@
 			    		resultData     : this.originalData.documents[index],
 			    		originalData   : this.originalData,
 			    	}
-			    	debugger
 			    	this.callback(result);
 				},
 				popupClose: function(id='matzipPopupBox'){
@@ -131,4 +129,3 @@
     		});
     	}
     </script>
-    <script src="${url}/resources/js/matzip.js"></script>

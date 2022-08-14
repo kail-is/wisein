@@ -121,6 +121,8 @@ public class matzipController {
 
 		RecmDTO recmDTO = service.selectRecm(id);
 		model.addAttribute("recm", recmDTO);
+		MatzipDTO matzipDTO = service.selectMatzip(recmDTO.getRefMatzip());
+		model.addAttribute("matzip", matzipDTO);
 
 		return "board/matzipUpd";
 	}

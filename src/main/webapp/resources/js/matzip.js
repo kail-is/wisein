@@ -1,6 +1,19 @@
 // matzipBoard - func
 
-      function matzipSubmit(){
+    let isMatzipUpd = isEmpty(document.querySelector('.matzip-upd')) ? true : false;
+
+    if(isMatzipUpd){
+        const matzip_obj = JSON.parse(document.querySelector('#matzip-data').innerText)
+        document.querySelector('#matzip-address').value = matzip_obj.address_name
+        document.querySelector('#matzip-name').value = matzip_obj.place_name;
+
+        const defaultStar = document.querySelector("#star-val").value
+        document.querySelector("#star")[defaultStar - 1].selected = true;
+
+        editor.setHTML(document.querySelector('#content').value);
+    }
+
+    function matzipSubmit(){
 
         const writer = document.getElementById('writer').value;
         const subject = document.getElementById('subject').value;
@@ -25,15 +38,15 @@
                 alert("실패");
             }
         })
-      }
+    }
 
 
-    function matzipUpd(updStar){
+    function matzipUpd(){
 
         const num = document.getElementById('num').value;
         const subject = document.getElementById('subject').value;
         const content = editor.getHTML();
-        const star = document.getElementById('star').value == "" ? updStar : document.getElementById('star').value;
+        const star = document.getElementById('star').value;
 
         $.ajax({
             data:{"num": num, "subject":subject, "content":content, "star":star},
