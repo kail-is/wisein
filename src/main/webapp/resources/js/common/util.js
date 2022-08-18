@@ -379,26 +379,42 @@ function isHHMMSS(input) {
 
     /*
      * 작성자 : 주한나
-     * Datetime 형식으로 변환
-     * param : String, int
-     * return : Date
-     * 날짜 : 2022-08-06
+     * Date 타입을 String 타입으로 변환
+     * param : Date
+     * return : String
+     * 날짜 : 2022-08-08
      * */
-function dateTime(date){
-        if(date.length != 8){return "Invalid Date"}
+function dateToStr(date){
+        let year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
 
-        let yyyyMMdd = String(date);
-        let Year = yyyyMMdd.substring(0,4);
-        let Month = yyyyMMdd.substring(4,6);
-        let day = yyyyMMdd.substring(6,8);
+        if(month < 10) month = "0"+month;
+        if(day < 10) day = "0"+day;
 
-        return new Date(Year, Month-1, day);
+        return year+""+month+""+day;
     };
 
 
     /*
      * 작성자 : 주한나
-     * 주어진 날짜(yyyyMMdd) 윤년인지를 검사
+     * 주어진 날짜(yyyyMMdd)의 요일 반환(kor/eng)
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-18
+     * */
+function getDay(date,type){
+        let weekDay = (type == 'kor')? ['일', '월', '화', '수', '목', '금', '토'] : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        let inputDay = this.strToDate(date)
+        let week = weekDay[inputDay.getDay()];
+
+        return week;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd)가 윤년인지 검사
      * param : String
      * return : boolean
      * 날짜 : 2022-08-06
@@ -421,7 +437,20 @@ function isLeapYear(date){
 
     /*
      * 작성자 : 주한나
-     * 주어진 날짜(yyyyMMdd)의 그 달의 마지막 날짜(yyyyMMdd) 반환
+     * 주어진 날짜(yyyyMMdd)의 해당 달의 시작 날짜(yyyyMMdd)반환
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-06
+     * */
+function firstDate(date){
+        if(date.length != 8){return "Invalid Date"}
+        return date.substring(0,4)+date.substring(4,6)+"01";
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd) 해당 달의 마지막 날짜(yyyyMMdd) 반환
      * param : String
      * return : String
      * 날짜 : 2022-08-06
@@ -429,108 +458,57 @@ function isLeapYear(date){
 function lastDate(date){
         if(date.length != 8){return "Invalid Date"}
 
-        let asYear = date.substring(0,4);
-        let asMonth = date.substring(4,6);
+        let yyyy = date.substring(0,4)
+        let mm = date.substring(4,6)
 
-        let resultDay = new Date(asYear, asMonth-1, 0)
+        let inputDay = new Date(yyyy, mm, 0);
 
-        let year = resultDay.getFullYear();
-        let month = resultDay.getMonth()+1;
-        let day = resultDay.getDate();
-
-        if(month < 10) month = "0"+month;
-        if(day < 10) day = "0"+day;
-
-        return year+""+month+""+day;
+        return this.dateToStr(inputDay);
     };
 
 
     /*
      * 작성자 : 주한나
-     * 주어진 날짜(yyyyMMdd)의 달의 시작 날짜(yyyyMMdd)반환
-     * param : String
-     * return : String
-     * 날짜 : 2022-08-06
-     * */
-function firstDate(date){
-        if(date.length != 8){return "Invalid Date"}
-
-        let year = date.substring(0,4);
-        let month = date.substring(4,6);
-
-        return year+month+"01";
-    };
-
-
-    /*
-     * 작성자 : 주한나
-     * X일 뒤의 날짜 계산
-     * param : String
+     * 오늘로부터 X일 뒤의 날짜 계산
+     * param : Number
      * return : String
      * 날짜 : 2022-08-09
      * */
 function addDate(days){
         let today = new Date();
-        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()+days);
+        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()+Number(days));
 
-        let year = resultDay.getFullYear();
-        let month = resultDay.getMonth()+1;
-        let day = resultDay.getDate();
-
-        if(month < 10) month = "0"+month;
-        if(day < 10) day = "0"+day;
-
-        return year+""+month+""+day;
+        return this.dateToStr(resultDay);
     };
 
 
     /*
      * 작성자 : 주한나
-     * X일 전의 날짜 계산
-     * param : String
+     * 오늘로부터 X일 전의 날짜 계산
+     * param : Number
      * return : String
      * 날짜 : 2022-08-09
      * */
 function minusDate(days){
         let today = new Date();
-        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()-days);
+        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()-Number(days));
 
-        let year = resultDay.getFullYear();
-        let month = resultDay.getMonth()+1;
-        let day = resultDay.getDate();
-
-        if(month < 10) month = "0"+month;
-        if(day < 10) day = "0"+day;
-
-        return year+""+month+""+day;
+        return this.dateToStr(resultDay);
     };
 
 
     /*
      * 작성자 : 주한나
      * 입력날로부터 X일 뒤의 날짜 계산
-     * param : String
+     * param : String, Number
      * return : String
      * 날짜 : 2022-08-09
      * */
 function addDayFromInputDay(date, days){
-        if(date.length != 8){return "Invalid Date"}
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), date.substring(4,6)-1, inputDay.getDate()+Number(days));
 
-        let yyyy = date.substring(0,4);
-        let mm = date.substring(4,6);
-        let dd = date.substring(6,8);
-
-        let inputDay = new Date(yyyy, mm-1, dd);
-        let resultDay = new Date(yyyy, mm-1, inputDay.getDate()+days);
-
-        let year = resultDay.getFullYear();
-        let month = resultDay.getMonth()+1;
-        let day = resultDay.getDate();
-
-        if(month < 10) month = "0"+month;
-        if(day < 10) day = "0"+day;
-
-        return year+""+month+""+day;
+        return this.dateToStr(resultDay);
     };
 
 
@@ -542,23 +520,10 @@ function addDayFromInputDay(date, days){
      * 날짜 : 2022-08-09
      * */
 function minusDayFromInputDay(date, days){
-        if(date.length != 8){return "Invalid Date"}
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), date.substring(4,6)-1, inputDay.getDate()-Number(days));
 
-        let yyyy = date.substring(0,4);
-        let mm = date.substring(4,6);
-        let dd = date.substring(6,8);
-
-        let inputDay = new Date(yyyy, mm-1, dd);
-        let resultDay = new Date(yyyy,mm-1,inputDay.getDate()-days);
-
-        let year = resultDay.getFullYear();
-        let month = resultDay.getMonth()+1;
-        let day = resultDay.getDate();
-
-        if(month < 10) month = "0"+month;
-        if(day < 10) day = "0"+day;
-
-        return year+""+month+""+day;
+        return this.dateToStr(resultDay);
     };
 
 
@@ -570,22 +535,16 @@ function minusDayFromInputDay(date, days){
      * 날짜 : 2022-08-09
      * */
 function addMonthFromSomeDay(date, months){
-        if(date.length != 8){return "Invalid Date"}
-
-        let yyyy = date.substring(0,4);
-        let mm = date.substring(4,6);
-        let dd = date.substring(6,8);
-
-        let inputDay = new Date(yyyy, mm-1, dd);
-        let resultDay = new Date(yyyy,inputDay.getMonth()+months,dd);
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), inputDay.getMonth()+months, date.substring(6,8));
 
         let year = resultDay.getFullYear();
         let month = resultDay.getMonth()+1;
 
         //입력 날이랑 더한 날이 다르면 마지막날로 강제 셋팅
         //ex)22년 8월 31일 + 6달 => 23년 2월 28일
-        if(dd != resultDay.getDate()){
-            month = month-1
+        if(inputDay.getDate() != resultDay.getDate()){
+            month = month-1 //더했을때 날짜끼리 다르면 월이 넘어간거라 -1해줌
             resultDay = new Date(year, month, 0);
         }
 
@@ -606,24 +565,14 @@ function addMonthFromSomeDay(date, months){
      * 날짜 : 2022-08-17
      * */
 function diffDay(date1, date2){
-        if(date1.length != 8 || date2.length != 8){return "Invalid Date"}
+        let day1 = this.strToDate(date1).getTime();
+        let day2 = this.strToDate(date2).getTime();
 
-        let stYear = date1.substring(0,4);
-        let stMonth = date1.substring(4,6);
-        let stDay = date1.substring(6,8);
-
-        let endYear = date2.substring(0,4);
-        let endMonth = date2.substring(4,6);
-        let endDay = date2.substring(6,8);
-
-        let day1 = new Date(stYear, stMonth-1, stDay).getTime();
-        let day2 = new Date(endYear, endMonth-1, endDay).getTime();
-        let resultDay = (day2-day1)/(1000*60*60*24);
-
-        if(resultDay<0) resultDay = resultDay*-1
+        let resultDay = Math.abs((day2-day1)/(1000*60*60*24));//양수처리
 
         return resultDay;
     };
+
 
     /*
      * 작성자 : 주한나
@@ -633,31 +582,21 @@ function diffDay(date1, date2){
      * 날짜 : 2022-08-17
      * */
 function diffMonth(date1, date2){
-        if(date1.length != 8 || date2.length != 8){return "Invalid Date"}
+        //입력 달의 1일로 계산
+        let day1 = this.strToDate(this.firstDate(date1))
+        let day2 = this.strToDate(this.firstDate(date2))
+        let resultMonth = Math.round((day2-day1)/(1000*60*60*24*30));// 반올림처리
 
-        let stYear = date1.substring(0,4);
-        let stMonth = date1.substring(4,6);
-        let stDay = date1.substring(6,8);
+        resultMonth = Math.abs(resultMonth);//양수만 나오게 처리
 
-        let endYear = date2.substring(0,4);
-        let endMonth = date2.substring(4,6);
-        let endDay = date2.substring(6,8);
-
-        let day1 = new Date(stYear, stMonth-1, stDay);
-        let day2 = new Date(endYear, endMonth-1, endDay);
-        let resultDay = parseInt((day2-day1)/(1000*60*60*24*30);
-
-        if(resultDay<0) resultDay = resultDay*-1
-
-        return resultDay;
+        return resultMonth;
     };
 
 
     /*
      * 작성자 : 주한나
      * data 타입 반환
-     * return : String
-     ex) 'number', 'string', 'object', 'boolean', 'undefined'
+     * return : String (ex) 'number', 'string', 'object', 'boolean', 'undefined'
      * 날짜 : 2022-08-16
      * */
 function getType(data){
