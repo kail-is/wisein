@@ -1,10 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
-import com.wisein.wiselab.dto.CommentDTO;
-import com.wisein.wiselab.dto.LikeBoardDTO;
-import com.wisein.wiselab.dto.ScrapBoardDTO;
-import com.wisein.wiselab.dto.TipBoardDTO;
+import com.wisein.wiselab.dto.*;
 import com.wisein.wiselab.service.CommentService;
 import com.wisein.wiselab.service.LikeService;
 import com.wisein.wiselab.service.ScrapService;
@@ -70,21 +67,18 @@ public class tipController {
         int commentNum = commentService.selectCommentTotalCount(brdRef);
 
         //좋아요 체크 확인
-        // String id = (String) session.getAttribute("authUser");
-        // likeBoardDTO.setUserId(id);
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
         LikeBoardDTO LikeDTO = new LikeBoardDTO();
+        LikeDTO.setUserId((member.getId()));
         LikeDTO.setBrdRef(brdRef);
-        LikeDTO.setUserId("hannah94");
 
         String likeDelYn = likeService.TipLikeYN(LikeDTO);
         if(likeDelYn==null){ likeDelYn = "none"; }
 
         //스크랩 체크 확인
-        //String id = (String) session.getAttribute("authUser");
-        //scrapBoardDTO.setUserId(id);
         ScrapBoardDTO ScrapDTO = new  ScrapBoardDTO();
         ScrapDTO.setBrdRef(brdRef);
-        ScrapDTO.setUserId("hannah94");
+        ScrapDTO.setUserId((member.getId()));
 
         String scrapDelYn = scrapService.TipScrapYN(ScrapDTO);
         if(scrapDelYn==null){ scrapDelYn = "none"; }
@@ -99,26 +93,27 @@ public class tipController {
             commentList = commentService.selectComment(brdRef);
         }
 
-
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
         model.addAttribute("commentList", commentList);
         model.addAttribute("likeDelYn", likeDelYn);
         model.addAttribute("scrapDelYn", scrapDelYn);
-
+        model.addAttribute("memberId", member.getId());
         return "cmn/tipDetail";
     }
 
     //등록
     @GetMapping(value="/regTip")
     public String regTip () throws Exception {
-        return "cmn/regTip";
+        return "board/regTip";
     }
 
     @PostMapping(value="/regTip")
-    public String regTip (HttpServletRequest request, TipBoardDTO dto) throws Exception {
-        dto.setWriter("test2");
+    public String regTip (HttpSession session, TipBoardDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setWriter(member.getId());
+
         tipBoardService.insertTipBoard(dto);
 
         return "redirect:/tipList";
@@ -146,7 +141,7 @@ public class tipController {
     }
 
     @PostMapping(value="/updTip")
-    public String updTip(HttpServletRequest request, TipBoardDTO dto, HttpSession session) throws Exception {
+    public String updTip(TipBoardDTO dto, HttpSession session) throws Exception {
         tipBoardService.updateTipBoard(dto);
         session.removeAttribute("TipBoardDTO");
         return "redirect:/tipDetail?num="+dto.getNum();
@@ -162,7 +157,10 @@ public class tipController {
     //댓글 등록
     @ResponseBody
     @PostMapping(value = "/regTipComm")
-    public void tipRegComment (CommentDTO dto) throws Exception {
+    public void tipRegComment (HttpSession session, CommentDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setWriter(member.getId());
+
         commentService.insertComment(dto);
     }
 
@@ -183,9 +181,13 @@ public class tipController {
     //like 등록
     @ResponseBody
     @PostMapping(value = "/regLikeTip")
-    public void tipRegLike (int num, LikeBoardDTO dto) throws Exception {
+    public void tipRegLike (HttpSession session, int num, LikeBoardDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setUserId(member.getId());
+
         String brdRef = "tip||"+num;
         dto.setBrdRef(brdRef);
+
         likeService.insertLike(dto);
         likeService.addTipLikeCount(num);
     }
@@ -193,10 +195,15 @@ public class tipController {
     //like 상태 변경
     @ResponseBody
     @PostMapping(value = "/udpLikeTip")
-    public void tipUdpLike (int num, LikeBoardDTO dto) throws Exception {
+    public void tipUdpLike (HttpSession session, int num, LikeBoardDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setUserId(member.getId());
+
         String brdRef = "tip||"+num;
         dto.setBrdRef(brdRef);
+
         String likeDelYn = likeService.TipLikeYN(dto);
+
         if(likeDelYn.equals("N")){ //해제
             likeService.undoLike(dto);
             likeService.delTipLikeCount(num);
@@ -209,9 +216,13 @@ public class tipController {
     //scrap 등록
     @ResponseBody
     @PostMapping(value = "/regScrapTip")
-    public void tipRegScrap (int num, ScrapBoardDTO dto) throws Exception {
+    public void tipRegScrap (HttpSession session, int num, ScrapBoardDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setUserId(member.getId());
+
         String brdRef = "tip||"+num;
         dto.setBrdRef(brdRef);
+
         scrapService.insertScrap(dto);
         scrapService.addTipScrapCount(num);
     }
@@ -219,10 +230,15 @@ public class tipController {
     //scrap 상태 변경
     @ResponseBody
     @PostMapping(value = "/udpScrapTip")
-    public void tipUdpScrap (int num, ScrapBoardDTO dto) throws Exception {
+    public void tipUdpScrap (HttpSession session, int num, ScrapBoardDTO dto) throws Exception {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        dto.setUserId(member.getId());
+
         String brdRef = "tip||"+num;
         dto.setBrdRef(brdRef);
+
         String scrapDelYn = scrapService.TipScrapYN(dto);
+
         if(scrapDelYn.equals("N")){ //해제
             scrapService.undoScrap(dto);
             scrapService.delTipScrapCount(num);

@@ -58,11 +58,14 @@
         </div>
     </section>
 
-        <!-- 게시글 수정삭제 -->
-        <div class="icon" align="right">
-            <span class="material-icons" onClick="updTip()">border_color</span>
-            <span class="material-icons" onClick="delTip()">delete</span>
-        </div>
+        <!-- 게시글 수정삭제 아이콘-->
+        <c:set var="memberId" value="${memberId}" />
+        <c:if test="${tipBoardDTO.writer == memberId}">
+            <div class="icon" align="right">
+                <span class="material-icons" onClick="updTip()">border_color</span>
+                <span class="material-icons" onClick="delTip()">delete</span>
+            </div>
+        </c:if>
 
     <!-- 댓글 -->
     <section class="recommend-wrap">
@@ -81,8 +84,8 @@
                                     <div class="date">
                                         <fmt:formatDate value="${commentList.regDate}" pattern="yyyy-MM-dd"/>
                                     </div>
-                                    <!-- 댓글 수정삭제 -->
-                                    <c:if test="${commentList.writer == 'hannah94'}">
+                                    <!-- 댓글 수정삭제 아이콘 -->
+                                    <c:if test="${commentList.writer == memberId}">
                                         <div class="icon">
                                             <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content}')">border_color</span>
                                             <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
@@ -114,7 +117,7 @@
     <div class="CommentWriter">
         <div class="comment_inbox">
             <strong class="blind">댓글을 입력하세요</strong>
-            <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">hannah94</div></em>
+            <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">${memberId}</div></em>
             <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
         </div>
 
@@ -152,7 +155,6 @@
          }
 
          function regComm(){
-            var writer = 'hannah94'
             var commContent = document.getElementById('comment_content').value
             var brdRef = "tip||"+${tipBoardDTO.num};
 
@@ -164,7 +166,6 @@
 
             $.ajax({
                data:{
-                   "writer": writer,
                    "content": commContent,
                    "brdRef" : brdRef
                },
@@ -223,7 +224,6 @@
 
           function modComm(num){
 
-
               var num = num;
               var content = document.getElementById('modComm_content'+num).value;
 
@@ -250,12 +250,10 @@
           }
 
           function regLike(num){
-             var userId = 'hannah94'
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "userId" : userId
                        },
                        type:"POST",
                        url:"/regLikeTip",
@@ -273,12 +271,10 @@
           }
 
           function udpLike(num){
-             var userId = 'hannah94';
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "userId" : userId,
                        },
                        type:"POST",
                        url:"/udpLikeTip",
@@ -296,12 +292,10 @@
           }
 
           function regScrap(num){
-             var userId = 'hannah94'
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "userId" : userId
                        },
                        type:"POST",
                        url:"/regScrapTip",
@@ -319,12 +313,10 @@
           }
 
           function udpScrap(num){
-             var userId = 'hannah94';
               if(writer != ""){
                    $.ajax({
                        data:{
                            "num"    : num,
-                           "userId" : userId,
                        },
                        type:"POST",
                        url:"/udpScrapTip",
@@ -340,9 +332,6 @@
                    window.location.href="/login";
               }
           }
-
-
-
    </script>
 
 </body>
