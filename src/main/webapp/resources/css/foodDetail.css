@@ -226,7 +226,7 @@ input, select {
   display: -ms-flexbox;
   display: flex;
   border: 1px solid black;
-  min-height: 200px;
+  min-height: 100px;
   margin-bottom: 3em;
   border-radius: 1.5em;
   padding: 2em;
@@ -1145,6 +1145,10 @@ body {
 .food-board-wrap .food-board-img div {
   max-width: 100%;
   max-height: 300px;
+}
+
+.food-board-wrap .food-board-content p br {
+  display:none !important;
 }
 
 .map-wrap {

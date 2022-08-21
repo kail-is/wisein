@@ -90,6 +90,9 @@
             z.style.width = ratingRounded
     }
 
+    // 이미지 슬라이더 하단 삽입 이미지 삭제
+    imgDel();
+
     // 폐업 신고
 
     function reportClosed(){
@@ -115,3 +118,10 @@
 
     }
 
+    // 이미지 슬라이더 하단 삽입 이미지 삭제
+    function imgDel() {
+        const item = document.querySelectorAll('.food-board-content>p>img')
+        item.forEach(function(i) {
+            i.parentNode.remove();
+        });
+    }

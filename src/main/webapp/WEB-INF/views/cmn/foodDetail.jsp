@@ -55,7 +55,7 @@ ${matzip.matzipData}
     </div>
 
     <c:forEach var="recm" items="${recmList}">
-    <section class="content-frame">
+    <section class="content-frame food-detail">
         <div class="food-board-wrap">
             <div class="food-board-title">
                 <p><c:out value="${recm.subject}" /></p>
@@ -76,10 +76,11 @@ ${matzip.matzipData}
                 <p class=""> <c:out value="${recm.writer}" /></p>
                 <p class=""> <fmt:formatDate value="${recm.regDate}" pattern="yyyy-MM-dd" /></p>
             </div>
+            <c:if test="${not empty recm.recmImgList}">
             <div class="food-board-img">
-                <div class="swiper matzipSwiper" style=" ">
+                <div class="swiper matzipSwiper">
                     <div class="swiper-wrapper">
-                    <c:forEach var="file" items="${fileList}">
+                    <c:forEach var="file" items="${recm.recmImgList}">
                       <div class="swiper-slide">
                         <img src="${file.filePath}" />
                       </div>
@@ -89,7 +90,8 @@ ${matzip.matzipData}
                     <div class="swiper-button-prev"></div>
                 </div>
             </div>
-            <div class="food-board-content">
+            </c:if>
+            <div class="food-board-content" id="food-board-content">
                 <c:out value="${recm.content}" escapeXml="false" />
             </div>
         </div>
@@ -97,13 +99,4 @@ ${matzip.matzipData}
     </c:forEach>
 </div>
     <script src="${url}/resources/js/foodDetail.js"></script>
-
-    <script>
-        var swiper = new Swiper(".matzipSwiper", {
-        navigation: {
-         nextEl: ".swiper-button-next",
-         prevEl: ".swiper-button-prev",
-        },
-       });
-
-      </script>
+    <script src="${url}/resources/js/common/swiper.js"></script>
