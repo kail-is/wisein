@@ -94,7 +94,7 @@ public class matzipController {
 
 	@GetMapping(value="/matzipBoard")
 	public String matzipBoard () throws Exception {
-		return "cmn/matzipBoard";
+		return "board/matzipBoard";
 	}
 
 	@GetMapping(value="/regMatzip")
@@ -109,6 +109,7 @@ public class matzipController {
 		matzipDTO.setCategory(request.getParameter("category"));
 		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
 		matzipDTO.setMatzipData(request.getParameter("matzipData"));
+		matzipDTO.setAddressName(request.getParameter("addressName"));
 
 		service.insertMzBoard(matzipDTO, recmDTO);
 
@@ -120,8 +121,10 @@ public class matzipController {
 
 		RecmDTO recmDTO = service.selectRecm(id);
 		model.addAttribute("recm", recmDTO);
+		MatzipDTO matzipDTO = service.selectMatzip(recmDTO.getRefMatzip());
+		model.addAttribute("matzip", matzipDTO);
 
-		return "cmn/matzipUpd";
+		return "board/matzipUpd";
 	}
 
 	@GetMapping(value="/putRecm")
@@ -155,10 +158,11 @@ public class matzipController {
 
 	}
 
-	@ResponseBody
 	@GetMapping(value="/addClosed")
-	public void updClosedStat (@RequestParam int matzipId) throws Exception {
+	public String updClosedStat (@RequestParam int matzipId, RedirectAttributes ra) throws Exception {
 		service.updClosedStat(matzipId);
+		ra.addAttribute("id", matzipId);
+		return "redirect:/matzip";
 	}
 
 	@ExceptionHandler(NullPointerException.class)

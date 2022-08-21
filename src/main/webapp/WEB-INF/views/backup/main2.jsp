@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
-
-<head>
-    <link rel="stylesheet" href="resources/css/main.css">
-    <link rel="stylesheet" href="resources/css/common.css">
-</head>
-
     <div class="content-wrap">
         <section class="questions content-frame">
 

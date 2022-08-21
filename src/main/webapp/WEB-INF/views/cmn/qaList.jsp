@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
 </head>
-<body>
+
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
@@ -130,6 +130,3 @@
     event.clickDisplayChangeListener(titleSelect);
 
 </script>
-
-</body>
-</html>

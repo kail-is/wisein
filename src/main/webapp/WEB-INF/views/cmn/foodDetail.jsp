@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<head>
-    <link rel="stylesheet" href="resources/css/foodDetail.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
-</head>
-
-
 <div id='matzip_data' style='display:none'>
 ${matzip.matzipData}
 </div>
@@ -18,7 +12,7 @@ ${matzip.matzipData}
             <li>평가</li>
         </ul>
     </div>
-    <section class="content-frame">
+    <section class="content-frame food-detail">
         <div class="map-wrap">
             <div id="map" style="width:100%;height:350px;"></div>
         </div>
@@ -34,7 +28,7 @@ ${matzip.matzipData}
             </div>
             <c:if test="${matzip.closedState == 'N'}">
                 <div id="ban-button" class="ban-button" onclick="reportClosed()">
-                    <i class="fas fa-exclamation-circle"></i> 폐업 신고
+                    <i class="fas fa-exclamation-circle font-awe"></i> 폐업 신고
                 </div>
             </c:if>
             <c:if test="${matzip.closedState == 'Y'}">
@@ -69,9 +63,9 @@ ${matzip.matzipData}
                   </div>
                 </div>
                 <p class="recm-upd recm-icon" id="upd-${recm.num}">
-                <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt"></i> </a> </p>
+                <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt font-awe"></i> </a> </p>
                 <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt font-awe"></i>
                 </p>
             </div>
             <div class="food-board-writer gray">
@@ -88,127 +82,4 @@ ${matzip.matzipData}
     </section>
     </c:forEach>
 </div>
-
-
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31a7b466aaed9176525d555ca8a9644e"></script>
-    <script>
-        let writer = document.getElementsByClassName("writer")
-
-        Array.from(writer).forEach(function(element) {
-            element.addEventListener('click', function(e) {
-                if(e.target.nextElementSibling.style.display === 'block'){
-                    e.target.nextElementSibling.style.display = 'none';
-                }else{
-                    e.target.nextElementSibling.style.display = 'block';
-                }
-            });
-        });
-
-        // 데이터 적재
-        const matzip_obj = JSON.parse(document.getElementById('matzip_data').innerText)
-        const matzip_id = matzip_obj.documents[0].id;
-        document.getElementById('food-info-addr').innerText = matzip_obj.documents[0].address_name;
-        document.getElementById('food-info-title').innerText = matzip_obj.documents[0].place_name;
-        document.getElementById('info-wrap-title').innerText = matzip_obj.documents[0].place_name;
-        document.getElementById('food-info-content').innerText = matzip_obj.documents[0].place_url;
-
-        // 댓글 삭제
-        let upd = document.getElementsByClassName("recm-upd")
-        let del = document.getElementsByClassName("recm-del")
-
-        function delRecm(recmId) {
-
-           let delConfirm = confirm('삭제하시겠습니까?');
-
-           if (delConfirm) {
-                $.ajax({
-                    data:{"num": recmId},
-                    type:"GET",
-                    url:"/delRecm",
-                    success:function(data) {
-                        alert('삭제 완료');
-                        window.location.href = "recmCnt?id=${matzip.id}"
-                    },
-                    error:function(request, status, error) {
-                        alert("실패");
-                    }
-                })
-           }else {
-              alert('삭제 취소');
-           }
-        }
-
-        // 지도
-        var xDis = matzip_obj.documents[0].x
-        var yDis = matzip_obj.documents[0].y
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-
-            mapOption = {
-                center: new kakao.maps.LatLng(yDis, xDis), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-        // 마커가 표시될 위치입니다
-        var markerPosition  = new kakao.maps.LatLng(yDis, xDis);
-
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
-
-        // 마커가 지도 위에 표시되도록 설정합니다
-        marker.setMap(map);
-
-        var iwContent = '<div style="padding:5px;">' + matzip_obj.documents[0].place_name +  '<br> <a href="' + matzip_obj.documents[0].place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            iwPosition = new kakao.maps.LatLng(yDis, xDis); //인포윈도우 표시 위치입니다
-
-        // 인포윈도우를 생성합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            position : iwPosition,
-            content : iwContent
-        });
-
-        // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-        infowindow.open(map, marker);
-
-        let starCnt = document.querySelectorAll('.inner-star').length
-        let starGrp = document.querySelectorAll('.inner-star')
-
-        for (let z of starGrp ) {
-                ratingPercentage = z.getInnerHTML() / 5 * 100
-                ratingRounded = ratingPercentage + '%'
-                z.style.width = ratingRounded
-        }
-
-        // 폐업 신고
-
-        function reportClosed(){
-
-           let reptConfirm = confirm('업체 폐업 신고를 하시겠습니까?');
-
-           if (reptConfirm) {
-                $.ajax({
-                    data:{"matzip_id": matzip_id},
-                    type:"GET",
-                    url:"/reportClosed",
-                    success:function(data) {
-                        alert('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.');
-                    },
-                    error:function(request, status, error) {
-                        alert("실패");
-                    }
-                })
-           }else {
-              alert('삭제 취소');
-           }
-
-
-        }
-
-    </script>
-
-
-</body>
-</html>
+    <script src="${url}/resources/js/foodDetail.js"></script>

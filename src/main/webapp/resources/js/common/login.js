@@ -72,36 +72,84 @@ window.onload = function() {
 
     // PW 유효성 컨트롤: 패스워드 일치 여부 체크
     pwChkBtn.addEventListener('click', () => {
-        if ( !pw.value && !pwChk.value ) {
+
+        const pwMatched = pw.value === pwChk.value
+        const pwExped = pwExp(pw.value)
+
+        if ( isEmpty(pw.value) || isEmpty(pwChk.value) ) {
+            document.querySelector("#pwChkAlert > .red > .alert-text").innerText = "패스워드를 입력하세요."
+            document.querySelector("#pwChkAlert > .red").classList.remove('none');
             pwChkBool = false;
-            alert("패스워드를 입력하세요.");
-        } else if( pw.value === pwChk.value ) {
+        } else
+
+        if(!pwMatched) {
+            document.querySelector("#pwChkAlert > .red > .alert-text").innerText = "비밀번호가 일치하지 않습니다."
+            document.querySelector("#pwChkAlert > .red").classList.remove('none');
+            pwChkBool = false;
+        } else
+
+        if (!pwExped) {
+            document.querySelector("#pwChkAlert > .red > .alert-text").innerText = "영문, 숫자, 특수문자를 혼합하여 입력해주세요."
+            document.querySelector("#pwChkAlert > .red").classList.remove('none');
+            pwChkBool = false;
+        } else
+
+        if(pwMatched && pwExped) {
             pwChkBool = true;
             document.querySelector("#pwChkAlert > .porintColor").classList.remove('none');
             document.querySelector("#pwChkAlert > .red").classList.add('none');
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
-        } else {
-          pwChkBool = false;
-          document.querySelector("#pwChkAlert > .red").classList.remove('none');
         }
     });
 
+    // 회원정보 수정 비밀번호 재설정
+    pwBox.addEventListener('click', () => {
+        if (pwChkBool == true) {
+            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+                pwChkBool = false;
+                pwBox.value = "";
+                pwBox.readOnly = false;
+                pwChkBox.value = "";
+                pwChkBox.readOnly = false;
+                pwBox.focus;
+                document.querySelector("#pwChkAlert > .porintColor").classList.add('none');
+            }
+       }
+     });
+
     // 비밀번호 수정 유효성 체크
    upd_pwChkBtn.addEventListener('click', () => {
-        if ( !upd_pw.value && !upd_pwChk.value ) {
+
+        const pwMatched = upd_pw.value === upd_pwChk.value
+        const pwExped = pwExp(upd_pw.value)
+
+        if ( isEmpty(upd_pw.value) || isEmpty(upd_pwChk.value) ) {
+            document.querySelector("#upd_pwChkAlert > .red > .alert-text").innerText = "패스워드를 입력하세요."
+            document.querySelector("#upd_pwChkAlert > .red").classList.remove('none');
             upd_pwChkBool = false;
-            alert("패스워드를 입력하세요.");
-        } else if( upd_pw.value === upd_pwChk.value ) {
+        }else
+
+        if(!pwMatched) {
+            document.querySelector("#upd_pwChkAlert > .red > .alert-text").innerText = "비밀번호가 일치하지 않습니다."
+            document.querySelector("#upd_pwChkAlert > .red").classList.remove('none');
+            upd_pwChkBool = false;
+        }else
+
+        if (!pwExped) {
+            document.querySelector("#upd_pwChkAlert > .red > .alert-text").innerText = "영문, 숫자, 특수문자를 혼합하여 입력해주세요."
+            document.querySelector("#upd_pwChkAlert > .red").classList.remove('none');
+            upd_pwChkBool = false;
+        }
+
+        if(pwMatched && pwExped) {
             upd_pwChkBool = true;
             document.querySelector("#upd_pwChkAlert > .porintColor").classList.remove('none');
             document.querySelector("#upd_pwChkAlert > .red").classList.add('none');
             updPwBox.readOnly = true;
             updPwChkBox.readOnly = true;
-        } else {
-          upd_pwChkBool = false;
-          document.querySelector("#upd_pwChkAlert > .red").classList.remove('none');
         }
+
     });
 
     // 회원정보 수정 비밀번호 재설정
@@ -175,6 +223,19 @@ window.onload = function() {
         }else{
                return false;
         }
+    }
+
+    function pwExp(pw) {
+         let num = pw.search(/[0-9]/g);
+         let eng = pw.search(/[a-z]/ig);
+         let spe = chkSpecialChar(pw) ? 0 : -1;
+
+        if(num < 0 || eng < 0 || spe < 0 ){
+            return false;
+        }else {
+            return true;
+        }
+
     }
 
    loginBtn.addEventListener('click', () => {
@@ -288,18 +349,21 @@ function emailValid() {
 
 // 비밀번호 이메일 인증
 function chgePwEmail(userId) {
+
     $.ajax({
         data:{"user_id":userId},
         type:"GET",
         url:"/pwMailSend",
         success:function(data) {
-            commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!");
+            alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
         },
         error:function(request, status, error) {
             alert("실패");
         }
     })
 }
+
+
 
 // 이미지 삭제
 function imgDel(delImgFileNm) {
@@ -309,5 +373,17 @@ function imgDel(delImgFileNm) {
 }
 
 
+// ------------------------ 공통 관련 부분
 
 
+
+/*
+ * 작성자 : 서은빈
+ * 주민등록번호 뒷 첫번째 자리로 년대를 return
+ * param : Number
+ * return : Bool
+ * 날짜 : 2022-08-06
+ * */
+
+function getBirthYear() {
+}

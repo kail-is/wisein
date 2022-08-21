@@ -93,8 +93,8 @@
             <p id="pwChkBtn" class="signUp-input-label mg0">check</p>
         </div>
         <div id="pwChkAlert" class="signUp-pwassword-info-wrap">
-            <p class="porintColor none"> <span class="material-icons chk-alert">check_circle</span> 패스워드가 일치합니다 </p>
-            <p class="red none"> <span class="material-icons chk-alert"> report_problem </span> 패스워드가 일치하지 않습니다 </p>
+            <p class="porintColor none"> <span class="material-icons chk-alert">check_circle</span> <span class="alert-text">패스워드를 정확하게 입력하셨습니다. </span></p>
+            <p class="red none"> <span class="material-icons chk-alert"> report_problem </span> <span class="alert-text"> 패스워드가 일치하지 않습니다 </span></p>
         </div>
         <div class="signUp-confirm-Button-wrap">
             <button type="button" id="signup_btn" name="signup_btn">메일 인증하고 가입하기</button>
@@ -205,8 +205,8 @@
             <p id="upd_pwChkBtn" class="signUp-input-label" style="position: absolute; right: 0; margin: 0;">check</p>
         </div>
         <div id="upd_pwChkAlert" class="signUp-pwassword-info-wrap">
-            <p class="porintColor none"> <span class="material-icons chk-alert">check_circle</span> 패스워드가 일치합니다</p>
-            <p class="red none"> <span class="material-icons chk-alert"> report_problem </span> 패스워드가 일치하지 않습니다</p>
+            <p class="porintColor none"> <span class="material-icons chk-alert">check_circle</span> <span class="alert-text">패스워드를 정확하게 입력하셨습니다. </span></p>
+            <p class="red none"> <span class="material-icons chk-alert"> report_problem </span> <span class="alert-text"> 패스워드가 일치하지 않습니다. </span></p>
         </div>
         </form>
         <div class="signUp-confirm-Button-wrap">
