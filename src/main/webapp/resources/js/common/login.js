@@ -1,6 +1,5 @@
 let delImgArr = []
 
-
 window.onload = function() {
     var httpRequest;
 
@@ -28,14 +27,12 @@ window.onload = function() {
     let userDataUpdBtn = document.querySelector("#upd_btn");
     let pwModBtn = document.querySelector("#upd_pwModBtn");
 
-
-
     // ID 유효성 컨트롤: 회원 가입 여부 체크
     idChkBtn.addEventListener('click', () => {
         var userId = document.querySelector("#id").value;
 
         if (isEmpty(userId)) {
-             alert("아이디를 입력해주세요.");
+            alert("아이디를 입력해주세요");
         } else {
             httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = () => {
@@ -155,7 +152,7 @@ window.onload = function() {
             }
             updForm.submit();
         } else {
-           alert("비밀번호를 확인하세요.")
+           alert("비밀번호를 입력하세요.");
            event.preventDefault();
          }
    })
@@ -185,11 +182,11 @@ window.onload = function() {
         var password = document.getElementById("login_pw").value;
 
         if(id.length == 0) {
-          alert("아이디를 입력하세요.");
+            alert("아이디를 입력하세요.");
           return false
         }
 
-        if(id.length == 0) {
+        if(password.length == 0) {
           alert("비밀번호를 입력하세요.");
           return false
         }
@@ -239,32 +236,28 @@ window.onload = function() {
 
 }
 
-
 function login() {
     document.querySelector('#loginBox').classList.remove('none');
-    document.querySelector('#joinBox').classList.add('none');
+//    document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
-    $dim();
 }
 
 function signUp() {
     document.querySelector('#signUpBox').classList.remove('none');
-    document.querySelector('#joinBox').classList.add('none');
+//    document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
-    $dim();
 }
 
 function findPw() {
     document.querySelector('#findPwBox').classList.remove('none');
     document.querySelector('#loginBox').classList.add('none');
-    $dim();
+    document.querySelector('#loginBox').draggable();
 }
 
 function userUpd() {
     document.querySelector('#userUpdBox').classList.remove('none');
     document.querySelector('#bar-chk').checked = false;
-    $dim();
 }
 
 function userWithdraw() {
@@ -273,15 +266,6 @@ function userWithdraw() {
     if (withdrawal) {
         location.href = "/user/withdraw"
     }
-}
-
-function memPopUpClose() {
-    document.querySelector('#signUpBox').classList.add('none');
-    document.querySelector('#loginBox').classList.add('none');
-    document.querySelector('#userUpdBox').classList.add('none');
-    document.querySelector('#findPwBox').classList.add('none');
-    $dim(false);
-    location.reload();
 }
 
 // 회원가입 이메일 인증
@@ -304,13 +288,12 @@ function emailValid() {
 
 // 비밀번호 이메일 인증
 function chgePwEmail(userId) {
-
     $.ajax({
         data:{"user_id":userId},
         type:"GET",
         url:"/pwMailSend",
         success:function(data) {
-            alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
+            commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!");
         },
         error:function(request, status, error) {
             alert("실패");
@@ -318,11 +301,13 @@ function chgePwEmail(userId) {
     })
 }
 
-
-
 // 이미지 삭제
 function imgDel(delImgFileNm) {
     let selector = 'p[id="' + delImgFileNm +'"]';
     $(selector).parent().hide();
     delImgArr.push(delImgFileNm)
 }
+
+
+
+

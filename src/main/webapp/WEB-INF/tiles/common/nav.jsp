@@ -63,7 +63,7 @@
 <%-- 회원 가입 --%>
 <div id="signUpBox" class="popup-wrap page-center none">
     <div class="signUp-popup-wrap" style="min-width: 450px">
-    <p class="close" onclick="memPopUpClose()"> </p>
+    <p class="close" onclick="memPopUpClose(false)"> </p>
     <form role="form" method="post" autocomplete="off" id="reg_form" action="/register">
         <div class="signUp-input-wrap">
             <label for="" class="signUp-input-label">ID</label>
@@ -106,7 +106,7 @@
 <%-- 비밀번호 찾기 --%>
 <div id="findPwBox" class="popup-wrap page-center none">
     <div class="signUp-popup-wrap" style="min-width: 450px">
-    <p class="close" onclick="memPopUpClose()"> </p>
+    <p class="close" onclick="memPopUpClose(false)"> </p>
         <div class="signUp-input-wrap">
             <label for="" class="signUp-input-label">ID</label>
             <input type="text" class="signUp-input pr30p" id="findpw_Id" name="findpw_Id" required="required" placeholder="아이디">
@@ -123,29 +123,12 @@
 
 
 <%-- 메인 --%>
-<div id="joinBox" class="popup-wrap page-center none">
-    <div class="signUp-popup-wrap form-between">
-        <div class="w50p">
-            <div>
-                <button type="button" name="signUp_btn" onclick="signUp()" class="join-box-btn">SIGN UP</button>
-            </div>
-        </div>
-        <div class="w50p">
-            <div>
-                <button type="button" name="login_btn" onclick="login()" class="join-box-btn">LOGIN</button>
-            </div>
-        </div>
-    </div>
-    <div class="join-box-txt">
-       <p>해당 사이트는 와이즈랩 메일 인증 뒤 가입이 가능합니다.</p>
-    </div>
-</div>
 
-
+<%-- 로그인 --%>
 <div id="loginBox" class="popup-wrap page-center none">
 <form role="form" method="post" autocomplete="off" id="login_form" action="/login">
     <div class="signUp-popup-wrap form-between">
-        <p class="close" onclick="memPopUpClose()"> </p>
+        <p class="close" onclick="memPopUpClose(false)"> </p>
         <div class="w70p">
             <div class="signUp-input-wrap">
                 <label for="" class="signUp-input-label">ID</label>
@@ -163,8 +146,8 @@
         </div>
     </div>
     <div class="popup-link-wrap">
-        <p onclick="signUp()">회원가입</p>
-        <p onclick="findPw()">비밀번호 찾기</p>
+        <p onclick="signUp(true)">회원가입</p>
+        <p onclick="findPw(true)">비밀번호 찾기</p>
     </div>
 </form>
 </div>
@@ -175,7 +158,7 @@
 <%-- 회원 정보 수정 --%>
 <div id="userUpdBox" class="popup-wrap page-center none">
     <div class="signUp-popup-wrap" style="min-width: 450px; padding:2.5rem">
-     <p class="close" onclick="memPopUpClose()"> </p>
+     <p class="close" onclick="memPopUpClose(false)"> </p>
     <form role="form" method="post" id="upd_form" encType = "multipart/form-data" action="/user/update" autocomplete="off">
         <div class="signUp-input-wrap">
             <label for="id" class="signUp-input-label">ID</label>
@@ -230,5 +213,35 @@
             <button type="button" id="upd_btn" name="upd_btn">정보 수정</button>
         </div>
     </div>
+</div>
 
+<%--popup--%>
+<div id="alertBox" class="popup-wrap page-center none">
+    <div class="signUp-popup-wrap form-between">
+        <div class="popup-message-wrap">
+
+        </div>
+        <div class="alert-button-wrap">
+            <button type="button" id="alert-close-btn">확인</button>
+        </div>
+    </div>
+</div>
+
+<%--confirm--%>
+<div id="confirmBox" class="popup-wrap page-center none">
+    <div class="confirm-message-wrap">
+
+    </div>
+    <div class="signUp-popup-wrap form-between">
+        <div class="w50p">
+            <div class="confirm-btn">
+                <button type="button" name="signUp_btn" id="confirm-btn">확인</button>
+            </div>
+        </div>
+        <div class="w50p">
+            <div class="cancel-btn">
+                <button type="button" id="confirm-cancel-btn">취소</button>
+            </div>
+        </div>
+    </div>
 </div>
