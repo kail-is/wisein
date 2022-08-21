@@ -18,12 +18,12 @@ import com.wisein.wiselab.dto.FileDTO;
 @Component
 public class FileUtils {
 
-    public List<FileDTO> parseFileInfo(String brdRef, String fileType, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+    public List<FileDTO> parseFileInfo(String brdRef, String regId, String fileType, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
         if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
             return null;
         }
         String brdType = brdRef.split("\\|\\|")[0];
-        String regId = brdRef.split("\\|\\|")[1];
+        String brdNum = brdRef.split("\\|\\|")[1];
 
         String savingPath, printingPath;
 
