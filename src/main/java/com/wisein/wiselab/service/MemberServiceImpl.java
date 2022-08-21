@@ -89,7 +89,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         String brdRef =  "mem||" + dto.getId();
-        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
+        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, dto.getId(), "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {
             dao.insertMemFileList(list);
         }
