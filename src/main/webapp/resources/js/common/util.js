@@ -421,3 +421,16 @@ function chkSpecialChar(str) {
         return false
     }
 }
+
+ /*
+ * 작성자 : 서은빈
+ * 난수 값 반환
+ * param :
+ * return : String
+ * 날짜 : 2022-08-21
+ * */
+
+ function randomString() {
+    return Math.random().toString(36).substr(2,11);
+ }
+
