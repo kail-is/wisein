@@ -35,6 +35,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public int selectRecmPostNum(RecmDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectRecmPostNum", dto);
+    }
+
+    @Override
     public void createMatzip(MatzipDTO matzipDTO) throws Exception {
         sql.insert(NS + ".insertMatzip", matzipDTO);
     }
@@ -52,6 +57,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     @Override
     public void updRecm(RecmDTO recmDTO) throws Exception {
         sql.update(NS + ".updateRecm", recmDTO);
+    }
+
+    @Override
+    public int matzipCnt(int matzipId) throws Exception {
+        return sql.selectOne(NS + ".matzipCnt", matzipId);
     }
 
     @Override

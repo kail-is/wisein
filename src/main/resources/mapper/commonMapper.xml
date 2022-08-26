@@ -54,4 +54,11 @@
             AND DLT_YN = 'N'
     </select>
 
+    <update id="updateHash" parameterType="FileDTO">
+        UPDATE FILE
+        SET
+        BRD_REF = #{refNum}
+        WHERE BRD_REF = #{temRefHash}
+    </update>
+
 </mapper>

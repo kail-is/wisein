@@ -29,5 +29,10 @@ public class CommonDAOImpl implements CommonDAO {
         return sql.selectList(NS + ".selectFileList", brdRef);
     }
 
+    @Override
+    public void updateHash(FileDTO dto) throws Exception {
+        sql.update(NS + ".updateHash", dto);
+    }
+
 
 }

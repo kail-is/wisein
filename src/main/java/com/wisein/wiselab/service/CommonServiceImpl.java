@@ -34,7 +34,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public String uploadImgList(String brd, String regId, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
-        String hashcode = multipartHttpServletRequest.getParameter("hashcode");
+        String brdNumCd = multipartHttpServletRequest.getParameter("brdNumCd");
 
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         String name;
@@ -50,7 +50,7 @@ public class CommonServiceImpl implements CommonService {
             }
         }
 
-        String brdRef = brd + "||" + hashcode;
+        String brdRef = brd + "||" + brdNumCd;
         List<FileDTO> list = fileUtils.parseFileInfo(brdRef, regId, "image", multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false) {
             dao.uploadImgList(list);
@@ -65,5 +65,9 @@ public class CommonServiceImpl implements CommonService {
         dao.delUserImg(fileNm);
     }
 
+    @Override
+    public void updateHash(FileDTO dto) throws Exception {
+        dao.updateHash(dto);
+    }
 
 }

@@ -13,4 +13,6 @@ public interface CommonService {
 
     public void delUserImg(String fileNm) throws Exception;
 
+    public void updateHash(FileDTO dto) throws Exception;
+
 }

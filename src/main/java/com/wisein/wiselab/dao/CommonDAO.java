@@ -12,4 +12,5 @@ public interface CommonDAO {
 
     public List<FileDTO> selectFileList(String brdRef) throws Exception;
 
+    public void updateHash(FileDTO dto) throws Exception;
 }

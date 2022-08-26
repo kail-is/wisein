@@ -166,6 +166,16 @@ public class matzipController {
 		return "redirect:/matzip";
 	}
 
+	@ResponseBody
+	@GetMapping(value = "/getPostNum")
+	public int getPostNum(String writer, String subject) throws Exception {
+		RecmDTO dto = new RecmDTO();
+		dto.setWriter(writer);
+		dto.setSubject(subject);
+		int postNum = service.selectRecmPostNum(dto);
+	 	return postNum;
+	}
+
 	@ExceptionHandler(NullPointerException.class)
 	public String nullCheck(){
 		return "redirect:/matzipList";

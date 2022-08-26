@@ -53,6 +53,13 @@
         AND DEL_YN = 'N'
     </select>
 
+    <select id="matzipCnt" parameterType="Integer" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM MATZIP_BOARD
+        WHERE ID = #{matzipId}
+    </select>
+
     <select id="recmCnt" parameterType="Integer" resultType="Integer">
         SELECT
             COUNT(*)
@@ -178,6 +185,18 @@
         SELECT
         ID FROM MATZIP_BOARD
         WHERE ADDRESS_NAME = #{loc}
+    </select>
+
+    <select id="selectRecmPostNum" parameterType="recmDTO" resultType="Int">
+        SELECT
+        NUM
+        FROM RECM_BOARD
+        WHERE
+        WRITER = #{writer}
+        AND SUBJECT = #{subject}
+        AND DEL_YN = 'N'
+        ORDER BY NUM desc
+        limit 1
     </select>
 
 </mapper>

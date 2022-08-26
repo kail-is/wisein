@@ -1,5 +1,6 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class CommonController {
     @PostMapping(value = "/upload")
     public String postImg (HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 
-        MemberDTO ne = (MemberDTO)(session.getAttribute("member"));
-        System.out.println("multipartHttpServletRequest" + multipartHttpServletRequest);
+        MemberDTO member = (MemberDTO)(session.getAttribute("member"));
+        String brdNm = multipartHttpServletRequest.getParameter("brdNm");
 
-        String url = comService.uploadImgList("recm", ne.getId(), multipartHttpServletRequest);
+        String url = comService.uploadImgList(brdNm, member.getId(), multipartHttpServletRequest);
 
         return url;
     }
@@ -44,6 +45,27 @@ public class CommonController {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("code","0000");
         map.put("msg", "삭제 완료.");
+        return map;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/updateHash")
+    public Map<String, String> updateHash(HttpSession session, String brdNm, String randomStr, String brdNum) throws Exception {
+
+        // 로그인 사용자 요건 확인 고민 중
+        FileDTO file = new FileDTO();
+
+        randomStr = brdNm + "||" + randomStr;
+        brdNum = brdNm + "||" + brdNum;
+
+        file.setTemRefHash(randomStr);
+        file.setRefNum(brdNum);
+
+        comService.updateHash(file);
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("code","0000");
+        map.put("msg", "업데이트 완료.");
         return map;
     }
 

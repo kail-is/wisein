@@ -22,7 +22,7 @@ public class MatzipServiceImpl implements MatzipService{
     @Override
     public void insertMzBoard(MatzipDTO matzipDTO, RecmDTO recmDTO) throws Exception {
 
-        int idChk = dao.recmCnt(matzipDTO.getId());
+        int idChk = dao.matzipCnt(matzipDTO.getId());
 
         if(idChk == 0) {
             dao.createMatzip(matzipDTO);
@@ -55,6 +55,12 @@ public class MatzipServiceImpl implements MatzipService{
         }
 
         return list;
+    }
+
+    @Override
+    public int selectRecmPostNum(RecmDTO dto) throws Exception {
+        int num = dao.selectRecmPostNum(dto);
+        return num;
     }
 
     @Override
