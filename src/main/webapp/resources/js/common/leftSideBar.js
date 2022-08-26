@@ -29,7 +29,8 @@ function hTagToList(tag, depth = 1,parentArr = []){
     //태그 넣기
     [...tag.childNodes].forEach((el,idx) => {
         if(el.nodeName.startsWith("H")){
-            let subArr = [];
+
+            let coordinate = { x : el.getBoundingClientRect().top, y : el.getBoundingClientRect().left }
             depth = el.nodeName.substring(el.nodeName.length-1)
             let tagTitle = el.innerText
 
@@ -39,7 +40,7 @@ function hTagToList(tag, depth = 1,parentArr = []){
 
             if(depth <= 3){
             // 1~3 태그만 등록
-                parentArr.push({'tagTitle' : tagTitle, 'depth' : depth, 'id' : el.id})
+                parentArr.push({'tagTitle' : tagTitle, 'coordinate': coordinate, 'depth' : depth, 'id' : el.id})
             }
         }
     });
@@ -73,12 +74,27 @@ function listToHTag(target,arr,depth){
     depth = depth ? depth : 1
 
     arr.forEach(function(e){
-        target.innerHTML +='<li style = "cursor: pointer; padding-left:' + (e.depth * 10) +'px"> <a href="#'+e.id+'">' +  e.tagTitle + ' </a></li>';
+
+        let oneTag = document.createElement("li");
+        // oneTag.id = e.id;
+        oneTag.style = "cursor: pointer; padding-left:" + (e.depth * 10) + "px";
+        let textNode = document.createTextNode(e.tagTitle);
+        oneTag.appendChild(textNode);
+        oneTag.onclick = function() { goToCoordinate(e.coordinate) };
+
+        target.appendChild(oneTag);
+
         if(Array.isArray(e.subTag) && e.subTag.length > 0){
             listToTag(target,e.subTag,depth + 1);
         }
     })
 
+}
+
+function goToCoordinate(coordinate) {
+	var menuHeight = document.querySelector("header").offsetHeight;
+	var loca = coordinate.x
+	window.scrollTo({top: (loca - menuHeight), behavior:'smooth'});
 }
 
 export {hTagToList, listToHTag}
