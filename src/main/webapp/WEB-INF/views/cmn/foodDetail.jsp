@@ -66,11 +66,15 @@ ${matzip.matzipData}
                     </div>
                   </div>
                 </div>
-                <p class="recm-upd recm-icon" id="upd-${recm.num}">
-                <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt font-awe"></i> </a> </p>
-                <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
-                    <i class="fas fa-trash-alt font-awe"></i>
-                </p>
+                <c:if test="${recm.writer eq member.id}">
+                <div class="food-board-updel">
+                    <p class="recm-upd recm-icon" id="upd-${recm.num}">
+                    <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt font-awe"></i> </a> </p>
+                    <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
+                        <i class="fas fa-trash-alt font-awe"></i>
+                    </p>
+                </div>
+                </c:if>
             </div>
             <div class="food-board-writer gray">
                 <p class=""> <c:out value="${recm.writer}" /></p>

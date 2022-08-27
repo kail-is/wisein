@@ -899,7 +899,11 @@ body {
 .food-board-title .recm-icon {
     font-size: 14px;
     color: #7E57C2;
-    margin: 0 0.2em;
+}
+
+.food-board-title .food-board-updel {
+  display: flex;
+  margin: 0 !important
 }
 
 .food-board-writer p{
