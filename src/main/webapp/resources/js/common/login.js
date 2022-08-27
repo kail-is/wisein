@@ -345,7 +345,7 @@ function chgePwEmail(userId) {
 
 // 이미지 삭제
 function imgDel(delImgFileNm) {
-    let selector = document.getElementById(delImgFileNm);
-    selector.parentElement.style.display = "none"
+    let selector = document.getElementById(delImgFileNm)
+    selector.parentElement.remove()
     delImgArr.push(delImgFileNm)
 }
