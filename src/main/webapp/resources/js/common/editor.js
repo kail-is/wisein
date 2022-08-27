@@ -13,23 +13,18 @@ const onUploadImage = (blob, callback) => {
    formData.append("brdNm", brdNm)
    formData.append("file", blob)
 
-    $.ajax({
-        data: formData,
-        type: 'POST',
-        enctype: 'multipart/form-data',
-        url: '/upload',
-        contentType: false,
-        processData: false,
-        success: function(imgUrl) {
-           const alt = blob.name
-           url = window.location.host
-           callback( "http://" + url + '/' +imgUrl, alt);
-           imgUpload = true
-        },
-        error: function(e) {
-            alert('업로드 실패')
-        }
-    });
+    fetch('/upload', {
+        method: 'POST',
+        cache: 'no-cache',
+        body: formData
+    })
+    .then(response => response.text())
+    .catch(error => console.error('Error:', error))
+    .then( imgUrl => {
+        const alt = blob.name
+        url = window.location.host
+        callback( "http://" + url + '/' + imgUrl, alt)
+     });
 
     return false
  };
