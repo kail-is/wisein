@@ -17,11 +17,15 @@ public interface MatzipService {
 
     public List<RecmDTO> selectMzRecm(int matzipId) throws Exception;
 
+    public int selectRecmPostNum(RecmDTO dto) throws Exception;
+
     public int delRecm(int num) throws Exception;
 
     public int updRecm(RecmDTO recmDTO) throws Exception;
 
     public int recmCnt(int matzipId) throws Exception;
+
+    public void updClosedStat(int matzipId) throws Exception;
 
     public List<CompanyDTO> companyList();
     public List<CompanyDTO> matzipCount(String location);
@@ -29,4 +33,5 @@ public interface MatzipService {
     public List<CompanyDTO> recmMatzipCount(int id);
     public List<CompanyDTO> company();
     public List<CompanyDTO> selectCompany(String location);
+    public int matzipId(String loc);
 }

@@ -792,6 +792,14 @@ input, select {
   resize: none;
 }
 
+.mg1 {
+  margin: 1em;
+}
+
+.button-wrap {
+   text-align: right;
+}
+
 .button-wrap input[type='button']{
     color: white;
     width: 100px;

@@ -3,6 +3,7 @@ package com.wisein.wiselab.controller;
 import com.wisein.wiselab.config.JsonInstance;
 import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.service.FoodListService;
+import com.wisein.wiselab.service.MatzipService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,7 +32,7 @@ import java.util.Map;
 public class RestMatzipController {
 
     @Autowired
-    FoodListService service;
+    MatzipService service;
 
     JSONObject jObject;
     JSONParser jParser;
@@ -47,6 +48,7 @@ public class RestMatzipController {
 
     @GetMapping(value="/companyList")
     public Map<String, List<CompanyDTO>> companyList(CompanyDTO companyDTO, Model model) {
+
         ModelAndView mv = new ModelAndView();
         List<CompanyDTO> siteList = service.companyList();
         List<CompanyDTO> company = new ArrayList<>();
@@ -119,6 +121,7 @@ public class RestMatzipController {
         return map;
     }
 
+    //위도 경도 변환
     @GetMapping(value="/lateChange")
     public static Map findGeoPoint(@RequestParam("local") String location) {
         URL obj;
@@ -195,35 +198,10 @@ public class RestMatzipController {
     }
 
     @GetMapping(value="/matzipDetailId")
-    public Map<String, List<CompanyDTO>> matzipDetailId(@RequestParam("loc") String loc,
-                                                       CompanyDTO companyDTO) {
-        Map<String, List<CompanyDTO>> selectCompanyMap = new HashMap<>();
+    public int matzipDetailId(@RequestParam("loc") String loc) {
 
-        System.out.println("loc : "+loc);
-        List<String> matzipData = service.matzipData();
-
-        for (int i=0; i<matzipData.size(); i++) {
-            System.out.println(matzipData);
-
-        }
-
-        for (int i=0; i<matzipData.size(); i++) {
-
-            try {
-                jObject = (JSONObject) jParser.parse(matzipData.get(i));
-                jArray = (JSONArray) jObject.get("documents");
-                jObject = (JSONObject) jArray.get(0);
-
-                if (((String) jObject.get("address_name")).equals(loc)) {
-
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        return selectCompanyMap;
+        int matzipId = service.matzipId(loc);
+        return matzipId;
     }
 
 

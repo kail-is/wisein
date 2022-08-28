@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <link rel="stylesheet" href="resources/css/foodList.css">
 </head>
 <div class="content-wrap">
@@ -64,6 +63,8 @@
 
             <script src="resources/js/common/foodlist.js"></script>
 
+
+
             <div class="button-wrap">
                 <input type="button" value="추천">
             </div>
@@ -84,20 +85,3 @@
         </div>
     </section>
 </div>
-
-    <script>
-        let writer = document.getElementsByClassName("writer")
-        Array.from(writer).forEach(function(element) {
-            element.addEventListener('click', function(e) {
-                if(e.target.nextElementSibling.style.display === 'block'){
-                    e.target.nextElementSibling.style.display = 'none';
-                }else{
-                    e.target.nextElementSibling.style.display = 'block';
-                }
-            });
-        });
-    </script>
-
-
-</body>
-</html>

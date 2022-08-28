@@ -3,6 +3,7 @@ package com.wisein.wiselab.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class RecmDTO {
@@ -15,5 +16,6 @@ public class RecmDTO {
     private Date regDate;
     private Date updDate;
     private String delYn;
+    private List<FileDTO> recmImgList;
 }
 

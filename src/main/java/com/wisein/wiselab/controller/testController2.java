@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.MailHandler;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -30,30 +32,6 @@ public class testController2 {
 
 	@Autowired
 	MemberService service;
-	@Autowired
-	MailHandler mailHandler;
-	@Autowired
-	BCryptPasswordEncoder passEncoder;
-
-	@GetMapping(value = "/")
-	public String main() throws Exception {
-		return "redirect:qalist";
-	}
-
-	@GetMapping(value = "/totalSearch")
-	public String totalSearch() throws Exception {
-		return "cmn/totalSearch";
-	}
-
-	@GetMapping(value = "/fooddetail")
-	public String foodDetail() throws Exception {
-		return "cmn/foodDetail";
-	}
-
-//	@GetMapping(value = "/foodlist")
-//	public String foodList() throws Exception {
-//		return "cmn/foodList";
-//	}
 
 	@GetMapping(value = "/databoard")
 	public String dataBoard() throws Exception {
@@ -62,18 +40,25 @@ public class testController2 {
 
 	@GetMapping(value="/reg")
 	public String getRegister () throws Exception {
-		return "reg";
+		return "backup/reg";
 	}
 
 	@GetMapping(value="/tipboard")
 	public String tipBoard () throws Exception {
-		return "cmn/tipBoard";
+		return "board/tipBoard";
 	}
 
 	@PostMapping(value = "/reg")
 	public String postRegister (MemberDTO dto) throws Exception {
 		service.register(dto);
 		return "redirect:/";
+	}
+
+	@GetMapping(value="/matzipPhoto")
+	public String matzipPhoto (Model model) throws Exception {
+		List<FileDTO> memberImgList = service.memImgList("jeansuh42");
+		model.addAttribute("fileList", memberImgList);
+		return "matzipPhoto";
 	}
 
 }

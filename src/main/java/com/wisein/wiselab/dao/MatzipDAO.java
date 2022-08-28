@@ -15,6 +15,8 @@ public interface MatzipDAO {
 
     public List<RecmDTO> selectRecmList(int matzipId) throws Exception;
 
+    public int selectRecmPostNum(RecmDTO dto) throws Exception;
+
     public void createMatzip(MatzipDTO matzipDTO) throws Exception;
 
     public void addRecm(RecmDTO recmDTO) throws Exception;
@@ -23,9 +25,14 @@ public interface MatzipDAO {
 
     public void updRecm(RecmDTO recmDTO) throws Exception;
 
+    public int matzipCnt(int matzipId) throws Exception;
+
     public int recmCnt(int matzipId) throws Exception;
 
     public float avgRate(int matzipId) throws Exception;
+
+    public void updClosedStat(int matzipId) throws Exception;
+
 
     public List<CompanyDTO> companyList();
     public List<CompanyDTO> matzipCount(String location);
@@ -33,4 +40,5 @@ public interface MatzipDAO {
     public List<CompanyDTO> recmMatzipCount(int id);
     public List<CompanyDTO> company();
     public List<CompanyDTO> selectCompany(String location);
+    public int matzipId(String loc);
 }

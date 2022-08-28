@@ -35,6 +35,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public int selectRecmPostNum(RecmDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectRecmPostNum", dto);
+    }
+
+    @Override
     public void createMatzip(MatzipDTO matzipDTO) throws Exception {
         sql.insert(NS + ".insertMatzip", matzipDTO);
     }
@@ -55,6 +60,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public int matzipCnt(int matzipId) throws Exception {
+        return sql.selectOne(NS + ".matzipCnt", matzipId);
+    }
+
+    @Override
     public int recmCnt(int matzipId) throws Exception {
         return sql.selectOne(NS + ".recmCnt", matzipId);
     }
@@ -62,6 +72,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     @Override
     public float avgRate(int matzipId) throws Exception {
         return sql.selectOne(NS + ".avgRate", matzipId);
+    }
+
+    @Override
+    public void updClosedStat(int matzipId) throws Exception {
+        sql.update(NS + ".updClosedStat", matzipId);
     }
 
     @Override
@@ -93,5 +108,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     public List<CompanyDTO> selectCompany(String location) {
         return sql.selectList(NS + ".selectCompany2", location);
     }
+
+    @Override
+    public int matzipId(String loc) {
+        return sql.selectOne(NS + ".matzipId",loc);
+    }
+
 
 }

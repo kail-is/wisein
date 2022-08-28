@@ -1,19 +1,27 @@
 package com.wisein.wiselab.controller;
 
+import com.wisein.wiselab.config.JsonInstance;
 import com.wisein.wiselab.dto.CompanyDTO;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,11 +31,50 @@ public class matzipController {
 	@Autowired
 	MatzipService service;
 
+	JSONObject jObject;
+	JSONParser jParser;
+	JSONArray jArray;
+
+	public matzipController() {
+		this.jObject = JsonInstance.getjObjectInstance();
+		this.jParser = JsonInstance.getJsonParserInstatnce();
+		this.jArray = JsonInstance.getJsonArrayInstance();
+	}
+
+
+	//맛집 리스트 메인
 	@GetMapping(value = "/matzipList")
 	public String main(Model model, CompanyDTO companyDTO) throws Exception {
 
+		//카테고리 select
 		List<CompanyDTO> selectCompany = service.company();
+		//회사ㄷ
+		List<CompanyDTO> companyList = service.companyList();
+		List<CompanyDTO> company = new ArrayList<>();
 
+		for (int i=0; i<companyList.size(); i++) {
+			companyDTO = new CompanyDTO();
+
+			try {
+				jObject = (JSONObject) jParser.parse(companyList.get(i).getCompanydata());
+				jArray = (JSONArray) jObject.get("documents");
+				jObject = (JSONObject) jArray.get(0);
+
+				List<CompanyDTO> siteCountList = service.matzipCount(companyList.get(i).getLocation());
+
+				companyDTO.setId(companyList.get(i).getId());
+				companyDTO.setLocation(companyList.get(i).getLocation());
+				companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
+				companyDTO.setCompanyName((String) jObject.get("place_name"));
+				companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+
+				company.add(companyDTO);
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("companyList", company);
 		model.addAttribute("selectCompany", selectCompany);
 
 		return "cmn/foodList";
@@ -36,7 +83,6 @@ public class matzipController {
 	@GetMapping(value = "/matzip")
 	public String getMatzip(@RequestParam int id, Model model) throws Exception {
 
-		System.out.println("di : " +id);
 
 		MatzipDTO matzipDTO = service.selectMatzip(id);
 
@@ -49,7 +95,7 @@ public class matzipController {
 
 	@GetMapping(value="/matzipBoard")
 	public String matzipBoard () throws Exception {
-		return "cmn/matzipBoard";
+		return "board/matzipBoard";
 	}
 
 	@GetMapping(value="/regMatzip")
@@ -64,6 +110,7 @@ public class matzipController {
 		matzipDTO.setCategory(request.getParameter("category"));
 		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
 		matzipDTO.setMatzipData(request.getParameter("matzipData"));
+		matzipDTO.setAddressName(request.getParameter("addressName"));
 
 		service.insertMzBoard(matzipDTO, recmDTO);
 
@@ -75,8 +122,10 @@ public class matzipController {
 
 		RecmDTO recmDTO = service.selectRecm(id);
 		model.addAttribute("recm", recmDTO);
+		MatzipDTO matzipDTO = service.selectMatzip(recmDTO.getRefMatzip());
+		model.addAttribute("matzip", matzipDTO);
 
-		return "cmn/matzipUpd";
+		return "board/matzipUpd";
 	}
 
 	@GetMapping(value="/putRecm")
@@ -108,6 +157,23 @@ public class matzipController {
 			return "redirect:/matzip";
 		}
 
+	}
+
+	@GetMapping(value="/addClosed")
+	public String updClosedStat (@RequestParam int matzipId, RedirectAttributes ra) throws Exception {
+		service.updClosedStat(matzipId);
+		ra.addAttribute("id", matzipId);
+		return "redirect:/matzip";
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/getPostNum")
+	public int getPostNum(String writer, String subject) throws Exception {
+		RecmDTO dto = new RecmDTO();
+		dto.setWriter(writer);
+		dto.setSubject(subject);
+		int postNum = service.selectRecmPostNum(dto);
+	 	return postNum;
 	}
 
 	@ExceptionHandler(NullPointerException.class)

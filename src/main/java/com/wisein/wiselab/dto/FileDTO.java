@@ -12,4 +12,6 @@ public class FileDTO {
     private String fileExtension;
     private String dltYn;
     private String regId;
+    private String temRefHash;
+    private String refNum;
 }
