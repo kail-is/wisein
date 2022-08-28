@@ -83,13 +83,21 @@
      </script>
     <script>
         function update(){
-             document.querySelector("#content").value = editor.getHTML();
+             var subject = document.querySelector("#subject").value;
+             var content = editor.getMarkdown();
 
-             if(document.querySelector("#subject").value !== '' && document.querySelector("#content").value !== ''){
-                document.getElementById('tipBoard_form').submit();
-            }else{
-                alert("제목과 내용을 확인하세요👀")
-            }
+             if(subject == ''){
+                 alert('제목을 입력하세요✍')
+                 document.querySelector("#subject").focus();
+                 return;
+             }if(content == ''){
+                 alert('내용을 입력하세요✍')
+                 editor.focus();
+                 return;
+             }else{
+                 document.querySelector("#content").value = editor.getHTML();
+                 document.getElementById('tipBoard_form').submit();
+             }
         }
 
         function cancel(){

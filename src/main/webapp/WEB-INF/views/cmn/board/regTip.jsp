@@ -51,7 +51,7 @@
                            addImageBlobHook: (blob, callback) => {
                                 const alt = blob.name
                            	    const imgURL  = uploadImage(blob);
-                                callback(imgURL , alt);
+                                callback(imgURL, alt);
                            	}
                           }
             });
@@ -80,12 +80,20 @@
     </script>
     <script>
         function reg(){
-            document.querySelector("#content").value = editor.getHTML();
+            var subject = document.querySelector("#subject").value;
+            var content = editor.getMarkdown();
 
-            if(document.querySelector("#subject").value !== '' && document.querySelector("#content").value !== ''){
-                document.getElementById('tipBoard_form').submit();
+            if(subject == ''){
+                alert('제목을 입력하세요✍')
+                document.querySelector("#subject").focus();
+                return;
+            }if(content == ''){
+                alert('내용을 입력하세요✍')
+                editor.focus();
+                return;
             }else{
-                alert('제목과 내용을 확인하세요👀')
+                document.querySelector("#content").value = editor.getHTML();
+                document.getElementById('tipBoard_form').submit();
             }
         }
 

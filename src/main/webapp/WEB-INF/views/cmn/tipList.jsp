@@ -8,18 +8,7 @@
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
-            <div class="category-group">
-                <p class="title-select">제목(가나다)</p>
-                <ul class="person-function">
-                    <li><a href="#">제목</a></li>
-                    <li><a href="#">카테고리</a></li>
-                    <li><a href="#">글쓴이</a></li>
-                </ul>
-                <span class="material-icons">
-                        expand_more
-                </span>
-            </div>
-            <button type="button" onClick="location.href='regTip'" ></button>
+           <button type="button" onClick="location.href='regTip'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -41,9 +30,6 @@
                     <span class="material-icons">
                             expand_more
                     </span>
-                </div>
-                <div class="board-cell board-answer gray">
-                    답변
                 </div>
                 <div class="board-cell board-like gray">
                     좋아요
@@ -67,17 +53,8 @@
                     <div class="board-cell board-title">
                         <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
                     </div>
-                    <div class="board-cell board-answer gray">
-                            <span class="material-icons purple2">
-                                help_outline
-                            </span>
-                        1
-                    </div>
                     <div class="board-cell board-like gray">
-                            <span class="material-icons">
-                                thumb_up
-                            </span>
-                        1
+                        <span class="material-icons">thumb_up</span>${tip.likeCount}
                     </div>
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>
@@ -102,7 +79,7 @@
         </div>
         <input type="text" class="search-bar" placeholder="Type something…" required="required">
         <span class="material-icons">
-                <a href="#">search</a>
+           <a href="#">search</a>
         </span>
     </div>
     <ul class="pageno-group">
@@ -120,7 +97,7 @@
     </a>
 </div>
 
-<script type="module" >
+<script type="module">
     import * as event from 'resources/js/common/event.js';
     let writer = document.getElementsByClassName("writer");
     let categorySelect = document.getElementsByClassName("category-select");

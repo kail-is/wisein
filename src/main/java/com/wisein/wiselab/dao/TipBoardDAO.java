@@ -30,11 +30,4 @@ public interface TipBoardDAO {
     /* 전체 게시글 개수 조회 */
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;
 
-    /* TipBoard 댓글 조회*/
-    public List<TipBoardDTO> selectTipComment(int num) throws Exception;
-
-    /* TipBoard 댓글 등록*/
-    public void insertTipComment(TipBoardDTO dto) throws Exception;
-
-
 }

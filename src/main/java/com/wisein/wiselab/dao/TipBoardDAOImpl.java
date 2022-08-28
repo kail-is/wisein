@@ -1,6 +1,5 @@
 package com.wisein.wiselab.dao;
 import com.wisein.wiselab.dto.FileDTO;
-import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ public class TipBoardDAOImpl implements TipBoardDAO {
 
     /* TipBoard 다건조회 */
     @Override
-    public List<TipBoardDTO> selectTipList(TipBoardDTO dto) throws Exception {
-        return sql.selectList(NS + ".selectTipList");
+    public List<TipBoardDTO> selectTipList(TipBoardDTO dto) {
+        return sql.selectList(NS + ".selectTipList", dto);
     }
 
     /* TipBoard 단건조회 */
@@ -56,18 +55,6 @@ public class TipBoardDAOImpl implements TipBoardDAO {
     @Override
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
         return sql.selectOne(NS + ".selectBoardTotalCount", dto);
-    }
-
-    /* TipBoard 댓글 조회*/
-    @Override
-    public List<TipBoardDTO> selectTipComment(int num) throws Exception {
-        return sql.selectList(NS + ".selectTipComment", num);
-    }
-
-    /* TipBoard 댓글 등록*/
-    @Override
-    public void insertTipComment(TipBoardDTO dto) throws Exception {
-        sql.insert(NS + ".insertTipComment", dto);
     }
 
 }

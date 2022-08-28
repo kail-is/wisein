@@ -1,5 +1,7 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.FileDTO;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -28,12 +30,5 @@ public interface TipBoardService {
 
     /* 게시글 총 개수*/
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;
-
-    /* TipBoard 댓글 조회*/
-    public List<TipBoardDTO> selectTipComment(int num) throws Exception;
-
-    /* TipBoard 댓글 등록*/
-    public void insertTipComment(TipBoardDTO dto) throws Exception;
-
 
 }

@@ -1,24 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <head>
     <link rel="stylesheet" href="resources/css/tipDetail.css">
 </head>
 <div class="content-wrap">
     <div class="info-wrap">
-
         <ul class="info">
             <li>이런 내용이 궁금해요</li>
             <li>1. 답변을 드립니다</li>
             <li>2. 이것도 참고해 보세요</li>
         </ul>
-
     </div>
     <section class="questions content-frame">
+        <div class="icon" style="float:right;">
+            <!--좋아요-->
+            <c:if test="${likeDelYn == 'none'}">
+                <span class="material-icons" id="like_btn" onclick="regLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            </c:if>
+            <c:if test="${likeDelYn == 'Y'}">
+                <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+            </c:if>
+            <c:if test="${likeDelYn == 'N'}">
+                <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
+            </c:if>
 
-        <div class="title">
-            <c:out value="${tipBoardDTO.subject}" />
+            <!--북마크-->
+            <c:if test="${scrapDelYn == 'none'}">
+                <span class="material-icons" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+            </c:if>
+            <c:if test="${scrapDelYn == 'Y'}">
+                <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+            </c:if>
+            <c:if test="${scrapDelYn == 'N'}">
+                <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:purple;" >bookmarks</span>
+            </c:if>
         </div>
 
+        <!--제목-->
+        <div class="title">
+            <c:out value="${tipBoardDTO.subject}"/>
+        </div>
+
+        <!--작성자-->
         <div class="writer-wrap">
             <p class="writer"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
@@ -26,85 +50,80 @@
                 <li><a href="#">질문 모아 보기</a></li>
                 <li><a href="#">답변 모아 보기</a></li>
             </ul>
-            <span class="material-icons purple">
-                    videocam
-                </span>
+            <span class="material-icons purple">videocam</span>
         </div>
 
         <div class="subject">
             ${content}
         </div>
-
     </section>
 
-        <div class="icon" align="right">
-            <span class="material-icons" onClick="updTip()">
-                border_color
-            </span>
-            <span class="material-icons" onClick="delTip()">
-                delete
-            </span>
-        </div>
+        <!-- 게시글 수정삭제 아이콘-->
+        <c:set var="memberId" value="${memberId}" />
+        <c:if test="${tipBoardDTO.writer == memberId}">
+            <div class="icon" align="right">
+                <span class="material-icons" onClick="updTip()">border_color</span>
+                <span class="material-icons" onClick="delTip()">delete</span>
+            </div>
+        </c:if>
 
-
+    <!-- 댓글 -->
     <section class="recommend-wrap">
         <div class="recommend-titleLine">
-            댓글 (1)
+            댓글 (${commentNum})
         </div>
-        <ul class="recommend">
-            <li>
-                <div class="wrap">
-                    <div class="recommend-info-wrap">
-                        <div class="img"></div>
-                        <div class="info">
-                            <div class="title">서은빈(OK저축은행)</div>
-                            <div class="sub">
-                                <div class="date">
-                                    2021-10-22
-                                </div>
-                                <div class="icon">
-                                        <span class="material-icons">
-                                            border_color
-                                        </span>
-                                    <span class="material-icons">
-                                            delete
-                                        </span>
+        <c:forEach var="commentList" items="${commentList}">
+            <ul class="recommend">
+                <li>
+                    <div class="wrap">
+                        <div class="recommend-info-wrap">
+                            <div class="img"></div>
+                            <div class="info">
+                                <div class="title"><c:out value="${commentList.writer}"/></div>
+                                <div class="sub">
+                                    <div class="date">
+                                        <fmt:formatDate value="${commentList.regDate}" pattern="yyyy-MM-dd"/>
+                                    </div>
+                                    <!-- 댓글 수정삭제 아이콘 -->
+                                    <c:if test="${commentList.writer == memberId}">
+                                        <div class="icon">
+                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content}')">border_color</span>
+                                            <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
+                        <!--댓글보기-->
+                        <div class="content" id="comm${commentList.num}" name="comm${commentList.num}">
+                            <c:out value="${commentList.content}"/>
+                        </div>
+                        <!--댓글수정-->
+                        <div class="content-mod" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
+                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
+                        </div>
+                         <div class="comment_attach" id="mod_comment_attach" style='display: none;'>
+                            <div class="register_box">
+                                <a href="#" role="button" class="button btn_register" onClick="modComm(${commentList.num})">수정</a>
+                                <a href="#" role="button" class="button btn_register" onClick="modCancel(${commentList.num})">취소</a>
+                            </div>
+                         </div>
                     </div>
-                    <div class="content">유익한 글 정말 잘 읽었습니다!</div>
-                </div>
-            </li>
-        </ul>
-
-        <div class="recommend-write-wrap recommend">
-            <div class="wrap">
-                <div class="recommend-info-wrap">
-                    <div class="img"></div>
-                    <div class="info" id="writer-info">
-                        <div class="title">서은빈(OK저축은행)</div>
-                    </div>
-                </div>
-                <div class="content-writer-wrap">
-                    <textarea>유익한 글 정말 잘 읽었습니다!</textarea>
-                </div>
-            </div>
-        </div>
-
-
+                </li>
+            </ul>
+        </c:forEach>
     </section>
-
-    <div data-v-3b426d7d="" class="CommentWriter">
-        <div data-v-3b426d7d="" class="comment_inbox">
-            <strong data-v-3b426d7d="" class="blind">댓글을 입력하세요</strong>
-            <em data-v-3b426d7d="" class="comment_inbox_name">ghj0393</em>
-            <textarea data-v-3b426d7d="" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea><!----><!---->
+    <!--댓글입력-->
+    <div class="CommentWriter">
+        <div class="comment_inbox">
+            <strong class="blind">댓글을 입력하세요</strong>
+            <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">${memberId}</div></em>
+            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 17px;"></textarea>
         </div>
-        <div data-v-3b426d7d="" class="comment_attach">
 
-            <div data-v-3b426d7d="" class="register_box"><!---->
-                <a data-v-3b426d7d="" href="#" role="button" class="button btn_register">등록</a>
+        <div class="comment_attach">
+            <div class="register_box">
+                <a href="#" role="button" class="button btn_register" onClick="regComm()">등록</a>
             </div>
         </div>
     </div>
@@ -124,19 +143,196 @@
         });
     </script>
 
-    <script>
-     function delTip(){
-                 if(confirm('진짜 삭제하실꺼에여?🥺') == true){
-                     window.location.href="/delTip?num=${tipBoardDTO.num}"
-                 }
+   <script>
+         function delTip(){
+             if(confirm('진짜 삭제하실꺼에여?🥺') == true){
+                 window.location.href="/delTip?num=${tipBoardDTO.num}"
              }
+         }
 
-       function updTip(){
-            window.location.href="/updTip?num=${tipBoardDTO.num}"
-       }
-    </script>
+         function updTip(){
+              window.location.href="/updTip?num=${tipBoardDTO.num}"
+         }
 
+         function regComm(){
+            var commContent = document.getElementById('comment_content').value
+            var brdRef = "tip||"+${tipBoardDTO.num};
 
+            if(commContent.length==0){
+                alert("댓글을 입력하세요👀");
+                document.getElementById('comment_content').focus();
+                return;
+            }
+
+            $.ajax({
+               data:{
+                   "content": commContent,
+                   "brdRef" : brdRef
+               },
+               type:"POST",
+               url:"/regTipComm",
+               success:function(data) {
+                   window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+               },
+               error:function(request, status, error) {
+                   alert("댓글 등록 실패😢");
+               }
+            })
+         }
+
+          function delComm(num){
+             var num = num;
+             var brdRef = "tip||" + ${tipBoardDTO.num};
+             if(confirm('진짜 삭제하실꺼에여?🥺') == true){
+                 $.ajax({
+                    data:{
+                        "num": num,
+                        "brdRef": brdRef
+                     },
+                    type:"POST",
+                    url:"/delTipComm",
+                    success:function(data) {
+                        window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                    },
+                    error:function(request, status, error) {
+                        alert("댓글 삭제 실패😢");
+                    }
+                 })
+             }
+          }
+
+          var isMod = false;
+
+          function openModi(num, content){
+            if(isMod==false){
+                document.getElementById('comm'+num).style.display = 'none';
+                document.getElementById('modComm'+num).style.display = 'block';
+                document.getElementById('mod_comment_attach').style.display = 'block';
+                document.getElementById('modComm_content'+num).value = content;
+                isMod = true;
+            }else{
+                alert("이미 수정중인 댓글이 있어용🤔")
+            }
+          }
+
+          function modCancel(num){
+            isMod = false;
+            document.getElementById('modComm'+num).style.display = 'none';
+            document.getElementById('mod_comment_attach').style.display = 'none';
+            document.getElementById('comm'+num).style.display = 'block';
+          }
+
+          function modComm(num){
+
+              var num = num;
+              var content = document.getElementById('modComm_content'+num).value;
+
+              if(content.length==0){
+                  alert("수정할 댓글 내용을 입력하세요✍");
+                  document.getElementById('modComm_content'+num).focus();
+                  return;
+              }
+
+              $.ajax({
+                 data:{
+                     "num" : num,
+                     "content": content
+                 },
+                 type:"POST",
+                 url:"/udpTipComm",
+                 success:function(data) {
+                     window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                 },
+                 error:function(request, status, error) {
+                     alert("댓글 수정 실패😢");
+                 }
+              })
+          }
+
+          function regLike(num){
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                       },
+                       type:"POST",
+                       url:"/regLikeTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("좋아요 등록 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+          function udpLike(num){
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                       },
+                       type:"POST",
+                       url:"/udpLikeTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("좋아요 상태변경 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+          function regScrap(num){
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                       },
+                       type:"POST",
+                       url:"/regScrapTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("스크랩 등록 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+
+          function udpScrap(num){
+              if(writer != ""){
+                   $.ajax({
+                       data:{
+                           "num"    : num,
+                       },
+                       type:"POST",
+                       url:"/udpScrapTip",
+                       success:function(data) {
+                           window.location.href = "/tipDetail?num=${tipBoardDTO.num}"
+                       },
+                       error:function(request, status, error) {
+                           alert("스크랩 상태변경 실패😢");
+                       }
+                   })
+              } else if(writer == ""){
+                   alert("로그인 후 이용가능합니다.");
+                   window.location.href="/login";
+              }
+          }
+   </script>
 
 </body>
 </html>

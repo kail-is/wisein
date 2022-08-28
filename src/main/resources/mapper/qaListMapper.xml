@@ -39,7 +39,7 @@
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>
-    
+
 	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
 		<![CDATA[ 
 		SELECT COUNT(NUM) 
@@ -77,7 +77,7 @@
             , 'N'
         )
     </insert>
-
+    <!-- 단건 조회 -->
     <select id="selectQaOne" parameterType="QaListDTO" resultType="QaListDTO">
         SELECT
             NUM

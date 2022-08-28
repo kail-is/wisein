@@ -44,6 +44,11 @@ public interface QaListService {
      * param : Integer
      * return :
      * 날짜 : 2022-05-29
+     * 작성자 : 박혜림
+     * 게시글 총 개수
+     * param : QaListDTO
+     * return : int
+     * 날짜 : 2022-06-04
      * */
     public void deleteQaBoard(int num) throws Exception;
 
@@ -95,9 +100,9 @@ public interface QaListService {
     /*
      * 작성자 : 박혜림
      * 게시글 총 개수
-     * param : QaListDTO
+     * param : PageDTO
      * return : int
-     * 날짜 : 2022-06-04
+     * 날짜 : 2022-05-30
      * */
     public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception;
 

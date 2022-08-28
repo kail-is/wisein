@@ -38,13 +38,22 @@ public class qaController {
     public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
-        
+
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
+        qaList = qaListservice.selectQaList(qaListDTO);
+
+        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
+//        if(qaList.size() > 0) {
+//            for (int i = 0; i < qaList.size(); i++) {
+//                System.out.println(i + " : " + qaList.get(i));
+//            }
+//        }
 
         if(qaList.size() > 0) {
             for (int i = 0; i < qaList.size(); i++) {
-           //     System.out.println(i + " : " + qaList.get(i));
+                System.out.println(i + " : " + qaList.get(i));
             }
         }
 
@@ -101,7 +110,7 @@ public class qaController {
             , @RequestParam("num") int num) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        System.out.println("member : " + session.getAttribute("member"));
+//        System.out.println("member : " + session.getAttribute("member"));
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
@@ -109,10 +118,12 @@ public class qaController {
         List<LikeBoardDTO> likeQaBoardList = new ArrayList<>();
 
         if (dto.getNum() != 0){
+//            System.out.println("/qaDetail qaListDTO.getNum() : " + qaListDTO.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
         } else {
+//            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
             qaListDTO = qaListservice.selectQaOne(dto);
         }
@@ -120,6 +131,10 @@ public class qaController {
 
         System.out.println("qaListDTO : " + qaListDTO.toString());
         System.out.println("commentQaList : " + commentQaList.toString());
+//        System.out.println(qaListDTO.toString());
+//        System.out.println(qaListDTO.getContent());
+
+
 
         model.addAttribute("qaListDTO", qaListDTO);
         model.addAttribute("content", qaListDTO.getContent());

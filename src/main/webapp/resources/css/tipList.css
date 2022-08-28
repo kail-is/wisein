@@ -686,7 +686,7 @@ input, select {
 }
 
 .content-wrap .content-top-group button::after {
-  content: "질문!";
+  content: "팁작성✍";
 }
 
 @media screen and (max-width: 576px) {
