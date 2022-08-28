@@ -1,6 +1,5 @@
 let delImgArr = []
 
-
 window.onload = function() {
 
     let idChkBool = false;
@@ -187,7 +186,7 @@ window.onload = function() {
             }
             updForm.submit();
         } else {
-           alert("비밀번호를 확인하세요.")
+           alert("비밀번호를 입력하세요.");
            event.preventDefault();
          }
    })
@@ -230,11 +229,11 @@ window.onload = function() {
         var password = document.getElementById("login_pw").value;
 
         if(id.length == 0) {
-          alert("아이디를 입력하세요.");
+            alert("아이디를 입력하세요.");
           return false
         }
 
-        if(id.length == 0) {
+        if(password.length == 0) {
           alert("비밀번호를 입력하세요.");
           return false
         }
