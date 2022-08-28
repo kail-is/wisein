@@ -183,15 +183,6 @@ modalPopupCheck : function (modalCheck) {
 },
 }
 
-function memPopUpClose(modalCheck) {
-    document.querySelector('#signUpBox').classList.add('none');
-    document.querySelector('#loginBox').classList.add('none');
-    document.querySelector('#userUpdBox').classList.add('none');
-    document.querySelector('#findPwBox').classList.add('none');
-    commonPopup.modalPopupCheck(modalCheck);
-}
-
-
 
  /*
  * 작성자 : 서은빈

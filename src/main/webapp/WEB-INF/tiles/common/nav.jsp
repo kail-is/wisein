@@ -123,6 +123,24 @@
 
 
 <%-- 메인 --%>
+<div id="joinBox" class="popup-wrap page-center none">
+    <div class="signUp-popup-wrap form-between">
+        <div class="w50p">
+            <div>
+                <button type="button" name="signUp_btn" onclick="signUp()" class="join-box-btn">SIGN UP</button>
+            </div>
+        </div>
+        <div class="w50p">
+            <div>
+                <button type="button" name="login_btn" onclick="login()" class="join-box-btn">LOGIN</button>
+            </div>
+        </div>
+    </div>
+    <div class="join-box-txt">
+       <p>해당 사이트는 와이즈랩 메일 인증 뒤 가입이 가능합니다.</p>
+    </div>
+</div>
+
 
 <%-- 로그인 --%>
 <div id="loginBox" class="popup-wrap page-center none">

@@ -310,13 +310,14 @@ function userWithdraw() {
     }
 }
 
-function memPopUpClose() {
+function memPopUpClose(modalCheck) {
     document.querySelector('#signUpBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
     document.querySelector('#findPwBox').classList.add('none');
-    $dim(false);
-    location.reload();
+    commonPopup.modalPopupCheck(modalCheck);
+    $dim(false); // dim 역할은 비로그인 시 누르지 못하게 하는 용도입니다.
+    location.reload(); // 멤버 세션 체크를 위해 리로드를 시킵니다.
 }
 
 // 회원가입 이메일 인증
@@ -337,7 +338,12 @@ function chgePwEmail(userId) {
     fetch("/pwMailSend?" + "userId=" + userId)
          .then(response => response.text())
          .catch(error => console.error('Error:', error))
-         .then(response => alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!"));
+         .then(response => {
+                commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
+                setTimeout( function(){
+                    memPopUpClose(false)
+                }, 300);
+            });
 
 }
 
