@@ -568,8 +568,10 @@ input, select {
   position: fixed;
   border-radius: 0.75em;
   left: 5%;
+  top: 12% !important;
   width: 200px;
-  height: 150px;
+  min-height: 150px;
+  height: auto !important;
   border: 1px solid black;
   font-style: normal;
   font-family: "Noto Sans KR", sans-serif;

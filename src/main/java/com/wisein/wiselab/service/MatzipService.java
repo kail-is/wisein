@@ -17,6 +17,8 @@ public interface MatzipService {
 
     public List<RecmDTO> selectMzRecm(int matzipId) throws Exception;
 
+    public int selectRecmPostNum(RecmDTO dto) throws Exception;
+
     public int delRecm(int num) throws Exception;
 
     public int updRecm(RecmDTO recmDTO) throws Exception;

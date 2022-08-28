@@ -29,18 +29,13 @@
        let delConfirm = confirm('삭제하시겠습니까?');
 
        if (delConfirm) {
-            $.ajax({
-                data:{"num": recmId},
-                type:"GET",
-                url:"/delRecm",
-                success:function(data) {
+           fetch("/delRecm?" + "num=" + recmId)
+                .then(response => response.text())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
                     alert('삭제 완료');
-                    window.location.href = "recmCnt?id=${matzip.id}"
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
+                    window.location.href = "recmCnt?id=" + matzip_id
+                });
        }else {
           alert('삭제 취소');
        }
@@ -90,6 +85,9 @@
             z.style.width = ratingRounded
     }
 
+    // 이미지 슬라이더 하단 삽입 이미지 삭제
+    imgDel();
+
     // 폐업 신고
 
     function reportClosed(){
@@ -97,21 +95,20 @@
        let reptConfirm = confirm('업체 폐업 신고를 하시겠습니까?');
 
        if (reptConfirm) {
-            $.ajax({
-                data:{"matzip_id": matzip_id},
-                type:"GET",
-                url:"/reportClosed",
-                success:function(data) {
-                    alert('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.');
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
+           fetch("/reportClosed?" + "matzip_id=" + matzip_id)
+               .then(response => response.text())
+               .catch(error => console.error('Error:', error))
+               .then(response => alert('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.'));
        }else {
-          alert('삭제 취소');
+          alert('폐업 신고 취소');
        }
-
 
     }
 
+    // 이미지 슬라이더 하단 삽입 이미지 삭제
+    function imgDel() {
+        const item = document.querySelectorAll('.food-board-content>p>img')
+        item.forEach(function(i) {
+            i.parentNode.remove();
+        });
+    }

@@ -15,6 +15,8 @@ public interface MatzipDAO {
 
     public List<RecmDTO> selectRecmList(int matzipId) throws Exception;
 
+    public int selectRecmPostNum(RecmDTO dto) throws Exception;
+
     public void createMatzip(MatzipDTO matzipDTO) throws Exception;
 
     public void addRecm(RecmDTO recmDTO) throws Exception;
@@ -22,6 +24,8 @@ public interface MatzipDAO {
     public void delRecm(int recmId) throws Exception;
 
     public void updRecm(RecmDTO recmDTO) throws Exception;
+
+    public int matzipCnt(int matzipId) throws Exception;
 
     public int recmCnt(int matzipId) throws Exception;
 

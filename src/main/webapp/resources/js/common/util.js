@@ -183,15 +183,6 @@ modalPopupCheck : function (modalCheck) {
 },
 }
 
-function memPopUpClose(modalCheck) {
-    document.querySelector('#signUpBox').classList.add('none');
-    document.querySelector('#loginBox').classList.add('none');
-    document.querySelector('#userUpdBox').classList.add('none');
-    document.querySelector('#findPwBox').classList.add('none');
-    commonPopup.modalPopupCheck(modalCheck);
-}
-
-
 
  /*
  * 작성자 : 서은빈
@@ -599,3 +590,54 @@ function chkSpecialChar(str) {
         return false
     }
 }
+
+ /*
+ * 작성자 : 서은빈
+ * 난수 값 반환
+ * param :
+ * return : String
+ * 날짜 : 2022-08-21
+ * */
+
+ function randomString() {
+    return Math.random().toString(36).substr(2,11);
+ }
+
+
+ /*
+ * 작성자 : 서은빈
+ * 글 작성 게시판 종류 반환
+ * param :
+ * return : String
+ * 날짜 : 2022-08-26
+ * */
+
+ function getBoardNm() {
+
+    const BoardNmProps = {
+        QA: "qa",
+        TIP: "tip",
+        RECM: "recm",
+    };
+    Object.freeze(BoardNmProps);
+
+    const pathNm = document.location.pathname.split('/')[1].toUpperCase().replace("BOARD", "")
+
+    switch (pathNm) {
+        case "QA":
+          console.log("QA")
+          return BoardNmProps.QA
+          break;
+        case "TIP":
+          console.log("TIP")
+          return BoardNmProps.TIP
+          break;
+        case "MATZIP":
+        case "UPDRECM":
+          console.log("RECM")
+          return BoardNmProps.RECM
+          break;
+        default:
+          console.log('pathNm is not defined');
+      }
+ }

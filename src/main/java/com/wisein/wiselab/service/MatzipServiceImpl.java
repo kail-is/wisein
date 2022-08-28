@@ -1,5 +1,6 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dao.CommonDAO;
 import com.wisein.wiselab.dao.MatzipDAO;
 import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
@@ -15,10 +16,13 @@ public class MatzipServiceImpl implements MatzipService{
     @Autowired
     private MatzipDAO dao;
 
+    @Autowired
+    private CommonDAO comDAO;
+
     @Override
     public void insertMzBoard(MatzipDTO matzipDTO, RecmDTO recmDTO) throws Exception {
 
-        int idChk = dao.recmCnt(matzipDTO.getId());
+        int idChk = dao.matzipCnt(matzipDTO.getId());
 
         if(idChk == 0) {
             dao.createMatzip(matzipDTO);
@@ -41,12 +45,30 @@ public class MatzipServiceImpl implements MatzipService{
 
     @Override
     public List<RecmDTO> selectMzRecm(int matzipId) throws Exception {
-        return dao.selectRecmList(matzipId);
+
+        List<RecmDTO> list = dao.selectRecmList(matzipId);
+
+        for (int i = 0 ; i < list.size(); i++ ) {
+            RecmDTO oneRecm = list.get(i);
+            String brdRef = "recm||" + oneRecm.getNum();
+            oneRecm.setRecmImgList(comDAO.selectFileList(brdRef));
+        }
+
+        return list;
+    }
+
+    @Override
+    public int selectRecmPostNum(RecmDTO dto) throws Exception {
+        int num = dao.selectRecmPostNum(dto);
+        return num;
     }
 
     @Override
     public RecmDTO selectRecm(int recmId) throws Exception {
-        return dao.selectRecm(recmId);
+        RecmDTO post = dao.selectRecm(recmId);
+        String brdRef = "recm||" + recmId;
+        post.setRecmImgList(comDAO.selectFileList(brdRef));
+        return post;
     }
 
     @Override

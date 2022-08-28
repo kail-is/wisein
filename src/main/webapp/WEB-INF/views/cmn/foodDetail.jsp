@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <div id='matzip_data' style='display:none'>
 ${matzip.matzipData}
 </div>
+
 
 <div class="content-wrap">
     <div class="info-wrap" style="margin-top:0">
@@ -51,7 +55,7 @@ ${matzip.matzipData}
     </div>
 
     <c:forEach var="recm" items="${recmList}">
-    <section class="content-frame">
+    <section class="content-frame food-detail">
         <div class="food-board-wrap">
             <div class="food-board-title">
                 <p><c:out value="${recm.subject}" /></p>
@@ -62,20 +66,36 @@ ${matzip.matzipData}
                     </div>
                   </div>
                 </div>
-                <p class="recm-upd recm-icon" id="upd-${recm.num}">
-                <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt font-awe"></i> </a> </p>
-                <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
-                    <i class="fas fa-trash-alt font-awe"></i>
-                </p>
+                <c:if test="${recm.writer eq member.id}">
+                <div class="food-board-updel">
+                    <p class="recm-upd recm-icon" id="upd-${recm.num}">
+                    <a href="/updRecm?id=${recm.num}"> <i class="fas fa-pencil-alt font-awe"></i> </a> </p>
+                    <p class="recm-del recm-icon" id="del-${recm.num}" onclick="delRecm(${recm.num})">
+                        <i class="fas fa-trash-alt font-awe"></i>
+                    </p>
+                </div>
+                </c:if>
             </div>
             <div class="food-board-writer gray">
                 <p class=""> <c:out value="${recm.writer}" /></p>
                 <p class=""> <fmt:formatDate value="${recm.regDate}" pattern="yyyy-MM-dd" /></p>
             </div>
+            <c:if test="${not empty recm.recmImgList}">
             <div class="food-board-img">
-                <img src="../image/pizza.jpg" alt="">
+                <div class="swiper matzipSwiper">
+                    <div class="swiper-wrapper">
+                    <c:forEach var="file" items="${recm.recmImgList}">
+                      <div class="swiper-slide">
+                        <img src="${file.filePath}" />
+                      </div>
+                    </c:forEach>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
             </div>
-            <div class="food-board-content">
+            </c:if>
+            <div class="food-board-content" id="food-board-content">
                 <c:out value="${recm.content}" escapeXml="false" />
             </div>
         </div>
@@ -83,3 +103,4 @@ ${matzip.matzipData}
     </c:forEach>
 </div>
     <script src="${url}/resources/js/foodDetail.js"></script>
+    <script src="${url}/resources/js/common/swiper.js"></script>

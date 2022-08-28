@@ -2,6 +2,7 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.JsonInstance;
 import com.wisein.wiselab.dto.CompanyDTO;
+import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
@@ -163,6 +164,16 @@ public class matzipController {
 		service.updClosedStat(matzipId);
 		ra.addAttribute("id", matzipId);
 		return "redirect:/matzip";
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/getPostNum")
+	public int getPostNum(String writer, String subject) throws Exception {
+		RecmDTO dto = new RecmDTO();
+		dto.setWriter(writer);
+		dto.setSubject(subject);
+		int postNum = service.selectRecmPostNum(dto);
+	 	return postNum;
 	}
 
 	@ExceptionHandler(NullPointerException.class)

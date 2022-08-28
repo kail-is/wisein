@@ -1,7 +1,6 @@
 let delImgArr = []
 
 window.onload = function() {
-    var httpRequest;
 
     let idChkBool = false;
     let pwChkBool = false;
@@ -27,33 +26,27 @@ window.onload = function() {
     let userDataUpdBtn = document.querySelector("#upd_btn");
     let pwModBtn = document.querySelector("#upd_pwModBtn");
 
+
     // ID 유효성 컨트롤: 회원 가입 여부 체크
     idChkBtn.addEventListener('click', () => {
         var userId = document.querySelector("#id").value;
 
         if (isEmpty(userId)) {
-            alert("아이디를 입력해주세요");
+             alert("아이디를 입력해주세요.");
         } else {
-            httpRequest = new XMLHttpRequest();
-            httpRequest.onreadystatechange = () => {
-                if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                      if (httpRequest.status === 200) {
-                        var result = httpRequest.response;
-                         if (result > 0) {
-                          document.querySelector("#idChkAlert > .red").classList.remove('none');
-                         } else {
-                            document.querySelector("#idChkAlert > .porintColor").classList.remove('none');
-                            document.querySelector("#idChkAlert > .red").classList.add('none');
-                            idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
-                            idChkBool = true;
-                         }
-                      } else {
-                        alert('Request Error');
-                      }
-                }
-            };
-            httpRequest.open('GET', '/idDupChk?' + "userId=" + userId);
-            httpRequest.send();
+            fetch("/idDupChk?" + "userId=" + userId)
+                 .then(response => response.text())
+                 .catch(error => console.error('Error:', error))
+                 .then (idChkNum => {
+                    if (idChkNum > 0) {
+                      document.querySelector("#idChkAlert > .red").classList.remove('none');
+                    } else {
+                        document.querySelector("#idChkAlert > .porintColor").classList.remove('none');
+                        document.querySelector("#idChkAlert > .red").classList.add('none');
+                        idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
+                        idChkBool = true;
+                    }
+                 })
         }
     });
 
@@ -184,18 +177,11 @@ window.onload = function() {
             document.querySelector('#userUpdBox').classList.add('none');
             $dim(false);
             if(!delImgArr.isEmpty){
-                for (const i in delImgArr ){
-                 $.ajax({
-                        data:{"delImgFileNm" : delImgArr[i]},
-                        type:"GET",
-                        url:"/delImgFile",
-                        success:function(data) {
-                           console.log("이미지 삭제 완료");
-                        },
-                        error:function(request, status, error) {
-                            console.log("이미지 삭제 실패");
-                        }
-                    })
+                for (const i in delImgArr) {
+                 fetch("/delImgFile?" + "delImgFileNm=" + delImgArr[i])
+                     .then(response => response.json())
+                     .catch(error => console.error('이미지 삭제 실패 Error:', error))
+                     // 왜 콘솔 로그가 안 찍힐까요?
                 }
             }
             updForm.submit();
@@ -252,73 +238,68 @@ window.onload = function() {
           return false
         }
 
-        $.ajax({
-            url:"/authCheck",
-            data : {"login_Id":id},
-            type:"GET",
-            success:function(data) {
-                if (data.idExist=="0") {
-                    alert("존재하지 않는 아이디입니다.");
-                } else {
-                    if (data.authKey!="Y") {
-                        alert("메일 인증이 완료되지 않았습니다.");
+        fetch("/authCheck?" + "login_Id=" + id)
+             .then(response => response.json())
+             .catch(error => console.error('Error:', error))
+             .then( idChk => {
+                 if (idChk.idExist == 0) {
+                   alert("존재하지 않는 아이디입니다.");
+                 } else {
+                    if (idChk.authKey!="Y") {
+                     alert("메일 인증이 완료되지 않았습니다.");
                     } else {
-                        document.getElementById("login_form").submit();
+                     document.getElementById("login_form").submit();
                     }
-                }
-            },
-            error:function(request, status, error) {
-            	alert("실패");
-            }
-        })
+                 }
+              });
+
     })
 
     findPwBtn.addEventListener('click', () => {
 
         let id = document.querySelector("#findpw_Id").value
 
-        $.ajax({
-            url:"/idDupChk",
-            data : {"userId": id},
-            type:"GET",
-            success:function(data) {
-                if (data == 0) {
-                  document.querySelector("#findPwAlert > .red").classList.remove('none');
-                }else{
-                  chgePwEmail(id);
-                }
-            },
-            error:function(request, status, error) {
-            	alert("실패");
-            }
-        })
+        fetch("/idDupChk?" + "userId=" + id)
+             .then(response => response.text())
+             .catch(error => console.error('Error:', error))
+             .then( idChkNum => {
+                 if (idChkNum == 0) {
+                   document.querySelector("#findPwAlert > .red").classList.remove('none');
+                 } else{
+                    chgePwEmail(id);
+                 }
+              });
 
     })
 
 }
 
+
 function login() {
     document.querySelector('#loginBox').classList.remove('none');
-//    document.querySelector('#joinBox').classList.add('none');
+    document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
+    $dim();
 }
 
 function signUp() {
     document.querySelector('#signUpBox').classList.remove('none');
-//    document.querySelector('#joinBox').classList.add('none');
+    document.querySelector('#joinBox').classList.add('none');
     document.querySelector('#loginBox').classList.add('none');
     document.querySelector('#userUpdBox').classList.add('none');
+    $dim();
 }
 
 function findPw() {
     document.querySelector('#findPwBox').classList.remove('none');
     document.querySelector('#loginBox').classList.add('none');
-    document.querySelector('#loginBox').draggable();
+    $dim();
 }
 
 function userUpd() {
     document.querySelector('#userUpdBox').classList.remove('none');
     document.querySelector('#bar-chk').checked = false;
+    $dim();
 }
 
 function userWithdraw() {
@@ -329,61 +310,47 @@ function userWithdraw() {
     }
 }
 
+function memPopUpClose(modalCheck) {
+    document.querySelector('#signUpBox').classList.add('none');
+    document.querySelector('#loginBox').classList.add('none');
+    document.querySelector('#userUpdBox').classList.add('none');
+    document.querySelector('#findPwBox').classList.add('none');
+    commonPopup.modalPopupCheck(modalCheck);
+    $dim(false); // dim 역할은 비로그인 시 누르지 못하게 하는 용도입니다.
+    location.reload(); // 멤버 세션 체크를 위해 리로드를 시킵니다.
+}
+
 // 회원가입 이메일 인증
 function emailValid() {
     var email_Id = document.getElementById('id').value;
 
-    $.ajax({
-        data:{"email_Id":email_Id},
-        type:"GET",
-        url:"/authMailSend",
-        success:function(data) {
-            document.getElementById('reg_form').submit();
-        },
-        error:function(request, status, error) {
-            alert("실패");
-        }
-    })
+    fetch("/authMailSend?" + "email_Id=" + email_Id)
+         .then(response => response.text())
+         .catch(error => console.error('Error:', error))
+         .then( response => document.getElementById('reg_form').submit());
+
 }
 
 
 // 비밀번호 이메일 인증
 function chgePwEmail(userId) {
 
-    $.ajax({
-        data:{"user_id":userId},
-        type:"GET",
-        url:"/pwMailSend",
-        success:function(data) {
-            alert("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
-        },
-        error:function(request, status, error) {
-            alert("실패");
-        }
-    })
-}
+    fetch("/pwMailSend?" + "userId=" + userId)
+         .then(response => response.text())
+         .catch(error => console.error('Error:', error))
+         .then(response => {
+                commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
+                setTimeout( function(){
+                    memPopUpClose(false)
+                }, 300);
+            });
 
+}
 
 
 // 이미지 삭제
 function imgDel(delImgFileNm) {
-    let selector = 'p[id="' + delImgFileNm +'"]';
-    $(selector).parent().hide();
+    let selector = document.getElementById(delImgFileNm)
+    selector.parentElement.remove()
     delImgArr.push(delImgFileNm)
-}
-
-
-// ------------------------ 공통 관련 부분
-
-
-
-/*
- * 작성자 : 서은빈
- * 주민등록번호 뒷 첫번째 자리로 년대를 return
- * param : Number
- * return : Bool
- * 날짜 : 2022-08-06
- * */
-
-function getBirthYear() {
 }
