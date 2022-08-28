@@ -7,7 +7,6 @@
     let isDimming    = true;
     let option       = {};
 
-    //option.isLoading = true; //로딩처리는 딤말고 다른데서 처리필요
 
     for(let i = 0; i<arguments.length;i++){
         switch (typeof(arguments[i])) {
@@ -36,4 +35,17 @@
         elDimWrapper.style.display = 'none';
         body.style.overflowY       = 'auto';
     }
+}
+
+function enterkey() {
+   var selectedSearchType = document.getElementById('search-list');
+   var inputKeyword = document.getElementById('keywordInput');
+
+   if(window.event.keyCode == 13) {
+       const searchData = "/integration/board"
+                     + '?searchType=' + selectedSearchType.value
+                     + "&keyword=" + inputKeyword.value
+
+        location.href = self.location.origin + searchData
+   }
 }

@@ -70,3 +70,38 @@
     content: "\00d7";
     font-size:15pt;
 }
+
+#loading-img {
+    display: none;
+    opacity: 80%;
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    animation: rotate 5s infinite linear;
+    z-index: 100;
+}
+
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+#slide-bottom-arrow {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+}
+
+#dim-wrapper {
+    display: none;
+}
