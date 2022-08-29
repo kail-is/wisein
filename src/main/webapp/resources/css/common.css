@@ -1303,6 +1303,14 @@ body {
     margin: 0 !important;
 }
 
+.center {
+    text-align: center !important;
+}
+
+.mb1r {
+    margin-bottom: 1rem !important;
+}
+
 /*-----------------------------------------------*/
 
 .popup-message-wrap {
