@@ -4,10 +4,10 @@
     let isMatzipUpd = !(matzipUpdBox === undefined || matzipUpdBox === null) ? true : false
 
     const categoryEl   = document.getElementById('category');
-    const keywordEl = document.getElementById('keyword');
+    const keywordEl = document.getElementById('keywordBox');
     const matzipDataEl = document.getElementById('matzip_upload_data');
 
-    const keyword = document.querySelector('.content-inner-box .keyword');
+    //const keywordBox = document.querySelector('.content-inner-box .keyword');
     const matzip_name = document.querySelector('#matzip-name');
 
     const fmtSrhBtn = document.querySelector('#format-search-btn');
@@ -40,81 +40,64 @@
 
         if ( matzipValidate(subject, content, matzip_data) ){
 
-            $.ajax({
-                data:{"writer": writer, "subject":subject, "content":content, "star":star, "category": category, "matzipData": matzip_data, "matzipId": matzip_id, "addressName": address_name},
-                type:"GET",
-                url:"/regMatzip",
-                success:function(data) {
-                    alert("성공");
-                    const num = getPostNum(writer, subject)
-                    if(brdNum != num){
-                        updateImgHash(brdNum, num)
-                    }
-                    window.location.href = "/matzipList"
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
+            const obj = {"writer": writer, "subject":subject, "content":content, "star":star, "category": category, "matzipData": matzip_data, "matzipId": matzip_id, "addressName": address_name}
+
+            fetch("/regMatzip", {
+                    method : 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(obj),
+                }).then(response => response.text())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                   alert("성공");
+                   const postNum = getPostNum(writer, subject)
+                   if(brdNum != postNum){ updateImgHash(brdNum, postNum) }
+                   window.location.href = "/matzipList"
+                })
         }
     }
 
-    function updateImgHash(brdNum, num){
+    function updateImgHash(brdNum, postNum){
 
-        const brdNm = getBoardNm()
+        const brdName = getBoardNm()
 
-         $.ajax({
-                data:{"brdNm": brdNm, "randomStr": brdNum, "brdNum":num},
-                type:"GET",
-                url:"/updateHash",
-                success:function(data) {
+         fetch("/updateHash?" + "brdNm=" + brdName + "&randomStr=" + brdNum + "brdNum=" + postNum)
+               .then(response => response.text())
+               .catch(error => console.error('Error:', error))
+               .then(response => {
+                    console.log(response)
                     alert("이미지 업데이트 성공");
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
+               })
     }
 
 
-    function getPostNum(writer, subject) {
+     async function getPostNum(writer, subject) {
         let postNum = "-1"
-
-         $.ajax({
-                data:{"writer": writer, "subject":subject},
-                type:"GET",
-                url:"/getPostNum",
-                async: false,
-                success:function(data) {
-                    postNum = data;
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
-
-        return postNum;
+        const response = await fetch("/getPostNum?" + "writer=" + writer + "&subject=" + subject)
+        const data = await response.text()
+        return data
+        // TODO 동기식 실행 완료 - fulfilled Promise 객체 수정 요함
     }
 
     function matzipUpd(){
 
-        const num = document.getElementById('num').value;
+        const num = document.getElementById('num').value ;
         const subject = document.getElementById('subject').value;
         const content = editor.getHTML();
         const star = document.getElementById('star').value;
 
-        $.ajax({
-            data:{"num": num, "subject":subject, "content":content, "star":star},
-            type:"GET",
-            url:"/putRecm",
-            success:function(data) {
-                alert("성공");
-                window.location.href = "/matzipList"
-            },
-            error:function(request, status, error) {
-                alert("실패");
-            }
-        })
+        const obj = {"num": num, "subject":subject, "content":content, "star":star}
+
+        fetch("/putRecm", {
+                method : 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(obj),
+            }).then(response => response.text())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+               alert("성공");
+               window.location.href = "/matzipList"
+            });
     }
 
     function matzipValidate(subject, content, matzip_data) {
@@ -182,29 +165,22 @@
         let keyword = `${categoryEl.value} ${keywordEl.value}`
         const kakaoRestApiKey = KAKAO_KEY
 
-        $.ajax({
-            type : 'get',
-            url : 'https://dapi.kakao.com/v2/local/search/keyword.JSON?query='+keyword,
-            beforeSend : function(xhr){
-                xhr.setRequestHeader("Authorization", `KakaoAK ${kakaoRestApiKey}`);
-            },
-            error: function(xhr, status, error){
-                alert(error+'error');
-            },
-            success : function(data){
-                popupManger.matzipPopupOpen(data,(result)=>{
-                    matzip_name.value = result.selectedData.split("(")[0]
-                    keywordEl.value = result.selectedData.split("(")[1].replace(")","");
-                    matzipDataEl.value = JSON.stringify(result.resultData, null, 2);
+        fetch( "https://dapi.kakao.com/v2/local/search/keyword.JSON?query=" + keyword, {
+            headers: {'Authorization': `KakaoAK ${kakaoRestApiKey}`}
+            }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+               popupManger.matzipPopupOpen(data,(result)=>{
+                   matzip_name.value = result.selectedData.split("(")[0]
+                   keywordEl.value = result.selectedData.split("(")[1].replace(")","");
+                   matzipDataEl.value = JSON.stringify(result.resultData, null, 2);
 
-                    keywordEl.style.width = "50%"
-                    matzip_name.classList.remove('none');
-                    fmtSrhBtn.classList.remove('none');
-                    addSrhBtn.classList.add('none');
-                });
-
-            },
-        });
+                   keywordEl.style.width = "50%"
+                   matzip_name.classList.remove('none');
+                   fmtSrhBtn.classList.remove('none');
+                   addSrhBtn.classList.add('none');
+               });
+            });
     }
 
     function formatKeyword() {
