@@ -95,7 +95,7 @@ public class matzipController {
 
 	@GetMapping(value="/matzipBoard")
 	public String matzipBoard () throws Exception {
-		return "board/matzipBoard";
+		return "board/matzipBoard_TOBE";
 	}
 
 	@PostMapping(value="/regMatzip")
@@ -129,7 +129,7 @@ public class matzipController {
 		MatzipDTO matzipDTO = service.selectMatzip(recmDTO.getRefMatzip());
 		model.addAttribute("matzip", matzipDTO);
 
-		return "board/matzipUpd";
+		return "board/matzipBoard_TOBE";
 	}
 
 	@PostMapping(value="/putRecm")

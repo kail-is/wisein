@@ -1,7 +1,6 @@
 // matzipBoard - func
 
-    let matzipUpdBox = document.querySelector('.matzip-upd')
-    let isMatzipUpd = !(matzipUpdBox === undefined || matzipUpdBox === null) ? true : false
+    let isMatzipUpd = !isEmpty(window.location.pathname.match("upd"))
 
     const categoryEl   = document.getElementById('category');
     const keywordEl = document.getElementById('keywordBox');
@@ -52,7 +51,7 @@
                    alert("성공");
                    const postNum = getPostNum(writer, subject)
                    if(brdNum != postNum){ updateImgHash(brdNum, postNum) }
-                   window.location.href = "/matzipList"
+                   window.location.href = "/matzip?id=" + matzip_id
                 })
         }
     }
@@ -85,6 +84,9 @@
         const subject = document.getElementById('subject').value;
         const content = editor.getHTML();
         const star = document.getElementById('star').value;
+        const matzipId = document.getElementById('matzip_id').value;
+
+        debugger;
 
         const obj = {"num": num, "subject":subject, "content":content, "star":star}
 
@@ -96,7 +98,7 @@
             .catch(error => console.error('Error:', error))
             .then(response => {
                alert("성공");
-               window.location.href = "/matzipList"
+               window.location.href = "/matzip?id=" + matzipId
             });
     }
 
