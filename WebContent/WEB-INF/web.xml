@@ -20,4 +20,16 @@
 		<filter-name>xssEscapeServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+
+	<!-- error Page -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404Page</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/errorPage</location>
+	</error-page>
 </web-app>

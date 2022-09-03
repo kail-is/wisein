@@ -1311,6 +1311,28 @@ body {
     margin-bottom: 1rem !important;
 }
 
+.error-img img{
+    width: 70%;
+}
+
+.error-img-txt {
+    color: lightgray;
+    font-size: 8px;
+}
+
+.error-wrap {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.error-txt-wrap {
+    margin: auto;
+    text-align: center;
+}
+
+
+
 /*-----------------------------------------------*/
 
 .popup-message-wrap {

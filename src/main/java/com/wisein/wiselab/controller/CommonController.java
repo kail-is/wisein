@@ -5,6 +5,7 @@ import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,17 @@ public class CommonController {
 
     @Autowired
     CommonService comService;
+
+    @GetMapping(value = "/error/404Page")
+    public String error404(HttpServletResponse res, Model model) throws Exception {
+        model.addAttribute("code", "ERROR_404");
+        return "errors/404";
+    }
+
+    @GetMapping(value = "/error/errorPage")
+    public String errorPage() throws Exception {
+        return "errors/error";
+    }
 
     @ResponseBody
     @PostMapping(value = "/upload")

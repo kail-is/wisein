@@ -34,9 +34,15 @@
 	</definition>
 
 	<!-- error -->
-	<definition name="tiles/error/template" template="/WEB-INF/template/error/error-template.jsp"/>
-	<definition name="/errors/*"       extends="tiles/error/template">
-		<put-attribute name="contents" value="/WEB-INF/errors/{1}.jsp"/>
+	<definition name="tiles/error/template" template="/WEB-INF/tiles/error/error-template.jsp">
+		<put-attribute name="header"    value="/WEB-INF/tiles/common/header.jsp"/>
+		<put-attribute name="nav"       value="/WEB-INF/tiles/common/nav.jsp"/>
+		<put-attribute name="leftSide"  value="/WEB-INF/tiles/common/leftSide.jsp"/>
+		<put-attribute name="footer"    value="/WEB-INF/tiles/common/footer.jsp"/>
+	</definition>
+
+	<definition name="errors/*"       extends="tiles/error/template">
+		<put-attribute name="contents" value="/WEB-INF/views/cmn/error/{1}.jsp"/>
 	</definition>
    
 </tiles-definitions>

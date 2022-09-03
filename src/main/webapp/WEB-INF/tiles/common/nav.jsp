@@ -15,7 +15,12 @@
                     <c:if test="${empty member.fileList[0]}">
                         <img src ="../resources/image/Conic.png">
                     </c:if>
-                    <label for="my-function-chk">반가워요, ${member.name}!<br>${member.site}</label>
+                    <c:if test="${empty member}">
+                         <label for="my-function-chk">회원 가입이 필요해요.</label>
+                    </c:if>
+                    <c:if test="${not empty member}">
+                         <label for="my-function-chk">반가워요, ${member.name}!<br>${member.site}</label>
+                    </c:if>
                     <input type="checkbox" name="" id="my-function-chk" style="display: none;">
                     <ul class="person-function">
                      <c:if test="${empty member}">
