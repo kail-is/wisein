@@ -8,12 +8,11 @@ import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,26 +55,30 @@ public class matzipController {
 
 	@GetMapping(value="/matzipBoard")
 	public String matzipBoard () throws Exception {
-		return "board/matzipBoard";
+		return "board/matzipBoard_TOBE";
 	}
 
-	@GetMapping(value="/regMatzip")
-	public String regMatzip (HttpServletRequest request, RecmDTO recmDTO, MatzipDTO matzipDTO) throws Exception {
+	@PostMapping(value="/regMatzip")
+	@ResponseBody
+	public ResponseEntity<String> regMatzip(@RequestBody Map<String, String> params) throws Exception {
 
-		recmDTO.setWriter(request.getParameter("writer"));
-		recmDTO.setRefMatzip(Integer.parseInt(request.getParameter("matzipId")));
-		recmDTO.setSubject(request.getParameter("subject"));
-		recmDTO.setContent(request.getParameter("content"));
-		recmDTO.setStar(Float.parseFloat(request.getParameter("star")));
+		RecmDTO recmDTO = new RecmDTO();
+		MatzipDTO matzipDTO = new MatzipDTO();
 
-		matzipDTO.setCategory(request.getParameter("category"));
-		matzipDTO.setId(Integer.parseInt(request.getParameter("matzipId")));
-		matzipDTO.setMatzipData(request.getParameter("matzipData"));
-		matzipDTO.setAddressName(request.getParameter("addressName"));
+		recmDTO.setWriter(params.get("writer"));
+		recmDTO.setRefMatzip(Integer.parseInt(params.get("matzipId")));
+		recmDTO.setSubject(params.get("subject"));
+		recmDTO.setContent(params.get("content"));
+		recmDTO.setStar(Float.parseFloat(params.get("star")));
+
+		matzipDTO.setCategory(params.get("category"));
+		matzipDTO.setId(Integer.parseInt(params.get("matzipId")));
+		matzipDTO.setMatzipData(params.get("matzipData"));
+		matzipDTO.setAddressName(params.get("addressName"));
 
 		service.insertMzBoard(matzipDTO, recmDTO);
 
-		return "redirect:/matzipList";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
 	@GetMapping(value="/updRecm")
@@ -86,20 +89,23 @@ public class matzipController {
 		MatzipDTO matzipDTO = service.selectMatzip(recmDTO.getRefMatzip());
 		model.addAttribute("matzip", matzipDTO);
 
-		return "board/matzipUpd";
+		return "board/matzipBoard_TOBE";
 	}
 
-	@GetMapping(value="/putRecm")
-	public String putRecm(HttpServletRequest request, RecmDTO recmDTO) throws Exception {
+	@PostMapping(value="/putRecm")
+	@ResponseBody
+	public ResponseEntity<String> putRecm(@RequestBody Map<String, String> params) throws Exception {
 
-		recmDTO.setNum(Integer.parseInt(request.getParameter("num")));
-		recmDTO.setSubject(request.getParameter("subject"));
-		recmDTO.setContent(request.getParameter("content"));
-		recmDTO.setStar(Integer.parseInt(request.getParameter("star")));
+		RecmDTO recmDTO = new RecmDTO();
+
+		recmDTO.setNum(Integer.parseInt(params.get("num")));
+		recmDTO.setSubject(params.get("subject"));
+		recmDTO.setContent(params.get("content"));
+		recmDTO.setStar(Integer.parseInt(params.get("star")));
 
 		service.updRecm(recmDTO);
 
-		return "cmn/foodDetail";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
 	@GetMapping(value="/delRecm")

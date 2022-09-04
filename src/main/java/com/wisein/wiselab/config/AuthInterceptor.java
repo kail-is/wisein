@@ -8,6 +8,8 @@ import com.wisein.wiselab.dto.MemberDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.io.PrintWriter;
+
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
@@ -19,7 +21,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             MemberDTO member = (MemberDTO)session.getAttribute("member");
 
             if(member == null) {
-                res.sendRedirect("/");
+                res.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = res.getWriter();
+                out.println("<script>alert('로그인한 사용자만 이용 가능합니다.');");
+                out.println("location.href='/'");
+                out.println("</script>");
+                out.flush();
                 return false;
             }
 

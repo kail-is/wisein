@@ -12,9 +12,11 @@
         <title>WISEIN</title>
 
         <link rel="stylesheet" href="${url}/resources/css/main.css">
-        <link rel="stylesheet" href="resources/css/common.css">
-        <link rel="stylesheet" href="resources/css/tipBoard.css">
-        <link rel="stylesheet" href="resources/css/foodDetail.css">
+        <link rel="stylesheet" href="${url}/resources/css/common.css">
+        <link rel="stylesheet" href="${url}/resources/css/tipBoard.css">
+
+        <link rel="stylesheet" href="${url}/resources/css/foodList.css">
+        <link rel="stylesheet" href="${url}/resources/css/foodDetail.css">
 
         <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css">
         <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css">
@@ -60,6 +62,7 @@
 		</div>
 	</body>
 
+    <script src="${url}/resources/js/common/key.js"></script>
     <script src="${url}/resources/js/matzip.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
 	<script>

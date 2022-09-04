@@ -1303,6 +1303,36 @@ body {
     margin: 0 !important;
 }
 
+.center {
+    text-align: center !important;
+}
+
+.mb1r {
+    margin-bottom: 1rem !important;
+}
+
+.error-img img{
+    width: 70%;
+}
+
+.error-img-txt {
+    color: lightgray;
+    font-size: 8px;
+}
+
+.error-wrap {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.error-txt-wrap {
+    margin: auto;
+    text-align: center;
+}
+
+
+
 /*------ Modal Popup css --------*/
 
 .alert-title, .confirm-title {
