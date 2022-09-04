@@ -81,7 +81,7 @@ public class MatzipDAOImpl implements MatzipDAO {
 
     @Override
     public List<CompanyDTO> companyList() {
-        return sql.selectList(NS + ".company");
+        return sql.selectList(NS + ".companyList");
     }
 
     @Override
@@ -100,18 +100,23 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
-    public List<CompanyDTO> company() {
-        return sql.selectList(NS + ".selectCompany");
-    }
-
-    @Override
-    public List<CompanyDTO> selectCompany(String location) {
-        return sql.selectList(NS + ".selectCompany2", location);
-    }
-
-    @Override
     public int matzipId(String loc) {
         return sql.selectOne(NS + ".matzipId",loc);
+    }
+
+    @Override
+    public int matzipExistCheck(int id) {
+        return sql.selectOne(NS + ".matzipExistCheck",id);
+    }
+
+    @Override
+    public List<CompanyDTO> companyCategory() {
+        return sql.selectList(NS + ".companyCategory");
+    }
+
+    @Override
+    public List<CompanyDTO> categoryDetail(String option) {
+        return sql.selectList(NS + ".categoryDetail", option);
     }
 
 

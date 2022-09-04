@@ -232,8 +232,10 @@
   padding-right: 0.125em;
 }
 
+/* 지도 css */
 .map-wrap {
   width: 50%;
+  height:530px;
 }
 
 @media screen and (max-width: 992px) {

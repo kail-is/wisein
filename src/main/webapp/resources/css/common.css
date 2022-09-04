@@ -1303,12 +1303,22 @@ body {
     margin: 0 !important;
 }
 
-/*-----------------------------------------------*/
+/*------ Modal Popup css --------*/
+
+.alert-title, .confirm-title {
+    text-align:center;
+    padding-top:20px;
+    font-size:22px;
+    font-weight:bold;
+    color:#6633CC;
+}
 
 .popup-message-wrap {
     text-align:center;
     width:100%;
     height:60px;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .alert-button-wrap {
@@ -1326,11 +1336,10 @@ body {
     box-shadow: 2px 2px 2px #b1a5a5;
 }
 
-.confirm-message-wrap {
-    padding-top:40px;
+.confirm-button-wrap {
     text-align:center;
     width:100%;
-    height:80px;
+    height:40px;
 }
 
 .confirm-btn button {
@@ -1354,8 +1363,6 @@ body {
     -webkit-box-shadow: 2px 2px 2px #b1a5a5;
     box-shadow: 2px 2px 2px #b1a5a5;
 }
-
-
 
 
 .font-awe {

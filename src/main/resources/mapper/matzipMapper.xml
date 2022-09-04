@@ -127,12 +127,12 @@
 
     <select id="categoryLoc" parameterType="String" resultType="FoodListDTO">
         SELECT
-        *
-        FROM MATZIP_BOARD
+            *
+          FROM MATZIP_BOARD
         WHERE CATEGORY=#{category}
     </select>
 
-    <select id="company" resultType="CompanyDTO">
+    <select id="companyList" resultType="CompanyDTO">
         SELECT
         *
         FROM COMPANY
@@ -140,30 +140,30 @@
 
     <select id="matzipCount" resultType="CompanyDTO" parameterType="String">
         SELECT
-        COUNT(*) MATZIPCOUNT,
-        CATEGORY as LOCATION
-        FROM MATZIP_BOARD
-        where CATEGORY IN (SELECT LOCATION FROM COMPANY)
-        AND
+            COUNT(*) MATZIPCOUNT,
+            CATEGORY as LOCATION
+          FROM MATZIP_BOARD
+            where CATEGORY IN (SELECT LOCATION FROM COMPANY)
+          AND
         CATEGORY=#{location} GROUP BY CATEGORY;
     </select>
 
     <select id="matzipList" parameterType="String" resultType="CompanyDTO">
-        select
-        id,
-        matzip_data as companydata,
-        category as location
-        from matzip_board
-        where category=#{location}
+        SELECT
+            ID,
+            MATZIP_DATA AS COMPANYDATA,
+          CATEGORY AS LOCATION
+        FROM MATZIP_BOARD
+          WHERE CATEGORY=#{location}
     </select>
 
     <select id="recmMatzip" parameterType="Integer" resultType="CompanyDTO">
         SELECT
-        COUNT(*) AS MATZIPCOUNT,
-        REF_MATZIP AS ID
-        FROM RECM_BOARD
-        where REF_MATZIP= #{id}
-        group by REF_MATZIP;
+            COUNT(*) AS MATZIPCOUNT,
+            REF_MATZIP AS ID
+          FROM RECM_BOARD
+            WHERE REF_MATZIP= #{id}
+        GROUP BY REF_MATZIP;
 
     </select>
 
@@ -199,4 +199,29 @@
         limit 1
     </select>
 
+    <select id="matzipExistCheck" parameterType="Integer" resultType="Integer">
+        SELECT
+          EXISTS
+            (
+              SELECT
+                REF_MATZIP FROM RECM_BOARD
+                  WHERE REF_MATZIP = #{id}
+                limit 1
+            )
+        AS SUCCESS
+    </select>
+
+
+    <select id="companyCategory" resultType="CompanyDTO">
+        SELECT
+          LOCATION
+            FROM COMPANY
+    </select>
+
+    <select id="categoryDetail" parameterType="String" resultType="CompanyDTO">
+        SELECT
+          *
+            FROM COMPANY
+          WHERE LOCATION=#{option}
+    </select>
 </mapper>

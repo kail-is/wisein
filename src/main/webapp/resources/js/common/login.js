@@ -32,7 +32,7 @@ window.onload = function() {
         var userId = document.querySelector("#id").value;
 
         if (isEmpty(userId)) {
-             alert("아이디를 입력해주세요.");
+            commonPopup.alertPopup("아이디를 입력해주세요");
         } else {
             fetch("/idDupChk?" + "userId=" + userId)
                  .then(response => response.text())
@@ -51,9 +51,9 @@ window.onload = function() {
     });
 
     // 아이디 재설정
-    idBox.addEventListener('click', () => {
+    idBox.addEventListener('click', async () => {
         if (idChkBool == true) {
-            if (confirm("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 idChkBool = false;
                 document.querySelector("#idChkAlert > .porintColor").classList.add('none');
                 idBox.value = "";
@@ -97,9 +97,9 @@ window.onload = function() {
     });
 
     // 회원정보 수정 비밀번호 재설정
-    pwBox.addEventListener('click', () => {
+    pwBox.addEventListener('click', async () => {
         if (pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -146,9 +146,9 @@ window.onload = function() {
     });
 
     // 회원정보 수정 비밀번호 재설정
-    updPwBox.addEventListener('click', () => {
+    updPwBox.addEventListener('click', async () => {
         if (upd_pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 upd_pwChkBool = false;
                 updPwBox.value = "";
                 updPwBox.readOnly = false;
@@ -163,10 +163,10 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     signupBtn.addEventListener('click', () => {
       if (chkAll()) {
-        alert("유효성 테스트 통과");
+        commonPopup.alertPopup("유효성 테스트 통과");
         emailValid();
       } else {
-        alert("유효성 테스트 미통과");
+        commonPopup.alertPopup("유효성 테스트 통과");
         event.preventDefault();
       }
     });
@@ -186,7 +186,7 @@ window.onload = function() {
             }
             updForm.submit();
         } else {
-           alert("비밀번호를 입력하세요.");
+           commonPopup.alertPopup("비밀번호를 입력하세요.");
            event.preventDefault();
          }
    })
@@ -229,12 +229,12 @@ window.onload = function() {
         var password = document.getElementById("login_pw").value;
 
         if(id.length == 0) {
-            alert("아이디를 입력하세요.");
+            commonPopup.alertPopup("아이디를 입력하세요.");
           return false
         }
 
         if(password.length == 0) {
-          alert("비밀번호를 입력하세요.");
+          commonPopup.alertPopup("비밀번호를 입력하세요.");
           return false
         }
 
@@ -243,10 +243,10 @@ window.onload = function() {
              .catch(error => console.error('Error:', error))
              .then( idChk => {
                  if (idChk.idExist == 0) {
-                   alert("존재하지 않는 아이디입니다.");
+                   commonPopup.alertPopup("존재하지 않는 아이디입니다.");
                  } else {
                     if (idChk.authKey!="Y") {
-                     alert("메일 인증이 완료되지 않았습니다.");
+                     commonPopup.alertPopup("메일 인증이 완료되지 않았습니다.");
                     } else {
                      document.getElementById("login_form").submit();
                     }
@@ -302,8 +302,8 @@ function userUpd() {
     $dim();
 }
 
-function userWithdraw() {
-    let withdrawal = confirm("탈퇴하시겠습니까?")
+async function userWithdraw() {
+    let withdrawal = await commonPopup.confirmPopup("탈퇴하시겠습니까?", commonPopup.callback);
 
     if (withdrawal) {
         location.href = "/user/withdraw"

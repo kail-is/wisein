@@ -26,12 +26,4 @@ public interface MatzipService {
     public int recmCnt(int matzipId) throws Exception;
 
     public void updClosedStat(int matzipId) throws Exception;
-
-    public List<CompanyDTO> companyList();
-    public List<CompanyDTO> matzipCount(String location);
-    public List<CompanyDTO> matzipList(String location);
-    public List<CompanyDTO> recmMatzipCount(int id);
-    public List<CompanyDTO> company();
-    public List<CompanyDTO> selectCompany(String location);
-    public int matzipId(String loc);
 }

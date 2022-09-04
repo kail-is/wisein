@@ -1,16 +1,12 @@
 package com.wisein.wiselab.controller;
 
-import com.wisein.wiselab.config.JsonInstance;
+import com.wisein.wiselab.dao.MatzipDAO;
 import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import com.wisein.wiselab.service.MatzipService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -30,52 +28,15 @@ public class matzipController {
 
 	@Autowired
 	MatzipService service;
-
-	JSONObject jObject;
-	JSONParser jParser;
-	JSONArray jArray;
-
-	public matzipController() {
-		this.jObject = JsonInstance.getjObjectInstance();
-		this.jParser = JsonInstance.getJsonParserInstatnce();
-		this.jArray = JsonInstance.getJsonArrayInstance();
-	}
-
+	@Autowired
+	MatzipDAO dao;
 
 	//맛집 리스트 메인
 	@GetMapping(value = "/matzipList")
 	public String main(Model model, CompanyDTO companyDTO) throws Exception {
 
-		//카테고리 select
-		List<CompanyDTO> selectCompany = service.company();
-		//회사ㄷ
-		List<CompanyDTO> companyList = service.companyList();
-		List<CompanyDTO> company = new ArrayList<>();
-
-		for (int i=0; i<companyList.size(); i++) {
-			companyDTO = new CompanyDTO();
-
-			try {
-				jObject = (JSONObject) jParser.parse(companyList.get(i).getCompanydata());
-				jArray = (JSONArray) jObject.get("documents");
-				jObject = (JSONObject) jArray.get(0);
-
-				List<CompanyDTO> siteCountList = service.matzipCount(companyList.get(i).getLocation());
-
-				companyDTO.setId(companyList.get(i).getId());
-				companyDTO.setLocation(companyList.get(i).getLocation());
-				companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
-				companyDTO.setCompanyName((String) jObject.get("place_name"));
-				companyDTO.setCompanyLoc((String) jObject.get("address_name"));
-
-				company.add(companyDTO);
-
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		model.addAttribute("companyList", company);
-		model.addAttribute("selectCompany", selectCompany);
+		List<CompanyDTO> comCategoryList = dao.companyCategory();
+		model.addAttribute("comCategory", comCategoryList);
 
 		return "cmn/foodList";
 	}

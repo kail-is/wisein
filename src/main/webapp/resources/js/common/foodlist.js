@@ -1,146 +1,125 @@
-var x;
-var y;
-var pointIndex=0;
-var companyLength;
-var marker;
+let x, y, companyLength, localCheck, marker;
+let createDiv = document.createElement('div');
+let createDivBefore = document.querySelector('.button-wrap');
+
+//const commonPage = {
+//    totalCount : null,
+//    recordPerPage : 10,
+//    navPage : 10,
+//    firstPage : 1,
+//    lastPage : null,
+//}
+
 
 window.addEventListener('DOMContentLoaded', function(){
-
-    $.ajax({
-        url:"/companyList",
-        type:"GET",
-        datatype:"json",
-        success:function(data) {
-
-            companyLength = data.company.length;
-
-            for (var i=0; i<data.company.length; i++) {
-                $(".button-wrap").before("<div id='matmat' onclick='test(&quot;" + data.company[i].companyLoc+ "&quot;,&quot;" + data.company[i].location+ "&quot;)' class='board-line'><div style='width:300px;' id='local' class='board-cell board-category purple2'>"
-                    +data.company[i].location+"</div>"
-                    +"<div id='site' class='board-cell board-title'>"
-                    +data.company[i].companyName+"</div>"
-                    +"<div id='count' class='board-cell board-map purple'><span class='material-icons'>map</span>"
-                    +data.company[i].matzipCount+"</div></div>");
-
+    fetch("/companyList")
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(companyList => {
+            companyLength = companyList.company.length;
+            for (let i=0; i<companyList.company.length; i++) {
+                createDiv.innerHTML += "<div id='list' onclick='matzipLoc(&quot;" + companyList.company[i].location+ "&quot;,&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;)' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                            +companyList.company[i].location+"</div>"
+                            +"<div class='board-cell board-title'>"
+                            +companyList.company[i].companyName+"</div>"
+                            +"<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                            +companyList.company[i].matzipCount+"</div></div>";
             }
-        },
-        error:function(request, status, error) {
-            alert("Fail");
-        }
-    });
+            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
+        });
 });
 
-$("#category").blur(function() {
+function categorySelect(target) {
+    if (target.value != "none") {
+        let option = target.options[target.selectedIndex].text;
 
-    var place = $("#category option:selected").val()
+        fetch("/categorySelect?"+"option="+option)
+            .then(response => response.json())
+            .catch(error => console.log('Error'))
+            .then(categoryList => {
+                let changeText = document.getElementById('changeText')
+                changeText.innerText = "맛집";
 
-    if (place!="") {
-        $.ajax({
-            url:"/selectCompany",
-            data : {"place":place},
-            type:"GET",
-            datatype:"json",
-            success:function(data) {
-
-                for (var i=0;i<companyLength; i++) {
-                    $("#matmat").remove();
+                let companyArray = Array.from(document.querySelectorAll('#list'));
+                    for (let i=0; i<companyArray.length; i++) {
+                        companyArray[i].remove();
+                    }
+                for (let i=0; i<categoryList.company.length; i++) {
+                    createDiv.innerHTML += "<div id='list' onclick='matzipLoc(&quot;" + categoryList.company[i].location+ "&quot;,&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;)' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                                +categoryList.company[i].location+"</div>"
+                                +"<div class='board-cell board-title'>"
+                                +categoryList.company[i].companyName+"</div>"
+                                +"<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                                +categoryList.company[i].matzipCount+"</div></div>";
                 }
+                createDivBefore.insertAdjacentElement('beforebegin', createDiv);
+            });
+    }
+}
 
-                $("#hello").text("맛집");
+function matzipLoc(location,address,id) {
 
-                for (var j=0; j<data.company.length; j++) {
-                    $(".button-wrap").before("<div id='matmat' onclick='test(&quot;" + data.company[j].companyLoc+ "&quot;,&quot;" + data.company[j].location+ "&quot;)' class='board-line'><div style='width:300px;' id='local' class='board-cell board-category purple2'>"
-                        +data.company[j].location+"</div>"
-                        +"<div id='site' class='board-cell board-title'>"
-                        +data.company[j].companyName+"</div>"
-                        +"<div id='count' class='board-cell board-map purple'><span class='material-icons'>map</span>"
-                        +data.company[j].matzipCount+"</div></div>");
-                }
-
-            },
-            error:function(request, status, error) {
-                alert("Fail");
-            }
-        });
-    } else {
-        return;
+    let companyArray = Array.from(document.querySelectorAll('#list'));
+    for (let i=0; i<companyArray.length; i++) {
+        companyArray[i].remove();
     }
 
-});
-
-//수정1
-function test(local,place) {
-
-    $.ajax({
-        url:"/placeMatzip",
-        data : {"place":place},
-        type:"GET",
-        datatype:"json",
-        success:function(data) {
-
-            for (var i=0;i<companyLength; i++) {
-                $("#matmat").remove();
+    fetch("/foodList?"+"location="+location)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(matzipList => {
+            for (let i=0;i<matzipList.matzip.length; i++) {
+                createDiv.innerHTML += "<div id='list' onclick='selectFoodLocal(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                    +matzipList.matzip[i].location+"</div>"
+                    +"<div class='board-cell board-title'>"
+                    +matzipList.matzip[i].companyName+"</div>"
+                    +"<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                    +matzipList.matzip[i].matzipCount+"</div></div>";
             }
-            $("#hello").text("추천수");
-            //console.log("id : "+data.company[0].id);
-            for (var j=0; j<data.company.length; j++) {
-                $(".button-wrap").before("<div id='matmat' onclick='selectFoodLocal(&quot;" + data.company[j].companyLoc+ "&quot;)' class='board-line'><div style='width:300px;' id='local' class='board-cell board-category purple2'>"
-                    +data.company[j].location+"</div>"
-                    +"<div id='site' class='board-cell board-title'>"
-                    +data.company[j].companyName+"</div>"
-                    +"<div id='count' class='board-cell board-map purple'><span class='material-icons'>map</span>"
-                    +data.company[j].matzipCount+"</div></div>");
-            }
+            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
 
-        },
-        error:function(request, status, error) {
-            alert("Fail");
-        }
-    });
-        selectFoodLocal(local);
+            selectFoodLocal(address, id);
+
+        })
 
 }
 
-function selectFoodLocal(local)  {
+function selectFoodLocal(local, id) {
 
-    $.ajax({
-        url:"/lateChange",
-        data : {"local":local},
-        type:"GET",
-        datatype:"json",
-        success:function(data) {
-            var locatePoint = data.local;
-            local2 = JSON.parse(locatePoint);
-            x = local2['documents'][0].address.x;
-            y = local2['documents'][0].address.y;
+    localExistCheck(id);
 
-            local="";
-            panTo(local2['documents'][0].address.address_name);
-        },
-        error:function(request, status, error) {
-            alert("Fail");
-        }
-    });
+    let changeText = document.getElementById('changeText')
+    changeText.innerText = "추천수";
+
+    fetch("/lateChange?"+"local="+local)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(late => {
+            let lateRst = JSON.parse(late.local.toString().replace(/&quot;/g, '"'));
+            x = lateRst.documents[0].x;
+            y = lateRst.documents[0].y;
+
+            panTo(lateRst.documents[0].address_name);
+        })
 }
 
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-var ps = new kakao.maps.services.Places();
 
 var mapContainer = document.getElementById('map'),
     mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.37947804818484, 127.11415037150388),
         level: 3,
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
 function panTo(loc) {
-
     var moveLatLon = new kakao.maps.LatLng(y, x);
     map.panTo(moveLatLon);
     localCheckPoint(loc);
 }
 
+//상세 맛집 페이지 이동
 function localCheckPoint(loc) {
     var markerPosition = new kakao.maps.LatLng(y, x);
 
@@ -151,26 +130,30 @@ function localCheckPoint(loc) {
 
     marker.setMap(map);
 
+
     kakao.maps.event.addListener(marker, 'click', function() {
 
-        $.ajax({
-            url:"/matzipDetailId",
-            data : {"loc":loc},
-            type:"GET",
-            datatype:"json",
-            success:function(data) {
-
-                var url = "http://localhost:8080/matzip?id="+data;
-                location.href = url;
-            },
-            error:function(request, status, error) {
-                alert("Fail");
-            }
-        });
+        if (localCheck==1) {
+            fetch("/matzipDetailId?"+"loc="+loc)
+                .then(response => response.json())
+                .catch(error => console.log('Error'))
+                .then(matzipId => {
+                    let url = "http://localhost:8080/matzip?id="+matzipId;
+                    location.href = url;
+                });
+        }
     });
 }
 
-
+//좌표 이동 막기
+function localExistCheck(id) {
+    fetch("/matzipCheck?"+"id="+id)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(existCheck => {
+            localCheck = existCheck;
+        });
+}
 
 
 

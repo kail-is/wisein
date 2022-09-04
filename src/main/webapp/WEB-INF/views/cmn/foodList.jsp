@@ -7,7 +7,14 @@
     <section class="content-frame">
         <div class="top-group">
             <div class="category-wrap">
-                <p class="category-select">지역(가나다)</p>
+                <p class="category-select">
+                    <select onchange="categorySelect(this)">
+                        <option value="none">-----</option>
+                        <c:forEach items="${comCategory}" var="category">
+                            <option value="cate"><c:out value="${category.location}"/></option>
+                        </c:forEach>
+                    </select>
+                </p>
                 <ul class="person-function">
                     <li><a href="#">지역(가나다)</a></li>
                     <li><a href="#">사이트(가나다)</a></li>
@@ -28,15 +35,13 @@
                 <div class="board-line board-header">
                     <div class="board-cell board-category purple2">
                         <p>
-                            <select id="category">
-                                <option value="">-----</option>
-                                 <c:forEach items="${selectCompany}" var="category">
-                                    <option value="${category.location}"><c:out value="${category.location}"/></option>
+                            <select onchange="categorySelect(this)">
+                                <option value="none">-----</option>
+                                <c:forEach items="${comCategory}" var="category">
+                                    <option value="cate"><c:out value="${category.location}"/></option>
                                 </c:forEach>
                             </select>
                         </p>
-                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6d9d935757467c55bbacfbd5c39b0824&libraries=services"></script>
-
 
                         <ul class="person-function">
                             <li><a href="#">지역(가나다)</a></li>
@@ -49,19 +54,14 @@
                     </div>
                     <div class="board-cell board-title">
                         <p>site</p>
-                        <span class="material-icons">
-                                expand_more
-                            </span>
                     </div>
-                    <div id="hello" class="board-cell board-map gray">
+                    <div id="changeText" class="board-cell board-map gray">
                         맛집
-                        <span class="material-icons">
-                                expand_more
-                            </span>
                     </div>
                 </div>
 
-            <script src="resources/js/common/foodlist.js"></script>
+
+
 
 
 
@@ -84,4 +84,6 @@
             </ul>
         </div>
     </section>
+
+    <script src="resources/js/common/foodlist.js"></script>
 </div>
