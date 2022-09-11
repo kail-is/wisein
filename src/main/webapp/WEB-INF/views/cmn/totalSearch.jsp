@@ -69,7 +69,13 @@
                                     for (let item of result[key]) {
                                         innerHtml += `<ul class="tr">`;
                                         innerHtml += `<li class="td">` + item.num+ `</li>`;
-                                        innerHtml += `<li class="td search-subject">` + item.subject + `</li>`;
+                                        innerHtml += `<li class="td search-subject">`;
+                                        if(boardType === "QA") {
+                                            innerHtml += `<a href="/qaDetail?num=` + item.num + `">` + item.subject + `</a>`;
+                                        }else if (boardType === "TIP") {
+                                            innerHtml += `<a href="/tipDetail?num=` + item.num + `">` + item.subject + `</a>`;
+                                        }
+                                        innerHtml += `</li>`;
                                         innerHtml += `<li class="td">` + item.writer + `</li>`;
                                         innerHtml += `<li class="td">` + item.regDate + `</li>`;
                                         innerHtml += `</ul>`;
@@ -81,9 +87,10 @@
                             } else {
                                 //통신 실패
                                 console.log("통신 실패");
-                                $dim(false);
                             }
-                            $dim(false);
+                        	<c:if test="${not empty member}">
+                                $dim(false);
+                            </c:if>
                         }
                     },500)
                 }
