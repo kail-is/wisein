@@ -2,7 +2,7 @@
 <% String url =  request.getServerName().toString(); %>
     <header>
         <ul>
-            <li class="logo"><a href="/">wiseIN</a></li>
+            <li class="logo"><a href="${url}/">wiseIN</a></li>
             <li class="search-wrap">
                 <div class="select-wrap">
                     <select name="searchType" class="searchType" id="search-list">

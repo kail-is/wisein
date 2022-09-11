@@ -30,15 +30,15 @@
                      <c:if test="${not empty member}">
                          <li><a href="#">작성 글 모아 보기</a> </li>
                          <li onclick="userUpd()">정보 수정 </li>
-                         <li><a href="user/logout">로그아웃</a></li>
+                         <li><a href="${url}/user/logout">로그아웃</a></li>
                          <li onclick="userWithdraw()">탈퇴</a> </li>
                      </c:if>
                     </ul>
                 </div>
                 <ul class="menu">
-                    <li><a href="/qalist">질문하고 싶어요</a></li>
-                    <li><a href="/tiplist">Tech Tip</a></li>
-                    <li><a href="/matzipList">사이트 별 맛집 목록</a></li>
+                    <li><a href="${url}/qalist">질문하고 싶어요</a></li>
+                    <li><a href="${url}/tiplist">Tech Tip</a></li>
+                    <li><a href="${url}/matzipList">사이트 별 맛집 목록</a></li>
                 </ul>
                 <div class="search-bar">
                     <span class="material-icons">
