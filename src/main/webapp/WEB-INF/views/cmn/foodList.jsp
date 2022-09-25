@@ -8,7 +8,7 @@
         <div class="top-group">
             <div class="category-wrap">
                 <p class="category-select">
-                    <select onchange="categorySelect(this)">
+                    <select id="selectOption" onchange="categorySelect(this)">
                         <option value="none">-----</option>
                         <c:forEach items="${comCategory}" var="category">
                             <option value="cate"><c:out value="${category.location}"/></option>
@@ -24,7 +24,7 @@
                         expand_more
                     </span>
             </div>
-            <input type="button" value="추천">
+            <input type="button" onclick="location.href='matzipBoard'" value="추천">
         </div>
 
         <div class="map-wrap">
@@ -60,29 +60,14 @@
                     </div>
                 </div>
 
-
-
-
-
-
             <div class="button-wrap">
-                <input type="button" value="추천">
+                <input type="button" onclick="location.href='matzipBoard'"value="추천">
             </div>
         </div>
-        <div class="pageNo-wrap">
-            <ul class="pageno-group gray">
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li class="current purple">5</li>
-                <li>
-                        <span class="material-icons">
-                            chevron_right
-                        </span>
-                </li>
-            </ul>
+
+        <div id="page" class="page-wrap">
         </div>
+
     </section>
 
     <script src="resources/js/common/foodlist.js"></script>

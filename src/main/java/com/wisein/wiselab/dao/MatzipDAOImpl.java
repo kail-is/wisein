@@ -1,6 +1,7 @@
 package com.wisein.wiselab.dao;
 import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
+import com.wisein.wiselab.dto.PageDataDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ public class MatzipDAOImpl implements MatzipDAO {
     public MatzipDTO selectMatzip(int matzipId) throws Exception {
 
         MatzipDTO dto = sql.selectOne(NS + ".selectMatzip", matzipId);
-
         return dto == null ? new MatzipDTO() : dto;
     }
 
@@ -90,8 +90,8 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
-    public List<CompanyDTO> matzipList(String location) {
-        return sql.selectList(NS + ".matzipList", location);
+    public List<CompanyDTO> matzipList(PageDataDTO pageDataDto) {
+        return sql.selectList(NS+ ".matzipList", pageDataDto);
     }
 
     @Override
@@ -117,6 +117,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     @Override
     public List<CompanyDTO> categoryDetail(String option) {
         return sql.selectList(NS + ".categoryDetail", option);
+    }
+
+    @Override
+    public int dataCount(String location) {
+        return sql.selectOne(NS + ".dataCount", location);
     }
 
 

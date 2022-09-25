@@ -3,6 +3,7 @@ package com.wisein.wiselab.dao;
 
 import com.wisein.wiselab.dto.CompanyDTO;
 import com.wisein.wiselab.dto.MatzipDTO;
+import com.wisein.wiselab.dto.PageDataDTO;
 import com.wisein.wiselab.dto.RecmDTO;
 
 import java.util.List;
@@ -37,7 +38,8 @@ public interface MatzipDAO {
 
     public List<CompanyDTO> matzipCount(String location);
 
-    public List<CompanyDTO> matzipList(String location);
+//    public List<CompanyDTO> matzipList(String location);
+    public List<CompanyDTO> matzipList(PageDataDTO pageDataDto);
 
     public List<CompanyDTO> recmMatzipCount(int id);
 
@@ -48,4 +50,6 @@ public interface MatzipDAO {
     public List<CompanyDTO> companyCategory();
 
     public List<CompanyDTO> categoryDetail(String option);
+
+    public int dataCount(String location);
 }

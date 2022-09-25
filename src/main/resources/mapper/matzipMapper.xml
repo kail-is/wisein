@@ -127,76 +127,83 @@
 
     <select id="categoryLoc" parameterType="String" resultType="FoodListDTO">
         SELECT
-            *
+               ID
+             , CATEGORY
+             , MATZIP_DATA
+             , CLOSED_STATE
+             , ADDRESS_NAME
           FROM MATZIP_BOARD
-        WHERE CATEGORY=#{category}
+         WHERE CATEGORY=#{category}
     </select>
 
     <select id="companyList" resultType="CompanyDTO">
         SELECT
-        *
-        FROM COMPANY
+               ID
+             , LOCATION
+             , COMPANY_DATA
+          FROM COMPANY
     </select>
 
     <select id="matzipCount" resultType="CompanyDTO" parameterType="String">
         SELECT
-            COUNT(*) MATZIPCOUNT,
-            CATEGORY as LOCATION
+              COUNT(*) AS MATZIPCOUNT
+            , CATEGORY AS LOCATION
           FROM MATZIP_BOARD
-            where CATEGORY IN (SELECT LOCATION FROM COMPANY)
-          AND
-        CATEGORY=#{location} GROUP BY CATEGORY;
+         WHERE CATEGORY IN (SELECT LOCATION FROM COMPANY)
+           AND CATEGORY=#{location} GROUP BY CATEGORY;
     </select>
 
-    <select id="matzipList" parameterType="String" resultType="CompanyDTO">
+    <select id="matzipList" parameterType="PageDataDTO" resultType="CompanyDTO">
         SELECT
-            ID,
-            MATZIP_DATA AS COMPANYDATA,
-          CATEGORY AS LOCATION
-        FROM MATZIP_BOARD
-          WHERE CATEGORY=#{location}
+              A.ID
+            , A.LOCATION
+            , A.COMPANY_DATA
+          FROM
+              (SELECT
+                    @ROWNUM:=@ROWNUM+1 AS RNUM
+                  , B.ID
+                  , B.CATEGORY AS LOCATION
+                  , B.MATZIP_DATA AS COMPANY_DATA
+                 FROM MATZIP_BOARD AS B
+                  , (SELECT @ROWNUM:=0) R
+                WHERE CATEGORY=#{location}
+              ) AS A
+         LIMIT #{startRow}, #{dataPerPage}
     </select>
+
 
     <select id="recmMatzip" parameterType="Integer" resultType="CompanyDTO">
         SELECT
-            COUNT(*) AS MATZIPCOUNT,
-            REF_MATZIP AS ID
+               COUNT(*) AS MATZIPCOUNT
+             , REF_MATZIP AS ID
           FROM RECM_BOARD
-            WHERE REF_MATZIP= #{id}
-        GROUP BY REF_MATZIP;
-
+         WHERE REF_MATZIP= #{id}
+         GROUP BY REF_MATZIP
     </select>
 
     <select id="selectCompany" resultType="CompanyDTO">
         SELECT
-        DISTINCT
-        LOCATION
-        FROM COMPANY
-    </select>
-
-    <select id="selectCompany2" parameterType="String" resultType="CompanyDTO">
-        SELECT
-        *
-        FROM COMPANY
-        WHERE LOCATION=#{location}
+            DISTINCT
+             LOCATION
+          FROM COMPANY
     </select>
 
     <select id="matzipId" resultType="Integer">
         SELECT
-        ID FROM MATZIP_BOARD
-        WHERE ADDRESS_NAME = #{loc}
+            ID
+          FROM MATZIP_BOARD
+         WHERE ADDRESS_NAME = #{loc}
     </select>
 
     <select id="selectRecmPostNum" parameterType="recmDTO" resultType="Int">
         SELECT
-        NUM
-        FROM RECM_BOARD
-        WHERE
-        WRITER = #{writer}
-        AND SUBJECT = #{subject}
-        AND DEL_YN = 'N'
-        ORDER BY NUM desc
-        limit 1
+             NUM
+          FROM RECM_BOARD
+         WHERE WRITER = #{writer}
+           AND SUBJECT = #{subject}
+           AND DEL_YN = 'N'
+         ORDER BY NUM desc
+        LIMIT 1
     </select>
 
     <select id="matzipExistCheck" parameterType="Integer" resultType="Integer">
@@ -214,14 +221,23 @@
 
     <select id="companyCategory" resultType="CompanyDTO">
         SELECT
-          LOCATION
-            FROM COMPANY
+            LOCATION
+          FROM COMPANY
     </select>
 
     <select id="categoryDetail" parameterType="String" resultType="CompanyDTO">
         SELECT
-          *
-            FROM COMPANY
-          WHERE LOCATION=#{option}
+               ID
+             , LOCATION
+             , COMPANY_DATA
+          FROM COMPANY
+         WHERE LOCATION=#{option}
+    </select>
+
+    <select id="dataCount" parameterType="String" resultType="Integer">
+        SELECT
+            COUNT(*)
+          FROM MATZIP_BOARD
+         WHERE CATEGORY=#{location}
     </select>
 </mapper>

@@ -43,9 +43,7 @@ public class matzipController {
 	@GetMapping(value = "/matzip")
 	public String getMatzip(@RequestParam int id, Model model) throws Exception {
 
-
 		MatzipDTO matzipDTO = service.selectMatzip(id);
-
 		List<RecmDTO> recmDTOList = service.selectMzRecm(id);
 		model.addAttribute("matzip", matzipDTO);
 		model.addAttribute("recmList", recmDTOList);
