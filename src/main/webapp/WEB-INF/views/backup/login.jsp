@@ -6,7 +6,7 @@
  <form role="form" method="post" autocomplete="off" id="login_form">
   <div class="input_area">
    <label for="id">아이디 </label>
-   <input type="text" id="id" name="id" required="required" />
+   <input type="text" id="login_id" name="id" required="required" />
   </div>
 
   <div class="input_area">
@@ -14,12 +14,13 @@
    <input type="password" id="pw" name="pw" required="required" />
   </div>
 
-  <button type="button" id="login_btn" name="login_btn">로그인</button>
+  <input type="submit" id="login_btn" name="login_btn">로그인</button>
  </form>
 </section>
 
 <div> 로그인 여부: ${not empty member} </div>
 <div> 로그인 객체: ${member} </div>
+<div> 로그인 객체:  </div>
 
 <c:if test="${not empty msg}">
     <p style="color:red;">${msg}</p>

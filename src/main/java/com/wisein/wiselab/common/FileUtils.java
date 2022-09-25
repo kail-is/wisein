@@ -19,7 +19,7 @@ import com.wisein.wiselab.dto.FileDTO;
 public class FileUtils {
 
     public List<FileDTO> parseFileInfo(String brdRef, String regId, String fileType, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-        if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
+        if (ObjectUtils.isEmpty(multipartHttpServletRequest)) {
             return null;
         }
         String brdType = brdRef.split("\\|\\|")[0];
@@ -33,14 +33,14 @@ public class FileUtils {
 
         if (fileType.equals("image")) {
             savingPath = "src/main/webapp/resources/file/images/" + current.format(format);
-            printingPath= "resources/file/images/" + current.format(format);
-        }else {
+            printingPath = "resources/file/images/" + current.format(format);
+        } else {
             savingPath = "src/main/webapp/resources/file/" + current.format(format);
             printingPath = "resources/file/" + current.format(format);
         }
 
         File file = new File(savingPath);
-        if(file.exists() == false) {
+        if (file.exists() == false) {
             file.mkdirs();
         }
 
@@ -48,17 +48,17 @@ public class FileUtils {
 
         String newFileName, fileExtension, contType;
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             List<MultipartFile> list = multipartHttpServletRequest.getFiles(iterator.next());
-            for(MultipartFile multipartFile : list) {
-                if(multipartFile.isEmpty() == false) {
+            for (MultipartFile multipartFile : list) {
+                if (multipartFile.isEmpty() == false) {
 
-                    contType =  multipartFile.getContentType();
+                    contType = multipartFile.getContentType();
                     String[] contArr = contType.split("/");
                     fileExtension = contArr[1];
                     newFileName = Long.toString(System.nanoTime()) + "." + fileExtension;
 
-                    if(ObjectUtils.isEmpty(contType)) {
+                    if (ObjectUtils.isEmpty(contType)) {
                         break;
                     }
 

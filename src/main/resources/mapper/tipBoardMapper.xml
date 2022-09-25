@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisein.wiselab.mapper.tipBoardMapper">
+
+    <!--TipBoard 다건조회-->
+    <select id="selectTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
+        <![CDATA[
+            SELECT
+                A.RNUM
+                ,A.NUM
+                ,A.CATEGORY
+                ,A.WRITER
+                ,A.SUBJECT
+                ,A.CONTENT
+                ,A.REG_DATE
+                ,A.UPD_DATE
+                ,A.DEL_YN
+                ,A.PARENT_NUM
+                ,A.LIKE_COUNT
+            FROM
+                (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+                    ,TB.NUM
+                    ,TB.CATEGORY
+                    ,TB.WRITER
+                    ,TB.SUBJECT
+                    ,TB.CONTENT
+                    ,TB.REG_DATE
+                    ,TB.UPD_DATE
+                    ,TB.DEL_YN
+                    ,TB.COUNT
+                    ,TB.PARENT_NUM
+                    ,TB.LIKE_COUNT
+                FROM tip_board TB
+                    ,(SELECT @ROWNUM:=0) R
+                WHERE 1=1
+                   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+                   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+                   AND DEL_YN = 'N'
+                   AND TB.NUM > 0
+                GROUP BY TB.NUM
+                ORDER BY NUM DESC
+                ) AS A
+           LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+           ]]>
+        </select>
+
+        <!--TipBoard 단건조회-->
+        <select id="selectTipOne" parameterType="TipBoardDTO" resultType="TipBoardDTO">
+            SELECT
+                NUM
+                ,CATEGORY
+                ,WRITER
+                ,SUBJECT
+                ,CONTENT
+                ,REG_DATE
+                ,UPD_DATE
+                ,DEL_YN
+                ,COUNT
+                ,PARENT_NUM
+                ,LIKE_COUNT
+            FROM
+                 tip_board
+            WHERE NUM=#{num}
+    </select>
+
+    <!--TipBoard 게시글 등록-->
+    <insert id="insertTipBoard" parameterType="TipBoardDTO">
+        INSERT INTO tip_board
+        (
+            NUM
+            ,CATEGORY
+            ,WRITER
+            ,SUBJECT
+            ,CONTENT
+            ,REG_DATE
+            ,DEL_YN
+        )
+        VALUES
+        (
+            (SELECT NVL(MAX(num), 0) + 1 FROM tip_board ALIAS_FOR_SUBQUERY)
+            , #{category}
+            , #{writer}
+            , #{subject}
+            , #{content}
+            , (SELECT date_format(now(),'%Y-%c-%d'))
+            , 'N'
+        )
+    </insert>
+
+    <!--TipBoard 게시글 삭제-->
+    <update id="deleteTipBoard" parameterType="Integer">
+        UPDATE
+            tip_board
+        SET
+            DEL_YN = 'Y'
+        WHERE NUM = #{num}
+    </update>
+
+    <!--TipBoard 게시글 수정-->
+    <update id="updateTipBoard" parameterType="TipBoardDTO">
+        UPDATE
+           tip_board
+        SET
+            CATEGORY = #{category}
+            , SUBJECT = #{subject}
+            , CONTENT = #{content}
+            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+        WHERE NUM = #{num}
+    </update>
+
+    <!--TipBoard 게시글 번호 조회-->
+    <select id="selectTipPostNum" parameterType="TipBoardDTO" resultType="Integer">
+        SELECT NUM FROM tip_board
+        WHERE WRITER = #{writer}
+        AND SUBJECT = #{subject}
+        AND CONTENT = #{content}
+        AND DEL_YN = 'N'
+        ORDER BY NUM desc limit 1
+    </select>
+
+    <!--TipBoard 다음 게시글 번호 조회-->
+    <select id="selectNextTipNum" resultType="Integer">
+        SELECT NVL(MAX(num), 0)+1 AS NUM FROM tip_board
+    </select>
+
+    <!--전체 게시글 개수 조회-->
+    <select id="selectBoardTotalCount" parameterType="TipBoardDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM tip_board
+		WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		]]>
+    </select>
+
+    <!-- 서치 게시글 총 개수 -->
+    <select id="listSearchCount" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM tip_board
+		WHERE 1=1
+		   AND NUM > 0
+		]]>
+    </select>
+
+
+</mapper>

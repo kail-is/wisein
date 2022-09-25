@@ -3,7 +3,7 @@
     let body         = document.getElementsByTagName('body')[0];
     let element      = document.getElementById('dim');
     let elDimWrapper = document.getElementById('dim-wrapper');
-    let loadingImg   = document.getElementById('loading-img');
+    //let loadingImg   = document.getElementById('loading-img');
     let isDimming    = true;
     let option       = {};
 
@@ -25,13 +25,13 @@
         }
     }
     if(isDimming){
-        loadingImg.style.display   = option.isLoading ? 'block' : 'none';
+        //loadingImg.style.display   = option.isLoading ? 'block' : 'none';
         element.className         += ' dim';
         elDimWrapper.style.display = 'block';
         body.style.overflowY       = 'hidden';
     }else{
         element.classList.remove('dim');
-        loadingImg.style.display   = 'none';
+        //loadingImg.style.display   = 'none';
         elDimWrapper.style.display = 'none';
         body.style.overflowY       = 'auto';
     }

@@ -553,6 +553,253 @@ function isHHMMSS(input) {
     return true
 }
 
+    /*
+     * 작성자 : 주한나
+     * Date 타입을 String 타입으로 변환
+     * param : Date
+     * return : String
+     * 날짜 : 2022-08-08
+     * */
+function dateToStr(date){
+        let year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+
+        if(month < 10) month = "0"+month;
+        if(day < 10) day = "0"+day;
+
+        return year+""+month+""+day;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd)의 요일 반환(kor/eng)
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-18
+     * */
+function getDay(date,type){
+        let weekDay = (type == 'kor')? ['일', '월', '화', '수', '목', '금', '토'] : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        let inputDay = this.strToDate(date)
+        let week = weekDay[inputDay.getDay()];
+
+        return week;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd)가 윤년인지 검사
+     * param : String
+     * return : boolean
+     * 날짜 : 2022-08-06
+     * */
+function isLeapYear(date){
+        if(date.length != 8){return "Invalid Date"}
+
+        let year = date.substring(0,4);
+        if (year%4 == 0){
+            if (year%100 == 0){
+                return (year%400 == 0);
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd)의 해당 달의 시작 날짜(yyyyMMdd)반환
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-06
+     * */
+function firstDate(date){
+        if(date.length != 8){return "Invalid Date"}
+        return date.substring(0,4)+date.substring(4,6)+"01";
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 주어진 날짜(yyyyMMdd) 해당 달의 마지막 날짜(yyyyMMdd) 반환
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-06
+     * */
+function lastDate(date){
+        if(date.length != 8){return "Invalid Date"}
+
+        let yyyy = date.substring(0,4)
+        let mm = date.substring(4,6)
+
+        let inputDay = new Date(yyyy, mm, 0);
+
+        return this.dateToStr(inputDay);
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 오늘로부터 X일 뒤의 날짜 계산
+     * param : Number
+     * return : String
+     * 날짜 : 2022-08-09
+     * */
+function addDate(days){
+        let today = new Date();
+        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()+Number(days));
+
+        return this.dateToStr(resultDay);
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 오늘로부터 X일 전의 날짜 계산
+     * param : Number
+     * return : String
+     * 날짜 : 2022-08-09
+     * */
+function minusDate(days){
+        let today = new Date();
+        let resultDay = new Date(today.getFullYear(),today.getMonth(),today.getDate()-Number(days));
+
+        return this.dateToStr(resultDay);
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력날로부터 X일 뒤의 날짜 계산
+     * param : String, Number
+     * return : String
+     * 날짜 : 2022-08-09
+     * */
+function addDayFromInputDay(date, days){
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), date.substring(4,6)-1, inputDay.getDate()+Number(days));
+
+        return this.dateToStr(resultDay);
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력날로부터 X일 전의 날짜 계산
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-09
+     * */
+function minusDayFromInputDay(date, days){
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), date.substring(4,6)-1, inputDay.getDate()-Number(days));
+
+        return this.dateToStr(resultDay);
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력날로부터 X달 후의 날짜 계산
+     * param : String
+     * return : String
+     * 날짜 : 2022-08-09
+     * */
+function addMonthFromSomeDay(date, months){
+        let inputDay = this.strToDate(date);
+        let resultDay = new Date(date.substring(0,4), inputDay.getMonth()+months, date.substring(6,8));
+
+        let year = resultDay.getFullYear();
+        let month = resultDay.getMonth()+1;
+
+        //입력 날이랑 더한 날이 다르면 마지막날로 강제 셋팅
+        //ex)22년 8월 31일 + 6달 => 23년 2월 28일
+        if(inputDay.getDate() != resultDay.getDate()){
+            month = month-1 //더했을때 날짜끼리 다르면 월이 넘어간거라 -1해줌
+            resultDay = new Date(year, month, 0);
+        }
+
+        let day = resultDay.getDate();
+
+        if(month < 10) month = "0"+month;
+        if(day < 10) day = "0"+day;
+
+        return year+""+month+""+day;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력받은 두 날짜 간 일수 계산
+     * param : String
+     * return : Number
+     * 날짜 : 2022-08-17
+     * */
+function diffDay(date1, date2){
+        let day1 = this.strToDate(date1).getTime();
+        let day2 = this.strToDate(date2).getTime();
+
+        let resultDay = Math.abs((day2-day1)/(1000*60*60*24));//양수처리
+
+        return resultDay;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력받은 두 날짜 간 월수 계산
+     * param : String
+     * return : Number
+     * 날짜 : 2022-08-17
+     * */
+function diffMonth(date1, date2){
+        //입력 달의 1일로 계산
+        let day1 = this.strToDate(this.firstDate(date1))
+        let day2 = this.strToDate(this.firstDate(date2))
+        let resultMonth = Math.round((day2-day1)/(1000*60*60*24*30));// 반올림처리
+
+        resultMonth = Math.abs(resultMonth);//양수만 나오게 처리
+
+        return resultMonth;
+    };
+
+
+    /*
+     * 작성자 : 주한나
+     * data 타입 반환
+     * return : String (ex) 'number', 'string', 'object', 'boolean', 'undefined'
+     * 날짜 : 2022-08-16
+     * */
+function getType(data){
+       return (typeof data).toLowerCase();
+     };
+
+
+    /*
+     * 작성자 : 주한나
+     * data 가 object 인지 확인
+     * return : boolean
+     * 날짜 : 2022-08-16
+     * */
+function isObject(data){
+       return this.getType(data) === "object" && data !== null;
+     };
+
+
+    /*
+     * 작성자 : 주한나
+     * 입력값을 String 으로 변환
+     * return : String
+     * 날짜 : 2022-08-12
+     * */
+function toString(data){
+       return this.isObject(data)? JSON.stringify(data) : data+"";
+     };
 
  /*
  * 작성자 : 서은빈
@@ -643,6 +890,10 @@ function chkSpecialChar(str) {
         case "UPDRECM":
           console.log("RECM")
           return BoardNmProps.RECM
+          break;
+        case "UPDTIP":
+          console.log("UPDTIP")
+          return BoardNmProps.TIP
           break;
         default:
           console.log('pathNm is not defined');
