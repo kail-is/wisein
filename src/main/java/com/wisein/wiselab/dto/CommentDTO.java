@@ -16,4 +16,5 @@ public class CommentDTO {
     private Date regDate;
     private Date updDate;
     private String delYn;
+    private String filePath;
 }

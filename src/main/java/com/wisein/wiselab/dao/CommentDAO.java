@@ -11,9 +11,6 @@ public interface CommentDAO {
     /* comment 다건조회 */
     public List<CommentDTO> selectComment(CommentDTO dto) throws Exception;
 
-    /* comment 작성자 list 조회 */
-    public List<String> selectCommWriters(CommentDTO dto) throws Exception;
-
     /* comment 등록 */
     public void insertComment(CommentDTO dto) throws Exception;
 

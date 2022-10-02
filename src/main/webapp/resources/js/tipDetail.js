@@ -29,21 +29,15 @@
 
          function changeCommHtml(newCommList){
             let newCommArr = newCommList.commentList;
-            let commWritersIMG = newCommList.commWritersIMG;
-            let commWriters = Object.keys(commWritersIMG);
             let html = "<div class='recommend-titleLine'> 댓글 ("+newCommArr.length+")</div>"
             for(let i=0; i < newCommArr.length; i++){
                 html += "<ul class='recommend'><li>"
                 html += "<div class='wrap'><div class='recommend-info-wrap'>"
 
-                for(let j=0; j <commWriters.length; j++){
-                    if(newCommArr[i].writer == commWriters[j]){
-                        if(commWritersIMG[commWriters[j]] == null){
-                            html += "<img src ='../resources/image/Conic.png'>"
-                        }else{
-                            html += "<img src ='../"+commWritersIMG[commWriters[j]]+"'>"
-                        }
-                    }
+                if(newCommArr[i].filePath == null){
+                    html += "<img src ='../resources/image/Conic.png'>"
+                }else{
+                    html += "<img src ='../"+newCommArr[i].filePath+"'>"
                 }
 
                 html += "<div class='info'><div class='title'>"+newCommArr[i].writer+"</div>"

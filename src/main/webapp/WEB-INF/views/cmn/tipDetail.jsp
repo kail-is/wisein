@@ -75,16 +75,12 @@
                     <div class="wrap">
                         <div class="recommend-info-wrap">
                             <!-- 댓글 작성자 img -->
-                            <c:forEach var="item" items="${commWritersIMG}">
-                                <c:choose>
-                                    <c:when test = "${commentList.writer == item.key && item.value != null}">
-                                        <img src ="../${item.value}">
-                                    </c:when>
-                                    <c:when test = "${commentList.writer == item.key && item.value == null}">
-                                        <img src ="../resources/image/Conic.png">
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
+                                <c:if test = "${commentList.filePath != null}">
+                                    <img src ="../${commentList.filePath}">
+                                </c:if>
+                                <c:if test = "${commentList.filePath == null}">
+                                    <img src ="../resources/image/Conic.png">
+                                </c:if>
                             <div class="info">
                                 <!-- 댓글 작성자 -->
                                 <div class="title"><c:out value="${commentList.writer}"/></div>

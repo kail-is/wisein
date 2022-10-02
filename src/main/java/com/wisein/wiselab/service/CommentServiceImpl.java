@@ -36,17 +36,6 @@ public class CommentServiceImpl implements CommentService {
         return comment;
     }
 
-    /* comment 작성자 list 조회 */
-    @Override
-    public List<String> selectCommWriters(CommentDTO dto) throws Exception {
-        List<String> commWriters = new ArrayList<>();
-
-        commWriters = (List<String>) dao.selectCommWriters(dto);
-
-        return commWriters;
-    }
-
-
     /* comment 등록 */
     @Override
     public void insertComment(CommentDTO dto) throws Exception {

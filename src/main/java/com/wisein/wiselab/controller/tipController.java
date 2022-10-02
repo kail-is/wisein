@@ -100,20 +100,6 @@ public class tipController {
         TipBoardDTO TipBoardDTO = tipBoardService.selectTipOne(dto);
         List<CommentDTO> commentList = commentService.selectComment(CommentDTO);
 
-        //팁 작성자 이미지
-        HashMap<String,String> commWritersIMG = new HashMap<String,String>();
-        List<String> commWriters = commentService.selectCommWriters(CommentDTO);
-
-        if(commWriters.size()!=0){
-            for(int i=0; i < commWriters.size(); i++){
-                if(memberService.memImgList(commWriters.get(i)).size() != 0){
-                    commWritersIMG.put(commWriters.get(i), (memberService.memImgList(commWriters.get(i))).get(0).getFilePath());
-                } else {
-                    commWritersIMG.put(commWriters.get(i), null);
-                }
-            }
-        }
-
         //사이드바 설정
         String side_gubun = "Y";
 
@@ -124,7 +110,6 @@ public class tipController {
         model.addAttribute("likeDelYn", likeDelYn);
         model.addAttribute("scrapDelYn", scrapDelYn);
         model.addAttribute("memberId", member.getId());
-        model.addAttribute("commWritersIMG", commWritersIMG);
         model.addAttribute("side_gubun", side_gubun);
         return "cmn/tipDetail";
     }
@@ -218,23 +203,8 @@ public class tipController {
         //댓글 리스트
         List<CommentDTO> commentList = commentService.selectComment(dto);
 
-        //댓글 작성자 img
-        HashMap<String,String> commWritersIMG = new HashMap<String,String>();
-        List<String> commWriters = commentService.selectCommWriters(dto);
-
-        if(commWriters.size()!=0){
-            for(int i=0; i < commWriters.size(); i++){
-                if(memberService.memImgList(commWriters.get(i)).size() != 0){
-                    commWritersIMG.put(commWriters.get(i), (memberService.memImgList(commWriters.get(i))).get(0).getFilePath());
-                } else {
-                    commWritersIMG.put(commWriters.get(i), null);
-                }
-            }
-        }
-
         JSONObject response = new JSONObject();
         response.put("commentList",commentList);
-        response.put("commWritersIMG",commWritersIMG);
 
         return response;
     }
@@ -254,23 +224,8 @@ public class tipController {
         //댓글 리스트
         List<CommentDTO> commentList = commentService.selectComment(dto);
 
-        //댓글 작성자 img
-        HashMap<String,String> commWritersIMG = new HashMap<String,String>();
-        List<String> commWriters = commentService.selectCommWriters(dto);
-
-        if(commWriters.size()!=0){
-            for(int i=0; i < commWriters.size(); i++){
-                if(memberService.memImgList(commWriters.get(i)).size() != 0){
-                    commWritersIMG.put(commWriters.get(i), (memberService.memImgList(commWriters.get(i))).get(0).getFilePath());
-                } else {
-                    commWritersIMG.put(commWriters.get(i), null);
-                }
-            }
-        }
-
         JSONObject response = new JSONObject();
         response.put("commentList", commentList);
-        response.put("commWritersIMG",commWritersIMG);
 
         return response;
     }
@@ -291,23 +246,9 @@ public class tipController {
         //댓글 리스트
         List<CommentDTO> commentList = commentService.selectComment(dto);
 
-        //댓글 작성자 img
-        HashMap<String,String> commWritersIMG = new HashMap<String,String>();
-        List<String> commWriters = commentService.selectCommWriters(dto);
-
-        if(commWriters.size()!=0){
-            for(int i=0; i < commWriters.size(); i++){
-                if(memberService.memImgList(commWriters.get(i)).size() != 0){
-                    commWritersIMG.put(commWriters.get(i), (memberService.memImgList(commWriters.get(i))).get(0).getFilePath());
-                } else {
-                    commWritersIMG.put(commWriters.get(i), null);
-                }
-            }
-        }
 
         JSONObject response = new JSONObject();
         response.put("commentList", commentList);
-        response.put("commWritersIMG",commWritersIMG);
 
         return response;
     }

@@ -22,12 +22,6 @@ public class CommentDAOImpl implements CommentDAO {
         return sql.selectList(NS + ".selectComment", dto);
     }
 
-    /* comment 작성자 list 조회 */
-    @Override
-    public List<String> selectCommWriters(CommentDTO dto) throws Exception {
-        return sql.selectList(NS + ".selectCommWriters", dto);
-    }
-
     /* comment 등록 */
     @Override
     public void insertComment(CommentDTO dto) throws Exception {

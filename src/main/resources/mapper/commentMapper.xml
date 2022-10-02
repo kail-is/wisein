@@ -4,37 +4,28 @@
 
     <!--comment 다건조회-->
     <select id="selectComment" parameterType="CommentDTO" resultType="CommentDTO">
-        SELECT NUM
-              ,BOARD_IDX
-              ,BOARD_TYPE
-              ,CONTENT
-              ,WRITER
-              ,REG_DATE
-              ,UPD_DATE
-              ,DEL_YN
-          FROM COMMENT
-         WHERE BOARD_TYPE = #{boardType}
-           AND BOARD_IDX = #{boardIdx}
-           AND DEL_YN = 'N'
-    </select>
-
-    <!--comment 작성자 list 조회-->
-    <select id="selectCommWriters" parameterType="CommentDTO" resultType="String">
-        SELECT A.WRITER
-              ,B.FILE_NAME
-          FROM
-               (SELECT DISTINCT WRITER
+        SELECT A.NUM
+              ,A.BOARD_IDX
+              ,A.BOARD_TYPE
+              ,A.CONTENT
+              ,A.WRITER
+              ,A.REG_DATE
+              ,A.UPD_DATE
+              ,A.DEL_YN
+              ,B.FILE_PATH
+          FROM (SELECT *
                   FROM COMMENT
                  WHERE BOARD_TYPE = #{boardType}
                    AND BOARD_IDX = #{boardIdx}
                    AND DEL_YN = 'N'
                ) A
-          LEFT OUTER JOIN
-               (SELECT FILE_NAME
-                  FROM FILE
-                 WHERE DLT_YN = 'N'
-               ) B
+          LEFT OUTER JOIN (SELECT BRD_REF
+                                 ,FILE_PATH
+                             FROM FILE
+                            WHERE DLT_YN = 'N'
+                          ) B
             ON CONCAT('mem||', A.WRITER) = B.BRD_REF;
+
     </select>
 
     <!--comment 등록-->
