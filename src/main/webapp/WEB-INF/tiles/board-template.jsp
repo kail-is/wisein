@@ -62,9 +62,10 @@
 		</div>
 	</body>
 
-    <script src="${url}/resources/js/common/key.js"></script>
-    <script src="${url}/resources/js/matzip.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
+    <script src="${url}/resources/js/common/key.js"></script>
+    <script src="${url}/resources/js/tipBoard.js"></script>
+    <script src="${url}/resources/js/matzip.js"></script>
 	<script>
 	<c:if test="${empty member}">
 	    $dim();
