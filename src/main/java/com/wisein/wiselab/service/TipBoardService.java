@@ -28,10 +28,10 @@ public interface TipBoardService {
     /* TipBoard 게시글 번호 조회 */
     public int selectTipPostNum(TipBoardDTO dto) throws Exception;
 
-//    /* TipBoard 이미지 url */
-//    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception;
-
     /* 게시글 총 개수*/
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;
+
+    /* 작성자 meetLink */
+    public String selectMeetLink(int num) throws Exception;
 
 }

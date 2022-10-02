@@ -43,11 +43,17 @@
         <div class="writer-wrap">
             <p class="writer" id="tipWriter"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
-                <li><a href="#">메일 전송</a></li>
+                <li><a href="https://mail.wiselab.co.kr/member/login?host_domain=wiselab.co.kr&t=1664738123" target='_blank'>메일 전송</a></li>
                 <li><a href="#">질문 모아 보기</a></li>
                 <li><a href="#">답변 모아 보기</a></li>
             </ul>
-            <span class="material-icons purple">videocam</span>
+
+                <c:if test="${meetLink == null}">
+                    <a onclick="alert('미트링크가 없어요😅')"><span class="material-icons purple">videocam</span></a>
+                </c:if>
+                <c:if test="${meetLink != null}">
+                    <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
+                </c:if>
         </div>
 
         <div class="subject">

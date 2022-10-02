@@ -80,47 +80,10 @@ public class TipBoardServiceImpl implements TipBoardService {
         return dao.selectBoardTotalCount(dto);
     }
 
-
-//    /* TipBoard 이미지 url*/
-//    @Override
-//    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception{
-//        if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
-//
-//            Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-//            String name;
-//            while(iterator.hasNext()) {
-//                name = iterator.next();
-//                List<MultipartFile> list = multipartHttpServletRequest.getFiles(name);
-//                for(MultipartFile multipartFile : list) {
-//
-//                    String contType =  multipartFile.getContentType();
-//                    String[] contArr = contType.split("/");
-//                    String extension = contArr[1];
-//                }
-//
-//            }
-//        }
-//
-//        int tipNum = 0;
-//        String brdRef = "";
-//
-//        TipBoardDTO dto = (TipBoardDTO) session.getAttribute("TipBoardDTO");
-//        if(dto != null){
-//            tipNum = dto.getNum();
-//            brdRef = "tip||"+tipNum;
-//        }else{
-//            tipNum = dao.selectNextTipNum();
-//            brdRef = "tip||"+tipNum;
-//        }
-//
-////        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
-////        if(CollectionUtils.isEmpty(list) == false) {
-////            memDao.insertMemFileList(list);
-////        }
-////        String imgUrl = list.get(0).getFilePath();
-////        return imgUrl;
-//        return "";
-//    }
-
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return dao.selectMeetLink(num);
+    }
 
 }

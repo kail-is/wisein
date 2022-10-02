@@ -5,6 +5,7 @@
         let boardType = "tip";
         let isMod = false;
 
+        //글쓴이 클릭이벤트
         let writer = document.getElementsByClassName("writer")
 
          Array.from(writer).forEach(function(element) {
@@ -16,6 +17,11 @@
                  }
              });
          });
+
+         function clkMeetLink(){
+
+         }
+
 
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){

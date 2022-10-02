@@ -56,7 +56,7 @@
                   ,PARENT_NUM
                   ,LIKE_COUNT
              FROM TIP_BOARD
-            WHERE NUM=#{num}
+            WHERE NUM = #{num}
     </select>
 
     <!--TipBoard 게시글 등록-->
@@ -136,6 +136,17 @@
 		 WHERE 1=1
 		   AND NUM > 0
 		]]>
+    </select>
+
+    <!-- 작성자 meetLink -->
+    <select id="selectMeetLink" parameterType="Integer" resultType="string">
+        SELECT MEET_LINK
+          FROM MEMBER
+         WHERE ID = (SELECT WRITER
+                       FROM TIP_BOARD
+                      WHERE NUM = #{num}
+                        AND DEL_YN = 'N'
+                     )
     </select>
 
 

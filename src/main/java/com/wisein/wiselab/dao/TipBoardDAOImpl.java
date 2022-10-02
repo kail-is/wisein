@@ -63,4 +63,11 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         return sql.selectOne(NS + ".selectBoardTotalCount", dto);
     }
 
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return sql.selectOne(NS + ".selectMeetLink", num);
+    }
+
+
 }

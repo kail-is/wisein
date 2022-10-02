@@ -70,6 +70,8 @@ public class tipController {
     //단건 조회
     @GetMapping(value="/tipDetail")
     public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
+        //meetLink
+        String meetLink = tipBoardService.selectMeetLink(num);
 
         //댓글 갯수
         CommentDTO CommentDTO = new CommentDTO();
@@ -95,7 +97,6 @@ public class tipController {
         String scrapDelYn = scrapService.TipScrapYN(ScrapDTO);
         if(scrapDelYn==null){ scrapDelYn = "none"; }
 
-
         //팁 단건 내용+코멘트 내용 리스트
         TipBoardDTO TipBoardDTO = tipBoardService.selectTipOne(dto);
         List<CommentDTO> commentList = commentService.selectComment(CommentDTO);
@@ -110,6 +111,7 @@ public class tipController {
         model.addAttribute("likeDelYn", likeDelYn);
         model.addAttribute("scrapDelYn", scrapDelYn);
         model.addAttribute("memberId", member.getId());
+        model.addAttribute("meetLink", meetLink);
         model.addAttribute("side_gubun", side_gubun);
         return "cmn/tipDetail";
     }

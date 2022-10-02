@@ -33,4 +33,7 @@ public interface TipBoardDAO {
     /* 전체 게시글 개수 조회 */
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;
 
+    /* 작성자 meetLink */
+    public String selectMeetLink(int num) throws Exception;
+
 }
