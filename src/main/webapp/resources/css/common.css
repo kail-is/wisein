@@ -1394,6 +1394,42 @@ body {
     box-shadow: 2px 2px 2px #b1a5a5;
 }
 
+.road-popup {
+    width:800px;
+    height:700px;
+}
+
+.road-view-title {
+    text-align:center;
+    padding-top:20px;
+    font-size:22px;
+    font-weight:bold;
+    color:#6633CC;
+}
+
+.road-view {
+    width:700px;
+    height:500px;
+    border-radius:45px;
+    transform:translate(-50%, -50%);
+    position:absolute;
+    left:50%;
+    top:37%;
+}
+
+@media screen and (max-width : 992px) {
+    .road-view-title {
+        font-size:15px;
+    }
+    .road-popup {
+        width:350px;
+        height:350px;
+    }
+    .road-view {
+        width:250px;
+        height:250px;
+    }
+}
 
 .font-awe {
     font-family: "Font Awesome 5 Free" !important;

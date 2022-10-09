@@ -20,20 +20,33 @@ window.addEventListener('DOMContentLoaded', function(){
         .then(companyList => {
             for (let i=0; i<companyList.company.length; i++) {
                 createDiv.innerHTML
-                    += "<div id='list' onclick='selectFoodLocal(&quot;" + companyList.company[i].location+ "&quot;,&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-line'>"
+                    += "<div id='list' class='board-line'>"
                     + "<div style='width:300px;' class='board-cell board-category purple2'>"
                     + companyList.company[i].location+"</div>"
-                    + "<div class='board-cell board-title'>"
+                    + "<div onclick='selectFoodLocal(&quot;" + companyList.company[i].location+ "&quot;,&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-cell board-title'>"
                     + companyList.company[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                     + companyList.company[i].matzipCount+"</div>"
-                    + "</div>";
+                    + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + companyList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
             }
             createDivBefore.insertAdjacentElement('beforebegin', createDiv);
 
         });
 
 });
+
+function roadView(local) {
+    fetch("/lateChange?"+"local="+local)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(late => {
+            let lateRst = JSON.parse(late.local.toString().replace(/&quot;/g, '"'));
+            x = lateRst.documents[0].x;
+            y = lateRst.documents[0].y;
+
+            setRoadView(x, y);
+        })
+}
 
 function categorySelect(target) {
 
@@ -55,12 +68,13 @@ function categorySelect(target) {
                 }
                 for (let i=0; i<categoryList.company.length; i++) {
                     createDiv.innerHTML
-                        += "<div id='list' onclick='selectFoodLocal(&quot;" + categoryList.company[i].location+ "&quot;,&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                        += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                         + categoryList.company[i].location+"</div>"
-                        + "<div class='board-cell board-title'>"
+                        + "<div onclick='selectFoodLocal(&quot;" + categoryList.company[i].location+ "&quot;,&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-cell board-title'>"
                         + categoryList.company[i].companyName+"</div>"
                         + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
-                        + categoryList.company[i].matzipCount+"</div></div>";
+                        + categoryList.company[i].matzipCount+"</div>"
+                        + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + categoryList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
                 }
                 createDivBefore.insertAdjacentElement('beforebegin', createDiv);
 
@@ -105,12 +119,13 @@ function matzipLoc(location, currentPage) {
             }
             for (let i=0;i<matzipList.matzip.length; i++) {
                 createDiv.innerHTML
-                    += "<div id='list' onclick='selectFoodLocal(&quot;" + matzipList.matzip[i].location+ "&quot;,&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;,&quot;type2&quot;)' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                    += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                     + matzipList.matzip[i].location+"</div>"
-                    + "<div class='board-cell board-title'>"
+                    + "<div onclick='selectFoodLocal(&quot;" + matzipList.matzip[i].location+ "&quot;,&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;,&quot;type2&quot;)' class='board-cell board-title'>"
                     + matzipList.matzip[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
-                    + matzipList.matzip[i].matzipCount+"</div></div>";
+                    + matzipList.matzip[i].matzipCount+"</div>"
+                    + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + matzipList.matzip[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
 
             }
             createDivBefore.insertAdjacentElement('beforebegin', createDiv);
@@ -294,6 +309,32 @@ function localCheckPoint(loc) {
                         location.href = url;
                     }
                 });
+        }
+    });
+}
+
+function setRoadView(x, y) {
+    let roadviewContainer = document.getElementById('roadview');
+    let roadview = new kakao.maps.Roadview(roadviewContainer);
+    let roadviewClient = new kakao.maps.RoadviewClient();
+
+    let position = new kakao.maps.LatLng(y, x);
+
+    roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+        if (panoId==null) {
+            commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!");
+        } else {
+            let closeBtn = document.querySelector('#road-close-btn');
+
+            document.querySelector('#roadViewPopup').classList.remove('none');
+            commonPopup.modalPopupCheck(true);
+
+            closeBtn.addEventListener('click', function() {
+                commonPopup.close();
+                commonPopup.modalPopupCheck(false);
+            });
+
+            roadview.setPanoId(panoId, position);
         }
     });
 }

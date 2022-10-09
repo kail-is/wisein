@@ -58,6 +58,9 @@
                     <div id="changeText" class="board-cell board-map gray">
                         맛집
                     </div>
+                    <div class="board-cell board-text">
+                        로드뷰
+                    </div>
                 </div>
 
             <div class="button-wrap">

@@ -327,7 +327,9 @@ function emailValid() {
     fetch("/authMailSend?" + "email_Id=" + email_Id)
          .then(response => response.text())
          .catch(error => console.error('Error:', error))
-         .then( response => document.getElementById('reg_form').submit());
+         .then( response => {
+            document.getElementById('reg_form').submit()
+         });
 
 }
 

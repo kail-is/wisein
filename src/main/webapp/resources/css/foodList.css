@@ -280,7 +280,6 @@ ul li {
 
 ul li a {
     display: block;
-    font-size: 14px;
     padding: 9px 12px;
     box-sizing: border-box;
 }
@@ -294,23 +293,24 @@ ul li.on a {
 }
 
 .page-wrap {
-    position:absolute;;
-    height:50px;
-    width:100%;
     font-size:20px;
-    text-align:center;
-    padding-top:100px;
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+    position:relative;
+    bottom:-100px;
+
 }
 
 @media screen and (max-width: 992px) {
     .page-wrap {
-        padding-top:52px;
         text-align:center;
         position:relative;
         font-size:13px;
+        bottom:-55px;
     }
     .board-category, .board-title, .board-map {
-        font-size:13px;
+        font-size:10.5px;
     }
     .board-list {
         height:160px;
@@ -324,5 +324,10 @@ ul li.on a {
 
 .btn-wrap:hover {
     color:#9933FF;
+}
+
+.board-text {
+    width:50px;
+    color:grey;
 }
 
