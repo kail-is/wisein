@@ -49,4 +49,22 @@ public class LikeServiceImpl implements LikeService {
         dao.delTipLikeCount(num);
     }
 
+    /* like 등록시 게시글 likeCount 증가 */
+    @Override
+    public void addQaLikeCount(int num) throws Exception {
+        dao.addQaLikeCount(num);
+    }
+
+    /* like 해제시 게시글 likeCount 감소 */
+    @Override
+    public void delQaLikeCount(int num) throws Exception {
+        dao.delQaLikeCount(num);
+    }
+
+    /* like 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
+    @Override
+    public int getQaParentNum(int num) throws Exception {
+        return dao.getQaParentNum(num);
+    }
+
 }

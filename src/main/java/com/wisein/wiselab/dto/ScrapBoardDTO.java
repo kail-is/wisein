@@ -8,10 +8,8 @@ public class ScrapBoardDTO {
     private int boardIdx;
     private String boardType;
     private String userId;
-    private int likeCheck;
-    private int parentNum;
-    private String brdRef;
+//    private int likeCheck;
+//    private int parentNum;
+//    private String brdRef;
     private String delYn;
-
 }
-

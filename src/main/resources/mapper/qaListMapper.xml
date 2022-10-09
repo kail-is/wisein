@@ -15,6 +15,8 @@
              , A.ADP_YN
              , A.DEL_YN
              , A.PARENT_NUM
+             , A.LIKE_COUNT
+             , A.SCRAP_COUNT
           FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                      , QB.NUM 
                      , QB.CATEGORY
@@ -26,6 +28,8 @@
                      , QB.ADP_YN
                      , QB.DEL_YN
                      , QB.PARENT_NUM
+                     , QB.LIKE_COUNT
+                     , QB.SCRAP_COUNT
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
@@ -33,6 +37,7 @@
            		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
                    AND DEL_YN = 'N'
                    AND QB.NUM > 0
+                   AND PARENT_NUM is NULL
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
@@ -49,6 +54,7 @@
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
+		   AND PARENT_NUM is NULL
 		]]>
 	</select>
 
@@ -90,12 +96,14 @@
             ,ADP_YN
             ,DEL_YN
             ,PARENT_NUM
-            ,like_count
+            ,LIKE_COUNT
             ,ADP_NUM
+            ,SCRAP_COUNT
         FROM
             qa_board
         WHERE NUM=#{num}
     </select>
+
     <!-- 게시글 삭제 -->
     <delete id="deleteQaBoard" parameterType="Integer">
         UPDATE
@@ -105,6 +113,17 @@
             , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
         WHERE num = #{num}
     </delete>
+
+    <!-- 게시글 삭제시 댓글 삭제 -->
+    <delete id="deleteCommentQaBoard" parameterType="Integer">
+        UPDATE
+            qa_board
+        SET
+            del_yn = 'Y'
+            , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
+        WHERE PARENT_NUM = #{num}
+    </delete>
+
     <!-- 게시글 수정 -->
     <update id="updateQaBoard" parameterType="QaListDTO">
         UPDATE
@@ -169,11 +188,13 @@
             ,ADP_YN
             ,DEL_YN
             ,PARENT_NUM
-            ,like_count
+            ,LIKE_COUNT
             ,ADP_NUM
+            ,SCRAP_COUNT
         FROM
-        qa_board
+            qa_board
         WHERE PARENT_NUM = #{num}
+        AND DEL_YN = 'N'
     </select>
 
     <!-- 게시글 총 개수 -->
@@ -187,30 +208,57 @@
     </select>
 
     <select id="checkLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE boardIdx = #{boardIdx} AND userId = #{userId}
+        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+    </select>
+
+    <select id="checkScrapQaBoard" parameterType="ScrapBoardDTO" resultType="ScrapBoardDTO">
+        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
     </select>
 
     <insert id="insertLikeQaBoard" parameterType="LikeBoardDTO">
-        INSERT like_board (boardIdx, boardtype, userId, PARENT_NUM) VALUES( #{boardIdx}, 'qa', #{userId}, #{parentNum})
+        INSERT like_board (idx, board_Idx, board_type, user_id, PARENT_NUM) VALUES((SELECT NVL(MAX(idx), 0) + 1 FROM like_board ALIAS_FOR_SUBQUERY), #{boardIdx}, 'qa', #{userId}, #{parentNum})
+    </insert>
+
+    <insert id="insertScrapQaBoard" parameterType="ScrapBoardDTO">
+        INSERT scrap_board (idx, board_idx, board_type, user_id, PARENT_NUM) VALUES((SELECT NVL(MAX(idx), 0) + 1 FROM scrap_board ALIAS_FOR_SUBQUERY), #{boardIdx}, 'qa', #{userId}, #{parentNum})
     </insert>
 
     <update id="updateLikeQaBoard" parameterType="LikeBoardDTO">
         UPDATE like_board
         <if test="likeCheck == 1">
-            SET likeCheck = 0
+            SET LIKE_CHECK = 0
         </if>
         <if test="likeCheck == 0">
-            SET likeCheck = 1
+            SET LIKE_CHECK = 1
         </if>
-        WHERE boardIdx = #{boardIdx}
+        WHERE board_idx = #{boardIdx}
+    </update>
+
+    <update id="updateScrapQaBoard" parameterType="ScrapBoardDTO">
+        UPDATE scrap_board
+        <if test="scrapCheck == 1">
+            SET scrap_check = 0
+        </if>
+        <if test="scrapCheck == 0">
+            SET scrap_check = 1
+        </if>
+        WHERE board_idx = #{boardIdx}
     </update>
 
     <select id="selectLikeQaBoardList" parameterType="MemberDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE userId = #{id};
+        SELECT * FROM like_board WHERE user_id = #{id}
     </select>
 
-    <select id="selectOneLikeQaBoard" parameterType="MemberDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE boardIdx = #{boardIdx} AND userId = #{userId}
+    <select id="selectScrapQaBoardList" parameterType="MemberDTO" resultType="ScrapBoardDTO">
+        SELECT * FROM scrap_board WHERE user_id = #{id}
+    </select>
+
+    <select id="selectOneLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
+        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+    </select>
+
+    <select id="selectOneScrapQaBoard" parameterType="ScrapBoardDTO" resultType="ScrapBoardDTO">
+        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
     </select>
 
     <update id="adoptQaBoard" parameterType="QaListDTO">
@@ -221,22 +269,143 @@
         WHERE num = #{parentNum}
     </update>
 
+    <update id="adoptCommentQaBoard" parameterType="QaListDTO">
+        UPDATE qa_board
+        SET
+        ADP_YN = 'Y'
+        WHERE num = #{num}
+    </update>
+
     <update id="likeAddCount" parameterType="LikeBoardDTO">
         UPDATE qa_board
         SET
-        like_count = like_count+1
+        LIKE_COUNT = LIKE_COUNT+1
         WHERE num = #{parentNum}
     </update>
 
     <update id="likeMinusCount" parameterType="LikeBoardDTO">
         UPDATE qa_board
         SET
-        like_count = like_count-1
+        LIKE_COUNT = LIKE_COUNT-1
         WHERE num = #{parentNum}
     </update>
 
     <select id="selectAdpCount" parameterType="QaListDTO" resultType="LikeBoardDTO">
-        SELECT count(*) FROM like_board WHERE boardIdx = #{num}
+        SELECT count(*) FROM like_board WHERE board_idx = #{num}
+    </select>
+
+    <select id="selectQuestionsList" parameterType="QaListDTO" resultType="QaListDTO">
+        SELECT A.RNUM
+            , A.NUM
+            , A.CATEGORY
+            , A.WRITER
+            , A.SUBJECT
+            , A.CONTENT
+            , A.REG_DATE
+            , A.UPD_DATE
+            , A.ADP_YN
+            , A.DEL_YN
+            , A.PARENT_NUM
+        FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+            , QB.NUM
+            , QB.CATEGORY
+            , QB.WRITER
+            , QB.SUBJECT
+            , QB.CONTENT
+            , QB.REG_DATE
+            , QB.UPD_DATE
+            , QB.ADP_YN
+            , QB.DEL_YN
+            , QB.PARENT_NUM
+                FROM QA_BOARD QB
+                    , (SELECT @ROWNUM:=0) R
+                WHERE 1=1
+                    AND WRITER = #{writer}
+                    AND DEL_YN = 'N'
+                    AND QB.NUM > 0
+                    AND PARENT_NUM is NULL
+                GROUP BY QB.NUM
+                ORDER BY NUM DESC
+            ) AS A
+    </select>
+
+    <select id="selectCommentList" parameterType="QaListDTO" resultType="QaListDTO">
+        SELECT A.RNUM
+            , A.NUM
+            , A.CATEGORY
+            , A.WRITER
+            , A.SUBJECT
+            , A.CONTENT
+            , A.REG_DATE
+            , A.UPD_DATE
+            , A.ADP_YN
+            , A.DEL_YN
+            , A.PARENT_NUM
+        FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+            , QB.NUM
+            , QB.CATEGORY
+            , QB.WRITER
+            , QB.SUBJECT
+            , QB.CONTENT
+            , QB.REG_DATE
+            , QB.UPD_DATE
+            , QB.ADP_YN
+            , QB.DEL_YN
+            , QB.PARENT_NUM
+        FROM QA_BOARD QB
+            , (SELECT @ROWNUM:=0) R
+            WHERE 1=1
+                AND WRITER = #{writer}
+                AND DEL_YN = 'N'
+                AND QB.NUM > 0
+                AND PARENT_NUM is NOT NULL
+            GROUP BY QB.NUM
+            ORDER BY NUM DESC
+        ) AS A
+    </select>
+
+    <!-- Like 등록시 게시글 LikeCount 증가-->
+    <update id="addQaLikeCount" parameterType="int">
+        UPDATE
+            qa_board
+        SET
+            LIKE_COUNT = LIKE_COUNT+1
+        WHERE NUM = #{parentNum}
+    </update>
+
+    <!-- Like 해제시 게시글 LikeCount 증가-->
+    <update id="delQaLikeCount" parameterType="int">
+        UPDATE
+            qa_board
+        SET
+            LIKE_COUNT = LIKE_COUNT-1
+        WHERE NUM = #{parentNum}
+    </update>
+
+    <!-- Scrap 등록시 게시글 ScrapCount 증가-->
+    <update id="addQaScrapCount" parameterType="int">
+        UPDATE
+            qa_board
+        SET
+            SCRAP_COUNT = SCRAP_COUNT+1
+        WHERE NUM = #{parentNum}
+    </update>
+
+    <!-- Scrap 해제시 게시글 LikeCount 증가-->
+    <update id="delQaScrapCount" parameterType="int">
+        UPDATE
+            qa_board
+        SET
+            SCRAP_COUNT = SCRAP_COUNT-1
+        WHERE NUM = #{parentNum}
+    </update>
+
+    <select id="getParentNum" parameterType="QaListDTO" resultType="int">
+        SELECT
+            parent_num
+        FROM
+            qa_board
+        WHERE num = #{num}
     </select>
 
 </mapper>

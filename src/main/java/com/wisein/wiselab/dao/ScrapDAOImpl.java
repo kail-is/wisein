@@ -47,4 +47,21 @@ public class ScrapDAOImpl implements ScrapDAO {
     public void delTipScrapCount(int num) throws Exception {
         sql.update(NS+ ".delTipScrapCount", num);
     }
+
+    /* Scrap 등록시 게시글 ScrapCount 증가- */
+    @Override
+    public void addQaScrapCount(int num) throws Exception {
+        sql.update(NS+ ".addQaScrapCount", num);
+    }
+
+    /* Scrap 해제시 게시글 ScrapCount 감소- */
+    @Override
+    public void delQaScrapCount(int num) throws Exception {
+        sql.update(NS+ ".delQaScrapCount", num);
+    }
+
+    @Override
+    public int getScrapParentNum(int num) throws Exception {
+        return sql.selectOne(NS + ".getScrapParentNum", num);
+    }
 }
