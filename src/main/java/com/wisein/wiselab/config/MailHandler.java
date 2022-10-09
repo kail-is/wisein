@@ -2,7 +2,6 @@ package com.wisein.wiselab.config;
 
 import javax.mail.internet.MimeMessage;
 
-import com.wisein.wiselab.dto.MailDTO;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
