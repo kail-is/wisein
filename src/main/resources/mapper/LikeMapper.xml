@@ -4,73 +4,61 @@
 
     <!-- like 여부 조회-->
     <select id="TipLikeYN" parameterType="LikeBoardDTO" resultType="String">
-        SELECT DEL_YN FROM like_board
-        WHERE
-            BOARD_IDX = #{boardIdx}
-        AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        SELECT DEL_YN
+          FROM LIKE_BOARD
+         WHERE USER_ID = #{userId}
+           AND BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
     </select>
 
     <!-- like 등록-->
     <insert id="insertLike" parameterType="LikeBoardDTO">
-        INSERT INTO like_board
-        (
-            IDX
-            ,BOARD_IDX
-            ,BOARD_TYPE
-            ,USER_ID
-            ,DEL_YN
-        )
+        INSERT INTO LIKE_BOARD
+              (IDX
+              ,USER_ID
+              ,BOARD_IDX
+              ,BOARD_TYPE
+              ,DEL_YN
+              )
         VALUES
-        (
-            (SELECT NVL(MAX(idx), 0) + 1 FROM like_board ALIAS_FOR_SUBQUERY)
-            , #{boardIdx}
-            , #{boardType}
-            , #{userId}
-            , 'N'
-        )
+             ((SELECT NVL(MAX(idx), 0) + 1 FROM like_board ALIAS_FOR_SUBQUERY)
+              ,#{userId}
+              ,#{boardIdx}
+              ,#{boardType}
+              ,'N'
+              )
     </insert>
 
     <!-- like 재등록-->
     <update id="doLike" parameterType="LikeBoardDTO">
-        UPDATE
-            like_board
-        SET
-            DEL_YN = 'N'
-        WHERE
-            BOARD_IDX = #{boardIdx}
-        AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        UPDATE LIKE_BOARD
+           SET DEL_YN = 'N'
+         WHERE USER_ID = #{userId}
+           AND BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
     </update>
 
     <!-- like 해제-->
     <update id="undoLike" parameterType="LikeBoardDTO">
-        UPDATE
-            like_board
-        SET
-            DEL_YN = 'Y'
-        WHERE
-            BOARD_IDX = #{boardIdx}
-        AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        UPDATE LIKE_BOARD
+           SET DEL_YN = 'Y'
+         WHERE USER_ID = #{userId}
+           AND BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
     </update>
 
     <!-- like 등록시 게시글 likeCount 증가-->
     <update id="addTipLikeCount" parameterType="int">
-        UPDATE
-            tip_board
-        SET
-            LIKE_COUNT = LIKE_COUNT+1
-        WHERE num = #{num}
+        UPDATE TIP_BOARD
+           SET LIKE_COUNT = LIKE_COUNT+1
+         WHERE NUM = #{num}
     </update>
 
     <!-- like 해제시 게시글 likeCount 감소-->
     <update id="delTipLikeCount" parameterType="int">
-        UPDATE
-            tip_board
-        SET
-            LIKE_COUNT = LIKE_COUNT-1
-        WHERE num = #{num}
+        UPDATE TIP_BOARD
+           SET LIKE_COUNT = LIKE_COUNT-1
+         WHERE NUM = #{num}
     </update>
 
     <!-- like 등록시 게시글 likeCount 증가-->
@@ -94,11 +82,11 @@
     <!-- like 게시글 parentNum -->
     <select id="getQaParentNum" parameterType="int" resultType="int">
         SELECT
-            PARENT_NUM
+        PARENT_NUM
         FROM
-            qa_board
+        qa_board
         WHERE
-            NUM = #{num}
+        NUM = #{num}
     </select>
 
 </mapper>

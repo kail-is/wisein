@@ -2,25 +2,26 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
 import com.wisein.wiselab.dto.*;
-import com.wisein.wiselab.service.CommentService;
-import com.wisein.wiselab.service.LikeService;
-import com.wisein.wiselab.service.ScrapService;
-import com.wisein.wiselab.service.TipBoardService;
+import com.wisein.wiselab.service.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,12 +40,21 @@ public class tipController {
     @Autowired
     ScrapService scrapService;
 
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    MemberService memberService;
+
 
     private final AbstractPagingCustom PagingTagCustom;
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (@ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+        //수정때문에 세션저장해둔것 지움
+        session.removeAttribute("TipBoardDTO");
+
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
 
@@ -60,38 +70,39 @@ public class tipController {
     //단건 조회
     @GetMapping(value="/tipDetail")
     public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
-        TipBoardDTO TipBoardDTO = null;
-        List<CommentDTO> commentList = new ArrayList<>();
-        String brdRef = "tip||"+num;
+        //meetLink
+        String meetLink = tipBoardService.selectMeetLink(num);
+
         //댓글 갯수
-        int commentNum = commentService.selectCommentTotalCount(brdRef);
+        CommentDTO CommentDTO = new CommentDTO();
+        CommentDTO.setBoardIdx(num);
+        CommentDTO.setBoardType("tip");
+        int commentNum = commentService.selectCommentTotalCount(CommentDTO);
 
         //좋아요 체크 확인
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         LikeBoardDTO LikeDTO = new LikeBoardDTO();
         LikeDTO.setUserId((member.getId()));
-        LikeDTO.setBrdRef(brdRef);
+        LikeDTO.setBoardIdx(num);
+        LikeDTO.setBoardType("tip");
 
         String likeDelYn = likeService.TipLikeYN(LikeDTO);
         if(likeDelYn==null){ likeDelYn = "none"; }
 
         //스크랩 체크 확인
-        ScrapBoardDTO ScrapDTO = new  ScrapBoardDTO();
-        ScrapDTO.setBrdRef(brdRef);
+        ScrapBoardDTO ScrapDTO = new ScrapBoardDTO();
         ScrapDTO.setUserId((member.getId()));
-
+        ScrapDTO.setBoardIdx(num);
+        ScrapDTO.setBoardType("tip");
         String scrapDelYn = scrapService.TipScrapYN(ScrapDTO);
         if(scrapDelYn==null){ scrapDelYn = "none"; }
 
         //팁 단건 내용+코멘트 내용 리스트
-        if(dto.getNum() !=0){
-            TipBoardDTO = tipBoardService.selectTipOne(dto);
-            commentList = commentService.selectComment(brdRef);
-        }else{
-            TipBoardDTO.setNum(num);
-            TipBoardDTO = tipBoardService.selectTipOne(dto);
-            commentList = commentService.selectComment(brdRef);
-        }
+        TipBoardDTO TipBoardDTO = tipBoardService.selectTipOne(dto);
+        List<CommentDTO> commentList = commentService.selectComment(CommentDTO);
+
+        //사이드바 설정
+        String side_gubun = "Y";
 
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
@@ -100,32 +111,52 @@ public class tipController {
         model.addAttribute("likeDelYn", likeDelYn);
         model.addAttribute("scrapDelYn", scrapDelYn);
         model.addAttribute("memberId", member.getId());
+        model.addAttribute("meetLink", meetLink);
+        model.addAttribute("side_gubun", side_gubun);
         return "cmn/tipDetail";
     }
 
     //등록
-    @GetMapping(value="/regTip")
+    @GetMapping(value="/tipBoard")
     public String regTip () throws Exception {
-        return "board/regTip";
+        return "board/tipBoard";
     }
 
-    @PostMapping(value="/regTip")
-    public String regTip (HttpSession session, TipBoardDTO dto) throws Exception {
+    @ResponseBody
+    @PostMapping(value="/tipBoard")
+    public ResponseEntity regTip ( HttpSession session, @RequestBody Map<String, String> data) throws Exception {
+        TipBoardDTO dto = new TipBoardDTO();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
         dto.setWriter(member.getId());
+        dto.setCategory(data.get("category"));
+        dto.setSubject(data.get("subject"));
+        dto.setContent(data.get("content"));
 
         tipBoardService.insertTipBoard(dto);
 
-        return "redirect:/tipList";
+        //이미지 난수 게시글로 변경 ex) tip||sj2s10 => tip||22
+        String brdNum = data.get("brdNum");
+        int postNum = tipBoardService.selectTipPostNum(dto);
+
+        FileDTO file = new FileDTO();
+
+        file.setRefNum("tip||" + postNum);
+        file.setTemRefHash("tip||" + brdNum);
+        commonService.updateHash(file);
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     //삭제
     @GetMapping(value="/delTip")
     public String delTip (@RequestParam("num") int num) throws Exception {
-        String brdRef = "tip||"+num;
+        CommentDTO CommentDTO = new CommentDTO();
+        CommentDTO.setBoardIdx(num);
+        CommentDTO.setBoardType("tip");
 
         tipBoardService.deleteTipBoard(num);
-        commentService.deleteAllComment(brdRef);
+        commentService.deleteAllComment(CommentDTO);
 
         return "redirect:/tipList";
     }
@@ -137,116 +168,191 @@ public class tipController {
         dto = tipBoardService.selectTipOne(dto);
         model.addAttribute("TipBoardDTO", dto);
         session.setAttribute("TipBoardDTO", dto);
-        return "cmn/updTip";
+        return "board/tipBoard";
     }
 
+    @ResponseBody
     @PostMapping(value="/updTip")
-    public String updTip(TipBoardDTO dto, HttpSession session) throws Exception {
+    public ResponseEntity updTip(HttpSession session, @RequestBody Map<String, String> data) throws Exception {
+        TipBoardDTO dto = new TipBoardDTO();
+
+        dto.setNum(Integer.parseInt(data.get("num")));
+        dto.setCategory(data.get("category"));
+        dto.setSubject(data.get("subject"));
+        dto.setContent(data.get("content"));
+
         tipBoardService.updateTipBoard(dto);
         session.removeAttribute("TipBoardDTO");
-        return "redirect:/tipDetail?num="+dto.getNum();
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    //이미지 url 반환
-    @ResponseBody
-    @RequestMapping(value="/imgUrlReg")
-    public String imgUrlReg(MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session) throws Exception {
-        return tipBoardService.imgUrlReg(multipartHttpServletRequest, session);
-    }
 
     //댓글 등록
     @ResponseBody
     @PostMapping(value = "/regTipComm")
-    public void tipRegComment (HttpSession session, CommentDTO dto) throws Exception {
+    public JSONObject tipRegComment (HttpSession session, @RequestBody Map<String, String> data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        dto.setWriter(member.getId());
+        CommentDTO dto = new CommentDTO();
 
+        dto.setWriter(member.getId());
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
+        dto.setContent(data.get("content"));
+
+        //댓글등록
         commentService.insertComment(dto);
+
+        //댓글 리스트
+        List<CommentDTO> commentList = commentService.selectComment(dto);
+
+        JSONObject response = new JSONObject();
+        response.put("commentList",commentList);
+
+        return response;
     }
 
     //댓글 삭제
     @ResponseBody
     @PostMapping(value = "/delTipComm")
-    public void tipDelComment (CommentDTO dto) throws Exception {
+    public JSONObject tipDelComment (@RequestBody Map<String, String> data) throws Exception {
+        CommentDTO dto = new CommentDTO();
+
+        dto.setNum(Integer.parseInt(data.get("num")));
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
+
         commentService.deleteComment(dto);
+
+        //댓글 리스트
+        List<CommentDTO> commentList = commentService.selectComment(dto);
+
+        JSONObject response = new JSONObject();
+        response.put("commentList", commentList);
+
+        return response;
     }
 
     //댓글 수정
     @ResponseBody
     @PostMapping(value = "/udpTipComm")
-    public void tipUpdComment (CommentDTO dto) throws Exception {
+    public JSONObject tipUpdComment (@RequestBody Map<String, String> data) throws Exception {
+        CommentDTO dto = new CommentDTO();
+
+        dto.setNum(Integer.parseInt(data.get("num")));
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
+        dto.setContent(data.get("content"));
+
         commentService.updateComment(dto);
+
+        //댓글 리스트
+        List<CommentDTO> commentList = commentService.selectComment(dto);
+
+
+        JSONObject response = new JSONObject();
+        response.put("commentList", commentList);
+
+        return response;
     }
 
     //like 등록
     @ResponseBody
     @PostMapping(value = "/regLikeTip")
-    public void tipRegLike (HttpSession session, int num, LikeBoardDTO dto) throws Exception {
+    public JSONObject tipRegLike (HttpSession session, @RequestBody Map<String, String> data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        dto.setUserId(member.getId());
+        LikeBoardDTO dto = new LikeBoardDTO();
 
-        String brdRef = "tip||"+num;
-        dto.setBrdRef(brdRef);
+        dto.setUserId(member.getId());
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
 
         likeService.insertLike(dto);
-        likeService.addTipLikeCount(num);
+        likeService.addTipLikeCount(Integer.parseInt(data.get("boardIdx")));
+
+        String likeDelYn = likeService.TipLikeYN(dto);
+
+        JSONObject response = new JSONObject();
+        response.put("likeDelYn", likeDelYn);
+
+        return response;
     }
 
     //like 상태 변경
     @ResponseBody
     @PostMapping(value = "/udpLikeTip")
-    public void tipUdpLike (HttpSession session, int num, LikeBoardDTO dto) throws Exception {
+    public JSONObject tipUdpLike (HttpSession session, @RequestBody Map<String, String> data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        dto.setUserId(member.getId());
+        LikeBoardDTO dto = new LikeBoardDTO();
 
-        String brdRef = "tip||"+num;
-        dto.setBrdRef(brdRef);
+        dto.setUserId(member.getId());
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
 
         String likeDelYn = likeService.TipLikeYN(dto);
 
         if(likeDelYn.equals("N")){ //해제
             likeService.undoLike(dto);
-            likeService.delTipLikeCount(num);
+            likeService.delTipLikeCount(Integer.parseInt(data.get("boardIdx")));
         }else{//재등록
             likeService.doLike(dto);
-            likeService.addTipLikeCount(num);
+            likeService.addTipLikeCount(Integer.parseInt(data.get("boardIdx")));
         }
+
+        likeDelYn = likeService.TipLikeYN(dto);
+
+        JSONObject response = new JSONObject();
+        response.put("likeDelYn", likeDelYn);
+
+        return response;
     }
 
     //scrap 등록
     @ResponseBody
     @PostMapping(value = "/regScrapTip")
-    public void tipRegScrap (HttpSession session, int num, ScrapBoardDTO dto) throws Exception {
+    public JSONObject tipRegScrap (HttpSession session, @RequestBody Map<String, String> data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        dto.setUserId(member.getId());
+        ScrapBoardDTO dto = new ScrapBoardDTO();
 
-        String brdRef = "tip||"+num;
-        dto.setBrdRef(brdRef);
+        dto.setUserId(member.getId());
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
 
         scrapService.insertScrap(dto);
-        scrapService.addTipScrapCount(num);
+        scrapService.addTipScrapCount(Integer.parseInt(data.get("boardIdx")));
+
+        String scrapDelYn = scrapService.TipScrapYN(dto);
+        JSONObject response = new JSONObject();
+        response.put("scrapDelYn", scrapDelYn);
+
+        return response;
     }
 
     //scrap 상태 변경
     @ResponseBody
     @PostMapping(value = "/udpScrapTip")
-    public void tipUdpScrap (HttpSession session, int num, ScrapBoardDTO dto) throws Exception {
+    public JSONObject tipUdpScrap (HttpSession session, @RequestBody Map<String, String> data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        dto.setUserId(member.getId());
+        ScrapBoardDTO dto = new ScrapBoardDTO();
 
-        String brdRef = "tip||"+num;
-        dto.setBrdRef(brdRef);
+        dto.setUserId(member.getId());
+        dto.setBoardIdx(Integer.parseInt(data.get("boardIdx")));
+        dto.setBoardType(data.get("boardType"));
 
         String scrapDelYn = scrapService.TipScrapYN(dto);
 
         if(scrapDelYn.equals("N")){ //해제
             scrapService.undoScrap(dto);
-            scrapService.delTipScrapCount(num);
+            scrapService.delTipScrapCount(Integer.parseInt(data.get("boardIdx")));
         }else{//재등록
             scrapService.doScrap(dto);
-            scrapService.addTipScrapCount(num);
+            scrapService.addTipScrapCount(Integer.parseInt(data.get("boardIdx")));
         }
-    }
 
+        scrapDelYn = scrapService.TipScrapYN(dto);
+        JSONObject response = new JSONObject();
+        response.put("scrapDelYn", scrapDelYn);
+
+        return response;
+    }
 
 }

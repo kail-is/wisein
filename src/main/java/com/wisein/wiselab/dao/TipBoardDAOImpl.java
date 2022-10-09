@@ -45,6 +45,12 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         sql.update(NS+ ".updateTipBoard", dto);
     }
 
+    /* TipBoard 게시글 번호 조회 */
+    @Override
+    public int selectTipPostNum(TipBoardDTO dto) throws Exception {
+        return sql.selectOne(NS+ ".selectTipPostNum", dto);
+    }
+
     /* TipBoard 다음 게시글 번호 조회*/
     @Override
     public int selectNextTipNum() throws Exception{
@@ -56,5 +62,12 @@ public class TipBoardDAOImpl implements TipBoardDAO {
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
         return sql.selectOne(NS + ".selectBoardTotalCount", dto);
     }
+
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return sql.selectOne(NS + ".selectMeetLink", num);
+    }
+
 
 }

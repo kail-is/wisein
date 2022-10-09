@@ -1,7 +1,16 @@
 // matzipBoard - func
 
-    let matzipUpdBox = document.querySelector('.matzip-upd')
-    let isMatzipUpd = !(matzipUpdBox === undefined || matzipUpdBox === null) ? true : false
+    let isMatzipUpd = !isEmpty(window.location.pathname.match("upd"))
+
+    const categoryEl   = document.getElementById('category');
+    const keywordEl = document.getElementById('keywordBox');
+    const matzipDataEl = document.getElementById('matzip_upload_data');
+
+    //const keywordBox = document.querySelector('.content-inner-box .keyword');
+    const matzip_name = document.querySelector('#matzip-name');
+
+    const fmtSrhBtn = document.querySelector('#format-search-btn');
+    const addSrhBtn = document.querySelector('#add-search-btn');
 
     if(isMatzipUpd){
     // 맛집 수정 데이터
@@ -28,83 +37,163 @@
         const matzip_id = matzip_obj.id
         const address_name = matzip_obj.address_name
 
-        // TODO - 유효성 체크
+        if ( matzipValidate(subject, content, matzip_data) ){
 
-        $.ajax({
-            data:{"writer": writer, "subject":subject, "content":content, "star":star, "category": category, "matzipData": matzip_data, "matzipId": matzip_id, "addressName": address_name},
-            type:"GET",
-            url:"/regMatzip",
-            success:function(data) {
-                alert("성공");
-                const num = getPostNum(writer, subject)
-                if(brdNum != num){
-                    updateImgHash(brdNum, num)
-                }
-                window.location.href = "/matzipList"
-            },
-            error:function(request, status, error) {
-                alert("실패");
-            }
-        })
+            const obj = {"writer": writer, "subject":subject, "content":content, "star":star, "category": category, "matzipData": matzip_data, "matzipId": matzip_id, "addressName": address_name}
 
+            fetch("/regMatzip", {
+                    method : 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(obj),
+                }).then(response => response.text())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                   alert("성공");
+                   const postNum = getPostNum(writer, subject)
+                   if(brdNum != postNum){ updateImgHash(brdNum, postNum) }
+                   window.location.href = "/matzip?id=" + matzip_id
+                })
+        }
     }
 
-    function updateImgHash(brdNum, num){
+    function updateImgHash(brdNum, postNum){
 
-        const brdNm = getBoardNm()
+        const brdName = getBoardNm()
 
-         $.ajax({
-                data:{"brdNm": brdNm, "randomStr": brdNum, "brdNum":num},
-                type:"GET",
-                url:"/updateHash",
-                success:function(data) {
+         fetch("/updateHash?" + "brdNm=" + brdName + "&randomStr=" + brdNum + "brdNum=" + postNum)
+               .then(response => response.text())
+               .catch(error => console.error('Error:', error))
+               .then(response => {
+                    console.log(response)
                     alert("이미지 업데이트 성공");
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
+               })
     }
 
 
-    function getPostNum(writer, subject) {
+     async function getPostNum(writer, subject) {
         let postNum = "-1"
-
-         $.ajax({
-                data:{"writer": writer, "subject":subject},
-                type:"GET",
-                url:"/getPostNum",
-                async: false,
-                success:function(data) {
-                    postNum = data;
-                },
-                error:function(request, status, error) {
-                    alert("실패");
-                }
-            })
-
-        return postNum;
+        const response = await fetch("/getPostNum?" + "writer=" + writer + "&subject=" + subject)
+        const data = await response.text()
+        return data
+        // TODO 동기식 실행 완료 - fulfilled Promise 객체 수정 요함
     }
 
     function matzipUpd(){
 
-        const num = document.getElementById('num').value;
+        const num = document.getElementById('num').value ;
         const subject = document.getElementById('subject').value;
         const content = editor.getHTML();
         const star = document.getElementById('star').value;
+        const matzipId = document.getElementById('matzip_id').value;
 
-        $.ajax({
-            data:{"num": num, "subject":subject, "content":content, "star":star},
-            type:"GET",
-            url:"/putRecm",
-            success:function(data) {
-                alert("성공");
-                window.location.href = "/matzipList"
-            },
-            error:function(request, status, error) {
-                alert("실패");
-            }
-        })
+        debugger;
+
+        const obj = {"num": num, "subject":subject, "content":content, "star":star}
+
+        fetch("/putRecm", {
+                method : 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(obj),
+            }).then(response => response.text())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+               alert("성공");
+               window.location.href = "/matzip?id=" + matzipId
+            });
     }
 
-// matzipBoard - editor
+    function matzipValidate(subject, content, matzip_data) {
+
+        if (isEmpty(subject)){
+            alert("제목을 입력하세요.");
+            return false;
+        }
+
+        if (isEmpty(matzip_data)){
+            alert("맛집을 검색하세요.");
+            return false;
+        }
+
+        if(content == "<p><br></p>") {
+           if (!confirm("내용 없이 등록하시겠습니까?")) {
+             return false;
+           }
+        }
+
+        return true;
+
+    }
+
+// matzipBoard - 외부 맛집 검색
+
+    const popupManger = {
+            originalData : '',
+            callback     : () => {},
+            popupConfirm : function(e){
+                var formData1 = new FormData(e);
+                this.popupClose();
+                this.selectedData = formData1.get('content-radio');
+                var index = formData1.get('content-radio').split(":")[0]
+                const result = {
+                    selectedData   : formData1.get('content-radio').split(":")[1],
+                    resultData     : this.originalData.documents[index],
+                    originalData   : this.originalData,
+                }
+                this.callback(result);
+            },
+            popupClose: function(id='matzipPopupBox'){
+                const popupEl = document.getElementById(id);
+                popupEl.classList.add('none');
+
+            },
+            popupOpen : function(id='matzipPopupBox'){
+                const popupEl = document.getElementById(id);
+                popupEl.classList.remove('none');
+
+            },
+            matzipPopupOpen : function(data,callback){
+                this.originalData = data;
+                this.popupOpen();
+                this.callback = callback;
+                const matzipListEl = document.getElementById('matzipList');
+                const list = data.documents.map((item,index)=>{
+                    return `<li><input type="radio" id="search-${index}" class="content-radio content-radio-checked" name="content-radio" value="${index}:${item.place_name}(${item.address_name})"/><label for="search-${index}" class="content-label">${item.place_name}(${item.address_name})</label></li>`;
+                }).join('');
+                matzipListEl.innerHTML = list;
+            }
+    }
+
+    function findKeyword() {
+        let keyword = `${categoryEl.value} ${keywordEl.value}`
+        const kakaoRestApiKey = KAKAO_KEY
+
+        fetch( "https://dapi.kakao.com/v2/local/search/keyword.JSON?query=" + keyword, {
+            headers: {'Authorization': `KakaoAK ${kakaoRestApiKey}`}
+            }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+               popupManger.matzipPopupOpen(data,(result)=>{
+                   matzip_name.value = result.selectedData.split("(")[0]
+                   keywordEl.value = result.selectedData.split("(")[1].replace(")","");
+                   matzipDataEl.value = JSON.stringify(result.resultData, null, 2);
+
+                   keywordEl.style.width = "50%"
+                   matzip_name.classList.remove('none');
+                   fmtSrhBtn.classList.remove('none');
+                   addSrhBtn.classList.add('none');
+               });
+            });
+    }
+
+    function formatKeyword() {
+
+        matzip_name.value = ""
+        keywordEl.value = ""
+        matzipDataEl.value = ""
+
+        keywordEl.style.width = "70%"
+        matzip_name.classList.add('none');
+        fmtSrhBtn.classList.add('none');
+        addSrhBtn.classList.remove('none');
+
+    }

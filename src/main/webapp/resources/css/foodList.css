@@ -116,6 +116,10 @@
   font-size: 16px;
 }
 
+.board-list {
+    height:210px;
+}
+
 @media screen and (max-width: 992px) {
   .content-frame .board-wrap .board-list .board-header {
     display: none !important;
@@ -147,6 +151,8 @@
 @media screen and (max-width: 992px) {
   .content-frame .board-wrap .board-list .board-line {
     padding: 0.375em 0;
+    height:35px;
+    font-size:15px;
   }
 }
 
@@ -232,8 +238,10 @@
   padding-right: 0.125em;
 }
 
+/* 지도 css */
 .map-wrap {
   width: 50%;
+  height:530px;
 }
 
 @media screen and (max-width: 992px) {
@@ -247,3 +255,79 @@
   width: 100%;
   height: 100%;
 }
+
+.matzip-list-box {
+    border: 1px solid black;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.signUp-popup-wrap.matzip-wrap {
+    min-width: 450px
+}
+
+ul {
+    text-align: center;
+    display: inline-block;
+
+    border-right: 0;
+    list-style: none;
+}
+ul li {
+    text-align: center;
+    float: left;
+}
+
+ul li a {
+    display: block;
+    padding: 9px 12px;
+    box-sizing: border-box;
+}
+
+ul li.on {
+    background: #eda712;
+}
+
+ul li.on a {
+    color: #fff;
+}
+
+.page-wrap {
+    font-size:20px;
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+    position:relative;
+    bottom:-100px;
+
+}
+
+@media screen and (max-width: 992px) {
+    .page-wrap {
+        text-align:center;
+        position:relative;
+        font-size:13px;
+        bottom:-55px;
+    }
+    .board-category, .board-title, .board-map {
+        font-size:10.5px;
+    }
+    .board-list {
+        height:160px;
+    }
+}
+
+.btn-wrap {
+    font-weight:800;
+    color:#B266FF;
+}
+
+.btn-wrap:hover {
+    color:#9933FF;
+}
+
+.board-text {
+    width:50px;
+    color:grey;
+}
+

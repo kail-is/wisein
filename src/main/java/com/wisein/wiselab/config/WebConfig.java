@@ -2,8 +2,12 @@ package com.wisein.wiselab.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
+import com.wisein.wiselab.config.interceptor.CheckWriterInterceptor;
 import com.wisein.wiselab.config.interceptor.channel;
+import com.wisein.wiselab.dto.MemberDTO;
+import com.wisein.wiselab.service.MatzipService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +15,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,6 +28,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final ObjectMapper objectMapper;
 
+    private MemberDTO memberDTO;
+
+    @Autowired
+    private MatzipService matzipService;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(channel)
@@ -30,8 +40,17 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/resources/**");
 
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/user/*")
-                .excludePathPatterns();
+                .addPathPatterns("/*")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/authCheck")
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/register")
+                .excludePathPatterns("/qalist")
+                .excludePathPatterns("/error/*");
+
+        CheckWriterInterceptor checkWriterInterceptor = new CheckWriterInterceptor(memberDTO, matzipService);
+        InterceptorRegistration reg = registry.addInterceptor(checkWriterInterceptor);
+        reg.addPathPatterns("/updRecm", "putRecm", "/delRecm");
     }
 
     @Bean

@@ -48,24 +48,6 @@ function hTagToList(tag, depth = 1,parentArr = []){
     return parentArr;
 }
 
-
-function listToTag(target,arr,depth){
-    //초기화
-    if(typeof target != 'object' || Array.isArray(target))
-        return;
-
-    depth = depth ? depth : 1
-
-    arr.forEach(function(e){
-        target.innerHTML +='<li style = "cursor: pointer; padding-left:' + (e.depth * 10) +'px"> <a href="#'+e.id+'">' +  e.tagTitle + ' </a></li>';
-        if(Array.isArray(e.subTag) && e.subTag.length > 0){
-            listToTag(target,e.subTag,depth + 1);
-        }
-    })
-
-}
-
-
 function listToHTag(target,arr,depth){
     //초기화
     if(typeof target != 'object' || Array.isArray(target))

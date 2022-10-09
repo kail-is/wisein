@@ -24,10 +24,16 @@ public interface TipBoardDAO {
     /* TipBoard 게시글 수정 */
     public void updateTipBoard(TipBoardDTO dto) throws Exception;
 
+    /* TipBoard 게시글 번호 조회 */
+    public int selectTipPostNum(TipBoardDTO dto) throws Exception;
+
     /* TipBoard 다음 게시글 번호 조회*/
     public int selectNextTipNum() throws Exception;
 
     /* 전체 게시글 개수 조회 */
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception;
+
+    /* 작성자 meetLink */
+    public String selectMeetLink(int num) throws Exception;
 
 }

@@ -4,11 +4,12 @@
 
     <!-- Scrap 여부 조회-->
     <select id="TipScrapYN" parameterType="ScrapBoardDTO" resultType="String">
-        SELECT DEL_YN FROM Scrap_board
-        WHERE
-            BOARD_IDX = #{boardIdx}
+        SELECT DEL_YN
+        FROM
+            Scrap_board
+        WHERE USER_ID = #{userId}
         AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        AND BOARD_IDX = #{boardIdx}
     </select>
 
     <!-- Scrap 등록-->
@@ -16,17 +17,17 @@
         INSERT INTO Scrap_board
         (
             IDX
+            ,USER_ID
             ,BOARD_IDX
             ,BOARD_TYPE
-            ,USER_ID
             ,DEL_YN
         )
         VALUES
         (
             (SELECT NVL(MAX(idx), 0) + 1 FROM Scrap_board ALIAS_FOR_SUBQUERY)
+            , #{userId}
             , #{boardIdx}
             , #{boardType}
-            , #{userId}
             , 'N'
         )
     </insert>
@@ -37,10 +38,9 @@
             Scrap_board
         SET
             DEL_YN = 'N'
-        WHERE
-            BOARD_IDX = #{boardIdx}
+        WHERE USER_ID = #{userId}
         AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        AND BOARD_IDX = #{boardIdx}
     </update>
 
     <!-- Scrap 해제-->
@@ -49,10 +49,9 @@
             Scrap_board
         SET
             DEL_YN = 'Y'
-        WHERE
-            BOARD_IDX = #{boardIdx}
+        WHERE USER_ID = #{userId}
         AND BOARD_TYPE = #{boardType}
-        AND USER_ID = #{userId}
+        AND BOARD_IDX = #{boardIdx}
     </update>
 
     <!-- Scrap 등록시 게시글 ScrapCount 증가-->

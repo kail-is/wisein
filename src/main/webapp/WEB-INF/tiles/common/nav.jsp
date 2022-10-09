@@ -15,7 +15,12 @@
                     <c:if test="${empty member.fileList[0]}">
                         <img src ="../resources/image/Conic.png">
                     </c:if>
-                    <label for="my-function-chk">반가워요, ${member.name}!<br>${member.site}</label>
+                    <c:if test="${empty member}">
+                         <label for="my-function-chk">회원 가입이 필요해요.</label>
+                    </c:if>
+                    <c:if test="${not empty member}">
+                         <label for="my-function-chk">반가워요, ${member.name}!<br>${member.site}</label>
+                    </c:if>
                     <input type="checkbox" name="" id="my-function-chk" style="display: none;">
                     <ul class="person-function">
                      <c:if test="${empty member}">
@@ -32,7 +37,7 @@
                 </div>
                 <ul class="menu">
                     <li><a href="/qalist">질문하고 싶어요</a></li>
-                    <li><a href="/tiplist">Tech Tip</a></li>
+                    <li><a href="/tipList">Tech Tip</a></li>
                     <li><a href="/matzipList">사이트 별 맛집 목록</a></li>
                 </ul>
                 <div class="search-bar">
@@ -233,33 +238,41 @@
     </div>
 </div>
 
-<%--popup--%>
-<div id="alertBox" class="popup-wrap page-center none">
+<%--common Popup--%>
+<div id="commonPopup" class="popup-wrap page-center none">
+    <div class="alert-title">
+        경고창
+    </div>
+    <div class="confirm-title">
+        확인창
+    </div>
     <div class="signUp-popup-wrap form-between">
         <div class="popup-message-wrap">
-
         </div>
         <div class="alert-button-wrap">
             <button type="button" id="alert-close-btn">확인</button>
         </div>
-    </div>
-</div>
 
-<%--confirm--%>
-<div id="confirmBox" class="popup-wrap page-center none">
-    <div class="confirm-message-wrap">
-
-    </div>
-    <div class="signUp-popup-wrap form-between">
-        <div class="w50p">
+        <div class="confirm-button-wrap">
             <div class="confirm-btn">
                 <button type="button" name="signUp_btn" id="confirm-btn">확인</button>
             </div>
-        </div>
-        <div class="w50p">
             <div class="cancel-btn">
                 <button type="button" id="confirm-cancel-btn">취소</button>
             </div>
         </div>
+    </div>
+</div>
+
+<%-- roadView popup--%>
+<div id="roadViewPopup" class="popup-wrap page-center road-popup none">
+    <div class="road-view-title">
+        로드뷰
+    </div>
+    <div id="roadview" class="road-view">
+
+    </div>
+    <div class="alert-button-wrap">
+        <button type="button" id="road-close-btn">닫기</button>
     </div>
 </div>

@@ -1,9 +1,9 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.JsonInstance;
+import com.wisein.wiselab.dao.MatzipDAO;
 import com.wisein.wiselab.dto.CompanyDTO;
-import com.wisein.wiselab.service.FoodListService;
-import com.wisein.wiselab.service.MatzipService;
+import com.wisein.wiselab.dto.PageDataDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,11 +11,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,7 +28,7 @@ import java.util.Map;
 public class RestMatzipController {
 
     @Autowired
-    MatzipService service;
+    MatzipDAO dao;
 
     JSONObject jObject;
     JSONParser jParser;
@@ -49,15 +45,11 @@ public class RestMatzipController {
     @GetMapping(value="/companyList")
     public Map<String, List<CompanyDTO>> companyList(CompanyDTO companyDTO, Model model) {
 
-        ModelAndView mv = new ModelAndView();
-        List<CompanyDTO> siteList = service.companyList();
+        List<CompanyDTO> siteList = dao.companyList();
         List<CompanyDTO> company = new ArrayList<>();
-
         Map<String, List<CompanyDTO>> map = new HashMap<>();
-
         for (int i=0; i<siteList.size(); i++) {
             companyDTO = new CompanyDTO();
-
             try {
                 jObject = (JSONObject) jParser.parse(siteList.get(i).getCompanydata());
                 jArray = (JSONArray) jObject.get("documents");
@@ -67,13 +59,22 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            List<CompanyDTO> siteCountList = service.matzipCount(siteList.get(i).getLocation());
+            List<CompanyDTO> siteCountList = dao.matzipCount(siteList.get(i).getLocation());
 
-            companyDTO.setId(siteList.get(i).getId());
-            companyDTO.setLocation(siteList.get(i).getLocation());
-            companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
-            companyDTO.setCompanyName((String) jObject.get("place_name"));
-            companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+            if (siteCountList.size()==0) {
+                companyDTO.setId(siteList.get(i).getId());
+                companyDTO.setLocation(siteList.get(i).getLocation());
+                companyDTO.setMatzipCount(0);
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+
+            } else {
+                companyDTO.setId(siteList.get(i).getId());
+                companyDTO.setLocation(siteList.get(i).getLocation());
+                companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+            }
 
             company.add(companyDTO);
         }
@@ -83,25 +84,38 @@ public class RestMatzipController {
 
     }
 
-    @GetMapping(value="/placeMatzip")
-    public Map<String, List<CompanyDTO>> companyList(CompanyDTO companyDTO,Model model,
-                                                     @RequestParam("place") String place) {
+    @PostMapping(value="/foodList")
+    public Map<String, List<CompanyDTO>> matzipList(CompanyDTO companyDTO,Model model,
+                                                     PageDataDTO pageDataDto,
+                                                     @RequestBody String pageData) {
+        try {
+            jObject = (JSONObject) jParser.parse(pageData);
+            JSONObject jsonObj = (JSONObject) jObject;
+
+            String location = (String) jsonObj.get("location");
+            int startRow = Integer.parseInt(String.valueOf(jsonObj.get("startRow")));
+            int dataPerPage = Integer.parseInt(String.valueOf(jsonObj.get("dataPerPage")));
+
+            pageDataDto.setLocation(location);
+            pageDataDto.setStartRow(startRow-1);
+            pageDataDto.setDataPerPage(dataPerPage);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         List<CompanyDTO> company = new ArrayList<>();
-
-        List<CompanyDTO> matzipList = service.matzipList(place);
+        List<CompanyDTO> matzipList = dao.matzipList(pageDataDto);
 
         Map<String, List<CompanyDTO>> map = new HashMap<>();
 
         for (int i=0; i<matzipList.size(); i++) {
             companyDTO = new CompanyDTO();
 
-            List<CompanyDTO> recmMatzipList = service.recmMatzipCount(matzipList.get(i).getId());
+            List<CompanyDTO> recmMatzipList = dao.recmMatzipCount(matzipList.get(i).getId());
 
             try {
                 jObject = (JSONObject) jParser.parse(matzipList.get(i).getCompanydata());
-                jArray = (JSONArray) jObject.get("documents");
-                jObject = (JSONObject) jArray.get(0);
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -116,7 +130,7 @@ public class RestMatzipController {
             company.add(companyDTO);
         }
 
-        map.put("company", company);
+        map.put("matzip", company);
 
         return map;
     }
@@ -161,19 +175,33 @@ public class RestMatzipController {
         return null;
     }
 
-    @GetMapping(value="/selectCompany")
-    public Map<String, List<CompanyDTO>> selectCompany(@RequestParam("place") String location,
-                                                       CompanyDTO companyDTO) {
-        Map<String, List<CompanyDTO>> selectCompanyMap = new HashMap<>();
+    @GetMapping(value="/matzipDetailId")
+    public int matzipDetailId(@RequestParam("loc") String loc) {
 
-        List<CompanyDTO> companyList = service.selectCompany(location);
-        List<CompanyDTO> selectList = new ArrayList<>();
+        int matzipId = dao.matzipId(loc);
+        return matzipId;
+    }
 
-        for (int i=0; i<companyList.size(); i++) {
+    @GetMapping(value="/matzipCheck")
+    public int matzipCheck(@RequestParam("id") int id) {
+
+        int check = dao.matzipExistCheck(id);
+        return check;
+    }
+
+    @GetMapping(value="/categorySelect")
+    public Map<String, List<CompanyDTO>> categorySelect(CompanyDTO companyDTO,
+                                                        @RequestParam("option") String option) {
+
+        List<CompanyDTO> siteList = dao.categoryDetail(option);
+        List<CompanyDTO> company = new ArrayList<>();
+        Map<String, List<CompanyDTO>> map = new HashMap<>();
+
+        for (int i=0; i<siteList.size(); i++) {
             companyDTO = new CompanyDTO();
 
             try {
-                jObject = (JSONObject) jParser.parse(companyList.get(i).getCompanydata());
+                jObject = (JSONObject) jParser.parse(siteList.get(i).getCompanydata());
                 jArray = (JSONArray) jObject.get("documents");
                 jObject = (JSONObject) jArray.get(0);
 
@@ -181,27 +209,36 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            List<CompanyDTO> siteCountList = service.matzipCount(companyList.get(i).getLocation());
+            List<CompanyDTO> siteCountList = dao.matzipCount(siteList.get(i).getLocation());
 
-            companyDTO.setId(companyList.get(i).getId());
-            companyDTO.setLocation(companyList.get(i).getLocation());
-            companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
-            companyDTO.setCompanyName((String) jObject.get("place_name"));
-            companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+            if (siteCountList.size()==0) {
+                companyDTO.setId(siteList.get(i).getId());
+                companyDTO.setLocation(siteList.get(i).getLocation());
+                companyDTO.setMatzipCount(0);
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
 
-            selectList.add(companyDTO);
+            } else {
+                companyDTO.setId(siteList.get(i).getId());
+                companyDTO.setLocation(siteList.get(i).getLocation());
+                companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+            }
+
+            company.add(companyDTO);
         }
-        selectCompanyMap.put("company", selectList);
+        map.put("company", company);
+        return map;
 
-
-        return selectCompanyMap;
     }
 
-    @GetMapping(value="/matzipDetailId")
-    public int matzipDetailId(@RequestParam("loc") String loc) {
+    @GetMapping("/dataCount")
+    public int dataCount(@RequestParam("location") String location) {
 
-        int matzipId = service.matzipId(loc);
-        return matzipId;
+        int count = dao.dataCount(location);
+
+        return count;
     }
 
 

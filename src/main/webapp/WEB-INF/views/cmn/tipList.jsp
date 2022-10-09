@@ -8,7 +8,7 @@
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
-           <button type="button" onClick="location.href='regTip'" ></button>
+           <button type="button" onClick="location.href='tipBoard'" ></button>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -53,9 +53,16 @@
                     <div class="board-cell board-title">
                         <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
                     </div>
-                    <div class="board-cell board-like gray">
-                        <span class="material-icons">thumb_up</span>${tip.likeCount}
-                    </div>
+                    <c:if test="${tip.likeCount == 0}">
+                        <div class="board-cell board-like gray">
+                            <span class="material-icons">thumb_up</span>${tip.likeCount}
+                        </div>
+                    </c:if>
+                    <c:if test="${tip.likeCount != 0}">
+                        <div class="board-cell board-like purple2">
+                            <span class="material-icons">thumb_up</span>${tip.likeCount}
+                        </div>
+                    </c:if>
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>
                         <ul class="person-function">

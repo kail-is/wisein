@@ -3,80 +3,84 @@
 <mapper namespace="com.wisein.wiselab.mapper.commentMapper">
 
     <!--comment 다건조회-->
-    <select id="selectComment" parameterType="String" resultType="CommentDTO">
-        SELECT
-            NUM
-            ,BRD_REF
-            ,CONTENT
-            ,WRITER
-            ,REG_DATE
-            ,UPD_DATE
-            ,DEL_YN
-        FROM
-             comment
-        WHERE BRD_REF = #{brdRef}
-        AND DEL_YN = 'N'
+    <select id="selectComment" parameterType="CommentDTO" resultType="CommentDTO">
+        SELECT A.NUM
+              ,A.BOARD_IDX
+              ,A.BOARD_TYPE
+              ,A.CONTENT
+              ,A.WRITER
+              ,A.REG_DATE
+              ,A.UPD_DATE
+              ,A.DEL_YN
+              ,B.FILE_PATH
+          FROM (SELECT *
+                  FROM COMMENT
+                 WHERE BOARD_TYPE = #{boardType}
+                   AND BOARD_IDX = #{boardIdx}
+                   AND DEL_YN = 'N'
+               ) A
+          LEFT OUTER JOIN (SELECT BRD_REF
+                                 ,FILE_PATH
+                             FROM FILE
+                            WHERE DLT_YN = 'N'
+                          ) B
+            ON CONCAT('mem||', A.WRITER) = B.BRD_REF;
+
     </select>
 
     <!--comment 등록-->
     <insert id="insertComment" parameterType="CommentDTO">
-        INSERT INTO comment
-        (
-            NUM
-            , BRD_REF
-            , CONTENT
-            , WRITER
-            , REG_DATE
-            , DEL_YN
-        )
+        INSERT INTO COMMENT
+               (NUM
+               ,BOARD_IDX
+               ,BOARD_TYPE
+               ,CONTENT
+               ,WRITER
+               ,REG_DATE
+               ,DEL_YN
+              )
         VALUES
-        (
-            (SELECT NVL(MAX(num), 0) + 1 FROM comment ALIAS_FOR_SUBQUERY)
-            , #{brdRef}
-            , #{content}
-            , #{writer}
-            , (SELECT date_format(now(),'%Y-%c-%d'))
-            , 'N'
-        )
+              ((SELECT NVL(MAX(num), 0) + 1 FROM comment ALIAS_FOR_SUBQUERY)
+               ,#{boardIdx}
+               ,#{boardType}
+               ,#{content}
+               ,#{writer}
+               ,(SELECT date_format(now(),'%Y-%c-%d'))
+               ,'N'
+              )
     </insert>
 
-    <!--comment 다건삭제-->
+    <!--comment 전체삭제-->
     <update id="deleteAllComment" parameterType="CommentDTO">
-        UPDATE
-            comment
-        SET
-            DEL_YN = 'Y'
-        WHERE BRD_REF=#{brdRef}
+        UPDATE COMMENT
+           SET DEL_YN = 'Y'
+         WHERE BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
     </update>
 
     <!--comment 단건삭제-->
     <update id="deleteComment" parameterType="CommentDTO">
-        UPDATE
-            comment
-        SET
-            DEL_YN = 'Y'
-        WHERE  BRD_REF = #{brdRef}
-        AND NUM = #{num}
+        UPDATE COMMENT
+           SET DEL_YN = 'Y'
+         WHERE BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
+           AND NUM = #{num}
     </update>
 
     <!--comment 수정-->
     <update id="updateComment" parameterType="CommentDTO">
-        UPDATE
-            comment
-        SET
-            CONTENT = #{content}
-            , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
-        WHERE NUM = #{num}
+        UPDATE COMMENT
+           SET CONTENT = #{content}
+              ,UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+         WHERE NUM = #{num}
     </update>
 
     <!--전체 comment 개수 조회 -->
-    <select id="selectCommentTotalCount" parameterType="String" resultType="Integer">
-        SELECT
-            COUNT(*) AS Count
-        FROM
-            comment
-        WHERE BRD_REF = #{brdRef}
-        AND DEL_YN = 'N'
+    <select id="selectCommentTotalCount" parameterType="CommentDTO" resultType="Integer">
+        SELECT COUNT(*) AS Count
+          FROM COMMENT
+         WHERE BOARD_TYPE = #{boardType}
+           AND BOARD_IDX = #{boardIdx}
+           AND DEL_YN = 'N'
     </select>
-
 </mapper>

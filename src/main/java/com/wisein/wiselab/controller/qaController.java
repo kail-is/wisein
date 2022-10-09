@@ -1,7 +1,6 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
-import com.wisein.wiselab.common.paging.PagingTagCustom;
 import com.wisein.wiselab.dto.LikeBoardDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -49,7 +49,7 @@ public class qaController {
 
     @Autowired
     ScrapService scrapService;
-    
+
     private final AbstractPagingCustom PagingTagCustom;
 
     @GetMapping(value="/qalist")

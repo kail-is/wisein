@@ -269,19 +269,19 @@ alertPopup : function (alertMsg) {
 
 },
 
-confirmPopup : async function (confirmMsg, confirmCallback) {
+confirmPopup : function (confirmMsg, confirmCallback) {
     if (confirmMsg==null && confirmMsg.trim()=="") {
         console.log("Text is null");
 
     } else if (confirmCallback==null || typeof confirmCallback != 'function') {
         console.log("CallBack is not Function");
     } else {
-        return await confirmCallback(confirmMsg);
-
+         return confirmCallback(confirmMsg);
     }
+
 },
 
-callback : async function (confirmMsg) {
+callback : function (confirmMsg) {
     return new Promise(resolve => {
         let confirmBtn = document.querySelector('#confirm-btn');
         let cancelBtn = document.querySelector('#confirm-cancel-btn');
@@ -300,20 +300,29 @@ callback : async function (confirmMsg) {
 },
 
 close : function () {
-    document.querySelector('#alertBox').classList.add('none');
-    document.querySelector('#confirmBox').classList.add('none');
+    document.querySelector('#commonPopup').classList.add('none');
+    document.querySelector('#roadViewPopup').classList.add('none');
     commonPopup.modalPopupCheck(false);
 },
 
 open : function (type, msg) {
     if (type=="alert-type") {
-        document.querySelector('#alertBox').classList.remove('none');
+        document.querySelector('#commonPopup').classList.remove('none');
+        document.querySelector('.alert-title').style.display = "";
+        document.querySelector('.alert-button-wrap').style.display = "";
+        document.querySelector('.confirm-title').style.display = "none";
+        document.querySelector('.confirm-button-wrap').style.display = "none";
         document.querySelector('.popup-message-wrap').innerHTML = msg;
+
     } else if (type=="confirm-type") {
-        document.querySelector('#confirmBox').classList.remove('none');
-        document.querySelector(".confirm-message-wrap").innerHTML = msg;
+        document.querySelector('#commonPopup').classList.remove('none');
+        document.querySelector('.confirm-title').style.display = "";
+        document.querySelector('.confirm-button-wrap').style.display = "";
+        document.querySelector('.alert-title').style.display = "none";
+        document.querySelector('.alert-button-wrap').style.display = "none";
+        document.querySelector('.popup-message-wrap').innerHTML = msg;
     }
-    this.modalPopupCheck(false);
+    this.modalPopupCheck(true);
 },
 
 modalPopupCheck : function (modalCheck) {
@@ -333,7 +342,6 @@ modalPopupCheck : function (modalCheck) {
     }
 },
 }
-
 
  /*
  * 작성자 : 서은빈
@@ -1034,6 +1042,10 @@ function chkSpecialChar(str) {
         case "UPDRECM":
           console.log("RECM")
           return BoardNmProps.RECM
+          break;
+        case "UPDTIP":
+          console.log("UPDTIP")
+          return BoardNmProps.TIP
           break;
         default:
           console.log('pathNm is not defined');

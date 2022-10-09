@@ -27,12 +27,12 @@ public class CommentServiceImpl implements CommentService {
 
     /* comment 다건조회 */
     @Override
-    public List<CommentDTO> selectComment(String brdRef) throws Exception {
-        List<CommentDTO> Comment = new ArrayList<>();
+    public List<CommentDTO> selectComment(CommentDTO dto) throws Exception {
+        List<CommentDTO> comment = new ArrayList<>();
 
-        Comment = (List<CommentDTO>) dao.selectComment(brdRef);
+        comment = (List<CommentDTO>) dao.selectComment(dto);
 
-        return Comment;
+        return comment;
     }
 
     /* comment 등록 */
@@ -43,8 +43,8 @@ public class CommentServiceImpl implements CommentService {
 
     /* comment 다건삭제 */
     @Override
-    public void deleteAllComment(String brdRef) throws Exception {
-        dao.deleteAllComment(brdRef);
+    public void deleteAllComment(CommentDTO dto) throws Exception {
+        dao.deleteAllComment(dto);
     }
 
     /* comment 단건삭제 */
@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
 
     /* 전체 comment 개수 조회 */
     @Override
-    public int selectCommentTotalCount(String brdRef) throws Exception {
-        return dao.selectCommentTotalCount(brdRef);
+    public int selectCommentTotalCount(CommentDTO dto) throws Exception {
+        return dao.selectCommentTotalCount(dto);
     }
 }

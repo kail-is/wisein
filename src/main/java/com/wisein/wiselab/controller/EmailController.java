@@ -2,7 +2,7 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.AuthKeyConfig;
 import com.wisein.wiselab.config.MailHandler;
-import com.wisein.wiselab.dto.FileDTO;
+import com.wisein.wiselab.dto.MailDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,19 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.security.SecureRandom;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -41,10 +35,9 @@ public class EmailController {
     @ResponseBody
     @GetMapping(value = "/authMailSend")
     public void authMailSend(HttpSession session,
-                             @RequestParam("email_Id") String email) {
+                             @RequestParam("email_Id") String email, MailDTO mailDTO) {
 
         session.setAttribute("authUser", email);
-
         String address = "@wiselab.co.kr";
         email = email+address;
 
@@ -73,7 +66,12 @@ public class EmailController {
         );
         emailcontent.append("</body>");
         emailcontent.append("</html>");
-        mailHandler.send(email, "WISE IN 이메일 인증", emailcontent.toString());
+
+        mailDTO.setTitle("WISE IN 이메일 인증");
+        mailDTO.setToAddress(email);
+        mailDTO.setMessageContent(emailcontent.toString());
+
+        mailHandler.send(mailDTO);
     }
 
     //가입 메일 인증 완료
@@ -81,7 +79,7 @@ public class EmailController {
     public void authSuccess(HttpSession session, HttpServletResponse response,
                             Model model) throws Exception {
         String id = (String) session.getAttribute("authUser");
-        System.out.println("이메일 : " +id);
+
         service.authStateUpdate(id);
 
         model.addAttribute("checkId", id);
@@ -117,7 +115,7 @@ public class EmailController {
     @ResponseBody
     @GetMapping(value = "/pwMailSend")
     public void findPwMailSend(HttpSession session,
-                               @RequestParam("user_id") String email) throws Exception {
+                               @RequestParam("user_id") String email, MailDTO mailDTO) throws Exception {
 
         session.setAttribute("authUser", email);
 
@@ -173,7 +171,12 @@ public class EmailController {
         );
         emailcontent.append("</body>");
         emailcontent.append("</html>");
-        mailHandler.send(email, "WISE IN 패스워드 변경", emailcontent.toString());
+
+        mailDTO.setTitle("WISE IN 패스워드 변경");
+        mailDTO.setToAddress(email);
+        mailDTO.setMessageContent(emailcontent.toString());
+
+        mailHandler.send(mailDTO);
 
         service.addChgePw(memberDto);
 
@@ -206,7 +209,7 @@ public class EmailController {
     // 폐업 신고 메일 전송
     @ResponseBody
     @GetMapping(value = "/reportClosed")
-    public void reportClosed(@RequestParam("matzip_id") String matzipId) throws Exception {
+    public void reportClosed(@RequestParam("matzip_id") String matzipId, MailDTO mailDTO) throws Exception {
 
         String address = "wisein.adm@gmail.com";
 
@@ -246,7 +249,12 @@ public class EmailController {
         );
         emailcontent.append("</body>");
         emailcontent.append("</html>");
-        mailHandler.send(address, "WISE IN 맛집 폐업 신고", emailcontent.toString());
+
+        mailDTO.setTitle("WISE IN 맛집 폐업 신고");
+        mailDTO.setToAddress(address);
+        mailDTO.setMessageContent(emailcontent.toString());
+
+        mailHandler.send(mailDTO);
 
 
     }
