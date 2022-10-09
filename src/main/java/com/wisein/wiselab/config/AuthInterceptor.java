@@ -17,6 +17,12 @@ public class AuthInterceptor implements HandlerInterceptor {
         public boolean preHandle(HttpServletRequest req,
                                  HttpServletResponse res, Object obj) throws Exception {
 
+            String path = req.getServletPath();
+
+            if (path.equals("/authMailSend") || path.equals("/idDupChk") || path.equals("/authSuccess")) {
+                return true;
+            }
+
             HttpSession session = req.getSession();
             MemberDTO member = (MemberDTO)session.getAttribute("member");
 

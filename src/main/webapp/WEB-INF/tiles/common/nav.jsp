@@ -263,3 +263,16 @@
         </div>
     </div>
 </div>
+
+<%-- roadView popup--%>
+<div id="roadViewPopup" class="popup-wrap page-center road-popup none">
+    <div class="road-view-title">
+        로드뷰
+    </div>
+    <div id="roadview" class="road-view">
+
+    </div>
+    <div class="alert-button-wrap">
+        <button type="button" id="road-close-btn">닫기</button>
+    </div>
+</div>

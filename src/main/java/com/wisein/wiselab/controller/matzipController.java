@@ -52,7 +52,14 @@ public class matzipController {
 	}
 
 	@GetMapping(value="/matzipBoard")
-	public String matzipBoard () throws Exception {
+	public String matzipBoard (Model model) throws Exception {
+
+		List<CompanyDTO> companyList = dao.companyList();
+
+		System.out.println("#######"+ companyList);;
+
+		model.addAttribute("company", companyList);
+
 		return "board/matzipBoard_TOBE";
 	}
 

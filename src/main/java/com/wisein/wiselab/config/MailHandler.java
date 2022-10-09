@@ -1,6 +1,8 @@
 package com.wisein.wiselab.config;
 
 import javax.mail.internet.MimeMessage;
+
+import com.wisein.wiselab.dto.MailDTO;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,16 @@ public class MailHandler {
         this.mailSender = mailSender;
     }
 
-    public void send(String toEmail, String subject, String message) {
+    public void send(MailDTO mailDTO) {
         try {
+
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
 
             messageHelper.setFrom("wisein@gmail.com", "WISEADMIN");
-            messageHelper.setTo(toEmail);
-            messageHelper.setSubject(subject);
-            messageHelper.setText(message, true);
+            messageHelper.setTo(mailDTO.getToAddress());
+            messageHelper.setSubject(mailDTO.getTitle());
+            messageHelper.setText(mailDTO.getMessageContent(), true);
 
             mailSender.send(mimeMessage);
 

@@ -37,9 +37,9 @@
                 <%-- 맛집 등록 --%>
                 <c:if test="${empty recm}">
                      <select name="category" id="category">
-                         <option value="인덕원" selected>인덕원</option>
-                         <option value="회현">회현</option>
-                         <option value="을지로">을지로</option>
+                         <c:forEach items="${company}" var="company">
+                            <option value="${company.location}"><c:out value="${company.location}"/></option>
+                         </c:forEach>
                      </select>
                     <input type="text" size="210" id="matzip-name" class= "none" placeholder="맛집 이름" required>
                     <input type="text" size="210" class="keyword" id='keywordBox' placeholder="키워드" autocomplete=off required>

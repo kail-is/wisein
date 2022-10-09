@@ -150,6 +150,7 @@ callback : function (confirmMsg) {
 
 close : function () {
     document.querySelector('#commonPopup').classList.add('none');
+    document.querySelector('#roadViewPopup').classList.add('none');
     commonPopup.modalPopupCheck(false);
 },
 
