@@ -2,7 +2,6 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.AuthKeyConfig;
 import com.wisein.wiselab.config.MailHandler;
-import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MailDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
@@ -12,19 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.security.SecureRandom;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -47,7 +40,6 @@ public class EmailController {
         session.setAttribute("authUser", email);
         String address = "@wiselab.co.kr";
         email = email+address;
-        System.out.println("이메일 : "+email);
 
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
@@ -87,7 +79,7 @@ public class EmailController {
     public void authSuccess(HttpSession session, HttpServletResponse response,
                             Model model) throws Exception {
         String id = (String) session.getAttribute("authUser");
-        System.out.println("이메일 : " +id);
+
         service.authStateUpdate(id);
 
         model.addAttribute("checkId", id);
