@@ -18,11 +18,6 @@
              });
          });
 
-         function clkMeetLink(){
-
-         }
-
-
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){
                  window.location.href="/delTip?num="+tipNum;
