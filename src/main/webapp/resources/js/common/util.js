@@ -1,18 +1,169 @@
 
  /*
-     * 작성자 : 서은빈
-     * 공백 확인
-     * param : Object
-     * return : Bool
-     * 날짜 : 2022-06-19
-     * */
-var isEmpty = function(obj){
+ * 작성자 : 서은빈
+ * 공백 확인
+ * param : Object
+ * return : Bool
+ * 날짜 : 2022-06-19
+* */
+function isEmpty(obj){
     if( obj == "" || obj == null || obj == undefined || ( obj != null && typeof obj == "object" && !Object.keys(obj).length ) ){
       return true
     }else{
       return false
     }
   };
+
+ /*
+     * 작성자 : 이형근
+     * 문자열이 숫자형식에 맞는지 여부 체크
+     * param : value
+     * return : Bool
+     * 날짜 : 2022-08-11
+     * */
+function gfn_isNum(val){
+  return !isNaN(val)
+}
+
+ /*
+     * 작성자 : 이형근
+     * 문자열이 알파벳(a~z, A~Z)만으로 구성되어 있는지 체크
+     * param : value
+     * return : Bool
+     * 날짜 : 2022-08-11
+     * */
+function gfn_isAlpha(val){
+    if(!val){
+        return false;
+    }
+    const regex = /^[a-z|A-Z]+$/;
+    return regex.test(val);
+}
+
+ /*
+     * 작성자 : 이형근
+     * 문자열이 알파벳(a~z, A~Z), 숫자만으로 구성되어 있는지 체크
+     * param : value
+     * return : Bool
+     * 날짜 : 2022-08-11
+     * */
+function gfn_isAlNum(val){
+    if(!val){
+        return false;
+    }
+    const regex = /^[a-z|A-Z|0-9]+$/;
+    return regex.test(val);
+}
+
+ /*
+     * 작성자 : 이형근
+     * 문자열이 한글로만 구성되어 있는지 체크
+     * param : value
+     * return : Bool
+     * 날짜 : 2022-08-11
+     * */
+function gfn_isKor(val){
+    if(!val){
+        return false;
+    }
+    const regex = /^[ㄱ-ㅎ|가-힣]+$/;
+    return regex.test(val);
+}
+
+ /*
+     * 작성자 : 이형근
+     * 문자열이 숫자형식에 맞으면 숫자값을 반환
+     * param : object
+     * return : int
+     * 날짜 : 2022-08-11
+     * */
+function gfn_getNum(obj){
+  if(!isNaN(obj)){
+    return Number(obj)
+  }
+}
+
+ /*
+     * 작성자 : 이형근
+     * NULL 일 경우 빈 값을 리턴
+     * param : object
+     * return : ""
+     * 날짜 : 2022-08-11
+     * */
+function gfn_nullToEmpty(obj) {
+    var newStr = obj;
+
+    if( obj == "" || obj == null || obj == undefined || ( obj != null && typeof obj == "object" && !Object.keys(obj).length ) ){
+      return "";
+    }
+    return newStr;
+  };
+
+ /*
+     * 작성자 : 이형근
+     * 입력값 형태에 따라서 길이 또는 범위를 구하는 함수
+     * param : object
+     * return : int
+     * 날짜 : 2022-08-11
+     * */
+function gfn_length(obj){
+    if( obj == "" || obj == null || obj == undefined || ( obj != null && typeof obj == "object" && !Object.keys(obj).length ) ){
+      return 0;
+    }
+    return obj.length;
+}
+
+ /*
+     * 작성자 : 이형근
+     * 전체 문자열 중 특정 문자열이 포함된 위치를 반납
+     * param : strFull, searchStr
+     * return : int
+     * 날짜 : 2022-08-11
+     * */
+function gfn_indexOf(strFull, searchStr){
+    idx = strFull.indexOf(searchStr);
+    return idx;
+}
+
+ /*
+     * 작성자 : 이형근
+     * 입력된 문자열의 일부분을 다른 문자열로 치환하는 함수
+     * param : strFull, searchStr
+     * return : int
+     * 날짜 : 2022-08-11
+     * */
+function gfn_replace(strFull, strOld, strNew){
+    strFull = strFull.replace(strOld, strNew);
+    return strFull;
+}
+
+ /*
+     * 작성자 : 이형근
+     * 입력값 형태에 따라서 길이 또는 범위를 구하는 함수
+     * param : strFull, searchStr
+     * return : int
+     * 날짜 : 2022-08-11
+     * */
+function gfn_length(obj){
+    if(typeof obj == "object"){
+        return Object.keys(obj).length;
+    } else{
+        return obj.length;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
     * 작성자 : 임동근

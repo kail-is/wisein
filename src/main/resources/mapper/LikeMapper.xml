@@ -61,4 +61,32 @@
          WHERE NUM = #{num}
     </update>
 
+    <!-- like 등록시 게시글 likeCount 증가-->
+    <update id="addQaLikeCount" parameterType="int">
+        UPDATE
+        qa_board
+        SET
+        LIKE_COUNT = LIKE_COUNT+1
+        WHERE num = #{num}
+    </update>
+
+    <!-- like 해제시 게시글 likeCount 감소-->
+    <update id="delQaLikeCount" parameterType="int">
+        UPDATE
+        qa_board
+        SET
+        LIKE_COUNT = LIKE_COUNT-1
+        WHERE num = #{num}
+    </update>
+
+    <!-- like 게시글 parentNum -->
+    <select id="getQaParentNum" parameterType="int" resultType="int">
+        SELECT
+        PARENT_NUM
+        FROM
+        qa_board
+        WHERE
+        NUM = #{num}
+    </select>
+
 </mapper>

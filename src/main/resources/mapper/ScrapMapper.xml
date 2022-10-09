@@ -72,4 +72,32 @@
         WHERE num = #{num}
     </update>
 
+    <!-- Scrap 등록시 게시글 ScrapCount 증가-->
+    <update id="addQaScrapCount" parameterType="int">
+        UPDATE
+        qa_board
+        SET
+        SCRAP_COUNT = SCRAP_COUNT+1
+        WHERE num = #{num}
+    </update>
+
+    <!-- Scrap 해제시 게시글 ScrapCount 감소-->
+    <update id="delQaScrapCount" parameterType="int">
+        UPDATE
+        qa_board
+        SET
+        SCRAP_COUNT = SCRAP_COUNT-1
+        WHERE num = #{num}
+    </update>
+
+    <!-- like 게시글 parentNum -->
+    <select id="getScrapParentNum" parameterType="int" resultType="int">
+        SELECT
+            PARENT_NUM
+        FROM
+            qa_board
+        WHERE
+            NUM = #{num}
+    </select>
+
 </mapper>

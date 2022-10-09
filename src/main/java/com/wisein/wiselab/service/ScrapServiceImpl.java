@@ -49,4 +49,22 @@ public class ScrapServiceImpl implements ScrapService {
         dao.delTipScrapCount(num);
     }
 
+    /* Scrap 등록시 게시글 ScrapCount 증가 */
+    @Override
+    public void addQaScrapCount(int num) throws Exception {
+        dao.addQaScrapCount(num);
+    }
+
+    /* Scrap 해제시 게시글 ScrapCount 감소 */
+    @Override
+    public void delQaScrapCount(int num) throws Exception {
+        dao.delQaScrapCount(num);
+    }
+
+    /* Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
+    @Override
+    public int getScrapParentNum(int num) throws Exception {
+        return dao.getScrapParentNum(num);
+    }
+
 }

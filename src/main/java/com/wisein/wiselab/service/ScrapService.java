@@ -23,4 +23,12 @@ public interface ScrapService {
     /* Scrap 해제시 게시글 ScrapCount 감소 */
     public void delTipScrapCount(int num) throws Exception;
 
+    /* Scrap 등록시 게시글 ScrapCount 증가 */
+    public void addQaScrapCount(int num) throws Exception;
+
+    /* Scrap 해제시 게시글 ScrapCount 감소 */
+    public void delQaScrapCount(int num) throws Exception;
+
+    /* Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
+    public int getScrapParentNum(int num) throws Exception;
 }

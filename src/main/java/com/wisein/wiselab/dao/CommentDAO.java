@@ -4,7 +4,6 @@ package com.wisein.wiselab.dao;
 import com.wisein.wiselab.dto.CommentDTO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CommentDAO {
 

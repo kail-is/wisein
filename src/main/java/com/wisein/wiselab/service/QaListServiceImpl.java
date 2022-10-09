@@ -3,10 +3,7 @@ package com.wisein.wiselab.service;
 import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.QaListDAO;
-import com.wisein.wiselab.dto.LikeBoardDTO;
-import com.wisein.wiselab.dto.MemberDTO;
-import com.wisein.wiselab.dto.QaListDTO;
-import com.wisein.wiselab.dto.FileDTO;
+import com.wisein.wiselab.dto.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +52,38 @@ public class QaListServiceImpl implements QaListService {
         return qaList;
     }
 
+    /*
+     * 작성자 : 이형근
+     * QA 목록 조회
+     * param : QaListDTO
+     * return : qaList
+     * 날짜 : 2022-04-03
+     * 수정자 : 박혜림
+     * 수정일 : 2022-06-04
+     * */
+    @Override
+    public List<QaListDTO> selectQuestionsList(QaListDTO qaListDTO) throws Exception {
+        List<QaListDTO> qaList = new ArrayList<>();
+        qaList = (List<QaListDTO>) dao.selectQuestionsList(qaListDTO);
+        return qaList;
+    }
+
+    /*
+     * 작성자 : 이형근
+     * QA 목록 조회
+     * param : QaListDTO
+     * return : qaList
+     * 날짜 : 2022-04-03
+     * 수정자 : 박혜림
+     * 수정일 : 2022-06-04
+     * */
+    @Override
+    public List<QaListDTO> selectCommentList(QaListDTO qaListDTO) throws Exception {
+        List<QaListDTO> qaList = new ArrayList<>();
+        qaList = (List<QaListDTO>) dao.selectCommentList(qaListDTO);
+        return qaList;
+    }
+
 	/*
      * 작성자 : 이형근
      * QaBoard Insert
@@ -89,6 +118,12 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public void deleteQaBoard(int num) throws Exception {
         dao.deleteQaBoard(num);
+    }
+
+    /* 게시글 삭제시 댓글도 삭제 */
+    @Override
+    public void deleteCommentQaBoard(int num) throws Exception {
+        dao.deleteCommentQaBoard(num);
     }
 
     /*
@@ -158,15 +193,15 @@ public class QaListServiceImpl implements QaListService {
             brdRef =  "qa||"+chkNum.getNum();
         }
 
-//        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
+        //List<FileDTO> list = fileUtils.parseFileInfo(brdRef, "image", multipartHttpServletRequest);
 //        if(CollectionUtils.isEmpty(list) == false) {
 //            memDao.insertMemFileList(list);
 //        }
 //        String imgUrl = list.get(0).getFilePath();
-//
-//        session.removeAttribute("qaListDTO");
-//
-//        return imgUrl;
+
+        session.removeAttribute("qaListDTO");
+
+        //return imgUrl;
         return "";
     }
 
@@ -226,6 +261,18 @@ public class QaListServiceImpl implements QaListService {
      * 날짜 : 2022-07-24
      * */
     @Override
+    public ScrapBoardDTO checkScrapQaBoard(ScrapBoardDTO qa) throws Exception {
+        return dao.checkScrapQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
     public int insertLikeQaBoard(LikeBoardDTO qa) throws Exception {
         return dao.insertLikeQaBoard(qa);
     }
@@ -238,8 +285,32 @@ public class QaListServiceImpl implements QaListService {
      * 날짜 : 2022-07-24
      * */
     @Override
+    public int insertScrapQaBoard(ScrapBoardDTO qa) throws Exception {
+        return dao.insertScrapQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
     public int updateLikeQaBoard(LikeBoardDTO qa) throws Exception {
         return dao.updateLikeQaBoard(qa);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시
+     * param : boardNum, num
+     * return : int
+     * 날짜 : 2022-07-24
+     * */
+    @Override
+    public int updateScrapQaBoard(ScrapBoardDTO qa) throws Exception {
+        return dao.updateScrapQaBoard(qa);
     }
 
     /*
@@ -262,6 +333,18 @@ public class QaListServiceImpl implements QaListService {
      * 날짜 : 2022-07-24
      * */
     @Override
+    public List<ScrapBoardDTO> selectScrapQaBoardList(MemberDTO member) throws Exception{
+        return dao.selectScrapQaBoardList(member);
+    }
+
+    /*
+     * 작성자 : 이형근
+     * 게시글 좋아요 클릭 시 신규/기본 여부 체크
+     * param : boardNum, num
+     * return :
+     * 날짜 : 2022-07-24
+     * */
+    @Override
     public LikeBoardDTO selectOneLikeQaBoard(LikeBoardDTO member) throws Exception{
         return dao.selectOneLikeQaBoard(member);
     }
@@ -274,8 +357,20 @@ public class QaListServiceImpl implements QaListService {
      * 날짜 : 2022-07-24
      * */
     @Override
+    public ScrapBoardDTO selectOneScrapQaBoard(ScrapBoardDTO member) throws Exception{
+        return dao.selectOneScrapQaBoard(member);
+    }
+
+    /* 게시글 채택시 원본 채택여부 업데이트 */
+    @Override
     public void adoptQaBoard(QaListDTO dto) throws Exception {
         dao.adoptQaBoard(dto);
+    }
+
+    /* 게시글 채택시 채택된 댓글 채택여부 업데이트 */
+    @Override
+    public void adoptCommentQaBoard(QaListDTO dto) throws Exception {
+        dao.adoptCommentQaBoard(dto);
     }
 
     @Override
@@ -291,5 +386,35 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public int selectAdpCount(QaListDTO qaListDTO) throws Exception{
         return dao.selectAdpCount(qaListDTO);
+    }
+
+    /* like 등록 시 원본 게시글 count 증가 */
+    @Override
+    public void addQaLikeCount(int parentNum) throws Exception {
+        dao.addQaLikeCount(parentNum);
+    }
+
+    /* like 해제 시 원본 게시글 count 감소 */
+    @Override
+    public void delQaLikeCount(int parentNum) throws Exception {
+        dao.delQaLikeCount(parentNum);
+    }
+
+    /* scrap 등록 시 원본 게시글 count 증가 */
+    @Override
+    public void addQaScrapCount(int parentNum) throws Exception {
+        dao.addQaScrapCount(parentNum);
+    }
+
+    /* scrap 등록 시 원본 게시글 count 감소 */
+    @Override
+    public void delQaScrapCount(int parentNum) throws Exception {
+        dao.delQaScrapCount(parentNum);
+    }
+
+    /* 게시글 수정 후 detail 조회를 위한 원본게시글 num조회 */
+    @Override
+    public int getParentNum(QaListDTO qaListDTO) throws Exception {
+        return dao.getParentNum(qaListDTO);
     }
 }
