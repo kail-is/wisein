@@ -37,7 +37,7 @@
                 </div>
                 <ul class="menu">
                     <li><a href="/qalist">질문하고 싶어요</a></li>
-                    <li><a href="/tiplist">Tech Tip</a></li>
+                    <li><a href="/tipList">Tech Tip</a></li>
                     <li><a href="/matzipList">사이트 별 맛집 목록</a></li>
                 </ul>
                 <div class="search-bar">
