@@ -2,6 +2,7 @@ package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.config.AuthKeyConfig;
 import com.wisein.wiselab.config.MailHandler;
+import com.wisein.wiselab.dto.MailDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,6 @@ public class EmailController {
         session.setAttribute("authUser", email);
         String address = "@wiselab.co.kr";
         email = email+address;
-        System.out.println("이메일 : "+email);
 
         StringBuffer emailcontent = new StringBuffer();
         emailcontent.append("<!DOCTYPE html>");
@@ -79,7 +79,7 @@ public class EmailController {
     public void authSuccess(HttpSession session, HttpServletResponse response,
                             Model model) throws Exception {
         String id = (String) session.getAttribute("authUser");
-        System.out.println("이메일 : " +id);
+
         service.authStateUpdate(id);
 
         model.addAttribute("checkId", id);
