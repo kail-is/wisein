@@ -523,10 +523,12 @@ input, select {
 
 .purple2 {
   color: #7E57C2;
+  float: left;
 }
 
 .gray {
   color: #949494;
+  float: left;
 }
 
 .xs-off {

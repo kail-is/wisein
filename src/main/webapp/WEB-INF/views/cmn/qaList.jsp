@@ -79,15 +79,18 @@
                             </span>
                         </c:if>
                     </div>
-                    <div class="board-cell board-like">
-                            <c:if test="${qa.likeCount == 0}">
-                            <span class="material-icons" style="color:gray;">thumb_up</span>
-                            </c:if>
-                            <c:if test="${qa.likeCount != 0}">
-                            <span class="material-icons" >thumb_up</span>
-                            </c:if>
-                        ${qa.likeCount}
-                    </div>
+
+                    <c:if test="${qa.likeCount == 0}">
+                        <div class="board-cell board-like gray">
+                            <span class="material-icons">thumb_up</span>
+                        </div>
+                    </c:if>
+                    <c:if test="${qa.likeCount != 0}">
+                        <div class="board-cell board-like purple2">
+                            <span class="material-icons">thumb_up</span>${qa.likeCount}
+                        </div>
+                    </c:if>
+
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>

@@ -46,7 +46,7 @@ public class QaListServiceImpl implements QaListService {
         int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
 
         if(boardTotalCount > 0) {
-        	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
+            qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
         }
 
         return qaList;
@@ -84,7 +84,7 @@ public class QaListServiceImpl implements QaListService {
         return qaList;
     }
 
-	/*
+    /*
      * 작성자 : 이형근
      * QaBoard Insert
      * param : QaListDTO
@@ -133,10 +133,10 @@ public class QaListServiceImpl implements QaListService {
      * return : int
      * 날짜 : 2022-06-04
      * */
-	@Override
-	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
-		return dao.selectBoardTotalCount(qaListDTO);
-	}
+    @Override
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+        return dao.selectBoardTotalCount(qaListDTO);
+    }
 
     /*
      * 작성자 : 이형근
@@ -416,5 +416,11 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public int getParentNum(QaListDTO qaListDTO) throws Exception {
         return dao.getParentNum(qaListDTO);
+    }
+
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return dao.selectMeetLink(num);
     }
 }

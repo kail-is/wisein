@@ -244,5 +244,8 @@ public interface QaListService {
     public void delQaScrapCount(int parentNum) throws Exception;
 
     /* 게시글 수정 후 detail 조회를 위한 원본게시글 num조회 */
-    public int getParentNum(QaListDTO qaListDTO) throws Exception;;
+    public int getParentNum(QaListDTO qaListDTO) throws Exception;
+
+    /* 작성자 meetLink */
+    public String selectMeetLink(int num) throws Exception;
 }

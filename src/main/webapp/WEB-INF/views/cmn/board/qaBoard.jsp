@@ -40,7 +40,7 @@
 
         <div class="button-wrap">
             <c:if test="${empty qaListDTO.subject}">
-                <input type="button" value="등록" onclick="reg('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }')">
+                <input type="button" value="등록" onclick="regQa('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }')">
             </c:if>
             <c:if test="${!empty qaListDTO.subject}">
                 <input type="button" value="수정" onclick="update()">
