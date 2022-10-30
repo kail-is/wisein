@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
             String path = req.getServletPath();
 
-            if (path.equals("/authMailSend") || path.equals("/idDupChk") || path.equals("/authSuccess")) {
+            if (path.equals("/authMailSend") || path.equals("/idDupChk") || path.equals("/authSuccess") || path.equals("/pwMailSend")) {
                 return true;
             }
 
