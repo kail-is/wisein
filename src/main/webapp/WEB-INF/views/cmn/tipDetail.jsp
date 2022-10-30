@@ -10,26 +10,26 @@
             <span id="changeLikeHtml">
                 <!--좋아요-->
                 <c:if test="${likeDelYn == 'none'}">
-                    <span class="material-icons" id="like_btn" onclick="regLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+                    <span class="material-icons gray" id="like_btn" onclick="regLike(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
                 <c:if test="${likeDelYn == 'Y'}">
-                    <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:gray;" >thumb_up</span>
+                    <span class="material-icons gray" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
                 <c:if test="${likeDelYn == 'N'}">
-                    <span class="material-icons" id="like_btn" onclick="udpLike(${tipBoardDTO.num})" style="color:purple;" >thumb_up</span>
+                    <span class="material-icons purple" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
             </span>
 
             <!--북마크-->
             <span id="changeScrapHtml">
                 <c:if test="${scrapDelYn == 'none'}">
-                    <span class="material-icons" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+                    <span class="material-icons gray" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
                 <c:if test="${scrapDelYn == 'Y'}">
-                    <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:gray;" >bookmarks</span>
+                    <span class="material-icons gray" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
                 <c:if test="${scrapDelYn == 'N'}">
-                    <span class="material-icons" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})" style="color:purple;" >bookmarks</span>
+                    <span class="material-icons purple" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
             </span>
         </div>
@@ -44,8 +44,7 @@
             <p class="writer" id="tipWriter"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
                 <li><a href="https://mail.wiselab.co.kr/member/login?host_domain=wiselab.co.kr&t=1664738123" target='_blank'>메일 전송</a></li>
-                <li><a href="#">질문 모아 보기</a></li>
-                <li><a href="#">답변 모아 보기</a></li>
+                <li><a href="#">작성팁 모아보기</a></li>
             </ul>
 
                 <c:if test="${meetLink == null}">

@@ -160,9 +160,9 @@
               let num = tipNum;
 
               if(likeDelYn=='N'){
-                html = "<span class='material-icons' id='like_btn' onclick='udpLike("+num+")' style='color:purple;'>thumb_up</span>"
+                html = "<span class='material-icons purple' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
               }else{
-                html = "<span class='material-icons' id='like_btn' onclick='udpLike("+num+")' style='color:gray;'>thumb_up</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
               }
 
               let parent = document.getElementById('changeLikeHtml');
@@ -218,9 +218,9 @@
               let num = tipNum;
 
               if(scrapDelYn=='N'){
-                html = "<span class='material-icons' id='like_btn' onclick='udpScrap("+num+")' style='color:purple;'>bookmarks</span>"
+                html = "<span class='material-icons purple' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
               }else{
-                html = "<span class='material-icons' id='like_btn' onclick='udpScrap("+num+")' style='color:gray;'>bookmarks</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
               }
 
               let parent = document.getElementById('changeScrapHtml');
