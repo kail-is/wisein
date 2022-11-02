@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
-<head>
-    <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
-</head>
-<body>
 <div class="content-wrap">
     <section class="content-frame">
         <div class="content-top-group">
@@ -103,17 +99,3 @@
         </span>
     </a>
 </div>
-
-<script type="module">
-    import * as event from 'resources/js/common/event.js';
-    let writer = document.getElementsByClassName("writer");
-    let categorySelect = document.getElementsByClassName("category-select");
-    let titleSelect = document.getElementsByClassName("title-select");
-
-    event.clickDisplayChangeListener(writer);
-    event.clickDisplayChangeListener(categorySelect);
-    event.clickDisplayChangeListener(titleSelect);
-</script>
-
-</body>
-</html>

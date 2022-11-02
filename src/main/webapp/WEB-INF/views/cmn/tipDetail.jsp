@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
-<head>
-    <link rel="stylesheet" href="resources/css/tipDetail.css">
-</head>
-<div class="content-wrap">
+<div class="content-wrap tipDetail">
     <section class="questions content-frame">
         <div class="icon" style="float:right;">
             <span id="changeLikeHtml">
@@ -123,6 +120,7 @@
             </ul>
         </c:forEach>
     </section>
+
     <!--댓글 입력-->
     <div class="CommentWriter">
         <div class="comment_inbox">
@@ -138,5 +136,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

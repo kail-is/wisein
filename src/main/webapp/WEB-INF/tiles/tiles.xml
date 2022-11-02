@@ -16,7 +16,7 @@
 	</definition>
 
 	<definition name="cmn/*"  extends="tiles/default/template">
-		<put-attribute name="contents" value="/WEB-INF/views/cmn/{1}.jsp"/>
+		<put-attribute name="contents"  value="/WEB-INF/views/cmn/{1}.jsp"/>
 	</definition>
 
 
@@ -25,12 +25,12 @@
 		<put-attribute name="nav"       value="/WEB-INF/tiles/common/nav.jsp"/>
 		<put-attribute name="leftSide"  value="/WEB-INF/tiles/common/leftSide.jsp"/>
 		<put-attribute name="footer"    value="/WEB-INF/tiles/common/footer.jsp"/>
-		<put-attribute name="editor" value="/WEB-INF/tiles/common/editor.jsp"/>
+		<put-attribute name="editor" 	value="/WEB-INF/tiles/common/editor.jsp"/>
 	</definition>
 
 
 	<definition name="board/*" extends="tiles/board/template">
-		<put-attribute name="contents" value="/WEB-INF/views/cmn/board/{1}.jsp"/>
+		<put-attribute name="contents"  value="/WEB-INF/views/cmn/board/{1}.jsp"/>
 	</definition>
 
 	<!-- error -->
@@ -42,7 +42,7 @@
 	</definition>
 
 	<definition name="errors/*"       extends="tiles/error/template">
-		<put-attribute name="contents" value="/WEB-INF/views/cmn/error/{1}.jsp"/>
+		<put-attribute name="contents"  value="/WEB-INF/views/cmn/error/{1}.jsp"/>
 	</definition>
    
 </tiles-definitions>

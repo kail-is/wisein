@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <% String url =  request.getServerName().toString(); %>
 
 <!DOCTYPE html>
@@ -16,6 +18,8 @@
         <link rel="stylesheet" href="${url}/resources/css/tipBoard.css">
         <link rel="stylesheet" href="${url}/resources/css/foodDetail.css">
         <link rel="stylesheet" href="${url}/resources/css/totalSearch.css">
+        <link rel="stylesheet" href="${url}/resources/css/tipDetail.css">
+        <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
 
         <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css">
         <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css">
@@ -66,4 +70,16 @@
 	    document.querySelector('#joinBox').classList.remove('none');
 	</c:if>
 	</script>
+
+	<script type="module">
+        import * as event from 'resources/js/common/event.js';
+        let writer = document.getElementsByClassName("writer");
+        let categorySelect = document.getElementsByClassName("category-select");
+        let titleSelect = document.getElementsByClassName("title-select");
+
+        event.clickDisplayChangeListener(writer);
+        event.clickDisplayChangeListener(categorySelect);
+        event.clickDisplayChangeListener(titleSelect);
+    </script>
+
 </html>
