@@ -133,15 +133,3 @@
             </span>
     </a>
 </div>
-
-<script type="module" >
-    import * as event from 'resources/js/common/event.js';
-    let writer = document.getElementsByClassName("writer");
-    let categorySelect = document.getElementsByClassName("category-select");
-    let titleSelect = document.getElementsByClassName("title-select");
-
-    event.clickDisplayChangeListener(writer);
-    event.clickDisplayChangeListener(categorySelect);
-    event.clickDisplayChangeListener(titleSelect);
-
-</script>

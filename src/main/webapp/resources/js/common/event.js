@@ -13,5 +13,3 @@ function clickDisplayChangeListener(params) {
         });
     });
 }
-
-export {clickDisplayChangeListener}
