@@ -1,24 +1,12 @@
         //전역변수
         let tipNum = document.location.search.replace(/[^0-9]/g,"");
         let tipWriter = document.getElementById('tipWriter') || "";
-        if (tipWriter != "") tipWriter.innerHTML;
         let memId = document.getElementById('comment_writer')|| "";
-        if (memId != "") memId.innerHTML;
         let boardType = "tip";
         let isMod = false;
 
-        //글쓴이 클릭이벤트
-        let writer = document.getElementsByClassName("writer")
-
-         Array.from(writer).forEach(function(element) {
-             element.addEventListener('click', function(e) {
-                 if(e.target.nextElementSibling.style.display === 'block'){
-                     e.target.nextElementSibling.style.display = 'none';
-                 }else{
-                     e.target.nextElementSibling.style.display = 'block';
-                 }
-             });
-         });
+        if (tipWriter != "") tipWriter.innerHTML;
+        if (memId != "") memId.innerHTML;
 
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){

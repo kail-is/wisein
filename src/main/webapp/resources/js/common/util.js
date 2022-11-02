@@ -1,26 +1,4 @@
  /*
- * 작성자 : 김경민
- * 클릭이벤트 공통
- * param : params
- * 날짜 : 2022-11-03
-* */
-function clickDisplayChangeListener(params) {
-    Array.from(params).forEach(function(element) {
-        element.addEventListener('click', function(e) {
-            try {
-                if(e.target.nextElementSibling.style.display === 'block'){
-                    e.target.nextElementSibling.style.display = 'none';
-                }else{
-                    e.target.nextElementSibling.style.display = 'block';
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-    });
-}
-
- /*
  * 작성자 : 서은빈
  * 공백 확인
  * param : Object

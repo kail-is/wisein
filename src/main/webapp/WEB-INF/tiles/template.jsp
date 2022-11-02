@@ -61,6 +61,7 @@
 	</body>
 
     <script src="${url}/resources/js/common/util.js"></script>
+    <script src="${url}/resources/js/common/event.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
     <script src="${url}/resources/js/tipDetail.js"></script>
 
@@ -71,14 +72,5 @@
 	</c:if>
 	</script>
 
-	<script>
-        let clkWriter = document.getElementsByClassName("writer");
-        let categorySelect = document.getElementsByClassName("category-select");
-        let titleSelect = document.getElementsByClassName("title-select");
-
-        clickDisplayChangeListener(writer);
-        clickDisplayChangeListener(categorySelect);
-        clickDisplayChangeListener(titleSelect);
-    </script>
 
 </html>

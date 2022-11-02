@@ -1,3 +1,4 @@
+//디테일페이지 글쓴이 클릭이벤트(메일전송,질문모아보기,답변모아보기)
 function clickDisplayChangeListener(params) {
     Array.from(params).forEach(function(element) {
         element.addEventListener('click', function(e) {
@@ -13,3 +14,10 @@ function clickDisplayChangeListener(params) {
         });
     });
 }
+let clkWriter = document.getElementsByClassName("writer");
+let categorySelect = document.getElementsByClassName("category-select");
+let titleSelect = document.getElementsByClassName("title-select");
+
+clickDisplayChangeListener(clkWriter);
+clickDisplayChangeListener(categorySelect);
+clickDisplayChangeListener(titleSelect);

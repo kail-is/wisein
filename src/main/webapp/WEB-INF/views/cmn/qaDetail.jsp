@@ -29,7 +29,7 @@
         <div class="writer-wrap">
             <p class="writer"><c:out value="${qaListDTO.writer}" /></p>
             <ul class="person-function">
-                <li><a href="https://mail.wiselab.co.kr/member/login?host_domain=wiselab.co.kr&t=1664738123" target='_blank'>메일 전송</a></li>
+                <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
                 <li><a href="#" onclick="questionsList_btn('${fn:replace(qaListDTO.writer, "'", "\\'") }');" id="questionsList_btn">질문 모아 보기</a></li>
                 <li><a href="#" onclick="commentList_btn('${fn:replace(qaListDTO.writer, "'", "\\'") }');" id="commentList_btn">답변 모아 보기</a></li>
             </ul>
@@ -139,7 +139,7 @@
         <div class="writer-wrap">
             <p class="writer"><c:out value="${commentQa.writer}" /></p>
             <ul class="person-function">
-                <li><a href="https://mail.wiselab.co.kr/member/login?host_domain=wiselab.co.kr&t=1664738123"">메일 전송</a></li>
+                <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
                 <li><a href="#" id="comment_questionsList_btn" onclick="comment_questionsList_btn('${commentQaWriter}')">질문 모아 보기</a></li>
                 <li><a href="#" id="comment_commentsList_btn" onclick="comment_commentList_btn('${commentQaWriter}')">답변 모아 보기</a></li>
             </ul>
@@ -167,16 +167,3 @@
 
 </body>
 
-<script>
-    let writer = document.getElementsByClassName("writer")
-
-    Array.from(writer).forEach(function(element) {
-        element.addEventListener('click', function(e) {
-            if(e.target.nextElementSibling.style.display === 'block'){
-                e.target.nextElementSibling.style.display = 'none';
-            }else{
-                e.target.nextElementSibling.style.display = 'block';
-            }
-        });
-    });
-</script>
