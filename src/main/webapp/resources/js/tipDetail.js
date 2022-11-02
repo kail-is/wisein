@@ -1,7 +1,9 @@
         //전역변수
-        let tipWriter = document.getElementById('tipWriter').innerHTML;
-        let memId = document.getElementById('comment_writer').innerHTML;
         let tipNum = document.location.search.replace(/[^0-9]/g,"");
+        let tipWriter = document.getElementById('tipWriter') || "";
+        if (tipWriter != "") tipWriter.innerHTML;
+        let memId = document.getElementById('comment_writer')|| "";
+        if (memId != "") memId.innerHTML;
         let boardType = "tip";
         let isMod = false;
 
