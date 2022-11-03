@@ -60,6 +60,9 @@ public class qaController {
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQaList(qaListDTO);
+//System.out.println("===========qaList==============");
+//        System.out.println(qaListDTO.getTotalPageCount());
+//        System.out.println(pagination);
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
@@ -76,9 +79,9 @@ public class qaController {
 
     @PostMapping(value="/qaBoard")
     public String qaBoard (HttpServletRequest request
-                        , QaListDTO qaListDTO
-                        , RedirectAttributes re) throws Exception {
-//        System.out.println("========================= qaBoard Post 시작 ====================================");
+            , QaListDTO qaListDTO
+            , RedirectAttributes re) throws Exception {
+        //System.out.println("========================= qaBoard Post 시작 ====================================");
         HttpSession session = request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
@@ -124,6 +127,9 @@ public class qaController {
             , @RequestParam("num") int num) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+        //meetLink
+        String meetLink = qaListservice.selectMeetLink(num);
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
@@ -176,7 +182,7 @@ public class qaController {
         if(likeQaBoardList != null){
             model.addAttribute("likeQaBoardList", likeQaBoardList);
 //            System.out.println("likeQaBoardList : " + likeQaBoardList.toString());
-}
+        }
         // 스크랩 히스토리가 있을경우 저장
         if(scrapQaBoardList != null){
             model.addAttribute("scrapQaBoardList", scrapQaBoardList);
@@ -189,6 +195,7 @@ public class qaController {
         model.addAttribute("commentContent", commentContent);
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
+        model.addAttribute("meetLink", meetLink);
 
         return "cmn/qaDetail";
     }
@@ -268,8 +275,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/regLikeQa")
     public JSONObject regLikeQa (HttpSession session
-                        , @RequestBody String data
-                        , LikeBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , LikeBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -338,8 +345,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/udpLikeQa")
     public JSONObject udpLikeQa (HttpSession session
-                            , LikeBoardDTO dto
-                            , @RequestBody String data) throws Exception {
+            , LikeBoardDTO dto
+            , @RequestBody String data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -413,8 +420,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/regScrapQa")
     public JSONObject regScrapQa (HttpSession session
-                        , @RequestBody String data
-                        , ScrapBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , ScrapBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -479,8 +486,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/udpScrapQa")
     public JSONObject udpScrapQa (HttpSession session
-                                , @RequestBody String data
-                                , ScrapBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , ScrapBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -551,9 +558,9 @@ public class qaController {
 
     @GetMapping(value = "/qaDelete")
     public String qaDelete (
-                          HttpServletRequest request
-                        , @RequestParam(value="num", required = false, defaultValue = "0") int num
-                        , @RequestParam(value="commentQaNum", required = false, defaultValue = "0") int commentQaNum) throws Exception {
+            HttpServletRequest request
+            , @RequestParam(value="num", required = false, defaultValue = "0") int num
+            , @RequestParam(value="commentQaNum", required = false, defaultValue = "0") int commentQaNum) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
@@ -581,7 +588,7 @@ public class qaController {
             if(commentQaList != null){
                 qaListservice.deleteCommentQaBoard(num);
                 int commentQaListSize = commentQaList.size();
-            //3.
+                //3.
                 if(likeQaBoardList != null){
                     int LikeQaBoardListSize = likeQaBoardList.size();
                     for(int i=0; i<commentQaListSize; i++){
@@ -593,7 +600,7 @@ public class qaController {
                         }
                     }
                 }
-            //4.
+                //4.
                 if(scrapQaBoardList != null){
                     int scrapQaBoardListSize = scrapQaBoardList.size();
                     for(int i=0; i<commentQaListSize; i++){
@@ -627,7 +634,7 @@ public class qaController {
     @PostMapping(value = "/qaUpdatePro")
     public String qaUpdatePro (QaListDTO qaListDTO
 //                            , Model model
-                            , RedirectAttributes re) throws Exception {
+            , RedirectAttributes re) throws Exception {
 
         qaListservice.updateQaBoard(qaListDTO);
 //        System.out.println("qaListDTO : " + qaListDTO.toString());
@@ -676,8 +683,8 @@ public class qaController {
     //@ResponseBody
     @PostMapping(value = "/qaAdopt")
     public String qaAdopt (int boardNum
-                        , int commentNum
-                        , RedirectAttributes re) throws Exception {
+            , int commentNum
+            , RedirectAttributes re) throws Exception {
         QaListDTO dto = new QaListDTO();
         dto.setNum(commentNum);
         dto.setParentNum(boardNum);
@@ -691,31 +698,95 @@ public class qaController {
     }
 
     @GetMapping(value="/questionsList")
-    public String questionsList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
+    public String questionsList (HttpServletRequest request
+            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
+//                                , @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
+            , Model model) throws Exception {
+        //System.out.println(qaListDTO.toString());
+
+        //System.out.println("===================");
+        //System.out.println(sideCheck);
+        //System.out.println("===================");
+
+        boolean sc = Boolean.parseBoolean(sideCheck);
+        //System.out.println(sc);
+        if(sc){
+            HttpSession session= request.getSession();
+            MemberDTO member = (MemberDTO) session.getAttribute("member");
+            qaListDTO.setWriter(member.getId());
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+
+        //System.out.println(qaListDTO.toString());
+
 //        System.out.println("questionsList : " + qaListDTO);
         List<QaListDTO> qaList = new ArrayList<>();
+
+        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQuestionsList(qaListDTO);
+
+//        System.out.println(qaListDTO.getTotalPageCount());
+//        System.out.println(pagination);
 
 //        for (int i=0; i<qaList.size(); i++)
 //            System.out.println(qaList.get(i).toString());
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/qaList";
     }
 
     @GetMapping(value="/commentList")
-    public String commentList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
+    public String commentList (HttpServletRequest request
+            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , Model model) throws Exception {
+        //HttpSession session= request.getSession();
+        //MemberDTO member = (MemberDTO) session.getAttribute("member");
+        //qaListDTO.setWriter(member.getId());
+
+        //System.out.println(qaListDTO.toString());
+
 //        System.out.println("commentList : " + qaListDTO);
         List<QaListDTO> qaList = new ArrayList<>();
+
+        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectCommentList(qaListDTO);
 
 //        for (int i=0; i<qaList.size(); i++)
 //            System.out.println(qaList.get(i).toString());
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/qaList";
+    }
+
+    //comment_meetLink_btn 조회
+    @ResponseBody
+    @PostMapping(value = "/selectMeetLink")
+    public JSONObject selectMeetLink (HttpSession session
+            , @RequestBody String data) throws Exception {
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(data);
+
+        JSONObject jsonObj = (JSONObject)obj;
+
+        String numStr = String.valueOf(jsonObj.get("num"));
+        int num = Integer.parseInt(numStr);
+
+        String meetLink = qaListservice.selectMeetLink(num);
+
+        JSONObject response = new JSONObject();
+
+        response.put("meetLink",meetLink);
+
+        return response;
     }
 
 }

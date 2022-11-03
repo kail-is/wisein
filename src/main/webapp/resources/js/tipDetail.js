@@ -1,22 +1,12 @@
         //전역변수
-        let tipWriter = document.getElementById('tipWriter').innerHTML;
-        let memId = document.getElementById('comment_writer').innerHTML;
         let tipNum = document.location.search.replace(/[^0-9]/g,"");
+        let tipWriter = document.getElementById('tipWriter') || "";
+        let memId = document.getElementById('comment_writer')|| "";
         let boardType = "tip";
         let isMod = false;
 
-        //글쓴이 클릭이벤트
-        let writer = document.getElementsByClassName("writer")
-
-         Array.from(writer).forEach(function(element) {
-             element.addEventListener('click', function(e) {
-                 if(e.target.nextElementSibling.style.display === 'block'){
-                     e.target.nextElementSibling.style.display = 'none';
-                 }else{
-                     e.target.nextElementSibling.style.display = 'block';
-                 }
-             });
-         });
+        if (tipWriter != "") tipWriter.innerHTML;
+        if (memId != "") memId.innerHTML;
 
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){
@@ -160,9 +150,9 @@
               let num = tipNum;
 
               if(likeDelYn=='N'){
-                html = "<span class='material-icons' id='like_btn' onclick='udpLike("+num+")' style='color:purple;'>thumb_up</span>"
+                html = "<span class='material-icons purple' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
               }else{
-                html = "<span class='material-icons' id='like_btn' onclick='udpLike("+num+")' style='color:gray;'>thumb_up</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
               }
 
               let parent = document.getElementById('changeLikeHtml');
@@ -218,9 +208,9 @@
               let num = tipNum;
 
               if(scrapDelYn=='N'){
-                html = "<span class='material-icons' id='like_btn' onclick='udpScrap("+num+")' style='color:purple;'>bookmarks</span>"
+                html = "<span class='material-icons purple' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
               }else{
-                html = "<span class='material-icons' id='like_btn' onclick='udpScrap("+num+")' style='color:gray;'>bookmarks</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
               }
 
               let parent = document.getElementById('changeScrapHtml');

@@ -1,4 +1,3 @@
-
  /*
  * 작성자 : 서은빈
  * 공백 확인
@@ -12,7 +11,7 @@ function isEmpty(obj){
     }else{
       return false
     }
-  };
+  }
 
  /*
      * 작성자 : 이형근

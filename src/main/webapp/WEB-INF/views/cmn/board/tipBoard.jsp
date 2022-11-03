@@ -6,8 +6,8 @@
             <!--신규일경우-->
             <c:if test="${empty TipBoardDTO.category}">
                 <select name="category" id="category">
-                    <option value="FRONT" selected>Front</option>
-                    <option value="BACK">Back</option>
+                    <option value="FRONT" selected>FRONT</option>
+                    <option value="BACK">BACK</option>
                     <option value="DB">DB</option>
                 </select>
             </c:if>

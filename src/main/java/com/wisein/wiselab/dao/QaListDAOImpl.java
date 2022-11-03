@@ -155,10 +155,10 @@ public class QaListDAOImpl implements QaListDAO {
      * return : int
      * 날짜 : 2022-06-04
      * */
-	@Override
-	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
-		return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
-	}
+    @Override
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+        return sql.selectOne(NS + ".selectBoardTotalCount", qaListDTO);
+    }
 
     /*
      * 작성자 : 이형근
@@ -335,5 +335,11 @@ public class QaListDAOImpl implements QaListDAO {
     @Override
     public int getParentNum(QaListDTO qaListDTO) throws Exception {
         return sql.selectOne(NS + ".getParentNum", qaListDTO);
+    }
+
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return sql.selectOne(NS + ".selectMeetLink", num);
     }
 }

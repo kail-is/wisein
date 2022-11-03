@@ -10,12 +10,12 @@ import java.util.List;
 public interface QaListDAO {
 
     /*
-    * 작성자 : 이형근
-    * QA 목록 조회
-    * param : QaListDTO
-    * return : qaList
-    * 날짜 : 2022-04-03
-    * */
+     * 작성자 : 이형근
+     * QA 목록 조회
+     * param : QaListDTO
+     * return : qaList
+     * 날짜 : 2022-04-03
+     * */
     public List<QaListDTO> selectQaList(QaListDTO qaListDTO) throws Exception;
 
     /*
@@ -53,7 +53,7 @@ public interface QaListDAO {
      * 날짜 : 2022-05-18
      * */
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception;
-    
+
     /*
      * 작성자 : 박혜림
      * 게시글 총 개수
@@ -237,5 +237,8 @@ public interface QaListDAO {
     public void delQaScrapCount(int parentNum) throws Exception;
 
     /* 게시글 수정 후 detail 조회를 위한 원본게시글 num조회 */
-    public int getParentNum(QaListDTO qaListDTO) throws Exception;;
+    public int getParentNum(QaListDTO qaListDTO) throws Exception;
+
+    /* 작성자 meetLink */
+    public String selectMeetLink(int num) throws Exception;
 }

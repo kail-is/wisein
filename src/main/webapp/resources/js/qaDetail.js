@@ -14,7 +14,7 @@
 
         // 원본-질문모아보기
         function questionsList_btn(writer) {
-            window.location.href="/questionsList?writer="+writer
+            window.location.href="/questionsList?writer="+writer;
         }
 
 
@@ -94,13 +94,19 @@
                 let html;
 
                 if(check == 0){
-                   html = "<span class='material-icons' id='comment_like_btn' onclick='regLike(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;' >thumb_up</span>"
+                    html = "<div class='board-cell board-like gray'>"
+                    html += "<span class='material-icons' id='comment_like_btn' onclick='regLike(" + "\"" + writer + "\"," + commentQaNum + ")' >thumb_up</span>"
+                    html += "</div>"
                 }
                 else if(check == 1){
-                   html = "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")'  >thumb_up</span>"
+                    html = "<div class='board-cell board-like purple2'>"
+                    html += "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")'  >thumb_up</span>"
+                    html += "</div>"
                 }
                 else if(check == 2){
-                    html = "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;'>thumb_up</span>"
+                    html = "<div class='board-cell board-like gray'>"
+                    html += "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")' >thumb_up</span>"
+                    html += "</div>"
                 }
 
                 //console.log(check);
@@ -141,15 +147,21 @@
                 let html;
 
                 if(checkScrap == 0){
-                    html = "<span class='material-icons' id='comment_scrap_btn' onclick='regScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;' >bookmarks</span>"
+                    html = "<div class='board-cell board-like gray'>"
+                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='regScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;' >bookmarks</span>"
+                    html += "</div>"
                 }
 
                 else if(checkScrap == 1){
-                    html = "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")'  >bookmarks</span>"
+                    html = "<div class='board-cell board-like purple2'>"
+                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")'  >bookmarks</span>"
+                    html += "</div>"
                 }
 
                 else if(checkScrap == 2){
-                    html = "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;'>bookmarks</span>"
+                    html = "<div class='board-cell board-like gray'>"
+                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;'>bookmarks</span>"
+                    html += "</div>"
                 }
 
                 //console.log(checkScrap);
@@ -258,3 +270,31 @@
                window.location.href="/login";
             }
         }
+
+        function comment_meetLink_btn(num){
+            let data = {
+                method: 'POST',
+                body: JSON.stringify({ num }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            fetch("/selectMeetLink", data)
+            .then(response => response.json())
+            .catch(error => console.log(error))
+            .then(json =>  {
+                console.log(json);
+                let meetLink = json.meetLink;
+                console.log(meetLink);
+                if(meetLink == null){
+                    alert('미트링크가 없어요😅');
+                } else{
+                    //window.location.href = meetLink;
+                    //window.location.replace(meetLink);
+                    window.open(meetLink,'_blank');
+                }
+            })
+        }
+
+
