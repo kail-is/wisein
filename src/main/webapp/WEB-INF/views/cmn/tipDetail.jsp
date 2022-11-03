@@ -41,7 +41,7 @@
             <p class="writer" id="tipWriter"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
                 <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
-                <li><a href="#">작성팁 모아보기</a></li>
+                <li><a onclick="gatherMemTip()">작성팁 모아보기</a></li>
             </ul>
 
                 <c:if test="${meetLink == null}">
@@ -61,8 +61,8 @@
         <c:set var="memberId" value="${memberId}" />
         <c:if test="${tipBoardDTO.writer == memberId}">
             <div class="icon" align="right">
-                <span class="material-icons" onClick="updTip()">border_color</span>
-                <span class="material-icons" onClick="delTip()">delete</span>
+                <span class="material-icons" onclick="updTip()">border_color</span>
+                <span class="material-icons" onclick="delTip()">delete</span>
             </div>
         </c:if>
 

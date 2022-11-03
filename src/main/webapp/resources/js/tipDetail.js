@@ -5,8 +5,12 @@
         let boardType = "tip";
         let isMod = false;
 
-        if (tipWriter != "") tipWriter.innerHTML;
-        if (memId != "") memId.innerHTML;
+        if (tipWriter != "") tipWriter = tipWriter.innerHTML;
+        if (memId != "") memId = memId.innerHTML;
+
+        function gatherMemTip(){
+            window.location.href="/gatherMemTip?writer="+tipWriter;
+        }
 
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){

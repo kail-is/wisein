@@ -67,6 +67,21 @@ public class tipController {
         return "cmn/tipList";
     }
 
+    //작성글 모아보기
+    @GetMapping(value="/gatherMemTip")
+    public String gatherMemTip (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+        List<TipBoardDTO> tipList = new ArrayList<>();
+        tipList = tipBoardService.selectMemberTipList(dto);
+
+        dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
+        String pagination = PagingTagCustom.render(dto);
+
+        model.addAttribute("tipList", tipList);
+        model.addAttribute("pagination", pagination);
+
+        return "cmn/tipList";
+    }
+
     //단건 조회
     @GetMapping(value="/tipDetail")
     public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
@@ -154,9 +169,11 @@ public class tipController {
         CommentDTO CommentDTO = new CommentDTO();
         CommentDTO.setBoardIdx(num);
         CommentDTO.setBoardType("tip");
+        String brdRef = "tip||"+num;
 
         tipBoardService.deleteTipBoard(num);
         commentService.deleteAllComment(CommentDTO);
+        commonService.deleteAllImg(brdRef);
 
         return "redirect:/tipList";
     }

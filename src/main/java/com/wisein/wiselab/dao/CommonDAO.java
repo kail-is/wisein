@@ -8,6 +8,8 @@ public interface CommonDAO {
 
     public void delUserImg(String fileNm) throws Exception;
 
+    public void deleteAllImg(String brdRef) throws Exception;
+
     public void uploadImgList(List<FileDTO> list) throws Exception;
 
     public List<FileDTO> selectFileList(String brdRef) throws Exception;

@@ -29,9 +29,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> selectComment(CommentDTO dto) throws Exception {
         List<CommentDTO> comment = new ArrayList<>();
-
         comment = (List<CommentDTO>) dao.selectComment(dto);
-
         return comment;
     }
 

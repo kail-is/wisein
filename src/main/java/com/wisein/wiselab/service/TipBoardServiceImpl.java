@@ -35,12 +35,15 @@ public class TipBoardServiceImpl implements TipBoardService {
     @Override
     public List<TipBoardDTO> selectTipList(TipBoardDTO dto) throws Exception {
         List<TipBoardDTO> tipList = new ArrayList<>();
-        int boardTotalCount = dao.selectBoardTotalCount(dto);
+        tipList = (List<TipBoardDTO>) dao.selectTipList(dto);
+        return tipList;
+    }
 
-        if(boardTotalCount > 0) {
-            tipList = (List<TipBoardDTO>) dao.selectTipList(dto);
-        }
-
+    /* TipBoard 작성글 모아보기 */
+    @Override
+    public List<TipBoardDTO> selectMemberTipList(TipBoardDTO dto) throws Exception {
+        List<TipBoardDTO> tipList = new ArrayList<>();
+        tipList = (List<TipBoardDTO>) dao.selectMemberTipList(dto);
         return tipList;
     }
 
@@ -78,6 +81,12 @@ public class TipBoardServiceImpl implements TipBoardService {
     @Override
     public int selectBoardTotalCount(TipBoardDTO dto) throws Exception {
         return dao.selectBoardTotalCount(dto);
+    }
+
+    /* 모아보기 게시글 개수 조회 */
+    @Override
+    public int selectMemberTipTotalCount(TipBoardDTO dto) throws Exception {
+        return dao.selectMemberTipTotalCount(dto);
     }
 
     /* 작성자 meetLink */
