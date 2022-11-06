@@ -5,12 +5,12 @@
   font-weight: 600;
 }
 
-.content-wrap {
+.content-wrap.food-wrap{
   max-width: 1400px;
   min-width: 350px;
 }
 
-.content-frame {
+.content-frame.food-wrap{
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,7 +30,7 @@
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame {
+  .content-frame.food-wrap {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -50,11 +50,11 @@
   }
 }
 
-.content-frame .top-group {
+.content-frame.food-wrap .top-group {
   display: none;
 }
 
-.content-frame .top-group .category-wrap {
+.content-frame.food-wrap .top-group .category-wrap {
   font-size: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -75,7 +75,7 @@
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .top-group {
+  .content-frame.food-wrap .top-group {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -94,39 +94,40 @@
   }
 }
 
-.content-frame .top-group input[type=button] {
+.content-frame.food-wrap .top-group input[type=button] {
   background-color: #7E57C2;
   color: white;
 }
 
-.content-frame .board-wrap {
+.content-frame.food-wrap .board-wrap {
   position: relative;
   width: 50%;
   padding: 0 2em;
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .board-wrap {
+  .content-frame.food-wrap .board-wrap {
     width: 100%;
     padding: 0;
   }
 }
 
-.content-frame .board-wrap .board-list {
+.content-frame.food-wrap .board-wrap .board-list {
   font-size: 16px;
 }
 
 .board-list {
+
     height:210px;
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .board-wrap .board-list .board-header {
+  .content-frame.food-wrap .board-wrap .board-list .board-header {
     display: none !important;
   }
 }
 
-.content-frame .board-wrap .board-list .board-line {
+.content-frame.food-wrap .board-wrap .board-list .board-line {
   padding: 0 1em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -149,14 +150,14 @@
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .board-wrap .board-list .board-line {
+  .content-frame.food-wrap .board-wrap .board-list .board-line {
     padding: 0.375em 0;
     height:35px;
     font-size:15px;
   }
 }
 
-.content-frame .board-wrap .board-list .board-line .board-cell {
+.content-frame.food-wrap .board-wrap .board-list .board-line .board-cell {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -174,47 +175,47 @@
           flex-direction: row;
 }
 
-.content-frame .board-wrap .board-list .board-line .board-category {
+.content-frame.food-wrap .board-wrap .board-list .board-line .board-category {
   position: relative;
   -ms-flex-preferred-size: 120px;
       flex-basis: 120px;
 }
 
-.content-frame .board-wrap .board-list .board-line .board-title {
+.content-frame.food-wrap .board-wrap .board-list .board-line .board-title {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   -ms-flex-negative: 3;
       flex-shrink: 3;
 }
 
-.content-frame .board-wrap .board-list .board-line .board-map {
+.content-frame.food-wrap .board-wrap .board-list .board-line .board-map {
   -ms-flex-preferred-size: 80px;
       flex-basis: 80px;
 }
 
-.content-frame .board-wrap .button-wrap {
+.content-frame.food-wrap .board-wrap .button-wrap {
   position: absolute;
   right: 2em;
   bottom: 0;
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .board-wrap .button-wrap {
+  .content-frame.food-wrap .board-wrap .button-wrap {
     display: none;
   }
 }
 
-.content-frame .board-wrap .button-wrap input[type=button] {
+.content-frame.food-wrap .board-wrap .button-wrap input[type=button] {
   background-color: #7E57C2;
   color: white;
 }
 
-.content-frame .pageNo-wrap .pageno-group {
+.content-frame.food-wrap .pageNo-wrap .pageno-group {
   display: none;
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame .pageNo-wrap .pageno-group {
+  .content-frame.food-wrap .pageNo-wrap .pageno-group {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -233,7 +234,7 @@
   }
 }
 
-.content-frame .pageNo-wrap .pageno-group li {
+.content-frame.food-wrap .pageNo-wrap .pageno-group li {
   font-size: 16px;
   padding-right: 0.125em;
 }
@@ -269,18 +270,15 @@
 ul {
     text-align: center;
     display: inline-block;
-
     border-right: 0;
     list-style: none;
 }
 ul li {
     text-align: center;
-    float: left;
 }
 
 ul li a {
     display: block;
-    padding: 9px 12px;
     box-sizing: border-box;
 }
 
@@ -310,11 +308,23 @@ ul li.on a {
         bottom:-55px;
     }
     .board-category, .board-title, .board-map {
-        font-size:10.5px;
+        font-size:10px;
+    }
+
+    .board-category {
+        width:50px;
     }
     .board-list {
         height:160px;
     }
+
+    .recm-btn {
+        font-size:12px;
+        border-radius:5px;
+        width:70px;
+        height:30px;
+    }
+
 }
 
 .btn-wrap {
@@ -331,3 +341,12 @@ ul li.on a {
     color:grey;
 }
 
+.info-title {
+    display: block;
+    background: #50627F;
+    color: #fff;
+    text-align: center;
+    line-height:22px;
+    border-radius:4px;
+    padding:0px 10px;
+}

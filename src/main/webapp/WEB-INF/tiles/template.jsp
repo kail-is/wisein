@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${url}/resources/css/tipBoard.css">
         <link rel="stylesheet" href="${url}/resources/css/foodDetail.css">
         <link rel="stylesheet" href="${url}/resources/css/totalSearch.css">
+        <link rel="stylesheet" href="${url}/resources/css/foodList.css">
 
         <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css">
         <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css">
