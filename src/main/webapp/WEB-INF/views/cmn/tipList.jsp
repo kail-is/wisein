@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <div class="content-wrap">
-    <section class="content-frame">
+    <section class="content-frame tipList">
         <div class="content-top-group">
            <button type="button" onClick="location.href='tipBoard'" ></button>
         </div>

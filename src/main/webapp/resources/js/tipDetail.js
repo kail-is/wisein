@@ -43,7 +43,7 @@
                     html += "<span class='material-icons' onClick='delComm("+newCommArr[i].num+")'>delete</span></div>"
                 }
                 html += "</div></div></div>"
-                html += "<div class='content' id='comm"+newCommArr[i].num+"' name='comm"+newCommArr[i].num+"'>"+newCommArr[i].content+"</div>"
+                html += "<div class='content' id='comm"+newCommArr[i].num+"' name='comm"+newCommArr[i].num+"'>"+newCommArr[i].content.replaceAll('<br>', '\r\n')+"</div>"
                 html += " <div class='content-mod' id='modComm"+newCommArr[i].num+"' name='modComm"+newCommArr[i].num+"' style='display: none;'>"
                 html += "<textarea class='comment_inbox_text' id='modComm_content"+newCommArr[i].num+"' name='modComm_content"+newCommArr[i].num+"' placeholder='댓글을 남겨보세요' rows='1' style='overflow: hidden; overflow-wrap: break-word; height: 17px;'></textarea>"
                 html += "</div> <div class='comment_attach' id='mod_comment_attach"+newCommArr[i].num+"' style='display: none;'>"
@@ -64,6 +64,7 @@
 
          function regComm(){
             let content = document.getElementById('comment_content').value
+            content = content.replace(/(?:\r\n|\r|\n)/g,'<br>');
             let data = {boardType: boardType, boardIdx: tipNum, content: content}
 
             if(content.length==0){
@@ -71,7 +72,7 @@
                 document.getElementById('comment_content').focus();
                 return;
             }
-            let check;
+
             fetch('/regTipComm',{
                 method: 'POST',
                 cache : 'no-cache',
@@ -126,6 +127,7 @@
 
           function modComm(commNum){
               let content = document.getElementById('modComm_content'+commNum).value;
+              content = content.replace(/(?:\r\n|\r|\n)/g,'<br>');
               let data = {num: commNum, boardType: boardType, boardIdx: tipNum, content: content};
 
               if(content.length==0){
@@ -263,5 +265,11 @@
                   changeScrapHtml(json);
               })
           }
+
+         function resize(obj){
+             obj.style.height = '1px';
+             obj.style.height = (10 + obj.scrollHeight) + 'px';
+         }
+
 
 

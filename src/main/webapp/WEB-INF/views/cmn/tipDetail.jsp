@@ -107,7 +107,7 @@
                         </div>
                         <!--댓글 수정-->
                         <div class="content-mod" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
-                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1"></textarea>
+                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
                         </div>
                          <div class="comment_attach" id="mod_comment_attach${commentList.num}" style='display: none;'>
                             <div class="register_box">
@@ -126,7 +126,7 @@
         <div class="comment_inbox">
             <strong class="blind">댓글을 입력하세요</strong>
             <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">${memberId}</div></em>
-            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1"></textarea>
+            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
         </div>
 
         <div class="comment_attach">

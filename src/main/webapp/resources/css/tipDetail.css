@@ -265,7 +265,7 @@ header ul li:nth-child(2) .select-wrap select {
 
 .recommend-wrap .recommend .wrap .content-mod .comment_inbox_text {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   display: block;
   width: 100%;
   min-height: 17px;
@@ -372,7 +372,7 @@ header ul li:nth-child(2) .select-wrap select {
   }
   .CommentWriter .comment_inbox_text {
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
       display: block;
       width: 100%;
       min-height: 17px;
@@ -418,7 +418,7 @@ header ul li:nth-child(2) .select-wrap select {
       display: inline-block;
       min-width: 46px;
       height: 34px;
-      line-height: 36px;
+      line-height: 50px;
       font-size: 13px;
       color: var(--skinCommentWriterText);
       border-radius: 6px;
@@ -427,3 +427,5 @@ header ul li:nth-child(2) .select-wrap select {
       text-align: center;
       vertical-align: top;
   }
+
+

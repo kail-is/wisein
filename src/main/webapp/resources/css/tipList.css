@@ -40,13 +40,11 @@ header ul li:nth-child(2) .select-wrap select {
   margin-bottom: 2em;
 }
 
-
-
 .content-wrap {
   max-width: 1400px;
 }
 
-.content-wrap .content-frame {
+.content-wrap .content-frame.tipList {
   margin-bottom: 1.5em;
 }
 
