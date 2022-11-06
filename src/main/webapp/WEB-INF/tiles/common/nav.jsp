@@ -28,7 +28,7 @@
                          <li onclick="signUp()">회원가입 </li>
                      </c:if>
                      <c:if test="${not empty member}">
-                         <li><a href="/questionsList?sideCheck=true">작성 글 모아 보기</a> </li>
+                         <li><a href="/questionsList?sideCheck=Y">작성 글 모아 보기</a> </li>
                          <li onclick="userUpd()">정보 수정 </li>
                          <li><a href="user/logout">로그아웃</a></li>
                          <li onclick="userWithdraw()">탈퇴</a> </li>
