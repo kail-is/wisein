@@ -156,9 +156,14 @@
                 this.popupOpen();
                 this.callback = callback;
                 const matzipListEl = document.getElementById('matzipList');
-                const list = data.documents.map((item,index)=>{
-                    return `<li><input type="radio" id="search-${index}" class="content-radio content-radio-checked" name="content-radio" value="${index}:${item.place_name}(${item.address_name})"/><label for="search-${index}" class="content-label">${item.place_name}(${item.address_name})</label></li>`;
-                }).join('');
+                let list = ``
+                if(data.documents.length > 0) {
+                    list = data.documents.map((item,index)=>{
+                        return `<li><input type="radio" id="search-${index}" class="content-radio content-radio-checked" name="content-radio" value="${index}:${item.place_name}(${item.address_name})"/><label for="search-${index}" class="content-label">${item.place_name}(${item.address_name})</label></li>`;
+                    }).join('');
+                }else {
+                    list = `<li class="flex-center" style="height: 100%;"><p>데이터가 없습니다! 다시 검색하세요.</p></li>`
+                }
                 matzipListEl.innerHTML = list;
             }
     }
@@ -172,6 +177,7 @@
             }).then(response => response.json())
             .catch(error => console.error('Error:', error))
             .then(data => {
+                debugger;
                popupManger.matzipPopupOpen(data,(result)=>{
                    matzip_name.value = result.selectedData.split("(")[0]
                    keywordEl.value = result.selectedData.split("(")[1].replace(")","");
