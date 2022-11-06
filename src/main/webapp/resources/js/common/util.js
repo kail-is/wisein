@@ -1,4 +1,3 @@
-
  /*
  * 작성자 : 서은빈
  * 공백 확인
@@ -152,19 +151,6 @@ function gfn_length(obj){
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
     * 작성자 : 임동근
     * 서버의 현재 시간 가져오는 함수
@@ -256,7 +242,7 @@ function stringLengthCheck(input, maxByte) {
 */
 let commonPopup = {
 
-alertPopup : function (alertMsg) {
+alertPopup : function (alertMsg, modalCheck) {
     let closeBtn = document.querySelector('#alert-close-btn');
 
     if (alertMsg!=null && alertMsg.trim()!="") {
@@ -264,7 +250,7 @@ alertPopup : function (alertMsg) {
     }
 
     closeBtn.addEventListener('click', function () {
-        commonPopup.close();
+        commonPopup.close(modalCheck);
     });
 
 },
@@ -299,10 +285,10 @@ callback : function (confirmMsg) {
 
 },
 
-close : function () {
+close : function (modalCheck) {
     document.querySelector('#commonPopup').classList.add('none');
     document.querySelector('#roadViewPopup').classList.add('none');
-    commonPopup.modalPopupCheck(false);
+    commonPopup.modalPopupCheck(modalCheck);
 },
 
 open : function (type, msg) {
