@@ -229,11 +229,11 @@ public class EmailController {
                 "	<p" +
                 "	 style=\"text-align: center; margin: 2em;\">" +
                 "			해당 맛집 확인</p>" +
-                "	<p" +
-                "	 style=\"text-align: center; margin: 2em; font-weight: bold;\">" +
-                "	<a style=\"color: black; text-decoration: none; text-align: center;\" href=\"http://localhost:8080/matzip?id=" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://localhost:8080/matzip?id=" +
                 matzipId +
                 "\">" +
+                "		<p" +
+                "			style=\"display: inline-block; width: 210px; height: 45px; margin: 20px 5px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">" +
                 " 맛집 이동" +
                 "	</p>" +
                 "	</a>" +
@@ -241,7 +241,7 @@ public class EmailController {
                 matzipId +
                 "\">" +
                 "		<p" +
-                "			style=\"display: inline-block; width: 210px; height: 45px; margin: 30px 5px 40px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">" +
+                "			style=\"display: inline-block; width: 210px; height: 45px; margin: 20px 5px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">" +
                 "			폐업 처리</p>" +
                 "	</a>" +
                 "	<div style=\"border-top: 1px solid #DDD; padding: 5px;\"></div>" +
