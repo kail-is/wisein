@@ -114,8 +114,8 @@ public class matzipController {
 	}
 
 	@GetMapping(value="/delRecm")
-	public String delRecm (@RequestParam int num) throws Exception {
-		service.delRecm(num);
+	public String delRecm (@RequestParam int id) throws Exception {
+		service.delRecm(id);
 		return "cmn/foodDetail";
 	}
 

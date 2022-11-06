@@ -29,7 +29,7 @@
        let delConfirm = confirm('삭제하시겠습니까?');
 
        if (delConfirm) {
-           fetch("/delRecm?" + "num=" + recmId)
+           fetch("/delRecm?" + "id=" + recmId)
                 .then(response => response.text())
                 .catch(error => console.error('Error:', error))
                 .then(response => {
