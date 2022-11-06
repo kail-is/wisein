@@ -92,38 +92,39 @@
                 </c:forEach>
 <span id="changeLikeHtml${i}">
                 <c:if test="${check == 0}">
-                    <div class="board-cell board-like gray">
+                    <div class="board-cell board-like gray qaDetail">
+                    <div class="">
                     <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
                     </div>
                 </c:if>
 
                 <c:if test="${check == 1}">
-                    <div class="board-cell board-like purple2">
+                    <div class="board-cell board-like purple2 qaDetail">
                     <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})"  >thumb_up</span>
                     </div>
                 </c:if>
 
                 <c:if test="${check == 2}">
-                    <div class="board-cell board-like gray">
+                    <div class="board-cell board-like gray qaDetail">
                     <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})" style="color:gray;">thumb_up</span>
                     </div>
                 </c:if>
 </span>
 <span id="changeScrapHtml${i}">
                 <c:if test="${checkScrap == 0}">
-                    <div class="board-cell board-like gray">
+                    <div class="board-cell board-like gray qaDetail">
                     <span class="material-icons" id="comment_scrap_btn" onclick="regScrap('${writer}',${commentQaNum})" >bookmarks</span>
                     </div>
                 </c:if>
 
                 <c:if test="${checkScrap == 1}">
-                    <div class="board-cell board-like purple2">
+                    <div class="board-cell board-like purple2 qaDetail">
                     <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})"  >bookmarks</span>
                     </div>
                 </c:if>
 
                 <c:if test="${checkScrap == 2}">
-                    <div class="board-cell board-like gray">
+                    <div class="board-cell board-like gray qaDetail">
                     <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})" >bookmarks</span>
                     </div>
                 </c:if>

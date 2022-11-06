@@ -342,4 +342,16 @@ public class QaListDAOImpl implements QaListDAO {
     public String selectMeetLink(int num) throws Exception {
         return sql.selectOne(NS + ".selectMeetLink", num);
     }
+
+    /* 작성글 모아보기 페이징조회 */
+    @Override
+    public int selectMemberQaTotalCount(QaListDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectMemberQaTotalCount", dto);
+    }
+
+    /* 댓글 모아보기 페이징조회 */
+    @Override
+    public int selectMemberQaCommentTotalCount(QaListDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectMemberQaCommentTotalCount", dto);
+    }
 }

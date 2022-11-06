@@ -241,4 +241,11 @@ public interface QaListDAO {
 
     /* 작성자 meetLink */
     public String selectMeetLink(int num) throws Exception;
+
+    /* 작성글 모아보기 페이징조회 */
+    public int selectMemberQaTotalCount(QaListDTO dto) throws  Exception;
+
+    /* 댓글 모아보기 페이징조회 */
+    public int selectMemberQaCommentTotalCount(QaListDTO dto) throws  Exception;
+
 }
