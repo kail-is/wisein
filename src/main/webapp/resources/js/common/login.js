@@ -337,7 +337,7 @@ function emailValid() {
 // 비밀번호 이메일 인증
 function chgePwEmail(userId) {
 
-    fetch("/pwMailSend?" + "userId=" + userId)
+    fetch("/pwMailSend?" + "user_id=" + userId)
          .then(response => response.text())
          .catch(error => console.error('Error:', error))
          .then(response => {
