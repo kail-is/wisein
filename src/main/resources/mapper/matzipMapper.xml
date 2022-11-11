@@ -108,13 +108,19 @@
         WHERE ID = #{id}
     </update>
 
-
     <update id="delRecm" parameterType="Integer">
         UPDATE RECM_BOARD
         SET
         DEL_YN = 'Y'
         WHERE NUM = #{num}
     </update>
+
+    <select id="recmMatzipId" parameterType="Integer" resultType="Integer">
+        SELECT
+            REF_MATZIP
+          FROM RECM_BOARD
+        WHERE NUM = #{recmId}
+    </select>
 
     <update id="updateRecm" parameterType="RecmDTO">
         UPDATE RECM_BOARD
@@ -150,7 +156,8 @@
             , CATEGORY AS LOCATION
           FROM MATZIP_BOARD
          WHERE CATEGORY IN (SELECT LOCATION FROM COMPANY)
-           AND CATEGORY=#{location} GROUP BY CATEGORY;
+           AND CATEGORY=#{location}
+           AND CLOSED_STATE = 'N' GROUP BY CATEGORY;
     </select>
 
     <select id="matzipList" parameterType="PageDataDTO" resultType="CompanyDTO">
@@ -167,6 +174,7 @@
                  FROM MATZIP_BOARD AS B
                   , (SELECT @ROWNUM:=0) R
                 WHERE CATEGORY=#{location}
+                AND CLOSED_STATE = 'N'
               ) AS A
          LIMIT #{startRow}, #{dataPerPage}
     </select>

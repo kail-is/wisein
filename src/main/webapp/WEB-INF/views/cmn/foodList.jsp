@@ -12,11 +12,7 @@
                         </c:forEach>
                     </select>
                 </p>
-                <ul class="person-function">
-                    <li><a href="#">지역(가나다)</a></li>
-                    <li><a href="#">사이트(가나다)</a></li>
-                    <li><a href="#">맛집 개수</a></li>
-                </ul>
+
                 <span class="material-icons">
                         expand_more
                     </span>
@@ -28,7 +24,7 @@
             <div id="map"></div>
         </div>
         <div class="board-wrap">
-            <div class="board-list">
+            <div class="board-list food-wrap">
                 <div class="board-line board-header">
                     <div class="board-cell board-category purple2">
                         <p>
@@ -40,11 +36,6 @@
                             </select>
                         </p>
 
-                        <ul class="person-function">
-                            <li><a href="#">지역(가나다)</a></li>
-                            <li><a href="#">사이트(가나다)</a></li>
-                            <li><a href="#">맛집 개수</a></li>
-                        </ul>
                         <span class="material-icons">
                                 expand_more
                             </span>

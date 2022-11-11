@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
-    <script src="resources/js/common/util.js"></script>
 </head>
 
 <div class="content-wrap">

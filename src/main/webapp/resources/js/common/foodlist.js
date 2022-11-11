@@ -2,7 +2,9 @@ let x, y, companyLength, localCheck, marker;
 let createDiv = document.createElement('div');
 let createDivBefore = document.querySelector('.button-wrap');
 let pageDiv = document.querySelector('#page');
-let name, infoTitle;
+let name, infoTitle, map;
+let overlay;
+let content;
 
 let totalCount;
 let dataPerPage = 5;
@@ -122,6 +124,7 @@ function matzipLoc(location, currentPage) {
         .then(response => response.json())
         .catch(error => console.log('Error'))
         .then(matzipList => {
+            console.log(matzipList.matzip);
             if (matzipList.matzip.length==0) {
                 createDiv.innerHTML
                     += "<div id='list' class='board-line' style='height:50px;justify-content:center;align-items:center;';>"
@@ -269,7 +272,7 @@ function selectFoodLocal(location, local, id, type, companyName) {
             x = lateRst.documents[0].x;
             y = lateRst.documents[0].y;
 
-            panTo(lateRst.documents[0].address_name);
+            panTo(lateRst.documents[0].address_name, companyName);
         })
     if (type === 'type1') {
         matzipLoc(location, currentPage);
@@ -282,22 +285,37 @@ var mapContainer = document.getElementById('map'),
         level: 3,
     };
 
-var map = new kakao.maps.Map(mapContainer, mapOption);
+map = new kakao.maps.Map(mapContainer, mapOption);
 
 /*
     마커 체크
 */
-function panTo(loc) {
+function panTo(loc, companyName) {
     var moveLatLon = new kakao.maps.LatLng(y, x);
     map.panTo(moveLatLon);
-    localCheckPoint(loc);
+    localCheckPoint(loc, companyName);
 }
-
 
 /*
     상세 맛집 이동
 */
-function localCheckPoint(loc) {
+function localCheckPoint(loc, companyName) {
+
+//    content = '<div class="wrap">' +
+//    '    <div class="info">' +
+//    '        <div class="title">' +
+//    companyName+
+//    '            <div class="close" onclick="closeOverlay('+overlay+')" title="닫기"></div>' +
+//    '        </div>' +
+//    '        <div class="body">' +
+//    '            <div class="desc">' +
+//    '                <div class="ellipsis">'+loc+'</div>' +
+//    '                <div><a href="test">홈페이지</a></div>' +
+//    '            </div>' +
+//    '        </div>' +
+//    '    </div>' +
+//    '</div>';
+
     var markerPosition = new kakao.maps.LatLng(y, x);
 
     marker = new kakao.maps.Marker({
@@ -306,6 +324,23 @@ function localCheckPoint(loc) {
     });
 
     marker.setMap(map);
+
+//    kakao.maps.event.addListener(marker, 'click', function() {
+//
+//        marker = new kakao.maps.Marker({
+//            position: markerPosition,
+//            clickable: true
+//        });
+//
+//        overlay = new kakao.maps.CustomOverlay({
+//            content: content,
+//            map: map,
+//            position: marker.getPosition()
+//        });
+//
+//        console.log(overlay);
+//        overlay.setMap(map);
+//    });
 
     kakao.maps.event.addListener(marker, 'click', function() {
         if (localCheck==1) {
@@ -354,6 +389,10 @@ function localCheckPoint(loc) {
     kakao.maps.event.addListener(marker, 'mouseout', function() {
         infowindow.close();
     });
+}
+
+function closeOverlay(overlay) {
+    overlay.setMap(null);
 }
 
 /*

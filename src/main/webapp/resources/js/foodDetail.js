@@ -32,10 +32,20 @@
            fetch("/delRecm?" + "id=" + recmId)
                 .then(response => response.text())
                 .catch(error => console.error('Error:', error))
-                .then(response => {
-                    alert('삭제 완료');
-                    window.location.href = "recmCnt?id=" + matzip_id
+                .then(recmMatzipId => {
+                    let matzip_num = recmMatzipId;
+
+                    fetch("/addClosed?" + "matzipId=" + matzip_num)
+                        .then(response => response.text())
+                        .catch(error => console.error('Error:', error))
+                        .then(response => {
+                            alert('삭제 완료');
+                            window.location.href = "recmCnt?id=" + matzip_id
+                        });
+//                    alert('삭제 완료');
+//                    window.location.href = "recmCnt?id=" + matzip_id
                 });
+
        }else {
           alert('삭제 취소');
        }
