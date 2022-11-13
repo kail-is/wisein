@@ -3,7 +3,7 @@ let createDiv = document.createElement('div');
 let createDivBefore = document.querySelector('.button-wrap');
 let pageDiv = document.querySelector('#page');
 let name, infoTitle, map;
-let overlay;
+let clickOverlay = null;
 let content;
 
 let totalCount;
@@ -287,35 +287,17 @@ var mapContainer = document.getElementById('map'),
 
 map = new kakao.maps.Map(mapContainer, mapOption);
 
-/*
-    마커 체크
-*/
+//마커 체크
 function panTo(loc, companyName) {
     var moveLatLon = new kakao.maps.LatLng(y, x);
     map.panTo(moveLatLon);
     localCheckPoint(loc, companyName);
 }
 
-/*
-    상세 맛집 이동
-*/
+//맛집 클릭시 좌표 & 커스텀 오버레이
 function localCheckPoint(loc, companyName) {
 
-//    content = '<div class="wrap">' +
-//    '    <div class="info">' +
-//    '        <div class="title">' +
-//    companyName+
-//    '            <div class="close" onclick="closeOverlay('+overlay+')" title="닫기"></div>' +
-//    '        </div>' +
-//    '        <div class="body">' +
-//    '            <div class="desc">' +
-//    '                <div class="ellipsis">'+loc+'</div>' +
-//    '                <div><a href="test">홈페이지</a></div>' +
-//    '            </div>' +
-//    '        </div>' +
-//    '    </div>' +
-//    '</div>';
-
+    /*---- 맛집 클릭시 좌표 찍음----*/
     var markerPosition = new kakao.maps.LatLng(y, x);
 
     marker = new kakao.maps.Marker({
@@ -325,79 +307,71 @@ function localCheckPoint(loc, companyName) {
 
     marker.setMap(map);
 
-//    kakao.maps.event.addListener(marker, 'click', function() {
-//
-//        marker = new kakao.maps.Marker({
-//            position: markerPosition,
-//            clickable: true
-//        });
-//
-//        overlay = new kakao.maps.CustomOverlay({
-//            content: content,
-//            map: map,
-//            position: marker.getPosition()
-//        });
-//
-//        console.log(overlay);
-//        overlay.setMap(map);
-//    });
+
+    //마커 클릭할 때 마다 customOverlay에 할당되있는 값을 null처리하고
+    //현재 클릭한 cuttomOverlay 변수에 재할당
 
     kakao.maps.event.addListener(marker, 'click', function() {
-        if (localCheck==1) {
-            fetch("/matzipDetailId?"+"loc="+loc)
-                .then(response => response.json())
-                .catch(error => console.log('Error'))
-                .then(matzipId => {
-                    if (typeof matzipId != 'number') {
-                        return;
-                    } else {
-                        let url = "http://localhost:8080/matzip?id="+matzipId;
-                        location.href = url;
-                    }
-                });
+        if (clickOverlay) {
+            clickOverlay.setMap(null);
         }
-    });
 
-    var iwContent = '<div class="info-title" style="padding:5px;">'+name+'</div>';
-
-    var infowindow = new kakao.maps.InfoWindow({
-        content : iwContent
-    });
-
-    kakao.maps.event.addListener(marker, 'mouseover', function() {
         marker = new kakao.maps.Marker({
             position: markerPosition,
             clickable: true
         });
 
-        infowindow.open(map, marker);
-
-        infoTitle = document.querySelectorAll('.info-title');
-        infoTitle.forEach(function(e) {
-            var w = e.offsetWidth + 10;
-            var ml = w/2;
-            e.parentElement.style.top = "82px";
-            e.parentElement.style.left = "50%";
-            e.parentElement.style.marginLeft = -ml+"px";
-            e.parentElement.style.width = w+"px";
-            e.parentElement.previousSibling.style.display = "none";
-            e.parentElement.parentElement.style.border = "0px";
-            e.parentElement.parentElement.style.background = "unset";
+        customOverlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: marker.getPosition()
         });
+
+        content = '<div class="wrap">' +
+        '    <div class="info">' +
+        '        <div class="title">' +
+        companyName+
+        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+        '        </div>' +
+        '        <div class="body">' +
+        '            <div class="desc">' +
+        '                <div class="ellipsis">'+loc+'</div>' +
+        '                <div class="detail-btn"><a href="javascript:void(0);"  onclick="detailPage(\''+loc+'\');">상세보기</a></div>' +
+        '            </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>';
+
+        customOverlay.setContent(content);
+
+        customOverlay.setMap(map);
+        clickOverlay = customOverlay;
     });
 
-    kakao.maps.event.addListener(marker, 'mouseout', function() {
-        infowindow.close();
-    });
 }
 
-function closeOverlay(overlay) {
-    overlay.setMap(null);
+//커스텀 오버레이 맛집 상세페이지 이동
+function detailPage(loc) {
+    if (localCheck==1) {
+        fetch("/matzipDetailId?"+"loc="+loc)
+            .then(response => response.json())
+            .catch(error => console.log('Error'))
+            .then(matzipId => {
+                if (typeof matzipId != 'number') {
+                    return;
+                } else {
+                    let url = "http://localhost:8080/matzip?id="+matzipId;
+                    location.href = url;
+                }
+            });
+    }
 }
 
-/*
-    로드뷰 표시
-*/
+//커스텀 오버레이 닫기
+function closeOverlay() {
+    customOverlay.setMap(null);
+}
+
+//로드뷰 표시
 function setRoadView(x, y) {
     let roadviewContainer = document.getElementById('roadview');
     let roadview = new kakao.maps.Roadview(roadviewContainer);
@@ -424,6 +398,7 @@ function setRoadView(x, y) {
     });
 }
 
+//matzip board db에 맛집이 있는 지 확인
 function localExistCheck(id) {
     fetch("/matzipCheck?"+"id="+id)
         .then(response => response.json())
