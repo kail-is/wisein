@@ -53,16 +53,16 @@ public class qaController {
     private final AbstractPagingCustom PagingTagCustom;
 
     @GetMapping(value="/qalist")
-    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
+    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO
+                        //, HttpSession session
+                        //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
+                        , Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
 
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQaList(qaListDTO);
-//System.out.println("===========qaList==============");
-//        System.out.println(qaListDTO.getTotalPageCount());
-//        System.out.println(pagination);
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
@@ -123,7 +123,6 @@ public class qaController {
     public String qaDetail (HttpServletRequest request
             , QaListDTO dto
             , Model model
-//            , @RequestBody String data
             , @RequestParam("num") int num) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -136,9 +135,6 @@ public class qaController {
         List<String> commentContent = new ArrayList<>();
         List<LikeBoardDTO> likeQaBoardList = new ArrayList<>();
         List<ScrapBoardDTO> scrapQaBoardList = new ArrayList<>();
-
-//        System.out.println("dto : " + dto.toString());
-//        System.out.println("num : " + num);
 
         // redirect시 필요조건
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -193,8 +189,12 @@ public class qaController {
             commentContent.add(commentQaList.get(i).getContent());
         }
         model.addAttribute("commentContent", commentContent);
-        String side_gubun = "Y";
-        model.addAttribute("side_gubun", side_gubun);
+
+        String check =(String)session.getAttribute("side_gubun");
+        if(check == null){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
         model.addAttribute("meetLink", meetLink);
 
         return "cmn/qaDetail";
@@ -700,39 +700,45 @@ public class qaController {
     @GetMapping(value="/questionsList")
     public String questionsList (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
-            , @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
-//                                , @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
-            , Model model) throws Exception {
-        //System.out.println(qaListDTO.toString());
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+           , Model model) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        //System.out.println("===================");
-        //System.out.println(sideCheck);
-        //System.out.println("===================");
+        // 사이드모아보기 아니면서 처음 모아보기일경우
+        if(qaListDTO.getWriter() != null){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null){
+                session.removeAttribute("questionsListWriter");
+            }
+            session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+            //System.out.println("사이드모아보기 아니면서 처음 모아보기일경우");
+        }
+        // 사이드모아보기 처음일경우
+        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null){
+                session.removeAttribute("questionsListWriter");
+            }
+            session.setAttribute("questionsListWriter", member.getId());
+            //System.out.println("사이드모아보기 처음일경우");
+        }
 
-        boolean sc = Boolean.parseBoolean(sideCheck);
-        //System.out.println(sc);
-        if(sc){
-            HttpSession session= request.getSession();
-            MemberDTO member = (MemberDTO) session.getAttribute("member");
-            qaListDTO.setWriter(member.getId());
+        qaListDTO.setWriter((String)session.getAttribute("questionsListWriter"));
+        session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+        System.out.println(qaListDTO.getWriter());
+
+        // 본인글 및 본인 질문모아보기에서는 사이드바 보여주게 설정
+        if(member.getId().equals(qaListDTO.getWriter())){
             String side_gubun = "Y";
             model.addAttribute("side_gubun", side_gubun);
         }
 
-        //System.out.println(qaListDTO.toString());
-
-//        System.out.println("questionsList : " + qaListDTO);
         List<QaListDTO> qaList = new ArrayList<>();
 
-        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
-        String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQuestionsList(qaListDTO);
-
-//        System.out.println(qaListDTO.getTotalPageCount());
-//        System.out.println(pagination);
-
-//        for (int i=0; i<qaList.size(); i++)
-//            System.out.println(qaList.get(i).toString());
+        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
@@ -743,22 +749,47 @@ public class qaController {
     @GetMapping(value="/commentList")
     public String commentList (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
             , Model model) throws Exception {
-        //HttpSession session= request.getSession();
-        //MemberDTO member = (MemberDTO) session.getAttribute("member");
-        //qaListDTO.setWriter(member.getId());
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        //System.out.println(qaListDTO.toString());
+        // 사이드모아보기 아니면서 처음 모아보기일경우
+        if(qaListDTO.getWriter() != null){
+            String temp = (String)session.getAttribute("commentListWriter");
+            if(temp != null){
+                session.removeAttribute("commentListWriter");
+            }
+            session.setAttribute("commentListWriter", qaListDTO.getWriter());
+        }
 
-//        System.out.println("commentList : " + qaListDTO);
+        qaListDTO.setWriter((String)session.getAttribute("commentListWriter"));
+
+//System.out.println(sideCheck);
+        // 사이드바에서 QA답글모아보기 예외처리
+        if(sideCheck.equals("Y")){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null && temp.equals(member.getId())){
+                qaListDTO.setWriter(temp);
+                session.setAttribute("commentListWriter", member.getId());
+            }
+        }
+
+//System.out.println(session.getAttribute("questionsListWriter"));
+//System.out.println(session.getAttribute("commentListWriter"));
+//System.out.println(qaListDTO.getWriter());
+
+        // 본인글 및 본인 답글모아보기에서는 사이드바 보여주게 설정
+        if(member.getId().equals(qaListDTO.getWriter())){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+
         List<QaListDTO> qaList = new ArrayList<>();
 
-        qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
-        String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectCommentList(qaListDTO);
-
-//        for (int i=0; i<qaList.size(); i++)
-//            System.out.println(qaList.get(i).toString());
+        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaCommentTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);

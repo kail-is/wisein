@@ -5,7 +5,12 @@
     <script src="resources/js/common/util.js"></script>
 </head>
 
+<c:if test="${empty questionsListWriter && empty commentListWriter}">
 <div class="content-wrap">
+</c:if>
+<c:if test="${not empty questionsListWriter || not empty commentListWriter}">
+<div class="content-wrap" style="max-width: 1300px;">
+</c:if>
     <section class="content-frame">
         <div class="content-top-group">
             <div class="category-group">

@@ -298,3 +298,31 @@
         }
 
 
+
+        function comment_meetLink_btn(num){
+            let data = {
+                method: 'POST',
+                body: JSON.stringify({ num }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            fetch("/selectMeetLink", data)
+            .then(response => response.json())
+            .catch(error => console.log(error))
+            .then(json =>  {
+                console.log(json);
+                let meetLink = json.meetLink;
+                console.log(meetLink);
+                if(meetLink == null){
+                    alert('미트링크가 없어요😅');
+                } else{
+                    //window.location.href = meetLink;
+                    //window.location.replace(meetLink);
+                    window.open(meetLink,'_blank');
+                }
+            })
+        }
+
+

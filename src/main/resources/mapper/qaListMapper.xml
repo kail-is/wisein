@@ -437,4 +437,34 @@
         )
     </select>
 
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectMemberQaTotalCount" parameterType="QaListDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		   AND PARENT_NUM is NULL
+		]]>
+    </select>
+
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectMemberQaCommentTotalCount" parameterType="QaListDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		   AND PARENT_NUM is NOT NULL
+		]]>
+    </select>
+
 </mapper>
