@@ -8,7 +8,7 @@
         if (tipWriter != "") tipWriter = tipWriter.innerHTML;
         if (memId != "") memId = memId.innerHTML;
 
-        function gatherMemTip(){
+        function gatherMemTip(tipWriter){
             window.location.href="/gatherMemTip?writer="+tipWriter;
         }
 
