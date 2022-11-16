@@ -26,6 +26,8 @@
             let newCommArr = newCommList.commentList;
             let html = "<div class='recommend-titleLine'> 댓글 ("+newCommArr.length+")</div>"
             for(let i=0; i < newCommArr.length; i++){
+                newCommArr[i].content = newCommArr[i].content.replaceAll('&lt;br&gt;', '<br>')
+                console.log("ddddddddd"+newCommArr[i].content)
                 html += "<ul class='recommend'><li>"
                 html += "<div class='wrap'><div class='recommend-info-wrap'>"
 
@@ -43,9 +45,9 @@
                     html += "<span class='material-icons' onClick='delComm("+newCommArr[i].num+")'>delete</span></div>"
                 }
                 html += "</div></div></div>"
-                html += "<div class='content' id='comm"+newCommArr[i].num+"' name='comm"+newCommArr[i].num+"'>"+newCommArr[i].content.replaceAll('<br>', '\r\n')+"</div>"
+                html += "<div class='content' id='comm"+newCommArr[i].num+"' name='comm"+newCommArr[i].num+"'>"+newCommArr[i].content+"</div>"
                 html += " <div class='content-mod' id='modComm"+newCommArr[i].num+"' name='modComm"+newCommArr[i].num+"' style='display: none;'>"
-                html += "<textarea class='comment_inbox_text' id='modComm_content"+newCommArr[i].num+"' name='modComm_content"+newCommArr[i].num+"' placeholder='댓글을 남겨보세요' rows='1' style='overflow: hidden; overflow-wrap: break-word; height: 17px;'></textarea>"
+                html += "<textarea class='comment_inbox_text' id='modComm_content"+newCommArr[i].num+"' name='modComm_content"+newCommArr[i].num+"placeholder='댓글을 남겨보세요 onkeydown='resize(this)' onkeyup='resize(this)'></textarea>"
                 html += "</div> <div class='comment_attach' id='mod_comment_attach"+newCommArr[i].num+"' style='display: none;'>"
                 html += "<div class='register_box'>"
                 html += "<a href='#' role='button' class='button btn_register' onClick='modComm("+newCommArr[i].num+")'>수정</a>"
@@ -60,6 +62,7 @@
 
          function initCommText(){
             document.getElementById("comment_content").value = '';
+            document.getElementById('comment_content').style.height = '0px'
          }
 
          function regComm(){
@@ -107,11 +110,13 @@
 
 
           function openModi(commNum, content){
+            content = content.replaceAll('<br>', '\r\n');
             if(isMod==false){
                 document.getElementById('comm'+commNum).style.display = 'none';
                 document.getElementById('modComm'+commNum).style.display = 'block';
                 document.getElementById('mod_comment_attach'+commNum).style.display = 'block';
                 document.getElementById('modComm_content'+commNum).value = content;
+                resize(document.getElementById('modComm_content'+commNum))
                 isMod = true;
             }else{
                 alert("이미 수정중인 댓글이 있어용🤔")

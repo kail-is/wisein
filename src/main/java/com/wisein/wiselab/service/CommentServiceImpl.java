@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         dao.insertComment(dto);
     }
 
-    /* comment 다건삭제 */
+    /* 글삭제시 comment 삭제 */
     @Override
     public void deleteAllComment(CommentDTO dto) throws Exception {
         dao.deleteAllComment(dto);

@@ -52,6 +52,7 @@
                 </c:if>
         </div>
 
+        <!--본문-->
         <div class="subject">
             ${content}
         </div>
@@ -103,7 +104,7 @@
                         </div>
                         <!--댓글 내용-->
                         <div class="content" id="comm${commentList.num}" name="comm${commentList.num}">
-                            <c:out value="${commentList.content}"/>
+                            ${commentList.content}
                         </div>
                         <!--댓글 수정-->
                         <div class="content-mod" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
