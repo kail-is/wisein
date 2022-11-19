@@ -2,7 +2,3 @@
 .content-wrap {
   max-width: 1400px;
 }
-
-.content-wrap .content-top-group button::after {
-  content: "질문!";
-}
