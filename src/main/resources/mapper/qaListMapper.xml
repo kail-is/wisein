@@ -18,7 +18,7 @@
              , A.LIKE_COUNT
              , A.SCRAP_COUNT
           FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
-                     , QB.NUM 
+                     , QB.NUM
                      , QB.CATEGORY
                      , QB.WRITER
                      , QB.SUBJECT
@@ -45,93 +45,93 @@
         ]]>
     </select>
 
-	<select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
-		<![CDATA[ 
-		SELECT COUNT(NUM) 
-		  FROM QA_BOARD 
-		 WHERE 1=1 
-		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END  
+    <select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+		 WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
 		   AND PARENT_NUM is NULL
 		]]>
-	</select>
+    </select>
 
     <!-- 게시글 등록 -->
     <insert id="insertQaBoard" parameterType="QaListDTO">
         INSERT INTO qa_board
         (
-            NUM
-            ,CATEGORY
-            ,WRITER
-            ,SUBJECT
-            ,CONTENT
-            ,REG_DATE
-            ,ADP_YN
-            ,DEL_YN
+        NUM
+        ,CATEGORY
+        ,WRITER
+        ,SUBJECT
+        ,CONTENT
+        ,REG_DATE
+        ,ADP_YN
+        ,DEL_YN
         )
         VALUES
         (
-            (SELECT NVL(MAX(num), 0) + 1 FROM qa_board ALIAS_FOR_SUBQUERY)
-            , #{category}
-            , #{writer}
-            , #{subject}
-            , #{content}
-            , (SELECT date_format(now(),'%Y-%c-%d'))
-            , 'N'
-            , 'N'
+        (SELECT NVL(MAX(num), 0) + 1 FROM qa_board ALIAS_FOR_SUBQUERY)
+        , #{category}
+        , #{writer}
+        , #{subject}
+        , #{content}
+        , (SELECT date_format(now(),'%Y-%c-%d'))
+        , 'N'
+        , 'N'
         )
     </insert>
     <!-- 단건 조회 -->
     <select id="selectQaOne" parameterType="QaListDTO" resultType="QaListDTO">
         SELECT
-            NUM
-            ,CATEGORY
-            ,WRITER
-            ,SUBJECT
-            ,CONTENT
-            ,REG_DATE
-            ,UPD_DATE
-            ,ADP_YN
-            ,DEL_YN
-            ,PARENT_NUM
-            ,LIKE_COUNT
-            ,ADP_NUM
-            ,SCRAP_COUNT
+        NUM
+        ,CATEGORY
+        ,WRITER
+        ,SUBJECT
+        ,CONTENT
+        ,REG_DATE
+        ,UPD_DATE
+        ,ADP_YN
+        ,DEL_YN
+        ,PARENT_NUM
+        ,LIKE_COUNT
+        ,ADP_NUM
+        ,SCRAP_COUNT
         FROM
-            qa_board
+        qa_board
         WHERE NUM=#{num}
     </select>
 
     <!-- 게시글 삭제 -->
     <delete id="deleteQaBoard" parameterType="Integer">
         UPDATE
-            qa_board
+        qa_board
         SET
-            del_yn = 'Y'
-            , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
+        del_yn = 'Y'
+        , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
         WHERE num = #{num}
     </delete>
 
     <!-- 게시글 삭제시 댓글 삭제 -->
     <delete id="deleteCommentQaBoard" parameterType="Integer">
         UPDATE
-            qa_board
+        qa_board
         SET
-            del_yn = 'Y'
-            , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
+        del_yn = 'Y'
+        , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
         WHERE PARENT_NUM = #{num}
     </delete>
 
     <!-- 게시글 수정 -->
     <update id="updateQaBoard" parameterType="QaListDTO">
         UPDATE
-            qa_board
+        qa_board
         SET
-            subject = #{subject}
-            , content = #{content}
-            , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
+        subject = #{subject}
+        , content = #{content}
+        , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
         WHERE num = #{num}
     </update>
     <!-- 파일 신규 등록 -->
@@ -141,11 +141,11 @@
     <!-- 파일 수정 등록 -->
     <select id="selectQaNum" parameterType="QaListDTO" resultType="QaListDTO">
         SELECT
-            NVL(max(num), 0) AS num
+        NVL(max(num), 0) AS num
         FROM
-            qa_board
+        qa_board
         WHERE
-            num = #{num}
+        num = #{num}
     </select>
     <!-- 댓글 등록 -->
     <insert id="insertCommentQaBoard" parameterType="QaListDTO">
@@ -178,28 +178,28 @@
     <!-- 댓글 조회 -->
     <select id="selectCommentQaList" resultType="QaListDTO">
         SELECT
-            NUM
-            ,CATEGORY
-            ,WRITER
-            ,SUBJECT
-            ,CONTENT
-            ,REG_DATE
-            ,UPD_DATE
-            ,ADP_YN
-            ,DEL_YN
-            ,PARENT_NUM
-            ,LIKE_COUNT
-            ,ADP_NUM
-            ,SCRAP_COUNT
+        NUM
+        ,CATEGORY
+        ,WRITER
+        ,SUBJECT
+        ,CONTENT
+        ,REG_DATE
+        ,UPD_DATE
+        ,ADP_YN
+        ,DEL_YN
+        ,PARENT_NUM
+        ,LIKE_COUNT
+        ,ADP_NUM
+        ,SCRAP_COUNT
         FROM
-            qa_board
+        qa_board
         WHERE PARENT_NUM = #{num}
         AND DEL_YN = 'N'
     </select>
 
     <!-- 게시글 총 개수 -->
-	<select id="listSearchCount" resultType="int">
-		<![CDATA[
+    <select id="listSearchCount" resultType="int">
+        <![CDATA[
 		SELECT COUNT(NUM)
 		  FROM QA_BOARD
 		 WHERE 1=1
@@ -295,117 +295,176 @@
     </select>
 
     <select id="selectQuestionsList" parameterType="QaListDTO" resultType="QaListDTO">
+        <![CDATA[
         SELECT A.RNUM
-            , A.NUM
-            , A.CATEGORY
-            , A.WRITER
-            , A.SUBJECT
-            , A.CONTENT
-            , A.REG_DATE
-            , A.UPD_DATE
-            , A.ADP_YN
-            , A.DEL_YN
-            , A.PARENT_NUM
-        FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
-            , QB.NUM
-            , QB.CATEGORY
-            , QB.WRITER
-            , QB.SUBJECT
-            , QB.CONTENT
-            , QB.REG_DATE
-            , QB.UPD_DATE
-            , QB.ADP_YN
-            , QB.DEL_YN
-            , QB.PARENT_NUM
-                FROM QA_BOARD QB
-                    , (SELECT @ROWNUM:=0) R
-                WHERE 1=1
-                    AND WRITER = #{writer}
-                    AND DEL_YN = 'N'
-                    AND QB.NUM > 0
-                    AND PARENT_NUM is NULL
-                GROUP BY QB.NUM
-                ORDER BY NUM DESC
-            ) AS A
+             , A.NUM
+             , A.CATEGORY
+             , A.WRITER
+             , A.SUBJECT
+             , A.CONTENT
+             , A.REG_DATE
+             , A.UPD_DATE
+             , A.ADP_YN
+             , A.DEL_YN
+             , A.PARENT_NUM
+             , A.LIKE_COUNT
+             , A.SCRAP_COUNT
+          FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+                     , QB.NUM
+                     , QB.CATEGORY
+                     , QB.WRITER
+                     , QB.SUBJECT
+                     , QB.CONTENT
+                     , QB.REG_DATE
+                     , QB.UPD_DATE
+                     , QB.ADP_YN
+                     , QB.DEL_YN
+                     , QB.PARENT_NUM
+                     , QB.LIKE_COUNT
+                     , QB.SCRAP_COUNT
+                  FROM QA_BOARD QB
+                     , (SELECT @ROWNUM:=0) R
+                 WHERE 1=1
+				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+				   AND WRITER = #{writer}
+                   AND DEL_YN = 'N'
+                   AND QB.NUM > 0
+                   AND PARENT_NUM is NULL
+                 GROUP BY QB.NUM
+                 ORDER BY NUM DESC
+                ) AS A
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+        ]]>
     </select>
 
     <select id="selectCommentList" parameterType="QaListDTO" resultType="QaListDTO">
+        <![CDATA[
         SELECT A.RNUM
-            , A.NUM
-            , A.CATEGORY
-            , A.WRITER
-            , A.SUBJECT
-            , A.CONTENT
-            , A.REG_DATE
-            , A.UPD_DATE
-            , A.ADP_YN
-            , A.DEL_YN
-            , A.PARENT_NUM
-        FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
-            , QB.NUM
-            , QB.CATEGORY
-            , QB.WRITER
-            , QB.SUBJECT
-            , QB.CONTENT
-            , QB.REG_DATE
-            , QB.UPD_DATE
-            , QB.ADP_YN
-            , QB.DEL_YN
-            , QB.PARENT_NUM
-        FROM QA_BOARD QB
-            , (SELECT @ROWNUM:=0) R
-            WHERE 1=1
-                AND WRITER = #{writer}
-                AND DEL_YN = 'N'
-                AND QB.NUM > 0
-                AND PARENT_NUM is NOT NULL
-            GROUP BY QB.NUM
-            ORDER BY NUM DESC
-        ) AS A
+             , A.NUM
+             , A.CATEGORY
+             , A.WRITER
+             , A.SUBJECT
+             , A.CONTENT
+             , A.REG_DATE
+             , A.UPD_DATE
+             , A.ADP_YN
+             , A.DEL_YN
+             , A.PARENT_NUM
+             , A.LIKE_COUNT
+             , A.SCRAP_COUNT
+          FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+                     , QB.NUM
+                     , QB.CATEGORY
+                     , QB.WRITER
+                     , QB.SUBJECT
+                     , QB.CONTENT
+                     , QB.REG_DATE
+                     , QB.UPD_DATE
+                     , QB.ADP_YN
+                     , QB.DEL_YN
+                     , QB.PARENT_NUM
+                     , QB.LIKE_COUNT
+                     , QB.SCRAP_COUNT
+                  FROM QA_BOARD QB
+                     , (SELECT @ROWNUM:=0) R
+                 WHERE 1=1
+				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+				   AND WRITER = #{writer}
+                   AND DEL_YN = 'N'
+                   AND QB.NUM > 0
+                   AND PARENT_NUM is NOT NULL
+                 GROUP BY QB.NUM
+                 ORDER BY NUM DESC
+                ) AS A
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+        ]]>
     </select>
 
     <!-- Like 등록시 게시글 LikeCount 증가-->
     <update id="addQaLikeCount" parameterType="int">
         UPDATE
-            qa_board
+        qa_board
         SET
-            LIKE_COUNT = LIKE_COUNT+1
+        LIKE_COUNT = LIKE_COUNT+1
         WHERE NUM = #{parentNum}
     </update>
 
     <!-- Like 해제시 게시글 LikeCount 증가-->
     <update id="delQaLikeCount" parameterType="int">
         UPDATE
-            qa_board
+        qa_board
         SET
-            LIKE_COUNT = LIKE_COUNT-1
+        LIKE_COUNT = LIKE_COUNT-1
         WHERE NUM = #{parentNum}
     </update>
 
     <!-- Scrap 등록시 게시글 ScrapCount 증가-->
     <update id="addQaScrapCount" parameterType="int">
         UPDATE
-            qa_board
+        qa_board
         SET
-            SCRAP_COUNT = SCRAP_COUNT+1
+        SCRAP_COUNT = SCRAP_COUNT+1
         WHERE NUM = #{parentNum}
     </update>
 
     <!-- Scrap 해제시 게시글 LikeCount 증가-->
     <update id="delQaScrapCount" parameterType="int">
         UPDATE
-            qa_board
+        qa_board
         SET
-            SCRAP_COUNT = SCRAP_COUNT-1
+        SCRAP_COUNT = SCRAP_COUNT-1
         WHERE NUM = #{parentNum}
     </update>
 
     <select id="getParentNum" parameterType="QaListDTO" resultType="int">
         SELECT
-            parent_num
+        parent_num
         FROM
-            qa_board
+        qa_board
         WHERE num = #{num}
+    </select>
+
+    <!-- 작성자 meetLink -->
+    <select id="selectMeetLink" parameterType="Integer" resultType="string">
+        SELECT MEET_LINK
+        FROM MEMBER
+        WHERE ID = (SELECT WRITER
+        FROM QA_BOARD
+        WHERE NUM = #{num}
+        AND DEL_YN = 'N'
+        )
+    </select>
+
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectMemberQaTotalCount" parameterType="QaListDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		   AND PARENT_NUM is NULL
+		]]>
+    </select>
+
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectMemberQaCommentTotalCount" parameterType="QaListDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM QA_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		   AND PARENT_NUM is NOT NULL
+		]]>
     </select>
 
 </mapper>

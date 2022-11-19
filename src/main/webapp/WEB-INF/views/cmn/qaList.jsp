@@ -2,23 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
+    <script src="resources/js/common/util.js"></script>
 </head>
 
+<c:if test="${empty questionsListWriter && empty commentListWriter}">
 <div class="content-wrap">
+</c:if>
+<c:if test="${not empty questionsListWriter || not empty commentListWriter}">
+<div class="content-wrap" style="max-width: 1300px;">
+</c:if>
     <section class="content-frame">
         <div class="content-top-group">
-            <div class="category-group">
-                <p class="title-select">제목(가나다)</p>
-                <ul class="person-function">
-                    <li><a href="#">제목</a></li>
-                    <li><a href="#">카테고리</a></li>
-                    <li><a href="#">글쓴이</a></li>
-                </ul>
-                <span class="material-icons">
-                        expand_more
-                    </span>
-            </div>
+        <c:if test="${side_gubun ne 'Y'}">
             <button type="button" onClick="location.href='/qaBoard'" ></button>
+        </c:if>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -26,6 +23,7 @@
                 </div>
                 <div class="board-cell board-category purple2">
                     <p class="category-select">카테고리</p>
+                    <!--
                     <ul class="person-function">
                         <li><a href="#">FRONT</a></li>
                         <li><a href="#">BACK</a></li>
@@ -34,14 +32,17 @@
                     <span class="material-icons">
                             expand_more
                         </span>
+                        -->
                 </div>
-                <div class="board-cell board-title">
+                <div class="board-cell board-title ">
                     제목(가나다)
+                    <!--
                     <span class="material-icons">
-                            expand_more
-                        </span>
+                        expand_more
+                    </span>
+                    -->
                 </div>
-                <div class="board-cell board-answer gray">
+                <div class="board-cell board-answer  gray">
                     답변
                 </div>
                 <div class="board-cell board-like gray">
@@ -56,7 +57,7 @@
             </div>
 
             <c:forEach var="qa" items="${qaList}">
-                <div class="board-line">
+                <div class="board-line ">
                     <div class="board-cell board-no">
                         <c:out value="${qa.num}" />
                     </div>
@@ -78,15 +79,18 @@
                             </span>
                         </c:if>
                     </div>
-                    <div class="board-cell board-like">
-                            <c:if test="${qa.likeCount == 0}">
-                            <span class="material-icons" style="color:gray;">thumb_up</span>
-                            </c:if>
-                            <c:if test="${qa.likeCount != 0}">
-                            <span class="material-icons" >thumb_up</span>
-                            </c:if>
-                        ${qa.likeCount}
-                    </div>
+
+                    <c:if test="${qa.likeCount == 0}">
+                        <div class="board-cell board-like gray">
+                            <span class="material-icons">thumb_up</span>
+                        </div>
+                    </c:if>
+                    <c:if test="${qa.likeCount != 0}">
+                        <div class="board-cell board-like purple2">
+                            <span class="material-icons">thumb_up</span>${qa.likeCount}
+                        </div>
+                    </c:if>
+
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>
@@ -129,15 +133,3 @@
             </span>
     </a>
 </div>
-
-<script type="module" >
-    import * as event from 'resources/js/common/event.js';
-    let writer = document.getElementsByClassName("writer");
-    let categorySelect = document.getElementsByClassName("category-select");
-    let titleSelect = document.getElementsByClassName("title-select");
-
-    event.clickDisplayChangeListener(writer);
-    event.clickDisplayChangeListener(categorySelect);
-    event.clickDisplayChangeListener(titleSelect);
-
-</script>

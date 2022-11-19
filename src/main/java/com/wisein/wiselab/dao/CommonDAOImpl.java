@@ -20,6 +20,11 @@ public class CommonDAOImpl implements CommonDAO {
     }
 
     @Override
+    public void deleteAllImg(String brdRef) throws Exception {
+        sql.update(NS + ".deleteAllImg", brdRef);
+    }
+
+    @Override
     public void uploadImgList(List<FileDTO> list) {
         sql.insert(NS + ".insertFileList", list);
     }

@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
-<head>
-    <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
-</head>
-<body>
-<div class="content-wrap">
-    <section class="content-frame">
+<div class="content-wrap tipList">
+    <section class="content-frame tipList">
         <div class="content-top-group">
-           <button type="button" onClick="location.href='tipBoard'" ></button>
+           <c:if test="${side_gubun ne 'Y'}">
+                <button type="button" onClick="location.href='tipBoard'" ></button>
+           </c:if>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -16,6 +14,7 @@
                 </div>
                 <div class="board-cell board-category purple2">
                     <p class="category-select">카테고리</p>
+                    <!--
                     <ul class="person-function">
                         <li><a href="#">FRONT</a></li>
                         <li><a href="#">BACK</a></li>
@@ -24,12 +23,15 @@
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-title">
                     제목(가나다)
+                    <!--
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-like gray">
                     좋아요
@@ -103,17 +105,3 @@
         </span>
     </a>
 </div>
-
-<script type="module">
-    import * as event from 'resources/js/common/event.js';
-    let writer = document.getElementsByClassName("writer");
-    let categorySelect = document.getElementsByClassName("category-select");
-    let titleSelect = document.getElementsByClassName("title-select");
-
-    event.clickDisplayChangeListener(writer);
-    event.clickDisplayChangeListener(categorySelect);
-    event.clickDisplayChangeListener(titleSelect);
-</script>
-
-</body>
-</html>

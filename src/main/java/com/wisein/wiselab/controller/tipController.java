@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,47 @@ public class tipController {
         tipList = tipBoardService.selectTipList(dto);
 
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
+        String pagination = PagingTagCustom.render(dto);
+
+        model.addAttribute("tipList", tipList);
+        model.addAttribute("pagination", pagination);
+
+        return "cmn/tipList";
+    }
+
+    //작성글 모아보기
+    @GetMapping(value="/gatherMemTip")
+    public String gatherMemTip (HttpServletRequest request, @ModelAttribute("TipBoardDTO") TipBoardDTO dto,  @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck, Model model) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+        //모아보기 첫진입
+        if(dto.getWriter() != null) {
+            String check = (String)session.getAttribute("writer");
+            if(check != null) {session.removeAttribute("writer");}
+            session.setAttribute("writer",dto.getWriter());
+        }
+
+        //석삼 모아보기 첫진입
+        if(dto.getWriter() == null && sideCheck.equals("Y")) {
+            String check = (String)session.getAttribute("writer");
+            if(check != null) {session.removeAttribute("writer");}
+            session.setAttribute("writer", member.getId());
+        }
+
+        dto.setWriter((String)session.getAttribute("writer"));
+        session.setAttribute("writer",dto.getWriter());
+
+        //본인글 모아보기시 사이드바 show
+        if(member.getId().equals(dto.getWriter())){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+
+        List<TipBoardDTO> tipList = new ArrayList<>();
+
+        tipList = tipBoardService.selectMemberTipList(dto);
+        dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
         model.addAttribute("tipList", tipList);
@@ -154,9 +196,11 @@ public class tipController {
         CommentDTO CommentDTO = new CommentDTO();
         CommentDTO.setBoardIdx(num);
         CommentDTO.setBoardType("tip");
+        String brdRef = "tip||"+num;
 
         tipBoardService.deleteTipBoard(num);
         commentService.deleteAllComment(CommentDTO);
+        commonService.deleteAllImg(brdRef);
 
         return "redirect:/tipList";
     }

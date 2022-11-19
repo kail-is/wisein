@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <% String url =  request.getServerName().toString(); %>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@
         <link rel="stylesheet" href="${url}/resources/css/main.css">
         <link rel="stylesheet" href="${url}/resources/css/common.css">
         <link rel="stylesheet" href="${url}/resources/css/tipBoard.css">
-
+        <link rel="stylesheet" href="${url}/resources/css/tipDetail.css">
         <link rel="stylesheet" href="${url}/resources/css/foodList.css">
         <link rel="stylesheet" href="${url}/resources/css/foodDetail.css">
 

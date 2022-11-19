@@ -1,5 +1,5 @@
 
-        function reg(writer, category){
+        function regQa(writer, category){
             //alert(writer);
             //alert(category);
 

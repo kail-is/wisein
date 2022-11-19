@@ -53,7 +53,10 @@ public class qaController {
     private final AbstractPagingCustom PagingTagCustom;
 
     @GetMapping(value="/qalist")
-    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
+    public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO
+                        //, HttpSession session
+                        //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
+                        , Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
 
@@ -76,9 +79,9 @@ public class qaController {
 
     @PostMapping(value="/qaBoard")
     public String qaBoard (HttpServletRequest request
-                        , QaListDTO qaListDTO
-                        , RedirectAttributes re) throws Exception {
-//        System.out.println("========================= qaBoard Post 시작 ====================================");
+            , QaListDTO qaListDTO
+            , RedirectAttributes re) throws Exception {
+        //System.out.println("========================= qaBoard Post 시작 ====================================");
         HttpSession session = request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
@@ -120,19 +123,18 @@ public class qaController {
     public String qaDetail (HttpServletRequest request
             , QaListDTO dto
             , Model model
-//            , @RequestBody String data
             , @RequestParam("num") int num) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+        //meetLink
+        String meetLink = qaListservice.selectMeetLink(num);
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
         List<String> commentContent = new ArrayList<>();
         List<LikeBoardDTO> likeQaBoardList = new ArrayList<>();
         List<ScrapBoardDTO> scrapQaBoardList = new ArrayList<>();
-
-//        System.out.println("dto : " + dto.toString());
-//        System.out.println("num : " + num);
 
         // redirect시 필요조건
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -176,7 +178,7 @@ public class qaController {
         if(likeQaBoardList != null){
             model.addAttribute("likeQaBoardList", likeQaBoardList);
 //            System.out.println("likeQaBoardList : " + likeQaBoardList.toString());
-}
+        }
         // 스크랩 히스토리가 있을경우 저장
         if(scrapQaBoardList != null){
             model.addAttribute("scrapQaBoardList", scrapQaBoardList);
@@ -187,8 +189,13 @@ public class qaController {
             commentContent.add(commentQaList.get(i).getContent());
         }
         model.addAttribute("commentContent", commentContent);
-        String side_gubun = "Y";
-        model.addAttribute("side_gubun", side_gubun);
+
+        String check =(String)session.getAttribute("side_gubun");
+        if(check == null){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+        model.addAttribute("meetLink", meetLink);
 
         return "cmn/qaDetail";
     }
@@ -268,8 +275,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/regLikeQa")
     public JSONObject regLikeQa (HttpSession session
-                        , @RequestBody String data
-                        , LikeBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , LikeBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -338,8 +345,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/udpLikeQa")
     public JSONObject udpLikeQa (HttpSession session
-                            , LikeBoardDTO dto
-                            , @RequestBody String data) throws Exception {
+            , LikeBoardDTO dto
+            , @RequestBody String data) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -413,8 +420,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/regScrapQa")
     public JSONObject regScrapQa (HttpSession session
-                        , @RequestBody String data
-                        , ScrapBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , ScrapBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -479,8 +486,8 @@ public class qaController {
     @ResponseBody
     @PostMapping(value = "/udpScrapQa")
     public JSONObject udpScrapQa (HttpSession session
-                                , @RequestBody String data
-                                , ScrapBoardDTO dto) throws Exception {
+            , @RequestBody String data
+            , ScrapBoardDTO dto) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         dto.setUserId(member.getId());
 
@@ -551,9 +558,9 @@ public class qaController {
 
     @GetMapping(value = "/qaDelete")
     public String qaDelete (
-                          HttpServletRequest request
-                        , @RequestParam(value="num", required = false, defaultValue = "0") int num
-                        , @RequestParam(value="commentQaNum", required = false, defaultValue = "0") int commentQaNum) throws Exception {
+            HttpServletRequest request
+            , @RequestParam(value="num", required = false, defaultValue = "0") int num
+            , @RequestParam(value="commentQaNum", required = false, defaultValue = "0") int commentQaNum) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
@@ -581,7 +588,7 @@ public class qaController {
             if(commentQaList != null){
                 qaListservice.deleteCommentQaBoard(num);
                 int commentQaListSize = commentQaList.size();
-            //3.
+                //3.
                 if(likeQaBoardList != null){
                     int LikeQaBoardListSize = likeQaBoardList.size();
                     for(int i=0; i<commentQaListSize; i++){
@@ -593,7 +600,7 @@ public class qaController {
                         }
                     }
                 }
-            //4.
+                //4.
                 if(scrapQaBoardList != null){
                     int scrapQaBoardListSize = scrapQaBoardList.size();
                     for(int i=0; i<commentQaListSize; i++){
@@ -627,7 +634,7 @@ public class qaController {
     @PostMapping(value = "/qaUpdatePro")
     public String qaUpdatePro (QaListDTO qaListDTO
 //                            , Model model
-                            , RedirectAttributes re) throws Exception {
+            , RedirectAttributes re) throws Exception {
 
         qaListservice.updateQaBoard(qaListDTO);
 //        System.out.println("qaListDTO : " + qaListDTO.toString());
@@ -676,8 +683,8 @@ public class qaController {
     //@ResponseBody
     @PostMapping(value = "/qaAdopt")
     public String qaAdopt (int boardNum
-                        , int commentNum
-                        , RedirectAttributes re) throws Exception {
+            , int commentNum
+            , RedirectAttributes re) throws Exception {
         QaListDTO dto = new QaListDTO();
         dto.setNum(commentNum);
         dto.setParentNum(boardNum);
@@ -691,31 +698,126 @@ public class qaController {
     }
 
     @GetMapping(value="/questionsList")
-    public String questionsList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
-//        System.out.println("questionsList : " + qaListDTO);
-        List<QaListDTO> qaList = new ArrayList<>();
-        qaList = qaListservice.selectQuestionsList(qaListDTO);
+    public String questionsList (HttpServletRequest request
+            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+           , Model model) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-//        for (int i=0; i<qaList.size(); i++)
-//            System.out.println(qaList.get(i).toString());
+        // 사이드모아보기 아니면서 처음 모아보기일경우
+        if(qaListDTO.getWriter() != null){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null){
+                session.removeAttribute("questionsListWriter");
+            }
+            session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+            //System.out.println("사이드모아보기 아니면서 처음 모아보기일경우");
+        }
+        // 사이드모아보기 처음일경우
+        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null){
+                session.removeAttribute("questionsListWriter");
+            }
+            session.setAttribute("questionsListWriter", member.getId());
+            //System.out.println("사이드모아보기 처음일경우");
+        }
+
+        qaListDTO.setWriter((String)session.getAttribute("questionsListWriter"));
+        session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+        System.out.println(qaListDTO.getWriter());
+
+        // 본인글 및 본인 질문모아보기에서는 사이드바 보여주게 설정
+        if(member.getId().equals(qaListDTO.getWriter())){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+
+        List<QaListDTO> qaList = new ArrayList<>();
+
+        qaList = qaListservice.selectQuestionsList(qaListDTO);
+        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/qaList";
     }
 
     @GetMapping(value="/commentList")
-    public String commentList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO, Model model) throws Exception {
-//        System.out.println("commentList : " + qaListDTO);
-        List<QaListDTO> qaList = new ArrayList<>();
-        qaList = qaListservice.selectCommentList(qaListDTO);
+    public String commentList (HttpServletRequest request
+            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , Model model) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-//        for (int i=0; i<qaList.size(); i++)
-//            System.out.println(qaList.get(i).toString());
+        // 사이드모아보기 아니면서 처음 모아보기일경우
+        if(qaListDTO.getWriter() != null){
+            String temp = (String)session.getAttribute("commentListWriter");
+            if(temp != null){
+                session.removeAttribute("commentListWriter");
+            }
+            session.setAttribute("commentListWriter", qaListDTO.getWriter());
+        }
+
+        qaListDTO.setWriter((String)session.getAttribute("commentListWriter"));
+
+//System.out.println(sideCheck);
+        // 사이드바에서 QA답글모아보기 예외처리
+        if(sideCheck.equals("Y")){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null && temp.equals(member.getId())){
+                qaListDTO.setWriter(temp);
+                session.setAttribute("commentListWriter", member.getId());
+            }
+        }
+
+//System.out.println(session.getAttribute("questionsListWriter"));
+//System.out.println(session.getAttribute("commentListWriter"));
+//System.out.println(qaListDTO.getWriter());
+
+        // 본인글 및 본인 답글모아보기에서는 사이드바 보여주게 설정
+        if(member.getId().equals(qaListDTO.getWriter())){
+            String side_gubun = "Y";
+            model.addAttribute("side_gubun", side_gubun);
+        }
+
+        List<QaListDTO> qaList = new ArrayList<>();
+
+        qaList = qaListservice.selectCommentList(qaListDTO);
+        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaCommentTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
 
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/qaList";
+    }
+
+    //comment_meetLink_btn 조회
+    @ResponseBody
+    @PostMapping(value = "/selectMeetLink")
+    public JSONObject selectMeetLink (HttpSession session
+            , @RequestBody String data) throws Exception {
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(data);
+
+        JSONObject jsonObj = (JSONObject)obj;
+
+        String numStr = String.valueOf(jsonObj.get("num"));
+        int num = Integer.parseInt(numStr);
+
+        String meetLink = qaListservice.selectMeetLink(num);
+
+        JSONObject response = new JSONObject();
+
+        response.put("meetLink",meetLink);
+
+        return response;
     }
 
 }

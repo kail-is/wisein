@@ -66,6 +66,11 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public void deleteAllImg(String brdRef) throws Exception {
+        dao.deleteAllImg(brdRef);
+    }
+
+    @Override
     public void updateHash(FileDTO dto) throws Exception {
         dao.updateHash(dto);
     }
