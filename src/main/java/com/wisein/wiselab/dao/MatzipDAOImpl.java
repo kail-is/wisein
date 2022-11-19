@@ -124,5 +124,10 @@ public class MatzipDAOImpl implements MatzipDAO {
         return sql.selectOne(NS + ".dataCount", location);
     }
 
+    @Override
+    public int recmMatzipId(int recmId) {
+        return sql.selectOne(NS + ".recmMatzipId", recmId);
+    }
+
 
 }

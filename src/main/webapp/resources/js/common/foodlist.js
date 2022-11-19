@@ -2,6 +2,9 @@ let x, y, companyLength, localCheck, marker;
 let createDiv = document.createElement('div');
 let createDivBefore = document.querySelector('.button-wrap');
 let pageDiv = document.querySelector('#page');
+let name, infoTitle, map;
+let clickOverlay = null;
+let content;
 
 let totalCount;
 let dataPerPage = 5;
@@ -13,6 +16,9 @@ let startPage;
 let endPage;
 let totalPage;
 
+/*
+    맛집 페이지 로드 시 회사 데이터 표시
+*/
 window.addEventListener('DOMContentLoaded', function(){
     fetch("/companyList")
         .then(response => response.json())
@@ -23,18 +29,19 @@ window.addEventListener('DOMContentLoaded', function(){
                     += "<div id='list' class='board-line'>"
                     + "<div style='width:300px;' class='board-cell board-category purple2'>"
                     + companyList.company[i].location+"</div>"
-                    + "<div onclick='selectFoodLocal(&quot;" + companyList.company[i].location+ "&quot;,&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-cell board-title'>"
+                    + "<div onclick='selectFoodLocal(&quot;" + companyList.company[i].location+ "&quot;,&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;,&quot;type1&quot;,&quot;" + companyList.company[i].companyName+ "&quot;)' class='board-cell board-title'>"
                     + companyList.company[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                     + companyList.company[i].matzipCount+"</div>"
                     + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + companyList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
             }
             createDivBefore.insertAdjacentElement('beforebegin', createDiv);
-
         });
-
 });
 
+/*
+    로드뷰 클릭시 지역 좌표 변환
+*/
 function roadView(local) {
     fetch("/lateChange?"+"local="+local)
         .then(response => response.json())
@@ -48,6 +55,9 @@ function roadView(local) {
         })
 }
 
+/*
+    카테고리 선택
+*/
 function categorySelect(target) {
 
     removeAllChild(pageDiv);
@@ -70,7 +80,7 @@ function categorySelect(target) {
                     createDiv.innerHTML
                         += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                         + categoryList.company[i].location+"</div>"
-                        + "<div onclick='selectFoodLocal(&quot;" + categoryList.company[i].location+ "&quot;,&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;,&quot;type1&quot;)' class='board-cell board-title'>"
+                        + "<div onclick='selectFoodLocal(&quot;" + categoryList.company[i].location+ "&quot;,&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;,&quot;type1&quot;,&quot;" + categoryList.company[i].companyName+ "&quot;)' class='board-cell board-title'>"
                         + categoryList.company[i].companyName+"</div>"
                         + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                         + categoryList.company[i].matzipCount+"</div>"
@@ -82,6 +92,9 @@ function categorySelect(target) {
     }
 }
 
+/*
+    맛집 위치 표시
+*/
 function matzipLoc(location, currentPage) {
 
     removeAllChild(pageDiv);
@@ -111,6 +124,7 @@ function matzipLoc(location, currentPage) {
         .then(response => response.json())
         .catch(error => console.log('Error'))
         .then(matzipList => {
+            console.log(matzipList.matzip);
             if (matzipList.matzip.length==0) {
                 createDiv.innerHTML
                     += "<div id='list' class='board-line' style='height:50px;justify-content:center;align-items:center;';>"
@@ -121,7 +135,7 @@ function matzipLoc(location, currentPage) {
                 createDiv.innerHTML
                     += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                     + matzipList.matzip[i].location+"</div>"
-                    + "<div onclick='selectFoodLocal(&quot;" + matzipList.matzip[i].location+ "&quot;,&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;,&quot;type2&quot;)' class='board-cell board-title'>"
+                    + "<div onclick='selectFoodLocal(&quot;" + matzipList.matzip[i].location+ "&quot;,&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;,&quot;type2&quot;,&quot;" + matzipList.matzip[i].companyName+ "&quot;)' class='board-cell board-title'>"
                     + matzipList.matzip[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                     + matzipList.matzip[i].matzipCount+"</div>"
@@ -243,8 +257,8 @@ function setPageBlock(currentPage, pageBlock) {
     endPage = startPage + pageBlock - 1;
 }
 
-function selectFoodLocal(location, local, id, type) {
-
+function selectFoodLocal(location, local, id, type, companyName) {
+    name = companyName;
     localExistCheck(id);
 
     let changeText = document.getElementById('changeText')
@@ -258,15 +272,12 @@ function selectFoodLocal(location, local, id, type) {
             x = lateRst.documents[0].x;
             y = lateRst.documents[0].y;
 
-            panTo(lateRst.documents[0].address_name);
+            panTo(lateRst.documents[0].address_name, companyName);
         })
     if (type === 'type1') {
         matzipLoc(location, currentPage);
     }
-
 }
-
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 var mapContainer = document.getElementById('map'),
     mapOption = {
@@ -274,16 +285,19 @@ var mapContainer = document.getElementById('map'),
         level: 3,
     };
 
-var map = new kakao.maps.Map(mapContainer, mapOption);
+map = new kakao.maps.Map(mapContainer, mapOption);
 
-function panTo(loc) {
+//마커 체크
+function panTo(loc, companyName) {
     var moveLatLon = new kakao.maps.LatLng(y, x);
     map.panTo(moveLatLon);
-    localCheckPoint(loc);
+    localCheckPoint(loc, companyName);
 }
 
-//상세 맛집 페이지 이동
-function localCheckPoint(loc) {
+//맛집 클릭시 좌표 & 커스텀 오버레이
+function localCheckPoint(loc, companyName) {
+
+    /*---- 맛집 클릭시 좌표 찍음----*/
     var markerPosition = new kakao.maps.LatLng(y, x);
 
     marker = new kakao.maps.Marker({
@@ -294,25 +308,70 @@ function localCheckPoint(loc) {
     marker.setMap(map);
 
 
-    kakao.maps.event.addListener(marker, 'click', function() {
+    //마커 클릭할 때 마다 customOverlay에 할당되있는 값을 null처리하고
+    //현재 클릭한 cuttomOverlay 변수에 재할당
 
-        if (localCheck==1) {
-            fetch("/matzipDetailId?"+"loc="+loc)
-                .then(response => response.json())
-                .catch(error => console.log('Error'))
-                .then(matzipId => {
-                    console.log(matzipId);
-                    if (typeof matzipId != 'number') {
-                        return;
-                    } else {
-                        let url = "http://localhost:8080/matzip?id="+matzipId;
-                        location.href = url;
-                    }
-                });
+    kakao.maps.event.addListener(marker, 'click', function() {
+        if (clickOverlay) {
+            clickOverlay.setMap(null);
         }
+
+        marker = new kakao.maps.Marker({
+            position: markerPosition,
+            clickable: true
+        });
+
+        customOverlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: marker.getPosition()
+        });
+
+        content = '<div class="wrap">' +
+        '    <div class="info">' +
+        '        <div class="title">' +
+        companyName+
+        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+        '        </div>' +
+        '        <div class="body">' +
+        '            <div class="desc">' +
+        '                <div class="ellipsis">'+loc+'</div>' +
+        '                <div class="detail-btn"><a href="javascript:void(0);"  onclick="detailPage(\''+loc+'\');">상세보기</a></div>' +
+        '            </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>';
+
+        customOverlay.setContent(content);
+
+        customOverlay.setMap(map);
+        clickOverlay = customOverlay;
     });
+
 }
 
+//커스텀 오버레이 맛집 상세페이지 이동
+function detailPage(loc) {
+    if (localCheck==1) {
+        fetch("/matzipDetailId?"+"loc="+loc)
+            .then(response => response.json())
+            .catch(error => console.log('Error'))
+            .then(matzipId => {
+                if (typeof matzipId != 'number') {
+                    return;
+                } else {
+                    let url = "http://localhost:8080/matzip?id="+matzipId;
+                    location.href = url;
+                }
+            });
+    }
+}
+
+//커스텀 오버레이 닫기
+function closeOverlay() {
+    customOverlay.setMap(null);
+}
+
+//로드뷰 표시
 function setRoadView(x, y) {
     let roadviewContainer = document.getElementById('roadview');
     let roadview = new kakao.maps.Roadview(roadviewContainer);
@@ -322,7 +381,7 @@ function setRoadView(x, y) {
 
     roadviewClient.getNearestPanoId(position, 50, function(panoId) {
         if (panoId==null) {
-            commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!");
+            commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!", false);
         } else {
             let closeBtn = document.querySelector('#road-close-btn');
 
@@ -339,6 +398,7 @@ function setRoadView(x, y) {
     });
 }
 
+//matzip board db에 맛집이 있는 지 확인
 function localExistCheck(id) {
     fetch("/matzipCheck?"+"id="+id)
         .then(response => response.json())
@@ -347,7 +407,6 @@ function localExistCheck(id) {
             localCheck = existCheck;
         });
 }
-
 
 
 

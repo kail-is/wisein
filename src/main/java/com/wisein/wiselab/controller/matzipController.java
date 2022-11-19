@@ -113,10 +113,14 @@ public class matzipController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
+	@ResponseBody
 	@GetMapping(value="/delRecm")
-	public String delRecm (@RequestParam int num) throws Exception {
-		service.delRecm(num);
-		return "cmn/foodDetail";
+	public int delRecm (@RequestParam int id) throws Exception {
+		service.delRecm(id);
+		int recmMatzipId = dao.recmMatzipId(id);
+		System.out.println(recmMatzipId);
+//		return "cmn/foodDetail";
+		return recmMatzipId;
 	}
 
 	@GetMapping(value="/recmCnt")
@@ -134,6 +138,7 @@ public class matzipController {
 	@GetMapping(value="/addClosed")
 	public String updClosedStat (@RequestParam int matzipId, RedirectAttributes ra) throws Exception {
 		service.updClosedStat(matzipId);
+		System.out.println("#########"+matzipId);
 		ra.addAttribute("id", matzipId);
 		return "redirect:/matzip";
 	}

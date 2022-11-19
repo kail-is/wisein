@@ -68,6 +68,7 @@ public class RestMatzipController {
                 companyDTO.setCompanyName((String) jObject.get("place_name"));
                 companyDTO.setCompanyLoc((String) jObject.get("address_name"));
 
+
             } else {
                 companyDTO.setId(siteList.get(i).getId());
                 companyDTO.setLocation(siteList.get(i).getLocation());
@@ -121,11 +122,19 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            companyDTO.setId(matzipList.get(i).getId());
-            companyDTO.setLocation(matzipList.get(i).getLocation());
-            companyDTO.setCompanyName((String) jObject.get("place_name"));
-            companyDTO.setCompanyLoc((String) jObject.get("address_name"));
-            companyDTO.setMatzipCount(recmMatzipList.get(0).getMatzipCount());
+            if (recmMatzipList.size() == 0) {
+                companyDTO.setId(matzipList.get(i).getId());
+                companyDTO.setLocation(matzipList.get(i).getLocation());
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+                companyDTO.setMatzipCount(0);
+            } else {
+                companyDTO.setId(matzipList.get(i).getId());
+                companyDTO.setLocation(matzipList.get(i).getLocation());
+                companyDTO.setCompanyName((String) jObject.get("place_name"));
+                companyDTO.setCompanyLoc((String) jObject.get("address_name"));
+                companyDTO.setMatzipCount(recmMatzipList.get(0).getMatzipCount());
+            }
 
             company.add(companyDTO);
         }
