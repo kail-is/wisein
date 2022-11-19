@@ -47,6 +47,9 @@
                         맛집
                     </div>
                     <div class="board-cell board-text">
+                        위치
+                    </div>
+                    <div class="board-cell board-text">
                         로드뷰
                     </div>
                 </div>
