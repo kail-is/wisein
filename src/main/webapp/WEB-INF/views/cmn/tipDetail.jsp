@@ -79,7 +79,7 @@
                         <div class="recommend-info-wrap">
                             <!-- 댓글 작성자 img -->
                                 <c:if test = "${commentList.filePath != null}">
-                                    <img src ="../${commentList.filePath}">
+                                    <img src ="../${commentList.filePath}" onError="this.src='../resources/image/Conic.png'">
                                 </c:if>
                                 <c:if test = "${commentList.filePath == null}">
                                     <img src ="../resources/image/Conic.png">
