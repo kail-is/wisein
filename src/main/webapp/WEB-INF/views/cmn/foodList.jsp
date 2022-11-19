@@ -20,7 +20,7 @@
             <input class="recm-btn" type="button" onclick="location.href='matzipBoard'" value="추천">
         </div>
 
-        <div class="map-wrap">
+        <div class="map-wrap food-wrap">
             <div id="map"></div>
         </div>
         <div class="board-wrap">

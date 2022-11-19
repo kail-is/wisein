@@ -118,7 +118,7 @@ public class matzipController {
 	public int delRecm (@RequestParam int id) throws Exception {
 		service.delRecm(id);
 		int recmMatzipId = dao.recmMatzipId(id);
-		System.out.println(recmMatzipId);
+
 //		return "cmn/foodDetail";
 		return recmMatzipId;
 	}
@@ -138,7 +138,7 @@ public class matzipController {
 	@GetMapping(value="/addClosed")
 	public String updClosedStat (@RequestParam int matzipId, RedirectAttributes ra) throws Exception {
 		service.updClosedStat(matzipId);
-		System.out.println("#########"+matzipId);
+
 		ra.addAttribute("id", matzipId);
 		return "redirect:/matzip";
 	}
