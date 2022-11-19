@@ -94,6 +94,7 @@
 .content-frame.food-wrap .top-group input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .board-wrap {
@@ -209,6 +210,7 @@
 .content-frame.food-wrap .board-wrap .button-wrap input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .pageNo-wrap .pageno-group {
