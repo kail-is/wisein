@@ -197,13 +197,11 @@
            <label class="signUp-input-label">프로필 사진</label>
            <input type="file" id="files" name="fileName" />
             <div class="file_list">
-                <c:forEach var="list" items="${member.fileList}">
-                    <div class="profile_img">
-                    <img src ="../${member.fileList[0].filePath}" width="25" height="25">
-                    ${list.orgFileName}
-                    <p onclick="imgDel(this.id)" id="${list.fileName}">X</p>
-                    </div>
-                </c:forEach>
+                <div class="profile_img">
+                <img src ="../${member.fileList[0].filePath}" width="25" height="25"
+                    onError="this.src='../resources/image/Conic.png'">
+                <p class="del-btn" onclick="imgDel(this.id)" id="${member.fileList[0].fileName}"></p>
+                </div>
             </div>
         </div>
         <div class="signUp-input-wrap">
