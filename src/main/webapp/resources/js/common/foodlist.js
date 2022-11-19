@@ -326,13 +326,13 @@ function localCheckPoint(loc, companyName) {
             position: marker.getPosition()
         });
 
-        content = '<div class="wrap">' +
-        '    <div class="info">' +
-        '        <div class="title">' +
+        content = '<div class="wrap food-wrap">' +
+        '    <div class="info food-wrap">' +
+        '        <div class="title food-wrap">' +
         companyName+
-        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+        '            <div class="close food-wrap" onclick="closeOverlay()" title="닫기"></div>' +
         '        </div>' +
-        '        <div class="body">' +
+        '        <div class="body food-wrap">' +
         '            <div class="desc">' +
         '                <div class="ellipsis">'+loc+'</div>' +
         '                <div class="detail-btn"><a href="javascript:void(0);"  onclick="detailPage(\''+loc+'\');">상세보기</a></div>' +

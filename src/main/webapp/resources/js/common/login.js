@@ -229,12 +229,12 @@ window.onload = function() {
         var password = document.getElementById("login_pw").value;
 
         if(id.length == 0) {
-            commonPopup.alertPopup("아이디를 입력하세요.", false);
+            commonPopup.alertPopup("아이디를 입력하세요.", true);
           return false
         }
 
         if(password.length == 0) {
-          commonPopup.alertPopup("비밀번호를 입력하세요.",false );
+          commonPopup.alertPopup("비밀번호를 입력하세요.", true);
           return false
         }
 
