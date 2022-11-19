@@ -11,7 +11,7 @@ function isEmpty(obj){
     }else{
       return false
     }
-  };
+  }
 
  /*
      * 작성자 : 이형근

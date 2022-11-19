@@ -78,7 +78,9 @@ let callAjaxIntegrationData = (addr = location.pathname) => {
     };
 }
 let callFun = callAjaxIntegrationData();
-callFun();
+ if(location.href.indexOf("integration") > -1) {
+    callFun();
+ }
 window.addEventListener('wheel',()=>{
     let scrollY =  window.innerHeight + window.scrollY;//브라우저 안쪽 길이 + 스크롤의 현재 위치
     if(scrollY > document.body.offsetHeight){//body태그 문서 길이

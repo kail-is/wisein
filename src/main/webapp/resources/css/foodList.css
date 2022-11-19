@@ -94,6 +94,7 @@
 .content-frame.food-wrap .top-group input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .board-wrap {
@@ -115,10 +116,15 @@
 }
 
 .board-list.food-wrap {
-
     height:210px;
 }
 
+.category-select #selectOption {
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
 @media screen and (max-width: 992px) {
   .content-frame.food-wrap .board-wrap .board-list .board-header {
@@ -209,6 +215,7 @@
 .content-frame.food-wrap .board-wrap .button-wrap input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .pageNo-wrap .pageno-group {

@@ -21,7 +21,7 @@ const onUploadImage = (blob, callback) => {
     .then(response => response.text())
     .catch(error => console.error('Error:', error))
     .then( imgUrl => {
-        const alt = blob.name
+        const alt = document.getElementById("toastuiAltTextInput").value
         url = window.location.host
         callback( "http://" + url + '/' + imgUrl, alt)
      });

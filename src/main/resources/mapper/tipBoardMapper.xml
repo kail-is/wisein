@@ -42,6 +42,47 @@
            ]]>
         </select>
 
+    <!--TipBoard 작성글 모아보기-->
+    <select id="selectMemberTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
+        <![CDATA[
+            SELECT A.RNUM
+                  ,A.NUM
+                  ,A.CATEGORY
+                  ,A.WRITER
+                  ,A.SUBJECT
+                  ,A.CONTENT
+                  ,A.REG_DATE
+                  ,A.UPD_DATE
+                  ,A.DEL_YN
+                  ,A.PARENT_NUM
+                  ,A.LIKE_COUNT
+            FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+                        ,TB.NUM
+                        ,TB.CATEGORY
+                        ,TB.WRITER
+                        ,TB.SUBJECT
+                        ,TB.CONTENT
+                        ,TB.REG_DATE
+                        ,TB.UPD_DATE
+                        ,TB.DEL_YN
+                        ,TB.COUNT
+                        ,TB.PARENT_NUM
+                        ,TB.LIKE_COUNT
+                   FROM TIP_BOARD TB
+                       ,(SELECT @ROWNUM:=0) R
+                  WHERE 1=1
+                    AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+                    AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+                    AND WRITER = #{writer}
+                    AND DEL_YN = 'N'
+                    AND TB.NUM > 0
+                  GROUP BY TB.NUM
+                  ORDER BY NUM DESC
+                  ) AS A
+           LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+           ]]>
+        </select>
+
         <!--TipBoard 단건조회-->
         <select id="selectTipOne" parameterType="TipBoardDTO" resultType="TipBoardDTO">
             SELECT NUM
@@ -123,6 +164,20 @@
 	     WHERE 1=1
 		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+		   AND DEL_YN = 'N'
+		   AND NUM > 0
+		]]>
+    </select>
+
+    <!--모아보기 게시글 개수 조회-->
+    <select id="selectMemberTipTotalCount" parameterType="TipBoardDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM TIP_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
 		]]>

@@ -8,14 +8,12 @@ import com.wisein.wiselab.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class QaListServiceImpl implements QaListService {
         int boardTotalCount = dao.selectBoardTotalCount(qaListDTO);
 
         if(boardTotalCount > 0) {
-        	qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
+            qaList = (List<QaListDTO>) dao.selectQaList(qaListDTO);
         }
 
         return qaList;
@@ -84,7 +82,7 @@ public class QaListServiceImpl implements QaListService {
         return qaList;
     }
 
-	/*
+    /*
      * 작성자 : 이형근
      * QaBoard Insert
      * param : QaListDTO
@@ -133,10 +131,10 @@ public class QaListServiceImpl implements QaListService {
      * return : int
      * 날짜 : 2022-06-04
      * */
-	@Override
-	public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
-		return dao.selectBoardTotalCount(qaListDTO);
-	}
+    @Override
+    public int selectBoardTotalCount(QaListDTO qaListDTO) throws Exception {
+        return dao.selectBoardTotalCount(qaListDTO);
+    }
 
     /*
      * 작성자 : 이형근
@@ -416,5 +414,23 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public int getParentNum(QaListDTO qaListDTO) throws Exception {
         return dao.getParentNum(qaListDTO);
+    }
+
+    /* 작성자 meetLink */
+    @Override
+    public String selectMeetLink(int num) throws Exception {
+        return dao.selectMeetLink(num);
+    }
+
+    /* 모아보기 페이징조회 */
+    @Override
+    public int selectMemberQaTotalCount(QaListDTO dto) throws Exception {
+        return dao.selectMemberQaTotalCount(dto);
+    }
+
+    /* 댓글 모아보기 페이징조회 */
+    @Override
+    public int selectMemberQaCommentTotalCount(QaListDTO dto) throws Exception {
+        return dao.selectMemberQaCommentTotalCount(dto);
     }
 }
