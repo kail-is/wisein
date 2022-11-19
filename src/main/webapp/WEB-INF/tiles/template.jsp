@@ -60,6 +60,7 @@
     <script src="${url}/resources/js/common/util.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
     <script src="${url}/resources/js/tipDetail.js"></script>
+    <script src="${url}/resources/js/totalSearch.js"></script>
 
 	<script>
 	<c:if test="${empty member}">
