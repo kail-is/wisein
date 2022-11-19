@@ -116,10 +116,15 @@
 }
 
 .board-list.food-wrap {
-
     height:210px;
 }
 
+.category-select #selectOption {
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
 @media screen and (max-width: 992px) {
   .content-frame.food-wrap .board-wrap .board-list .board-header {
