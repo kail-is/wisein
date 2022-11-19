@@ -1434,3 +1434,9 @@ body {
 .font-awe {
     font-family: "Font Awesome 5 Free" !important;
 }
+
+.flex-center {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

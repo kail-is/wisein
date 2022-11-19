@@ -150,13 +150,19 @@
 
 
 .matzip-write {
-    width: 1000px;
+    width: 100%;
     padding: 1em;
 }
 
 .content-inner-box{
     display: flex;
     justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .content-inner-box {
+    flex-wrap: wrap;
+  }
 }
 
 .content-inner-box input {
@@ -230,10 +236,10 @@
     cursor: pointer;
 }
 
-
 @media screen and (max-width: 576px) {
   .content-frame {
     direction: column;
+    flex-wrap : wrap;
   }
 }
 

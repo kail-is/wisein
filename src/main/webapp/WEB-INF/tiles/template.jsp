@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="${url}/resources/css/tipBoard.css">
         <link rel="stylesheet" href="${url}/resources/css/foodDetail.css">
         <link rel="stylesheet" href="${url}/resources/css/totalSearch.css">
+        <link rel="stylesheet" href="${url}/resources/css/foodList.css">
         <link rel="stylesheet" href="${url}/resources/css/tipDetail.css">
         <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
 
@@ -64,6 +65,7 @@
     <script src="${url}/resources/js/common/event.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
     <script src="${url}/resources/js/tipDetail.js"></script>
+    <script src="${url}/resources/js/totalSearch.js"></script>
 
 	<script>
 	<c:if test="${empty member}">
@@ -71,6 +73,4 @@
 	    document.querySelector('#joinBox').classList.remove('none');
 	</c:if>
 	</script>
-
-
 </html>

@@ -32,7 +32,7 @@ window.onload = function() {
         var userId = document.querySelector("#id").value;
 
         if (isEmpty(userId)) {
-            commonPopup.alertPopup("아이디를 입력해주세요");
+            commonPopup.alertPopup("아이디를 입력해주세요", true);
         } else {
             fetch("/idDupChk?" + "userId=" + userId)
                  .then(response => response.text())
@@ -163,10 +163,10 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     signupBtn.addEventListener('click', () => {
       if (chkAll()) {
-        commonPopup.alertPopup("유효성 테스트 통과");
+        commonPopup.alertPopup("유효성 테스트 통과", false);
         emailValid();
       } else {
-        commonPopup.alertPopup("유효성 테스트 통과");
+        commonPopup.alertPopup("유효성 테스트 미통과", true);
         event.preventDefault();
       }
     });
@@ -186,7 +186,7 @@ window.onload = function() {
             }
             updForm.submit();
         } else {
-           commonPopup.alertPopup("비밀번호를 입력하세요.");
+           commonPopup.alertPopup("비밀번호를 입력하세요.", true);
            event.preventDefault();
          }
    })
@@ -229,12 +229,12 @@ window.onload = function() {
         var password = document.getElementById("login_pw").value;
 
         if(id.length == 0) {
-            commonPopup.alertPopup("아이디를 입력하세요.");
+            commonPopup.alertPopup("아이디를 입력하세요.", true);
           return false
         }
 
         if(password.length == 0) {
-          commonPopup.alertPopup("비밀번호를 입력하세요.");
+          commonPopup.alertPopup("비밀번호를 입력하세요.", true);
           return false
         }
 
@@ -243,10 +243,10 @@ window.onload = function() {
              .catch(error => console.error('Error:', error))
              .then( idChk => {
                  if (idChk.idExist == 0) {
-                   commonPopup.alertPopup("존재하지 않는 아이디입니다.");
+                   commonPopup.alertPopup("존재하지 않는 아이디입니다.", false);
                  } else {
                     if (idChk.authKey!="Y") {
-                     commonPopup.alertPopup("메일 인증이 완료되지 않았습니다.");
+                     commonPopup.alertPopup("메일 인증이 완료되지 않았습니다.", false);
                     } else {
                      document.getElementById("login_form").submit();
                     }
@@ -341,7 +341,7 @@ function chgePwEmail(userId) {
          .then(response => response.text())
          .catch(error => console.error('Error:', error))
          .then(response => {
-                commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!")
+                commonPopup.alertPopup("임시 비밀번호 변경 링크가 발송됩니다. 이메일을 확인하세요!", false)
                 setTimeout( function(){
                     memPopUpClose(false)
                 }, 300);
