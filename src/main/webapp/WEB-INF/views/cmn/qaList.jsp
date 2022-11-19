@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<head>
-    <link rel="stylesheet" href="resources/css/qaList.css?ver=1">
-    <script src="resources/js/common/util.js"></script>
-</head>
 
 <c:if test="${empty questionsListWriter && empty commentListWriter}">
 <div class="content-wrap">
