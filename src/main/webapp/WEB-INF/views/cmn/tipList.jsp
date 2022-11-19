@@ -4,7 +4,9 @@
 <div class="content-wrap tipList">
     <section class="content-frame tipList">
         <div class="content-top-group">
-           <button type="button" onClick="location.href='tipBoard'" ></button>
+           <c:if test="${side_gubun ne 'Y'}">
+                <button type="button" onClick="location.href='tipBoard'" ></button>
+           </c:if>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -12,6 +14,7 @@
                 </div>
                 <div class="board-cell board-category purple2">
                     <p class="category-select">카테고리</p>
+                    <!--
                     <ul class="person-function">
                         <li><a href="#">FRONT</a></li>
                         <li><a href="#">BACK</a></li>
@@ -20,12 +23,15 @@
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-title">
                     제목(가나다)
+                    <!--
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-like gray">
                     좋아요
