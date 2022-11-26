@@ -24,9 +24,9 @@
     let upd = document.getElementsByClassName("recm-upd")
     let del = document.getElementsByClassName("recm-del")
 
-    function delRecm(recmId) {
+    async function delRecm(recmId) {
 
-       let delConfirm = confirm('삭제하시겠습니까?');
+       let delConfirm = await commonPopup.confirmPopup('삭제하시겠습니까?', commonPopup.callback);
 
        if (delConfirm) {
            fetch("/delRecm?" + "id=" + recmId)
@@ -39,15 +39,10 @@
                         .then(response => response.text())
                         .catch(error => console.error('Error:', error))
                         .then(response => {
-                            alert('삭제 완료');
                             window.location.href = "recmCnt?id=" + matzip_id
                         });
-//                    alert('삭제 완료');
-//                    window.location.href = "recmCnt?id=" + matzip_id
                 });
 
-       }else {
-          alert('삭제 취소');
        }
     }
 
@@ -74,7 +69,7 @@
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
 
-    var iwContent = '<div style="padding:5px;">' + matzip_obj.place_name +  '<br> <a href="' + matzip_obj.place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    var iwContent = '<div style="width:180px;padding:5px;">' + matzip_obj.place_name +  '<br> <a href="' + matzip_obj.place_url + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(yDis, xDis); //인포윈도우 표시 위치입니다
 
     // 인포윈도우를 생성합니다
@@ -100,17 +95,17 @@
 
     // 폐업 신고
 
-    function reportClosed(){
+    async function reportClosed(){
 
-       let reptConfirm = confirm('업체 폐업 신고를 하시겠습니까?');
+       let reptConfirm = await commonPopup.confirmPopup('업체 폐업 신고를 하시겠습니까?', commonPopup.callback);
 
        if (reptConfirm) {
            fetch("/reportClosed?" + "matzip_id=" + matzip_id)
                .then(response => response.text())
                .catch(error => console.error('Error:', error))
-               .then(response => alert('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.'));
+               .then(response => commonPopup.alertPopup('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.'));
        }else {
-          alert('폐업 신고 취소');
+          commonPopup.alertPopup('폐업 신고 취소');
        }
 
     }
