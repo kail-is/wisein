@@ -231,7 +231,7 @@ input, select {
 }
 
 .content-wrap .content-frame div {
-  margin-bottom: 0.5em;
+  <!-- margin-bottom: 0.5em; -->
 }
 
 .content-wrap .content-frame .title {
