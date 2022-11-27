@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
-<div class="content-wrap tipList">
-    <section class="content-frame tipList">
+<div class="content-wrap boardList">
+    <section class="content-frame boardList">
         <div class="content-top-group">
            <c:if test="${side_gubun ne 'Y'}">
                 <button type="button" onClick="location.href='tipBoard'" ></button>
@@ -68,9 +68,8 @@
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>
                         <ul class="person-function">
-                            <li><a href="#">메일 전송</a></li>
-                            <li><a href="#">질문 모아 보기</a></li>
-                            <li><a href="#">답변 모아 보기</a></li>
+                            <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
+                            <li><a onclick="gatherMemTip('${tip.writer}')">작성팁 모아보기</a></li>
                         </ul>
                     </div>
                     <div class="board-cell board-date gray">

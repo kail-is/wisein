@@ -3,11 +3,11 @@ header ul li:nth-child(2) .select-wrap select {
   background: url(../image/select_arrow.jpg) no-repeat right;
 }*/
 
-.content-wrap.tipList {
+.content-wrap.boardList {
   max-width: 1400px;
 }
 
-.content-wrap .content-frame.tipList {
+.content-wrap .content-frame.boardList {
   margin-bottom: 1.5em;
 }
 

@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:if test="${empty questionsListWriter && empty commentListWriter}">
-<div class="content-wrap">
+<div class="content-wrap boardList">
 </c:if>
 <c:if test="${not empty questionsListWriter || not empty commentListWriter}">
-<div class="content-wrap" style="max-width: 1300px;">
+<div class="content-wrap boardList" style="max-width: 1300px;">
 </c:if>
-    <section class="content-frame">
+    <section class="content-frame boardList">
         <div class="content-top-group">
         <c:if test="${side_gubun ne 'Y'}">
             <button type="button" onClick="location.href='/qaBoard'" ></button>
