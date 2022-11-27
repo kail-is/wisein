@@ -5,7 +5,7 @@
         <div class="top-group">
             <div class="category-wrap">
                 <p class="category-select">
-                    <select id="selectOption" onchange="categorySelect(this)">
+                    <select id="selectOption" onchange="foodCategorySelect(this)">
                         <option value="none">-----</option>
                         <c:forEach items="${comCategory}" var="category">
                             <option value="cate"><c:out value="${category.location}"/></option>
@@ -25,10 +25,10 @@
         </div>
         <div class="board-wrap">
             <div class="board-list food-wrap">
-                <div class="board-line board-header">
-                    <div class="board-cell board-category purple2">
+                <div class="board-line food-wrap board-header">
+                    <div class="board-cell food-wrap board-category purple2">
                         <p>
-                            <select class="select-list" onchange="categorySelect(this)">
+                            <select class="select-list" onchange="foodCategorySelect(this)">
                                 <option value="none">-----</option>
                                 <c:forEach items="${comCategory}" var="category">
                                     <option value="cate"><c:out value="${category.location}"/></option>
@@ -40,7 +40,7 @@
                                 expand_more
                             </span>
                     </div>
-                    <div class="board-cell board-title">
+                    <div class="board-cell food-list-title">
                         <p>site</p>
                     </div>
                     <div id="changeText" class="board-cell board-map gray">

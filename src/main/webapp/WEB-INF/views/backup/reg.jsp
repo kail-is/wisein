@@ -26,9 +26,9 @@ window.onload = function() {
 			      if (httpRequest.status === 200) {
 			    	var result = httpRequest.response;
                      if (result > 0) {
-    			        alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+    			        commonPopup.alertPopup("아이디가 존재합니다. 다른 아이디를 입력해주세요.", false);
                      } else {
-                        alert("사용 가능한 아이디입니다.");
+                        commonPopup.alertPopup("사용 가능한 아이디입니다.", false);
                         idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
                         idChkBool = true;
                      }
@@ -42,9 +42,9 @@ window.onload = function() {
 	});
 
     // 아이디 재설정
-    idBox.addEventListener('click', () => {
+    async idBox.addEventListener('click', () => {
         if (idChkBool == true) {
-            if (confirm("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 idChkBool = false;
                 idBox.value = "";
                 idBox.readOnly = false;
@@ -57,22 +57,22 @@ window.onload = function() {
     pwChkBtn.addEventListener('click', () => {
         if ( !pw.value && !pwChk.value ) {
             pwChkBool = false;
-            alert("패스워드를 입력하세요.");
+            commonPopup.alertPopup("패스워드를 입력하세요.", false);
         } else if( pw.value === pwChk.value ) {
             pwChkBool = true;
-            alert("패스워드가 일치합니다.");
+            commonPopup.alertPopup("패스워드가 일치합니다.", false);
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
-          alert("패스워드가 불일치합니다. 재입력하세요.");
+          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.", false);
         }
     });
 
     // 비밀번호 재설정
-    pwBox.addEventListener('click', () => {
+    async pwBox.addEventListener('click', () => {
         if (pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -84,9 +84,9 @@ window.onload = function() {
        }
      });
 
-    pwChkBox.addEventListener('click', () => {
+    async pwChkBox.addEventListener('click', () => {
         if (pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.commonPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -100,10 +100,10 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     signupBtn.addEventListener('click', () => {
       if (checkAll()) {
-        alert("유효성 테스트 통과");
+        commonPopup.alertPopup("유효성 테스트 통과", false);
         emailValid();
       } else {
-        alert("유효성 테스트 미통과");
+        commonPopup.alertPopup("유효성 테스트 미통과", false);
         event.preventDefault();
       }
     });
@@ -129,7 +129,7 @@ window.onload = function() {
                 document.getElementById('reg_form').submit();
             },
             error:function(request, status, error) {
-                alert("실패");
+                commonPopup.alertPopup("실패", false);
             }
         })
     }

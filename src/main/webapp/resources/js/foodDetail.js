@@ -27,14 +27,14 @@
     async function delRecm(recmId) {
 
        let delConfirm = await commonPopup.confirmPopup('삭제하시겠습니까?', commonPopup.callback);
-
+        //추천 삭제
        if (delConfirm) {
            fetch("/delRecm?" + "id=" + recmId)
                 .then(response => response.text())
                 .catch(error => console.error('Error:', error))
                 .then(recmMatzipId => {
                     let matzip_num = recmMatzipId;
-
+                    //맛집 삭제
                     fetch("/addClosed?" + "matzipId=" + matzip_num)
                         .then(response => response.text())
                         .catch(error => console.error('Error:', error))
@@ -105,7 +105,7 @@
                .catch(error => console.error('Error:', error))
                .then(response => commonPopup.alertPopup('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.'));
        }else {
-          commonPopup.alertPopup('폐업 신고 취소');
+          commonPopup.alertPopup('폐업 신고 취소', false);
        }
 
     }

@@ -87,11 +87,11 @@
              var content = editor.getMarkdown();
 
              if(subject == ''){
-                 alert('제목을 입력하세요✍')
+                 commonPopup.alertPopup('제목을 입력하세요✍', false);
                  document.querySelector("#subject").focus();
                  return;
              }if(content == ''){
-                 alert('내용을 입력하세요✍')
+                 commonPopup.alertPopup('내용을 입력하세요✍', false);
                  editor.focus();
                  return;
              }else{
@@ -100,8 +100,8 @@
              }
         }
 
-        function cancel(){
-            if(confirm('진짜 취소하실꺼에여?🥺') == true){
+        async function cancel(){
+            if(await commonPopup.confirmPopup('진짜 취소하실꺼에여?🥺', commonPopup.callback)){
                 window.history.back()
             }
         }

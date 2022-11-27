@@ -1,11 +1,11 @@
         function validCheck() {
             let result = true;
              if(document.querySelector("#subject").value == ''){
-                alert('제목을 입력하세요✍')
+                commonPopup.alertPopup('제목을 입력하세요✍', false);
                 document.querySelector("#subject").focus();
                 result = false;
              }else if(editor.getMarkdown() == ''){
-                alert('내용을 입력하세요✍')
+                commonPopup.alertPopup('내용을 입력하세요✍', false)
                 editor.focus();
                 result = false;
              }
@@ -51,8 +51,8 @@
             }
         };
 
-        function cancel(){
-            if(confirm('진짜 취소하실꺼에여?🥺') == true){
+        async function cancel(){
+            if(await commonPopup.confirmPopup('진짜 취소하실꺼에여?🥺', commonPopup.callback)){
                 window.history.back()
             }
         };

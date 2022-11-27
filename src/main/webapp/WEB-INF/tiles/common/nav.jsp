@@ -239,11 +239,8 @@
 
 <%--common Popup--%>
 <div id="commonPopup" class="popup-wrap page-center none">
-    <div class="alert-title">
-        경고창
-    </div>
-    <div class="confirm-title">
-        확인창
+    <div class="popup-title">
+        WISE IN
     </div>
     <div class="signUp-popup-wrap form-between">
         <div class="popup-message-wrap">

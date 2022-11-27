@@ -598,11 +598,12 @@ input, select {
 }
 
 .page-center {
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  z-index: 100;
 }
 
 .popup-wrap {
@@ -1122,51 +1123,6 @@ body {
   cursor: pointer;
 }
 
-.page-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 100;
-}
-
-.popup-wrap {
-  background-color: white;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-radius: 1.5rem;
-  -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-}
-
-.popup-wrap .popup-title-wrap {
-  border-radius: 0.75rem 0.75rem 0 0;
-  font-size: 1.125rem;
-  padding: 8px 0;
-  text-align: center;
-  background-color: #5398f1;
-  color: black;
-}
-
-.popup-wrap .popup-body-wrap {
-  color: black;
-}
-
 .dim {
   position: fixed;
   top: 0;
@@ -1335,7 +1291,7 @@ body {
 
 /*------ Modal Popup css --------*/
 
-.alert-title, .confirm-title {
+.popup-title {
     text-align:center;
     padding-top:20px;
     font-size:22px;

@@ -12,8 +12,8 @@
             window.location.href="/gatherMemTip?writer="+tipWriter;
         }
 
-         function delTip(){
-             if(confirm('진짜 삭제하실꺼에여?🥺') == true){
+         async function delTip(){
+             if(await commonPopup.confirmPopup('진짜 삭제하실꺼에여?🥺', commonPopup.callback)){
                  window.location.href="/delTip?num="+tipNum;
              }
          }
@@ -71,7 +71,7 @@
             let data = {boardType: boardType, boardIdx: tipNum, content: content}
 
             if(content.length==0){
-                alert("댓글을 입력하세요👀");
+                commonPopup.alertPopup("댓글을 입력하세요👀", false);
                 document.getElementById('comment_content').focus();
                 return;
             }
@@ -90,10 +90,10 @@
             })
          }
 
-          function delComm(commNum){
+          async function delComm(commNum){
              let data = {num: commNum, boardType: boardType, boardIdx: tipNum};
 
-             if(confirm('진짜 삭제하실꺼에여?🥺') == true){
+             if(await commonPopup.confirmPopup('진짜 삭제하실꺼에여?🥺', commonPopup.callback)){
                  fetch('/delTipComm',{
                      method: 'POST',
                      cache : 'no-cache',
@@ -119,7 +119,7 @@
                 resize(document.getElementById('modComm_content'+commNum))
                 isMod = true;
             }else{
-                alert("이미 수정중인 댓글이 있어용🤔")
+                commonPopup.alertPopup("이미 수정중인 댓글이 있어용🤔", false)
             }
           }
 
@@ -136,7 +136,7 @@
               let data = {num: commNum, boardType: boardType, boardIdx: tipNum, content: content};
 
               if(content.length==0){
-                  alert("수정할 댓글 내용을 입력하세요✍");
+                  commonPopup.alertPopup("수정할 댓글 내용을 입력하세요✍", false);
                   document.getElementById('modComm_content'+commNum).focus();
                   return;
               }
@@ -173,7 +173,7 @@
 
           function regLike(tipNum){
               if(tipWriter==memId){
-                  alert(memId+"님 자신의 글입니다😅")
+                  commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
               }
 
@@ -194,7 +194,7 @@
 
           function udpLike(tipNum){
               if(tipWriter==memId){
-                  alert(memId+"님 자신의 글입니다😅")
+                  commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
               }
 
@@ -231,7 +231,7 @@
 
           function regScrap(tipNum){
               if(tipWriter==memId){
-                  alert(memId+"님 자신의 글입니다😅")
+                  commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
               }
 
@@ -252,7 +252,7 @@
 
           function udpScrap(tipNum){
               if(tipWriter==memId){
-                  alert(memId+"님 자신의 글입니다😅")
+                  commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
               }
 

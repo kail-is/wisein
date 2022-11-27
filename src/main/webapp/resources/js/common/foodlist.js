@@ -16,11 +16,14 @@ let startPage;
 let endPage;
 let totalPage;
 
-var mapContainer = document.getElementById('map'),
+
+
+var mapContainer = document.getElementById('map')
     mapOption = {
         center: new kakao.maps.LatLng(37.37947804818484, 127.11415037150388),
-        level: 3,
+        level: 5,
     };
+
 
 map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -35,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     += "<div id='list' class='board-line'>"
                     + "<div style='width:300px;' class='board-cell board-category purple2'>"
                     + companyList.company[i].location+"</div>"
-                    + "<div onclick='getMatzipList(&quot;" + companyList.company[i].location+"&quot;)' class='board-cell board-title'>"
+                    + "<div onclick='getMatzipList(&quot;" + companyList.company[i].location+"&quot;)' class='board-cell food-list-title'>"
                     + companyList.company[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                     + companyList.company[i].matzipCount+"</div>"
@@ -47,13 +50,13 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 
 //카테고리 선택
-function categorySelect(target) {
+function foodCategorySelect(target) {
     removeAllChild(pageDiv);
 
     if (target.value != "none") {
         let option = target.options[target.selectedIndex].text;
 
-        fetch("/categorySelect?"+"option="+option)
+        fetch("/foodCategorySelect?"+"option="+option)
             .then(response => response.json())
             .catch(error => console.log('Error'))
             .then(categoryList => {
@@ -68,7 +71,7 @@ function categorySelect(target) {
                     createDiv.innerHTML
                         += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                         + categoryList.company[i].location+"</div>"
-                        + "<div onclick='getMatzipList(&quot;" + categoryList.company[i].location+"&quot;)' class='board-cell board-title'>"
+                        + "<div onclick='getMatzipList(&quot;" + categoryList.company[i].location+"&quot;)' class='board-cell food-list-title'>"
                         + categoryList.company[i].companyName+"</div>"
                         + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                         + categoryList.company[i].matzipCount+"</div>"
@@ -121,7 +124,7 @@ function getMatzipList(location, currentPage) {
                 createDiv.innerHTML
                     += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
                     + matzipList.matzip[i].location+"</div>"
-                    + "<div onclick='localExistCheck(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='board-cell board-title'>"
+                    + "<div onclick='localExistCheck(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='board-cell food-list-title'>"
                     + matzipList.matzip[i].companyName+"</div>"
                     + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
                     + matzipList.matzip[i].matzipCount+"</div>"

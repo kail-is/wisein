@@ -292,19 +292,17 @@ close : function (modalCheck) {
 },
 
 open : function (type, msg) {
+    document.querySelector('.popup-title').style.display = "";
+
     if (type=="alert-type") {
         document.querySelector('#commonPopup').classList.remove('none');
-        document.querySelector('.alert-title').style.display = "";
         document.querySelector('.alert-button-wrap').style.display = "";
-        document.querySelector('.confirm-title').style.display = "none";
         document.querySelector('.confirm-button-wrap').style.display = "none";
         document.querySelector('.popup-message-wrap').innerHTML = msg;
 
     } else if (type=="confirm-type") {
         document.querySelector('#commonPopup').classList.remove('none');
-        document.querySelector('.confirm-title').style.display = "";
         document.querySelector('.confirm-button-wrap').style.display = "";
-        document.querySelector('.alert-title').style.display = "none";
         document.querySelector('.alert-button-wrap').style.display = "none";
         document.querySelector('.popup-message-wrap').innerHTML = msg;
     }
