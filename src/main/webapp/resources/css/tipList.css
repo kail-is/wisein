@@ -1,52 +1,13 @@
+/*
 header ul li:nth-child(2) .select-wrap select {
-  width: 110px;
-  height: 28px;
-  border-radius: 0.375em;
-  color: white;
-  border: 1px solid white;
-  background-color: #1c1c1c;
-  font-size: 12px;
-  line-height: 30px;
-  padding: 0 0.5em;
-  margin-right: 2em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   background: url(../image/select_arrow.jpg) no-repeat right;
-}
+}*/
 
-
-.sidebar-wrap .sidebar .info {
-  position: relative;
-  width: 170px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  border: 1px solid white;
-  border-radius: 0.5em;
-  padding: 1.5em 1em;
-  margin-bottom: 2em;
-}
-
-
-
-.content-wrap.tipList {
+.content-wrap.boardList {
   max-width: 1400px;
 }
 
-.content-wrap .content-frame.tipList {
+.content-wrap .content-frame.boardList {
   margin-bottom: 1.5em;
 }
 
@@ -135,12 +96,12 @@ header ul li:nth-child(2) .select-wrap select {
 }
 
 .content-wrap .content-top-group button::after {
-  content: "팁작성✍";
+  content: "글작성✍";
 }
 
 @media screen and (max-width: 576px) {
   .content-wrap .content-top-group button::after {
-    content: "작성";
+    content: "글작성✍";
   }
 }
 

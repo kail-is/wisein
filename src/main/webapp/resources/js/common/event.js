@@ -10,13 +10,14 @@ function clickDisplayChangeListener(params) {
                 }
             } catch (error) {
                 console.log(error);
-            } 
+            }
         });
     });
 }
-let clkWriter = document.getElementsByClassName("writer");
-let categorySelect = document.getElementsByClassName("category-select");
-let titleSelect = document.getElementsByClassName("title-select");
+
+let clkWriter = 'document.getElementsByClassName("writer")';
+let categorySelect = 'document.getElementsByClassName("category-select")';
+let titleSelect = 'document.getElementsByClassName("title-select")';
 
 clickDisplayChangeListener(clkWriter);
 clickDisplayChangeListener(categorySelect);

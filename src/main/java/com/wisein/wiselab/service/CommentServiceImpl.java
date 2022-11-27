@@ -29,9 +29,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> selectComment(CommentDTO dto) throws Exception {
         List<CommentDTO> comment = new ArrayList<>();
-
         comment = (List<CommentDTO>) dao.selectComment(dto);
-
         return comment;
     }
 
@@ -41,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         dao.insertComment(dto);
     }
 
-    /* comment 다건삭제 */
+    /* 글삭제시 comment 삭제 */
     @Override
     public void deleteAllComment(CommentDTO dto) throws Exception {
         dao.deleteAllComment(dto);

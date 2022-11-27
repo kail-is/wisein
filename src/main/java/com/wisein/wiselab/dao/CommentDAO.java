@@ -13,7 +13,7 @@ public interface CommentDAO {
     /* comment 등록 */
     public void insertComment(CommentDTO dto) throws Exception;
 
-    /* comment 다건삭제 */
+    /* 글삭제시 comment 삭제 */
     public void deleteAllComment(CommentDTO dto) throws Exception;
 
     /* comment 단건삭제 */

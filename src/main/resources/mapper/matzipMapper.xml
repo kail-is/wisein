@@ -247,5 +247,6 @@
             COUNT(*)
           FROM MATZIP_BOARD
          WHERE CATEGORY=#{location}
+         AND CLOSED_STATE = 'N'
     </select>
 </mapper>

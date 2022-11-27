@@ -29,12 +29,20 @@
         </foreach>
     </insert>
 
+
     <!-- 파일 삭제  -->
     <update id="delImg" parameterType="String">
         UPDATE FILE
         SET
         DLT_YN = 'Y'
         WHERE FILE_NAME = #{fileName}
+    </update>
+
+    <!-- 파일 다건삭제  -->
+    <update id="deleteAllImg" parameterType="String">
+        UPDATE FILE
+           SET DLT_YN = 'Y'
+         WHERE BRD_REF = #{brdRef}
     </update>
 
     <!-- 파일 조회 -->

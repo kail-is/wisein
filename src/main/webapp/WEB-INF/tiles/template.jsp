@@ -65,6 +65,7 @@
     <script src="${url}/resources/js/common/event.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
     <script src="${url}/resources/js/tipDetail.js"></script>
+    <script src="${url}/resources/js/tipList.js"></script>
     <script src="${url}/resources/js/totalSearch.js"></script>
 
 	<script>

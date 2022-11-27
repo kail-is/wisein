@@ -41,7 +41,7 @@
             <p class="writer" id="tipWriter"><c:out value="${tipBoardDTO.writer}" /></p>
             <ul class="person-function">
                 <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
-                <li><a href="#">작성팁 모아보기</a></li>
+                <li><a onclick="gatherMemTip('${tipBoardDTO.writer}')">작성팁 모아보기</a></li>
             </ul>
 
                 <c:if test="${meetLink == null}">
@@ -52,6 +52,7 @@
                 </c:if>
         </div>
 
+        <!--본문-->
         <div class="subject">
             ${content}
         </div>
@@ -61,8 +62,8 @@
         <c:set var="memberId" value="${memberId}" />
         <c:if test="${tipBoardDTO.writer == memberId}">
             <div class="icon" align="right">
-                <span class="material-icons" onClick="updTip()">border_color</span>
-                <span class="material-icons" onClick="delTip()">delete</span>
+                <span class="material-icons" onclick="updTip()">border_color</span>
+                <span class="material-icons" onclick="delTip()">delete</span>
             </div>
         </c:if>
 
@@ -78,7 +79,7 @@
                         <div class="recommend-info-wrap">
                             <!-- 댓글 작성자 img -->
                                 <c:if test = "${commentList.filePath != null}">
-                                    <img src ="../${commentList.filePath}">
+                                    <img src ="../${commentList.filePath}" onError="this.src='../resources/image/Conic.png'">
                                 </c:if>
                                 <c:if test = "${commentList.filePath == null}">
                                     <img src ="../resources/image/Conic.png">
@@ -103,11 +104,11 @@
                         </div>
                         <!--댓글 내용-->
                         <div class="content" id="comm${commentList.num}" name="comm${commentList.num}">
-                            <c:out value="${commentList.content}"/>
+                            ${commentList.content}
                         </div>
                         <!--댓글 수정-->
                         <div class="content-mod" id="modComm${commentList.num}" name="modComm${commentList.num}" style='display: none;'>
-                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1"></textarea>
+                            <textarea class="comment_inbox_text" id="modComm_content${commentList.num}" name="modComm_content${commentList.num}" placeholder="댓글을 남겨보세요" rows="1" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
                         </div>
                          <div class="comment_attach" id="mod_comment_attach${commentList.num}" style='display: none;'>
                             <div class="register_box">
@@ -126,7 +127,7 @@
         <div class="comment_inbox">
             <strong class="blind">댓글을 입력하세요</strong>
             <em><div class="comment_inbox_name" id="comment_writer" name="comment_writer">${memberId}</div></em>
-            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1"></textarea>
+            <textarea class="comment_inbox_text" id="comment_content" name="comment_content" placeholder="댓글을 남겨보세요" rows="1" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
         </div>
 
         <div class="comment_attach">

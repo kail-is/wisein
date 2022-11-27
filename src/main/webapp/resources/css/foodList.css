@@ -94,6 +94,7 @@
 .content-frame.food-wrap .top-group input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .board-wrap {
@@ -115,10 +116,15 @@
 }
 
 .board-list.food-wrap {
-
     height:210px;
 }
 
+.category-select #selectOption {
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
 @media screen and (max-width: 992px) {
   .content-frame.food-wrap .board-wrap .board-list .board-header {
@@ -209,6 +215,7 @@
 .content-frame.food-wrap .board-wrap .button-wrap input[type=button] {
   background-color: #7E57C2;
   color: white;
+  border: none;
 }
 
 .content-frame.food-wrap .pageNo-wrap .pageno-group {
@@ -330,8 +337,8 @@
     .wrap.food-wrap .info.food-wrap {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap.food-wrap .info.food-wrap:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info.food-wrap .title.food-wrap {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-    .info.food-wrap .close.food-wrap {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info.food-wrap .close.food-wrap:hover {cursor: pointer;}
+    .info.food-wrap .close-btn.food-wrap {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+    .info.food-wrap .close-btn.food-wrap:hover {cursor: pointer;}
     .info.food-wrap .body.food-wrap {position: relative;overflow: hidden;}
     .info.food-wrap .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
@@ -339,5 +346,12 @@
     .info.food-wrap .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info.food-wrap:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info.food-wrap .link {color: #5085BB;}
-    .detail-btn {color:purple};
+    .detail-btn {color:purple}
+
+@media screen and (max-width: 992px) {
+    .info.food-wrap {
+        width:100px;
+    }
+
+}
 

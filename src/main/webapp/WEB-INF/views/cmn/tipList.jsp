@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
-<div class="content-wrap">
-    <section class="content-frame">
+<div class="content-wrap boardList">
+    <section class="content-frame boardList">
         <div class="content-top-group">
-           <button type="button" onClick="location.href='tipBoard'" ></button>
+           <c:if test="${side_gubun ne 'Y'}">
+                <button type="button" onClick="location.href='tipBoard'" ></button>
+           </c:if>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
@@ -12,6 +14,7 @@
                 </div>
                 <div class="board-cell board-category purple2">
                     <p class="category-select">카테고리</p>
+                    <!--
                     <ul class="person-function">
                         <li><a href="#">FRONT</a></li>
                         <li><a href="#">BACK</a></li>
@@ -20,12 +23,15 @@
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-title">
                     제목(가나다)
+                    <!--
                     <span class="material-icons">
                             expand_more
                     </span>
+                    -->
                 </div>
                 <div class="board-cell board-like gray">
                     좋아요
@@ -62,9 +68,8 @@
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>
                         <ul class="person-function">
-                            <li><a href="#">메일 전송</a></li>
-                            <li><a href="#">질문 모아 보기</a></li>
-                            <li><a href="#">답변 모아 보기</a></li>
+                            <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
+                            <li><a onclick="gatherMemTip('${tip.writer}')">작성팁 모아보기</a></li>
                         </ul>
                     </div>
                     <div class="board-cell board-date gray">

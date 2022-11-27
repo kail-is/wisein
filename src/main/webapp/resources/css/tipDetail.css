@@ -1,121 +1,9 @@
 header ul li:nth-child(2) .select-wrap select {
-  width: 110px;
-  height: 28px;
-  border-radius: 0.375em;
-  color: white;
-  border: 1px solid white;
-  background-color: #1c1c1c;
-  font-size: 12px;
-  line-height: 30px;
-  padding: 0 0.5em;
-  margin-right: 2em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   background: url(../image/select_arrow.jpg) no-repeat right;
 }
 
-.content-wrap.tipDetail {
-  max-width: 900px;
-  margin: 0 auto;
-  padding-top: 100px;
-  padding-left: 0.5%;
-  padding-right: 0.5%;
-}
-
-
 .content-wrap .content-frame .subject p img  {
   width: 100%
-}
-
-.sidebar-wrap .sidebar .info {
-  position: relative;
-  width: 170px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  border: 1px solid white;
-  border-radius: 0.5em;
-  padding: 1.5em 1em;
-  margin-bottom: 2em;
-}
-
-
-.info-wrap {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: fixed;
-  border-radius: 0.75em;
-  left: 5%;
-  top: 12% !important;
-  width: 200px;
-  min-height: 150px;
-  height: auto !important;
-  border: 1px solid black;
-  font-style: normal;
-  font-family: "Noto Sans KR", sans-serif;
-  padding: 0.5em 1em;
-  font-weight: 300;
-}
-
-@media screen and (max-width: 1500px) {
-  .info-wrap {
-    display: none;
-  }
-}
-
-.content-wrap {
-  max-width: 900px;
-  margin: 0 auto;
-  padding-top: 100px;
-}
-
-@media screen and (max-width: 992px) {
-  .content-wrap {
-    margin: 0 1em;
-  }
-}
-
-.content-wrap .answer .function {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-}
-
-.content-wrap .answer .function span {
-  font-size: 1.25rem;
-  padding-right: 0.25em;
-}
-
-@media screen and (max-width: 576px) {
-  .content-wrap .answer .function {
-    position: static;
-  }
 }
 
 .recommend-wrap {
@@ -265,7 +153,7 @@ header ul li:nth-child(2) .select-wrap select {
 
 .recommend-wrap .recommend .wrap .content-mod .comment_inbox_text {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   display: block;
   width: 100%;
   min-height: 17px;
@@ -298,7 +186,7 @@ header ul li:nth-child(2) .select-wrap select {
   vertical-align: top;
 }
 
-
+/*
 .recommend-wrap .recommend-write-wrap #writer-info {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
@@ -308,6 +196,7 @@ header ul li:nth-child(2) .select-wrap select {
 .recommend-wrap .recommend-write-wrap #writer-info .title {
   margin-top: 0.75em;
 }
+
 
 .recommend-wrap .recommend-write-wrap .content-writer-wrap {
   display: -webkit-box;
@@ -331,18 +220,7 @@ header ul li:nth-child(2) .select-wrap select {
   font-weight: 600;
   resize: none;
 }
-
-.button-wrap input[type='button']{
-    color: white;
-    width: 100px;
-    height: 50px;
-    background-color: #523781;
-    overflow: visible;
-    border-radius: 5px;
-}
-
-
-
+*/
 
 .CommentWriter {
     margin: 12px 0 29px;
@@ -372,7 +250,7 @@ header ul li:nth-child(2) .select-wrap select {
   }
   .CommentWriter .comment_inbox_text {
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
       display: block;
       width: 100%;
       min-height: 17px;
@@ -418,7 +296,7 @@ header ul li:nth-child(2) .select-wrap select {
       display: inline-block;
       min-width: 46px;
       height: 34px;
-      line-height: 36px;
+      line-height: 50px;
       font-size: 13px;
       color: var(--skinCommentWriterText);
       border-radius: 6px;
@@ -427,3 +305,5 @@ header ul li:nth-child(2) .select-wrap select {
       text-align: center;
       vertical-align: top;
   }
+
+

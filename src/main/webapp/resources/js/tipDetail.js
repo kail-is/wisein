@@ -5,8 +5,12 @@
         let boardType = "tip";
         let isMod = false;
 
-        if (tipWriter != "") tipWriter.innerHTML;
-        if (memId != "") memId.innerHTML;
+        if (tipWriter != "") tipWriter = tipWriter.innerHTML;
+        if (memId != "") memId = memId.innerHTML;
+
+        function gatherMemTip(tipWriter){
+            window.location.href="/gatherMemTip?writer="+tipWriter;
+        }
 
          function delTip(){
              if(confirm('진짜 삭제하실꺼에여?🥺') == true){
@@ -22,6 +26,8 @@
             let newCommArr = newCommList.commentList;
             let html = "<div class='recommend-titleLine'> 댓글 ("+newCommArr.length+")</div>"
             for(let i=0; i < newCommArr.length; i++){
+                newCommArr[i].content = newCommArr[i].content.replaceAll('&lt;br&gt;', '<br>')
+                console.log("ddddddddd"+newCommArr[i].content)
                 html += "<ul class='recommend'><li>"
                 html += "<div class='wrap'><div class='recommend-info-wrap'>"
 
@@ -41,7 +47,7 @@
                 html += "</div></div></div>"
                 html += "<div class='content' id='comm"+newCommArr[i].num+"' name='comm"+newCommArr[i].num+"'>"+newCommArr[i].content+"</div>"
                 html += " <div class='content-mod' id='modComm"+newCommArr[i].num+"' name='modComm"+newCommArr[i].num+"' style='display: none;'>"
-                html += "<textarea class='comment_inbox_text' id='modComm_content"+newCommArr[i].num+"' name='modComm_content"+newCommArr[i].num+"' placeholder='댓글을 남겨보세요' rows='1' style='overflow: hidden; overflow-wrap: break-word; height: 17px;'></textarea>"
+                html += "<textarea class='comment_inbox_text' id='modComm_content"+newCommArr[i].num+"' name='modComm_content"+newCommArr[i].num+"placeholder='댓글을 남겨보세요 onkeydown='resize(this)' onkeyup='resize(this)'></textarea>"
                 html += "</div> <div class='comment_attach' id='mod_comment_attach"+newCommArr[i].num+"' style='display: none;'>"
                 html += "<div class='register_box'>"
                 html += "<a href='#' role='button' class='button btn_register' onClick='modComm("+newCommArr[i].num+")'>수정</a>"
@@ -56,10 +62,12 @@
 
          function initCommText(){
             document.getElementById("comment_content").value = '';
+            document.getElementById('comment_content').style.height = '0px'
          }
 
          function regComm(){
             let content = document.getElementById('comment_content').value
+            content = content.replace(/(?:\r\n|\r|\n)/g,'<br>');
             let data = {boardType: boardType, boardIdx: tipNum, content: content}
 
             if(content.length==0){
@@ -67,7 +75,7 @@
                 document.getElementById('comment_content').focus();
                 return;
             }
-            let check;
+
             fetch('/regTipComm',{
                 method: 'POST',
                 cache : 'no-cache',
@@ -102,11 +110,13 @@
 
 
           function openModi(commNum, content){
+            content = content.replaceAll('<br>', '\r\n');
             if(isMod==false){
                 document.getElementById('comm'+commNum).style.display = 'none';
                 document.getElementById('modComm'+commNum).style.display = 'block';
                 document.getElementById('mod_comment_attach'+commNum).style.display = 'block';
                 document.getElementById('modComm_content'+commNum).value = content;
+                resize(document.getElementById('modComm_content'+commNum))
                 isMod = true;
             }else{
                 alert("이미 수정중인 댓글이 있어용🤔")
@@ -122,6 +132,7 @@
 
           function modComm(commNum){
               let content = document.getElementById('modComm_content'+commNum).value;
+              content = content.replace(/(?:\r\n|\r|\n)/g,'<br>');
               let data = {num: commNum, boardType: boardType, boardIdx: tipNum, content: content};
 
               if(content.length==0){
@@ -259,5 +270,11 @@
                   changeScrapHtml(json);
               })
           }
+
+         function resize(obj){
+             obj.style.height = '1px';
+             obj.style.height = (10 + obj.scrollHeight) + 'px';
+         }
+
 
 
