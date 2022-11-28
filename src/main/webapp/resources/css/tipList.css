@@ -4,7 +4,7 @@ header ul li:nth-child(2) .select-wrap select {
 }*/
 
 .content-wrap.boardList {
-  max-width: 1400px;
+  max-width: 1300px;
 }
 
 .content-wrap .content-frame.boardList {
@@ -379,3 +379,4 @@ header ul li:nth-child(2) .select-wrap select {
 .content-wrap .pageno-group .current {
   color: #7E57C2;
 }
+

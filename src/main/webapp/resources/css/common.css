@@ -579,9 +579,10 @@ input, select {
   font-family: "Noto Sans KR", sans-serif;
   padding: 0.5em 1em;
   font-weight: 300;
+  top: 120px;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1850px) {
   .info-wrap {
     display: none;
   }

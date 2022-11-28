@@ -11,7 +11,7 @@
        <div class="content-wrap">
             <div class="matzip-write">
                 <div class="content-inner-box">
-                     <div class="select-wrap" style="position: absolute;">
+                     <div class="select-wrap">
                          <select id="category" name="category" >
                             <c:if test="${empty qaListDTO.category}">
                                    <option value="FRONT">FRONT</option>
@@ -24,7 +24,7 @@
                          </select>
                     </div>
                     <p>
-                        <input type="text" size="210" id="subject" name="subject" placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;">
+                        <input type="text" size="210" id="subject" name="subject" placeholder="제목을 입력하세요" value="${qaListDTO.subject}">
                     </p>
                 </div>
 
