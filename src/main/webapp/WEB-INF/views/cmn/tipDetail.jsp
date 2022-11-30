@@ -45,7 +45,7 @@
             </ul>
 
                 <c:if test="${meetLink == null}">
-                    <a onclick="alert('미트링크가 없어요😅')"><span class="material-icons purple">videocam</span></a>
+                    <a onclick="commonPopup.alertPopup('미트링크가 없어요😅', false)"><span class="material-icons purple">videocam</span></a>
                 </c:if>
                 <c:if test="${meetLink != null}">
                     <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>

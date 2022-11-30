@@ -198,7 +198,7 @@ public class RestMatzipController {
         return check;
     }
 
-    @GetMapping(value="/categorySelect")
+    @GetMapping(value="/foodCategorySelect")
     public Map<String, List<CompanyDTO>> categorySelect(CompanyDTO companyDTO,
                                                         @RequestParam("option") String option) {
 

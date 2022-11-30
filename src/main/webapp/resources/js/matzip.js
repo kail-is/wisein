@@ -48,7 +48,7 @@
                 }).then(response => response.text())
                 .catch(error => console.error('Error:', error))
                 .then(response => {
-                   alert("성공");
+                   commonPopup.alertPopup("성공", false);
                    const postNum = getPostNum(writer, subject)
                    if(brdNum != postNum){ updateImgHash(brdNum, postNum) }
                    window.location.href = "/matzip?id=" + matzip_id
@@ -65,7 +65,7 @@
                .catch(error => console.error('Error:', error))
                .then(response => {
                     console.log(response)
-                    alert("이미지 업데이트 성공");
+                    commonPopup.alertPopup("이미지 업데이트 성공" ,false);
                })
     }
 
@@ -97,7 +97,7 @@
             }).then(response => response.text())
             .catch(error => console.error('Error:', error))
             .then(response => {
-               alert("성공");
+               commonPopup.alertPopup("성공", false);
                window.location.href = "/matzip?id=" + matzipId
             });
     }
@@ -105,12 +105,12 @@
     function matzipValidate(subject, content, matzip_data) {
 
         if (isEmpty(subject)){
-            alert("제목을 입력하세요.");
+            commonPopup.alertPopup("제목을 입력하세요.", false);
             return false;
         }
 
         if (isEmpty(matzip_data)){
-            alert("맛집을 검색하세요.");
+            commonPopup.alertPopup("맛집을 검색하세요.", false);
             return false;
         }
 

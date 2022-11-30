@@ -44,8 +44,8 @@
             form.submit();
         }
 
-        function cancel(){
-            if(confirm('진짜 취소하실꺼에여?🥺') == true){
+        async function cancel(){
+            if(await commonPopup.confirmPopup('진짜 취소하실꺼에여?🥺', commonPopup.callback)){
                 console.log('뒤로가기되찌롱');
                 window.history.back()
             }

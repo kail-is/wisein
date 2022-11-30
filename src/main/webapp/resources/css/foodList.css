@@ -187,7 +187,7 @@
       flex-basis: 120px;
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line .board-title {
+.content-frame.food-wrap .board-wrap .board-list .board-line .food-list-title {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   -ms-flex-negative: 3;
@@ -250,7 +250,6 @@
 /* 지도 css */
 .map-wrap.food-wrap {
   width: 50%;
-  height:530px;
 }
 
 @media screen and (max-width: 992px) {
@@ -263,6 +262,11 @@
 .map-wrap.food-wrap #map {
   width: 100%;
   height: 100%;
+}
+
+.board-list.food-wrap .select-list {
+    border: 0;
+    appearance: none;
 }
 
 .matzip-list-box {
@@ -288,7 +292,7 @@
         font-size:13px;
         bottom:-55px;
     }
-    .board-category, .board-title, .board-map {
+    .board-category, .food-list-title, .board-map {
         font-size:10px;
     }
 
@@ -349,9 +353,34 @@
     .detail-btn {color:purple}
 
 @media screen and (max-width: 992px) {
-    .info.food-wrap {
-        width:100px;
+    .wrap.food-wrap, .body.food-wrap, .info.food-wrap:nth-child(1) {
+        width:200px;
     }
 
-}
+    .info.food-wrap .title.food-wrap {
+        height:25px;
+        width:200px;
+        font-size:13px;
+    }
 
+    .desc .ellipsis, .detail-btn{
+        width:200px;
+        font-size: 10px;
+        justify-content:center;
+    }
+
+    .wrap.food-wrap {
+        height:90px;
+        margin-left:-105px;
+        bottom:50px;
+    }
+
+    wrap.food-wrap .info.food-wrap {
+        border-radius: 5px;
+    }
+
+    .info.food-wrap:after {
+        margin-left:-50px;
+        bottom:-10px;
+    }
+}

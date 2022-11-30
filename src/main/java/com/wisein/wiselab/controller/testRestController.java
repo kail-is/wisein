@@ -23,10 +23,6 @@ public class testRestController {
 	@Autowired
 	MemberService service;
 
-	@GetMapping(value = "/idDupChk")
-	public int getIdDupChk(String userId) throws Exception {
-		return service.idDupChk(userId);
-	}
 
 	@RequestMapping(value="/test")
 	public ResponseEntity<String> testHelloWorld (HttpServletRequest request) {

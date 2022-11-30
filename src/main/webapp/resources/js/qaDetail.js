@@ -23,8 +23,8 @@
             window.location.href="/qaUpdate?num="+num;
         }
         // 댓글 삭제
-        function comment_delete_btn(commentQaNum) {
-            if(confirm('정말 삭제하시겠습니까?') == true){
+        async function comment_delete_btn(commentQaNum) {
+            if(await commonPopup.confirmPopup('정말 삭제하시겠습니?', commonPopup.callback)){
                 window.location.href="/qaDelete?commentQaNum="+commentQaNum;
             }
         }
@@ -34,8 +34,8 @@
             window.location.href="/qaUpdate?num="+num
         }
         // 원본 삭제
-        function delete_btn(num){
-            if(confirm('정말 삭제하시겠습니까?') == true){
+        async function delete_btn(num){
+            if(await commonPopup.confirmPopup('정말 삭제하시겠습니까?', commonPopup.callback)){
                 window.location.href="/qaDelete?num="+num
             }
         }
@@ -46,7 +46,7 @@
                var parentNum = num;
                window.location.href="/qaBoard?parentNum=" + parentNum + "&writer=" + writer +"&category="+category;
            } else if(writer == ""){
-               alert("로그인 후 이용가능합니다.");
+               commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
            }
         }
 
@@ -57,7 +57,7 @@
                    document.querySelector("#commentNum").value = commentNum;
                    document.getElementById('adpForm').submit();
                } else if(writer == ""){
-                   alert("로그인 후 이용가능합니다.");
+                   commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
                }
         }
 
@@ -191,7 +191,7 @@
                     changeLikeHtml(json);
                 })
             } else if(writer == ""){
-               alert("로그인 후 이용가능합니다.");
+               commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
                window.location.href="/login";
             }
         }
@@ -216,7 +216,7 @@
                     changeLikeHtml(json);
                 })
             } else if(writer == ""){
-               alert("로그인 후 이용가능합니다.");
+               commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
                window.location.href="/login";
             }
         }
@@ -241,7 +241,7 @@
                     changeScrapHtml(json);
                 })
             } else if(writer == ""){
-               alert("로그인 후 이용가능합니다.");
+               commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
                window.location.href="/login";
             }
         }
@@ -266,7 +266,7 @@
                     changeScrapHtml(json);
                 })
             } else if(writer == ""){
-               alert("로그인 후 이용가능합니다.");
+               commonPopup.alertPopup("로그인 후 이용가능합니다.", false);
                window.location.href="/login";
             }
         }
@@ -288,7 +288,7 @@
                 let meetLink = json.meetLink;
                 console.log(meetLink);
                 if(meetLink == null){
-                    alert('미트링크가 없어요😅');
+                    commonPopup.alertPopup('미트링크가 없어요😅',false);
                 } else{
                     //window.location.href = meetLink;
                     //window.location.replace(meetLink);
@@ -316,7 +316,7 @@
                 let meetLink = json.meetLink;
                 console.log(meetLink);
                 if(meetLink == null){
-                    alert('미트링크가 없어요😅');
+                    commonPopup.alertPopup('미트링크가 없어요😅', false);
                 } else{
                     //window.location.href = meetLink;
                     //window.location.replace(meetLink);

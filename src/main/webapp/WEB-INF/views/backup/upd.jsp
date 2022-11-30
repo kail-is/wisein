@@ -21,19 +21,19 @@ window.onload = function() {
     pwChkBtn.addEventListener('click', () => {
         if (pw.value === pwChk.value) {
             pwChkBool = true;
-            alert("패스워드가 일치합니다.");
+            commonPopup.alertPopup("패스워드가 일치합니다.", false);
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
-          alert("패스워드가 불일치합니다. 재입력하세요.");
+          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.", false);
         }
     });
 
     // 비밀번호 재설정
-    pwBox.addEventListener('click', () => {
+    async pwBox.addEventListener('click', () => {
         if (pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -44,9 +44,9 @@ window.onload = function() {
        }
      });
 
-    pwChkBox.addEventListener('click', () => {
+    async pwChkBox.addEventListener('click', () => {
         if (pwChkBool == true) {
-            if (confirm("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.")) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -60,9 +60,9 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     updBtn.addEventListener('click', () => {
       if (checkAll()) {
-        alert("유효성 테스트 통과");
+        commonPopup.alertPopup("유효성 테스트 통과", false);
       } else {
-        alert("유효성 테스트 미통과");
+        commonPopup.alertPopup("유효성 테스트 미통과", false);
         event.preventDefault();
       }
     });

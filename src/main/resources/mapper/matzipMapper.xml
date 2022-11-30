@@ -103,9 +103,14 @@
 
     <update id="updClosedStat" parameterType="Int">
         UPDATE MATZIP_BOARD
-        SET
-        CLOSED_STATE = 'Y'
-        WHERE ID = #{id}
+            SET CLOSED_STATE = 'Y'
+          WHERE (
+            SELECT
+              COUNT(*)
+            FROM RECM_BOARD
+            WHERE REF_MATZIP = #{id}
+            AND DEL_YN = 'N'
+        ) = 0;
     </update>
 
     <update id="delRecm" parameterType="Integer">
@@ -186,6 +191,7 @@
              , REF_MATZIP AS ID
           FROM RECM_BOARD
          WHERE REF_MATZIP= #{id}
+         AND DEL_YN = 'N'
          GROUP BY REF_MATZIP
     </select>
 
