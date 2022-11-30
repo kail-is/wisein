@@ -29,23 +29,15 @@ public class memberController {
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 
-	@Autowired
-	AuthKeyConfig authKeyConfig;
-
-	@GetMapping(value = "/idDupChk")
-	public int getIdDupChk(String userId) throws Exception {
-		return service.idDupChk(userId);
-	}
-
 	@GetMapping(value="/register")
 	public String getRegister () throws Exception {
 		return "reg";
 	}
 
 	@PostMapping(value = "/register")
-	public String postRegister (MemberDTO dto) throws Exception {
+	public String postRegister (MemberDTO dto, AuthKeyConfig tmpKey) throws Exception {
 
-		String tempKey = authKeyConfig.tempKeyCreate();
+		String tempKey = tmpKey.tempKeyCreate();
 		dto.setAuthState(tempKey);
 
 		String inputPw = dto.getPw();
