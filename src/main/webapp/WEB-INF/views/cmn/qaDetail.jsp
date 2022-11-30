@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<head>
-    <link rel="stylesheet" href="resources/css/qaDetail.css">
-    <script src="/resources/js/qaDetail.js"></script>
-</head>
 
 <c:set var="num" value="${qaListDTO.num}" />
 <c:set var="category" value="${qaListDTO.category}" />
@@ -93,7 +89,6 @@
 <span id="changeLikeHtml${i}">
                 <c:if test="${check == 0}">
                     <div class="board-cell board-like gray qaDetail">
-                    <div class="">
                     <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
                     </div>
                 </c:if>

@@ -1,24 +1,22 @@
-//디테일페이지 글쓴이 클릭이벤트(메일전송,질문모아보기,답변모아보기)
-function clickDisplayChangeListener(params) {
-    Array.from(params).forEach(function(element) {
-        element.addEventListener('click', function(e) {
-            try {
-                if(e.target.nextElementSibling.style.display === 'block'){
-                    e.target.nextElementSibling.style.display = 'none';
-                }else{
-                    e.target.nextElementSibling.style.display = 'block';
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-    });
-}
+////디테일페이지 글쓴이 클릭이벤트(메일전송,질문모아보기,답변모아보기)
+//function clickDisplayChangeListener(params) {
+//    Array.from(params).forEach(function(element) {
+//        element.addEventListener('click', function(e) {
+//                if(e.target.nextElementSibling.style.display === 'block'){
+//                    e.target.nextElementSibling.style.display = 'none';
+//                }else{
+//                    e.target.nextElementSibling.style.display = 'none';
+//                }
+//        });
+//    });
+//}
+//
+//let clkWriter = document.getElementsByClassName("writer");
+//let categorySelect = document.getElementsByClassName("category-select");
+//let titleSelect = document.getElementsByClassName("title-select");
+//
+//clickDisplayChangeListener(clkWriter);
+//clickDisplayChangeListener(categorySelect);
+//clickDisplayChangeListener(titleSelect);
 
-let clkWriter = 'document.getElementsByClassName("writer")';
-let categorySelect = 'document.getElementsByClassName("category-select")';
-let titleSelect = 'document.getElementsByClassName("title-select")';
 
-clickDisplayChangeListener(clkWriter);
-clickDisplayChangeListener(categorySelect);
-clickDisplayChangeListener(titleSelect);
