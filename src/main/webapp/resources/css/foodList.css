@@ -88,6 +88,7 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
+    margin-bottom:10px;
   }
 }
 
@@ -152,12 +153,13 @@
   border-bottom: 1px solid black;
   text-align: center;
   padding: 0.125em 0;
+  height:45px;
 }
 
 
 @media screen and (max-width: 992px) {
   .content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line {
-    /*padding: 0.375em 0;*/
+    padding: 0.375em 0;
     height:35px;
     font-size:15px;
   }
@@ -255,7 +257,7 @@
 @media screen and (max-width: 992px) {
   .map-wrap.food-wrap {
     width: 100%;
-    height: 40%;
+    height: 45%;
   }
 }
 
@@ -290,7 +292,7 @@
         text-align:center;
         position:relative;
         font-size:13px;
-        bottom:-55px;
+        bottom:-40px;
     }
 
     .matzip-category, .food-list-title, .board-map {
