@@ -111,11 +111,11 @@
   }
 }
 
-.content-frame.food-wrap .board-wrap .board-list {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list {
   font-size: 16px;
 }
 
-.board-list.food-wrap {
+.matzip-wrap-list {
     height:210px;
 }
 
@@ -127,12 +127,12 @@
 }
 
 @media screen and (max-width: 992px) {
-  .content-frame.food-wrap .board-wrap .board-list .board-header {
+  .content-frame.food-wrap .board-wrap .matzip-wrap-list .board-header {
     display: none !important;
   }
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line {
   padding: 0 1em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -156,14 +156,14 @@
 
 
 @media screen and (max-width: 992px) {
-  .content-frame.food-wrap .board-wrap .board-list .board-line {
-    padding: 0.375em 0;
+  .content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line {
+    /*padding: 0.375em 0;*/
     height:35px;
     font-size:15px;
   }
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line .board-cell {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line .matzip-list-cell {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -181,20 +181,20 @@
           flex-direction: row;
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line .board-category {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line .matzip-category {
   position: relative;
   -ms-flex-preferred-size: 120px;
       flex-basis: 120px;
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line .food-list-title {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line .food-list-title {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   -ms-flex-negative: 3;
-      flex-shrink: 3;
+      /*flex-shrink: 3;*/
 }
 
-.content-frame.food-wrap .board-wrap .board-list .board-line .board-map {
+.content-frame.food-wrap .board-wrap .matzip-wrap-list .matzip-list-line .board-map {
   -ms-flex-preferred-size: 80px;
       flex-basis: 80px;
 }
@@ -250,7 +250,6 @@
 /* 지도 css */
 .map-wrap.food-wrap {
   width: 50%;
-  height:530px;
 }
 
 @media screen and (max-width: 992px) {
@@ -288,15 +287,12 @@
         font-size:13px;
         bottom:-55px;
     }
-    .board-category, .food-list-title, .board-map {
+
+    .matzip-category, .food-list-title, .board-map {
         font-size:10px;
     }
 
-    .board-category {
-        width:50px;
-    }
-
-    .board-list.food-wrap {
+    .matzip-wrap-list {
         height:160px;
     }
 
@@ -318,7 +314,7 @@
 }
 
 .board-text {
-    width:50px;
+    width:80px;
     color:grey;
 }
 
@@ -340,7 +336,7 @@
     .info.food-wrap .close-btn.food-wrap {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
     .info.food-wrap .close-btn.food-wrap:hover {cursor: pointer;}
     .info.food-wrap .body.food-wrap {position: relative;overflow: hidden;}
-    .info.food-wrap .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+    .info.food-wrap .desc {position: relative;margin:1em 0;text-align:center}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
     .info.food-wrap .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
@@ -369,14 +365,11 @@
         height:90px;
         margin-left:-105px;
         bottom:50px;
-    }
-
-    wrap.food-wrap .info.food-wrap {
-        border-radius: 5px;
+        border-radius:5px;
+        box-shadow: 0px 1px 2px #888;
     }
 
     .info.food-wrap:after {
-        margin-left:-50px;
         bottom:-10px;
     }
 }

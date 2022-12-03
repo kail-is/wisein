@@ -35,15 +35,15 @@ window.addEventListener('DOMContentLoaded', function(){
         .then(companyList => {
             for (let i=0; i<companyList.company.length; i++) {
                 createDiv.innerHTML
-                    += "<div id='list' class='board-line'>"
-                    + "<div style='width:300px;' class='board-cell board-category purple2'>"
+                    += "<div id='list' class='matzip-list-line'>"
+                    + "<div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
                     + companyList.company[i].location+"</div>"
-                    + "<div onclick='getMatzipList(&quot;" + companyList.company[i].location+"&quot;)' class='board-cell food-list-title'>"
+                    + "<div onclick='getMatzipList(&quot;" + companyList.company[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
                     + companyList.company[i].companyName+"</div>"
-                    + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
                     + companyList.company[i].matzipCount+"</div>"
-                    + "<div class='board-cell'><button onclick='checkLocal(&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].companyName+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>explore</button></div>"
-                    + "<div class='board-cell' style='width:50px;'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + companyList.company[i].companyLoc + "&quot;)'>visibility</button><div></div>";
+                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].companyName+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                    + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + companyList.company[i].companyLoc + "&quot;)'>visibility</button><div></div>";
             }
             createDivBefore.insertAdjacentElement('beforebegin', createDiv);
         });
@@ -69,14 +69,14 @@ function foodCategorySelect(target) {
                 }
                 for (let i=0; i<categoryList.company.length; i++) {
                     createDiv.innerHTML
-                        += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                        += "<div id='list' class='matzip-list-line'><div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
                         + categoryList.company[i].location+"</div>"
-                        + "<div onclick='getMatzipList(&quot;" + categoryList.company[i].location+"&quot;)' class='board-cell food-list-title'>"
+                        + "<div onclick='getMatzipList(&quot;" + categoryList.company[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
                         + categoryList.company[i].companyName+"</div>"
-                        + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                        + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
                         + categoryList.company[i].matzipCount+"</div>"
-                        + "<div class='board-cell'><button onclick='checkLocal(&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].companyName+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>explore</button></div>"
-                        + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + categoryList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
+                        + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].companyName+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                        + "<div class='matzip-list-cell board-map purple' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + categoryList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
                 }
                 createDivBefore.insertAdjacentElement('beforebegin', createDiv);
 
@@ -116,20 +116,20 @@ function getMatzipList(location, currentPage) {
         .then(matzipList => {
             if (matzipList.matzip.length==0) {
                 createDiv.innerHTML
-                    += "<div id='list' class='board-line' style='height:50px;justify-content:center;align-items:center;';>"
+                    += "<div id='list' class='matzip-list-line' style='height:50px;justify-content:center;align-items:center;';>"
                     + "등록된 맛집이 없습니다."
                     + "</div>";
             }
             for (let i=0;i<matzipList.matzip.length; i++) {
                 createDiv.innerHTML
-                    += "<div id='list' class='board-line'><div style='width:300px;' class='board-cell board-category purple2'>"
+                    += "<div id='list' class='matzip-list-line'><div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
                     + matzipList.matzip[i].location+"</div>"
-                    + "<div onclick='localExistCheck(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='board-cell food-list-title'>"
+                    + "<div onclick='localExistCheck(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
                     + matzipList.matzip[i].companyName+"</div>"
-                    + "<div class='board-cell board-map purple'><span class='material-icons'>map</span>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
                     + matzipList.matzip[i].matzipCount+"</div>"
-                    + "<div class='board-cell'><button onclick='checkLocal(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].companyName+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='material-icons-outlined purple'>explore</button></div>"
-                    + "<div class='board-cell' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + matzipList.matzip[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
+                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].companyName+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                    + "<div class='matzip-list-cell board-map purple' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + matzipList.matzip[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
 
             }
             createDivBefore.insertAdjacentElement('beforebegin', createDiv);

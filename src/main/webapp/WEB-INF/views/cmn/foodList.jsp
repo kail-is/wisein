@@ -14,8 +14,8 @@
                 </p>
 
                 <span class="material-icons">
-                        expand_more
-                    </span>
+                    expand_more
+                </span>
             </div>
             <input class="recm-btn" type="button" onclick="location.href='matzipBoard'" value="추천">
         </div>
@@ -24,11 +24,11 @@
             <div id="map"></div>
         </div>
         <div class="board-wrap">
-            <div class="board-list food-wrap">
-                <div class="board-line food-wrap board-header">
-                    <div class="board-cell food-wrap board-category purple2">
-                        <p>
-                            <select class="select-list" onchange="foodCategorySelect(this)">
+            <div class="matzip-wrap-list">
+                <div class="matzip-list-line board-header">
+                    <div class="matzip-list-cell matzip-category purple2">
+                        <p class="category-select">
+                            <select id="selectOption" onchange="foodCategorySelect(this)">
                                 <option value="none">-----</option>
                                 <c:forEach items="${comCategory}" var="category">
                                     <option value="cate"><c:out value="${category.location}"/></option>
@@ -37,19 +37,19 @@
                         </p>
 
                         <span class="material-icons">
-                                expand_more
-                            </span>
+                            expand_more
+                        </span>
                     </div>
-                    <div class="board-cell food-list-title">
+                    <div class="matzip-list-cell food-list-title">
                         <p>site</p>
                     </div>
-                    <div id="changeText" class="board-cell board-map gray">
+                    <div id="changeText" class="matzip-list-cell board-map gray">
                         맛집
                     </div>
-                    <div class="board-cell board-text">
+                    <div class="matzip-list-cell board-text">
                         위치
                     </div>
-                    <div class="board-cell board-text">
+                    <div class="matzip-list-cell board-text">
                         로드뷰
                     </div>
                 </div>
