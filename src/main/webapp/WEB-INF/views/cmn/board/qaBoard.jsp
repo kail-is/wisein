@@ -7,46 +7,46 @@
 
 <c:set var="category" value="${qaListDTO.category}" />
 <c:set var="writer" value="${member.id}" />
-
     <form autocomplete="off" id="qaBoardForm">
        <div class="content-wrap">
-         <div class="select-wrap" style="position: absolute;">
+            <div class="matzip-write">
+                <div class="content-inner-box">
+                     <div class="select-wrap">
+                         <select id="category" name="category" >
+                            <c:if test="${empty qaListDTO.category}">
+                                   <option value="FRONT">FRONT</option>
+                                   <option value="BACK">BACK</option>
+                                   <option value="DB">DB</option>
+                            </c:if>
+                            <c:if test="${!empty qaListDTO.category}">
+                                <option> <c:out value="${qaListDTO.category}" /> </option>
+                            </c:if>
+                         </select>
+                    </div>
+                    <p>
+                        <input type="text" size="210" id="subject" name="subject" placeholder="제목을 입력하세요" value="${qaListDTO.subject}">
+                    </p>
+                </div>
 
-         <select id="category" name="category" >
-            <c:if test="${empty qaListDTO.category}">
-                   <option value="FRONT">FRONT</option>
-                   <option value="BACK">BACK</option>
-                   <option value="DB">DB</option>
-            </c:if>
-            <c:if test="${!empty qaListDTO.category}">
-                <option> <c:out value="${qaListDTO.category}" /> </option>
-            </c:if>
-            </select>
-        </div>
-        <p>
-            <input type="text" size="210" id="subject" name="subject" placeholder="제목을 입력하세요" value="${qaListDTO.subject}" required style="width: 95%; margin-left: 73px;">
-        </p>
+                <div id="contents">
+                    <div id="editor">${qaListDTO.content}</div>
+                    <div id="viewer"></div>
 
-        <div>내용</div>
-        <div id="contents">
-            <div id="editor">${qaListDTO.content}</div>
-            <div id="viewer"></div>
+                    <input type="hidden" id="num" name="num" value="${qaListDTO.num}">
+                    <input type="hidden" id="parentNum" name="parentNum" value="${qaListDTO.parentNum}">
+                    <input type="hidden" id="content" name="content">
+                    <input type="hidden" id="updGubun" name="updGubun" value="N">
+                </div>
 
-            <input type="hidden" id="num" name="num" value="${qaListDTO.num}">
-            <input type="hidden" id="parentNum" name="parentNum" value="${qaListDTO.parentNum}">
-            <input type="hidden" id="content" name="content">
-            <input type="hidden" id="updGubun" name="updGubun" value="N">
-        </div>
-
-        <div class="button-wrap">
-            <c:if test="${empty qaListDTO.subject}">
-                <input type="button" value="등록" onclick="regQa('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }')">
-            </c:if>
-            <c:if test="${!empty qaListDTO.subject}">
-                <input type="button" value="수정" onclick="update()">
-            </c:if>
-            <input type="button" value="취소" onclick="cancel()">
+                <div class="button-wrap">
+                    <c:if test="${empty qaListDTO.subject}">
+                        <input type="button" value="등록" onclick="regQa('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }')">
+                    </c:if>
+                    <c:if test="${!empty qaListDTO.subject}">
+                        <input type="button" value="수정" onclick="update()">
+                    </c:if>
+                    <input type="button" value="취소" onclick="cancel()">
+               </div>
+            </div>
        </div>
-
-    </div>
-    </form>
+</form>

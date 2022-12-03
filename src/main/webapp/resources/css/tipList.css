@@ -3,11 +3,11 @@ header ul li:nth-child(2) .select-wrap select {
   background: url(../image/select_arrow.jpg) no-repeat right;
 }*/
 
-.content-wrap.tipList {
-  max-width: 1400px;
+.content-wrap.boardList {
+  max-width: 1300px;
 }
 
-.content-wrap .content-frame.tipList {
+.content-wrap .content-frame.boardList {
   margin-bottom: 1.5em;
 }
 
@@ -379,3 +379,4 @@ header ul li:nth-child(2) .select-wrap select {
 .content-wrap .pageno-group .current {
   color: #7E57C2;
 }
+

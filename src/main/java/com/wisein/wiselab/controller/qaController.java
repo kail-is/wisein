@@ -191,6 +191,7 @@ public class qaController {
         model.addAttribute("commentContent", commentContent);
 
         String check =(String)session.getAttribute("side_gubun");
+System.out.println("check :" + check);
         if(check == null){
             String side_gubun = "Y";
             model.addAttribute("side_gubun", side_gubun);

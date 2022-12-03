@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>\
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<!--
 <c:if test="${empty questionsListWriter && empty commentListWriter}">
-<div class="content-wrap">
+<div class="content-wrap boardList">
 </c:if>
 <c:if test="${not empty questionsListWriter || not empty commentListWriter}">
-<div class="content-wrap" style="max-width: 1300px;">
+<div class="content-wrap boardList" style="max-width: 1300px;">
 </c:if>
-    <section class="content-frame">
+-->
+<div class="content-wrap boardList">
+    <section class="content-frame boardList">
         <div class="content-top-group">
         <c:if test="${side_gubun ne 'Y'}">
             <button type="button" onClick="location.href='/qaBoard'" ></button>
@@ -91,9 +94,9 @@
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>
                         <ul class="person-function">
-                            <li><a href="#">메일 전송</a></li>
-                            <li><a href="#">질문 모아 보기</a></li>
-                            <li><a href="#">답변 모아 보기</a></li>
+                            <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
+                            <li><a href="#" onclick="questionsList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="questionsList_btn">질문 모아 보기</a></li>
+                            <li><a href="#" onclick="commentList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="commentList_btn">답변 모아 보기</a></li>
                         </ul>
                     </div>
                     <div class="board-cell board-date gray">

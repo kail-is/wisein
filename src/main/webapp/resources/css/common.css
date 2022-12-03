@@ -231,7 +231,7 @@ input, select {
 }
 
 .content-wrap .content-frame div {
-  margin-bottom: 0.5em;
+  <!-- margin-bottom: 0.5em; -->
 }
 
 .content-wrap .content-frame .title {
@@ -579,9 +579,10 @@ input, select {
   font-family: "Noto Sans KR", sans-serif;
   padding: 0.5em 1em;
   font-weight: 300;
+  top: 120px;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1850px) {
   .info-wrap {
     display: none;
   }

@@ -20,7 +20,8 @@
         <link rel="stylesheet" href="${url}/resources/css/totalSearch.css">
         <link rel="stylesheet" href="${url}/resources/css/foodList.css">
         <link rel="stylesheet" href="${url}/resources/css/tipDetail.css">
-        <link rel="stylesheet" href="resources/css/tipList.css?ver=1">
+        <link rel="stylesheet" href="${url}/resources/css/tipList.css?ver=1">
+        <link rel="stylesheet" href="${url}/resources/css/qaDetail.css">
 
         <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css">
         <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css">
@@ -65,6 +66,7 @@
     <script src="${url}/resources/js/common/event.js"></script>
     <script src="${url}/resources/js/common/login.js"></script>
     <script src="${url}/resources/js/tipDetail.js"></script>
+    <script src="${url}/resources/js/qaDetail.js"></script>
     <script src="${url}/resources/js/totalSearch.js"></script>
 
 	<script>
