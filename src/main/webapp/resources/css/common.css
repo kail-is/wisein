@@ -305,7 +305,6 @@ input, select {
 
 @media screen and (max-width: 576px) {
   .top-arrow {
-    display: none;
   }
 }
 

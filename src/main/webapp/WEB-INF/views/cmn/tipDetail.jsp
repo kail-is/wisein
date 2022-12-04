@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <div class="content-wrap tipDetail">
     <section class="questions content-frame">
         <div class="icon" style="float:right;">
@@ -44,12 +46,18 @@
                 <li><a onclick="gatherMemTip('${tipBoardDTO.writer}')">작성팁 모아보기</a></li>
             </ul>
 
-                <c:if test="${meetLink == null}">
-                    <a onclick="commonPopup.alertPopup('미트링크가 없어요😅', false)"><span class="material-icons purple">videocam</span></a>
-                </c:if>
-                <c:if test="${meetLink != null}">
-                    <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
-                </c:if>
+            <!--미트링크-->
+            <c:if test="${fn:contains(meetLink , 'meet.google.com')}">
+                <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
+            </c:if>
+
+            <!-- 게시글 수정삭제 아이콘-->
+            <c:if test="${tipBoardDTO.writer == memberId}">
+                <div class="icon" align="right">
+                    <span class="material-icons purple2" onclick="updTip()">border_color</span>
+                    <span class="material-icons purple2" onclick="delTip()">delete</span>
+                </div>
+            </c:if>
         </div>
 
         <!--본문-->
@@ -57,15 +65,6 @@
             ${content}
         </div>
     </section>
-
-        <!-- 게시글 수정삭제 아이콘-->
-        <c:set var="memberId" value="${memberId}" />
-        <c:if test="${tipBoardDTO.writer == memberId}">
-            <div class="icon" align="right">
-                <span class="material-icons" onclick="updTip()">border_color</span>
-                <span class="material-icons" onclick="delTip()">delete</span>
-            </div>
-        </c:if>
 
     <!-- 댓글 -->
     <section class="recommend-wrap" id="changeCommHtml">
