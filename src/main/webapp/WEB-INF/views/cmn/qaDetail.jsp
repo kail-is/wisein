@@ -101,7 +101,7 @@
 
                 <c:if test="${check == 2}">
                     <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})" style="color:gray;">thumb_up</span>
+                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
                     </div>
                 </c:if>
 </span>
