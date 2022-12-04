@@ -331,7 +331,7 @@ function detailPage(loc, localCheck) {
                 if (typeof matzipId != 'number') {
                     return;
                 } else {
-                    let url = "http://localhost:8080/matzip?id="+matzipId;
+                    let url = "http://localhost:9092/matzip?id="+matzipId;
                     location.href = url;
                 }
             });

@@ -1,11 +1,6 @@
 package com.wisein.wiselab.service;
 
-import com.wisein.wiselab.dto.FileDTO;
-import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface TipBoardService {

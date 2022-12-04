@@ -13,7 +13,7 @@
 			    		<option value="db"    ${searchType eq 'db'?'selected':''}>DB</option>
 	                </select>
                 </div>
-                <input type="text" id="keywordInput" class="search-bar" placeholder="Type something…" onkeyup="enterkey()" value="${keyword}" />
+                <input type="text" id="keywordInput" class="search-bar" placeholder="Type something…" onkeyup="enterKey('PC')" value="${keyword}" />
             </li>
             <li class="bar">
                 <label for="bar-chk">
