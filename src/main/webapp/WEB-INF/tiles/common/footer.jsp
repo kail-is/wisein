@@ -4,7 +4,7 @@
     <div class="search-wrap">
         <div class="select-wrap">
              <select name="searchType" class="searchType" id="search-list2">
-                <option value="all"   ${searchType eq 'all' ? 'selected':''}>카테고리 검색 </option>
+                <option value="all"   ${searchType eq 'all' ? 'selected':''}>카테고리</option>
                 <option value="front" ${searchType eq 'front'?'selected':''}>FRONT</option>
                 <option value="back"  ${searchType eq 'back'?'selected':''}>BACK</option>
                 <option value="db"    ${searchType eq 'db'?'selected':''}>DB</option>

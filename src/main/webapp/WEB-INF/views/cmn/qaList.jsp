@@ -93,7 +93,7 @@
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>
-                        <ul class="person-function">
+                        <ul class="person-function  list">
                             <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
                             <li><a href="#" onclick="questionsList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="questionsList_btn">질문 모아 보기</a></li>
                             <li><a href="#" onclick="commentList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="commentList_btn">답변 모아 보기</a></li>

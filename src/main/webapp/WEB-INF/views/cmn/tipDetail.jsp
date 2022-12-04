@@ -94,7 +94,7 @@
                                     <!-- 댓글 수정삭제 아이콘 -->
                                     <c:if test="${commentList.writer == memberId}">
                                         <div class="icon">
-                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content}')">border_color</span>
+                                            <span class="material-icons" onClick="modiComm(${commentList.num})">border_color</span>
                                             <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
                                         </div>
                                     </c:if>

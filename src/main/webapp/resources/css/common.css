@@ -356,6 +356,12 @@ input, select {
   z-index: 88;
 }
 
+.person-function.list {
+ text-align: left;
+ top: 125%;
+ left: 25%;
+}
+
 .person-function li {
   color: #ffffff;
   padding: 0.375em 0;

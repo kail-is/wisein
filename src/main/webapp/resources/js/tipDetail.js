@@ -41,7 +41,7 @@
                 html += "<div class='sub'><div class='date'>"+(newCommArr[i].regDate).slice(0,10)+"</div>"
                 if(newCommArr[i].writer == memId){
                     html += "<div class='icon'>"
-                    html += "<span class='material-icons' onClick='openModi("+newCommArr[i].num+",&apos;"+newCommArr[i].content+"&apos;)'>border_color</span>"
+                    html += "<span class='material-icons' onClick='modiComm("+newCommArr[i].num+")'>border_color</span>"
                     html += "<span class='material-icons' onClick='delComm("+newCommArr[i].num+")'>delete</span></div>"
                 }
                 html += "</div></div></div>"
@@ -108,9 +108,33 @@
              }
           }
 
+          function modiComm(commNum){
+            let data = {boardType: boardType, boardIdx: tipNum};
+            let query = Object.keys(data)
+                       .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+                       .join('&');
+
+            fetch('/selTipComm?' + query, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(json =>  {
+                for(const property in json.commentList){
+                    var sJson = json.commentList[property];
+                    if(sJson.num == commNum){
+                        openModi(sJson.num , sJson.content)
+                    }
+                }
+            })
+          }
 
           function openModi(commNum, content){
-            content = content.replaceAll('<br>', '\r\n');
+            content = content.replaceAll('&lt;br&gt;', '\r\n');
+            content = content.replaceAll("&lt;",'<');
+            content = content.replaceAll("&gt;",'>');
+            content = content.replaceAll("&quot;",'\"');
+            content = content.replaceAll("&#39;","\'");
             if(isMod==false){
                 document.getElementById('comm'+commNum).style.display = 'none';
                 document.getElementById('modComm'+commNum).style.display = 'block';

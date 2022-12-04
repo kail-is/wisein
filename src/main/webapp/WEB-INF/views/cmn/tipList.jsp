@@ -67,7 +67,7 @@
                     </c:if>
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${tip.writer}" /><br></p>
-                        <ul class="person-function">
+                        <ul class="person-function list">
                             <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
                             <li><a onclick="gatherMemTip('${tip.writer}')">작성팁 모아보기</a></li>
                         </ul>

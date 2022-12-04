@@ -97,16 +97,6 @@ window.addEventListener('wheel',()=>{
         callFun();
     }
 });
-let totalSearchWriter = document.getElementsByClassName("writer");
-Array.from(totalSearchWriter).forEach(function(element) {
-    element.addEventListener('click', function(e) {
-        if(e.target.nextElementSibling.style.display === 'block'){
-            e.target.nextElementSibling.style.display = 'none';
-        }else{
-            e.target.nextElementSibling.style.display = 'block';
-        }
-    });
-});
 
 window.onbeforeunload = function() {
     callFun = null;

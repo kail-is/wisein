@@ -10,7 +10,7 @@
 //        });
 //    });
 //}
-//
+//debugger;
 //let clkWriter = document.getElementsByClassName("writer");
 //let categorySelect = document.getElementsByClassName("category-select");
 //let titleSelect = document.getElementsByClassName("title-select");
@@ -20,3 +20,14 @@
 //clickDisplayChangeListener(titleSelect);
 
 
+let totalSearchWriter = document.getElementsByClassName("writer");
+Array.from(totalSearchWriter).forEach(function(element) {
+    element.addEventListener('click', function(e) {
+        if(e.target.nextElementSibling.style.display === 'block'){
+debugger;
+            e.target.nextElementSibling.style.display = 'none';
+        }else{
+            e.target.nextElementSibling.style.display = 'block';
+        }
+    });
+});

@@ -228,6 +228,24 @@ public class tipController {
     }
 
 
+    //댓글 리스트
+    @ResponseBody
+    @GetMapping(value = "/selTipComm")
+    public JSONObject tipSelComment (@RequestParam String boardIdx, @RequestParam String boardType) throws Exception {
+        CommentDTO dto = new CommentDTO();
+
+        dto.setBoardIdx(Integer.parseInt(boardIdx));
+        dto.setBoardType(boardType);
+
+        //댓글 리스트
+        List<CommentDTO> commentList = commentService.selectComment(dto);
+
+        JSONObject response = new JSONObject();
+        response.put("commentList",commentList);
+
+        return response;
+    }
+
     //댓글 등록
     @ResponseBody
     @PostMapping(value = "/regTipComm")
