@@ -1,4 +1,9 @@
 let callAjaxIntegrationData = (addr = location.pathname) => {
+
+    if(location.href.indexOf("integration") == -1) {
+        return
+    }
+
     let currentPageNo = 0;
     let boardTypeList = [];
     let isCall        = true;
@@ -77,10 +82,13 @@ let callAjaxIntegrationData = (addr = location.pathname) => {
         }
     };
 }
+
 let callFun = callAjaxIntegrationData();
- if(location.href.indexOf("integration") > -1) {
+
+if(typeof callFun === "function") {
     callFun();
- }
+}
+
 window.addEventListener('wheel',()=>{
     let scrollY =  window.innerHeight + window.scrollY;//브라우저 안쪽 길이 + 스크롤의 현재 위치
     if(scrollY > document.body.offsetHeight){//body태그 문서 길이
@@ -99,10 +107,10 @@ Array.from(totalSearchWriter).forEach(function(element) {
         }
     });
 });
+
 window.onbeforeunload = function() {
     callFun = null;
 };
-
 
 function goBrdDetail(brdType, brdNum) {
     location.href = "http://" + document.location.host + "/" + brdType.toLowerCase() + "Detail?num=" + brdNum
