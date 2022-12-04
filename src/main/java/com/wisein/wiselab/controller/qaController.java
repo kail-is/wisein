@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.annotation.Resource;
+import javax.lang.model.SourceVersion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -129,12 +128,14 @@ public class qaController {
 
         //meetLink
         String meetLink = qaListservice.selectMeetLink(num);
+        //System.out.println("meetLink = " + meetLink);
 
         QaListDTO qaListDTO = null;
         List<QaListDTO> commentQaList = new ArrayList<>();
         List<String> commentContent = new ArrayList<>();
         List<LikeBoardDTO> likeQaBoardList = new ArrayList<>();
         List<ScrapBoardDTO> scrapQaBoardList = new ArrayList<>();
+        List<String> commentMeetLinkList = new ArrayList<>();
 
         // redirect시 필요조건
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -154,6 +155,20 @@ public class qaController {
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
+
+            int commentQalistSize = commentQaList.size();
+
+            if(commentQalistSize != 0){
+                for(int i=0; i<commentQalistSize; i++){
+                    int commentNum = commentQaList.get(i).getNum();
+                    String commentMeetLink = qaListservice.selectMeetLink(commentNum);
+                    commentMeetLinkList.add(commentMeetLink);
+                    //System.out.println("commentMeetLinkList.get(i) = " + commentMeetLinkList.get(i));
+                }
+                model.addAttribute("commentMeetLinkList", commentMeetLinkList);
+            }
+
+
         } else {
 //            System.out.println("/qaDetail num : " + num);
             qaListDTO.setNum(num);
@@ -191,7 +206,7 @@ public class qaController {
         model.addAttribute("commentContent", commentContent);
 
         String check =(String)session.getAttribute("side_gubun");
-System.out.println("check :" + check);
+//System.out.println("check :" + check);
         if(check == null){
             String side_gubun = "Y";
             model.addAttribute("side_gubun", side_gubun);
@@ -262,9 +277,9 @@ System.out.println("check :" + check);
         body.put("likeQaBoardList", likeQaBoardList);
         body.put("scrapQaBoardList", scrapQaBoardList);
 
-        System.out.println("commentQaList : " + body.get("commentQaList"));
-        System.out.println("likeQaBoardList : " + body.get("likeQaBoardList"));
-        System.out.println("scrapQaBoardList : " + body.get("scrapQaBoardList"));
+//        System.out.println("commentQaList : " + body.get("commentQaList"));
+//        System.out.println("likeQaBoardList : " + body.get("likeQaBoardList"));
+//        System.out.println("scrapQaBoardList : " + body.get("scrapQaBoardList"));
 
 //        JSONObject jsonObject = new JSONObject(body);
 //
@@ -727,7 +742,7 @@ System.out.println("check :" + check);
 
         qaListDTO.setWriter((String)session.getAttribute("questionsListWriter"));
         session.setAttribute("questionsListWriter", qaListDTO.getWriter());
-        System.out.println(qaListDTO.getWriter());
+//        System.out.println(qaListDTO.getWriter());
 
         // 본인글 및 본인 질문모아보기에서는 사이드바 보여주게 설정
         if(member.getId().equals(qaListDTO.getWriter())){
