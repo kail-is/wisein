@@ -7,26 +7,26 @@
             <span id="changeLikeHtml">
                 <!--좋아요-->
                 <c:if test="${likeDelYn == 'none'}">
-                    <span class="material-icons gray" id="like_btn" onclick="regLike(${tipBoardDTO.num})">thumb_up</span>
+                    <span class="material-icons gray" id="like_btn" onclick="regLikeTip(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
                 <c:if test="${likeDelYn == 'Y'}">
-                    <span class="material-icons gray" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
+                    <span class="material-icons gray" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
                 <c:if test="${likeDelYn == 'N'}">
-                    <span class="material-icons purple" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
+                    <span class="material-icons purple2" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
                 </c:if>
             </span>
 
             <!--북마크-->
             <span id="changeScrapHtml">
                 <c:if test="${scrapDelYn == 'none'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})">bookmarks</span>
+                    <span class="material-icons gray" id="bookmark_btn" onclick="regScrapTip(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
                 <c:if test="${scrapDelYn == 'Y'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
+                    <span class="material-icons gray" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
                 <c:if test="${scrapDelYn == 'N'}">
-                    <span class="material-icons purple" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
+                    <span class="material-icons purple2" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
                 </c:if>
             </span>
         </div>

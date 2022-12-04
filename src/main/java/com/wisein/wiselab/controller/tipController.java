@@ -44,9 +44,6 @@ public class tipController {
     @Autowired
     CommonService commonService;
 
-    @Autowired
-    MemberService memberService;
-
 
     private final AbstractPagingCustom PagingTagCustom;
 

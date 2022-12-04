@@ -3,20 +3,10 @@ package com.wisein.wiselab.service;
 import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.TipBoardDAO;
-import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
-import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service

@@ -37,11 +37,18 @@
     }
 }
 
-function enterkey() {
-   var selectedSearchType = document.getElementById('search-list');
-   var inputKeyword = document.getElementById('keywordInput');
+function enterKey(param) {
+   var selectedSearchType, inputKeyword
 
-   if(window.event.keyCode == 13) {
+    if(param == 'PC'){
+        selectedSearchType = document.getElementById('search-list');
+        inputKeyword = document.getElementById('keywordInput');
+    }else if(param == 'MO'){
+        selectedSearchType = document.getElementById('search-list2');
+        inputKeyword = document.getElementById('keywordInput2');
+    }
+
+   if(window.event.keyCode == 13 || window.event.type == 'click') {
        const searchData = "/integration/board"
                      + '?searchType=' + selectedSearchType.value
                      + "&keyword=" + inputKeyword.value

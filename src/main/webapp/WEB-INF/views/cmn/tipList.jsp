@@ -79,28 +79,13 @@
             </c:forEach>
         </div>
     </section>
-    <div class="search-wrap">
-        <div class="select-wrap">
-            <select name="" id="search-list">
-                <option value="front">Front</option>
-            </select>
-        </div>
-        <input type="text" class="search-bar" placeholder="Type something…" required="required">
-        <span class="material-icons">
-           <a href="#">search</a>
-        </span>
-    </div>
+
+
+
+    <!--페이징-->
     <ul class="pageno-group">
         <div class="pagination">
             ${pagination}
         </div>
     </ul>
-</div>
-
-<div class="top-arrow">
-    <a href="#">
-        <span class="material-icons purple">
-            keyboard_arrow_up
-        </span>
-    </a>
 </div>
