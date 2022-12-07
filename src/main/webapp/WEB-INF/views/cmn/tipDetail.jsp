@@ -6,32 +6,35 @@
 <div class="content-wrap tipDetail">
     <section class="questions content-frame">
         <div class="icon" style="float:right;">
-            <span id="changeLikeHtml">
+           <c:if test="${tipBoardDTO.writer != memberId}">
                 <!--좋아요-->
-                <c:if test="${likeDelYn == 'none'}">
-                    <span class="material-icons gray" id="like_btn" onclick="regLikeTip(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-                <c:if test="${likeDelYn == 'Y'}">
-                    <span class="material-icons gray" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-                <c:if test="${likeDelYn == 'N'}">
-                    <span class="material-icons purple2" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-            </span>
+                <span id="changeLikeHtml">
+                    <c:if test="${likeDelYn == 'none'}">
+                        <span class="material-icons gray" id="like_btn" onclick="regLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                    <c:if test="${likeDelYn == 'Y'}">
+                        <span class="material-icons gray" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                    <c:if test="${likeDelYn == 'N'}">
+                        <span class="material-icons purple2" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                </span>
 
-            <!--북마크-->
-            <span id="changeScrapHtml">
-                <c:if test="${scrapDelYn == 'none'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="regScrapTip(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-                <c:if test="${scrapDelYn == 'Y'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-                <c:if test="${scrapDelYn == 'N'}">
-                    <span class="material-icons purple2" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-            </span>
+                <!--북마크-->
+                <span id="changeScrapHtml">
+                    <c:if test="${scrapDelYn == 'none'}">
+                        <span class="material-icons gray" id="bookmark_btn" onclick="regScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                    <c:if test="${scrapDelYn == 'Y'}">
+                        <span class="material-icons gray" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                    <c:if test="${scrapDelYn == 'N'}">
+                        <span class="material-icons purple2" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                </span>
+            </c:if>
         </div>
+
 
         <!--제목-->
         <div class="title">
