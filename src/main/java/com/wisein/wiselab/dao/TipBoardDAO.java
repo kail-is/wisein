@@ -1,8 +1,5 @@
 package com.wisein.wiselab.dao;
 
-
-import com.wisein.wiselab.dto.FileDTO;
-import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
 import java.util.List;

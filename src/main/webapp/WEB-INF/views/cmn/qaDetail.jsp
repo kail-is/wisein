@@ -30,10 +30,7 @@
                 <li><a href="#" onclick="commentList_btn('${fn:replace(qaListDTO.writer, "'", "\\'") }');" id="commentList_btn">답변 모아 보기</a></li>
             </ul>
 
-            <c:if test="${meetLink == null}">
-                <a onclick="commonPopup.alertPopup('미트링크가 없어요😅', false)"><span class="material-icons purple">videocam</span></a>
-            </c:if>
-            <c:if test="${meetLink != null}">
+            <c:if test = "${fn:contains(meetLink, 'meet.google.com')}">
                 <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
             </c:if>
 
@@ -55,6 +52,7 @@
     <c:set var="commentQaContent" value="${commentContent[i]}"  />
     <c:set var="commentQaNum" value="${commentQa.num}"  />
     <c:set var="commentQaWriter" value="${commentQa.writer}"  />
+    <c:set var="commentMeetLink" value="${commentMeetLinkList[i]}"  />
 
     <section class="questions content-frame">
         <div class="title">
@@ -101,7 +99,7 @@
 
                 <c:if test="${check == 2}">
                     <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})" style="color:gray;">thumb_up</span>
+                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
                     </div>
                 </c:if>
 </span>
@@ -140,7 +138,9 @@
                 <li><a href="#" id="comment_commentsList_btn" onclick="comment_commentList_btn('${commentQaWriter}')">답변 모아 보기</a></li>
             </ul>
 
-            <span class="material-icons purple" id="comment_meetLink_btn" onclick="comment_meetLink_btn(${commentQaNum})" >videocam</span>
+            <c:if test = "${fn:contains(commentMeetLink, 'meet.google.com')}">
+               <span class="material-icons purple" id="comment_meetLink_btn" onclick="comment_meetLink_btn(${commentQaNum})" >videocam</span>
+            </c:if>
 
             <c:if test="${member.id == commentQa.writer}">
                 <span class="material-icons" id="comment_update_btn" onclick="comment_update_btn(${commentQaNum})" >border_color</span>

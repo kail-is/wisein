@@ -1,35 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <div class="content-wrap tipDetail">
     <section class="questions content-frame">
         <div class="icon" style="float:right;">
-            <span id="changeLikeHtml">
+           <c:if test="${tipBoardDTO.writer != memberId}">
                 <!--좋아요-->
-                <c:if test="${likeDelYn == 'none'}">
-                    <span class="material-icons gray" id="like_btn" onclick="regLike(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-                <c:if test="${likeDelYn == 'Y'}">
-                    <span class="material-icons gray" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-                <c:if test="${likeDelYn == 'N'}">
-                    <span class="material-icons purple" id="like_btn" onclick="udpLike(${tipBoardDTO.num})">thumb_up</span>
-                </c:if>
-            </span>
+                <span id="changeLikeHtml">
+                    <c:if test="${likeDelYn == 'none'}">
+                        <span class="material-icons gray" id="like_btn" onclick="regLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                    <c:if test="${likeDelYn == 'Y'}">
+                        <span class="material-icons gray" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                    <c:if test="${likeDelYn == 'N'}">
+                        <span class="material-icons purple2" id="like_btn" onclick="udpLikeTip(${tipBoardDTO.num})">thumb_up</span>
+                    </c:if>
+                </span>
 
-            <!--북마크-->
-            <span id="changeScrapHtml">
-                <c:if test="${scrapDelYn == 'none'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="regScrap(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-                <c:if test="${scrapDelYn == 'Y'}">
-                    <span class="material-icons gray" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-                <c:if test="${scrapDelYn == 'N'}">
-                    <span class="material-icons purple" id="bookmark_btn" onclick="udpScrap(${tipBoardDTO.num})">bookmarks</span>
-                </c:if>
-            </span>
+                <!--북마크-->
+                <span id="changeScrapHtml">
+                    <c:if test="${scrapDelYn == 'none'}">
+                        <span class="material-icons gray" id="bookmark_btn" onclick="regScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                    <c:if test="${scrapDelYn == 'Y'}">
+                        <span class="material-icons gray" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                    <c:if test="${scrapDelYn == 'N'}">
+                        <span class="material-icons purple2" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
+                    </c:if>
+                </span>
+            </c:if>
         </div>
+
 
         <!--제목-->
         <div class="title">
@@ -44,12 +49,18 @@
                 <li><a onclick="gatherMemTip('${tipBoardDTO.writer}')">작성팁 모아보기</a></li>
             </ul>
 
-                <c:if test="${meetLink == null}">
-                    <a onclick="commonPopup.alertPopup('미트링크가 없어요😅', false)"><span class="material-icons purple">videocam</span></a>
-                </c:if>
-                <c:if test="${meetLink != null}">
-                    <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
-                </c:if>
+            <!--미트링크-->
+            <c:if test="${fn:contains(meetLink , 'meet.google.com')}">
+                <a href="${meetLink}" target='_blank'><span class="material-icons purple">videocam</span></a>
+            </c:if>
+
+            <!-- 게시글 수정삭제 아이콘-->
+            <c:if test="${tipBoardDTO.writer == memberId}">
+                <div class="icon" align="right">
+                    <span class="material-icons purple2" onclick="updTip()">border_color</span>
+                    <span class="material-icons purple2" onclick="delTip()">delete</span>
+                </div>
+            </c:if>
         </div>
 
         <!--본문-->
@@ -57,15 +68,6 @@
             ${content}
         </div>
     </section>
-
-        <!-- 게시글 수정삭제 아이콘-->
-        <c:set var="memberId" value="${memberId}" />
-        <c:if test="${tipBoardDTO.writer == memberId}">
-            <div class="icon" align="right">
-                <span class="material-icons" onclick="updTip()">border_color</span>
-                <span class="material-icons" onclick="delTip()">delete</span>
-            </div>
-        </c:if>
 
     <!-- 댓글 -->
     <section class="recommend-wrap" id="changeCommHtml">
@@ -95,7 +97,7 @@
                                     <!-- 댓글 수정삭제 아이콘 -->
                                     <c:if test="${commentList.writer == memberId}">
                                         <div class="icon">
-                                            <span class="material-icons" onClick="openModi(${commentList.num}, '${commentList.content}')">border_color</span>
+                                            <span class="material-icons" onClick="modiComm(${commentList.num})">border_color</span>
                                             <span class="material-icons" onClick="delComm(${commentList.num})">delete</span>
                                         </div>
                                     </c:if>

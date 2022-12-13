@@ -305,7 +305,6 @@ input, select {
 
 @media screen and (max-width: 576px) {
   .top-arrow {
-    display: none;
   }
 }
 
@@ -355,6 +354,12 @@ input, select {
   font-size: 14px;
   font-weight: 600;
   z-index: 88;
+}
+
+.person-function.list {
+ text-align: left;
+ top: 125%;
+ left: 25%;
 }
 
 .person-function li {

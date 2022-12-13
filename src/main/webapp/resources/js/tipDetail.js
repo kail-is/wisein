@@ -41,7 +41,7 @@
                 html += "<div class='sub'><div class='date'>"+(newCommArr[i].regDate).slice(0,10)+"</div>"
                 if(newCommArr[i].writer == memId){
                     html += "<div class='icon'>"
-                    html += "<span class='material-icons' onClick='openModi("+newCommArr[i].num+",&apos;"+newCommArr[i].content+"&apos;)'>border_color</span>"
+                    html += "<span class='material-icons' onClick='modiComm("+newCommArr[i].num+")'>border_color</span>"
                     html += "<span class='material-icons' onClick='delComm("+newCommArr[i].num+")'>delete</span></div>"
                 }
                 html += "</div></div></div>"
@@ -108,9 +108,33 @@
              }
           }
 
+          function modiComm(commNum){
+            let data = {boardType: boardType, boardIdx: tipNum};
+            let query = Object.keys(data)
+                       .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+                       .join('&');
+
+            fetch('/selTipComm?' + query, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(json =>  {
+                for(const property in json.commentList){
+                    var sJson = json.commentList[property];
+                    if(sJson.num == commNum){
+                        openModi(sJson.num , sJson.content)
+                    }
+                }
+            })
+          }
 
           function openModi(commNum, content){
-            content = content.replaceAll('<br>', '\r\n');
+            content = content.replaceAll('&lt;br&gt;', '\r\n');
+            content = content.replaceAll("&lt;",'<');
+            content = content.replaceAll("&gt;",'>');
+            content = content.replaceAll("&quot;",'\"');
+            content = content.replaceAll("&#39;","\'");
             if(isMod==false){
                 document.getElementById('comm'+commNum).style.display = 'none';
                 document.getElementById('modComm'+commNum).style.display = 'block';
@@ -155,15 +179,15 @@
               })
           }
 
-          function changeLikeHtml(json){
+          function changeLikeHtmlTip(json){
               let html;
               let likeDelYn = json.likeDelYn;
               let num = tipNum;
 
               if(likeDelYn=='N'){
-                html = "<span class='material-icons purple' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
+                html = "<span class='material-icons purple2' id='like_btn' onclick='udpLikeTip("+num+")'>thumb_up</span>"
               }else{
-                html = "<span class='material-icons gray' id='like_btn' onclick='udpLike("+num+")'>thumb_up</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpLikeTip("+num+")'>thumb_up</span>"
               }
 
               let parent = document.getElementById('changeLikeHtml');
@@ -171,7 +195,7 @@
               parent.innerHTML= html;
           }
 
-          function regLike(tipNum){
+          function regLikeTip(tipNum){
               if(tipWriter==memId){
                   commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
@@ -188,11 +212,11 @@
               .then(response => response.json())
               .catch(error => console.error('Error:', error))
               .then(json =>  {
-                 changeLikeHtml(json);
+                 changeLikeHtmlTip(json);
               })
           }
 
-          function udpLike(tipNum){
+          function udpLikeTip(tipNum){
               if(tipWriter==memId){
                   commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
@@ -209,19 +233,19 @@
               .then(response => response.json())
               .catch(error => console.error('Error:', error))
               .then(json =>  {
-                changeLikeHtml(json);
+                changeLikeHtmlTip(json);
              })
           }
 
-          function changeScrapHtml(json){
+          function changeScrapHtmlTip(json){
               let html;
               let scrapDelYn = json.scrapDelYn;
               let num = tipNum;
 
               if(scrapDelYn=='N'){
-                html = "<span class='material-icons purple' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
+                html = "<span class='material-icons purple2' id='like_btn' onclick='udpScrapTip("+num+")'>bookmarks</span>"
               }else{
-                html = "<span class='material-icons gray' id='like_btn' onclick='udpScrap("+num+")'>bookmarks</span>"
+                html = "<span class='material-icons gray' id='like_btn' onclick='udpScrapTip("+num+")'>bookmarks</span>"
               }
 
               let parent = document.getElementById('changeScrapHtml');
@@ -229,7 +253,7 @@
               parent.innerHTML= html;
           }
 
-          function regScrap(tipNum){
+          function regScrapTip(tipNum){
               if(tipWriter==memId){
                   commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
@@ -246,11 +270,11 @@
               .then(response => response.json())
               .catch(error => console.error('Error:', error))
               .then(json =>  {
-                  changeScrapHtml(json);
+                  changeScrapHtmlTip(json);
               })
           }
 
-          function udpScrap(tipNum){
+          function udpScrapTip(tipNum){
               if(tipWriter==memId){
                   commonPopup.alertPopup(memId+"님 자신의 글입니다😅", false)
                   return;
@@ -267,7 +291,7 @@
               .then(response => response.json())
               .catch(error => console.error('Error:', error))
               .then(json =>  {
-                  changeScrapHtml(json);
+                  changeScrapHtmlTip(json);
               })
           }
 

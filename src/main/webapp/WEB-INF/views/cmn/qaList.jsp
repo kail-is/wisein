@@ -93,7 +93,7 @@
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>
-                        <ul class="person-function">
+                        <ul class="person-function  list">
                             <li><a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr" target='_blank'>메일 전송</a></li>
                             <li><a href="#" onclick="questionsList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="questionsList_btn">질문 모아 보기</a></li>
                             <li><a href="#" onclick="commentList_btn('${fn:replace(qa.writer, "'", "\\'") }');" id="commentList_btn">답변 모아 보기</a></li>
@@ -107,28 +107,9 @@
 
         </div>
     </section>
-    <div class="search-wrap">
-        <div class="select-wrap">
-            <select name="" id="search-list">
-                <option value="front">Front</option>
-            </select>
-        </div>
-        <input type="text" class="search-bar" placeholder="Type something…" required="required">
-        <span class="material-icons">
-                <a href="#">search</a>
-            </span>
-    </div>
     <ul class="pageno-group">
 	    <div class="pagination">
 	    	${pagination}
     	</div>
     </ul>
-</div>
-
-<div class="top-arrow">
-    <a href="#">
-            <span class="material-icons purple">
-                keyboard_arrow_up
-            </span>
-    </a>
 </div>

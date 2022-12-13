@@ -94,17 +94,17 @@
                 let html;
 
                 if(check == 0){
-                    html = "<div class='board-cell board-like gray'>"
+                    html = "<div class='board-cell board-like gray qaDetail'>"
                     html += "<span class='material-icons' id='comment_like_btn' onclick='regLike(" + "\"" + writer + "\"," + commentQaNum + ")' >thumb_up</span>"
                     html += "</div>"
                 }
                 else if(check == 1){
-                    html = "<div class='board-cell board-like purple2'>"
+                    html = "<div class='board-cell board-like purple2 qaDetail'>"
                     html += "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")'  >thumb_up</span>"
                     html += "</div>"
                 }
                 else if(check == 2){
-                    html = "<div class='board-cell board-like gray'>"
+                    html = "<div class='board-cell board-like gray qaDetail'>"
                     html += "<span class='material-icons' id='comment_like_btn' onclick='udpLike(" + "\"" + writer + "\"," + commentQaNum + ")' >thumb_up</span>"
                     html += "</div>"
                 }
@@ -147,20 +147,20 @@
                 let html;
 
                 if(checkScrap == 0){
-                    html = "<div class='board-cell board-like gray'>"
-                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='regScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;' >bookmarks</span>"
+                    html = "<div class='board-cell board-like gray qaDetail'>"
+                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='regScrap(" + "\"" + writer + "\"," + commentQaNum + ")' >bookmarks</span>"
                     html += "</div>"
                 }
 
                 else if(checkScrap == 1){
-                    html = "<div class='board-cell board-like purple2'>"
+                    html = "<div class='board-cell board-like purple2 qaDetail'>"
                     html += "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")'  >bookmarks</span>"
                     html += "</div>"
                 }
 
                 else if(checkScrap == 2){
-                    html = "<div class='board-cell board-like gray'>"
-                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")' style='color:gray;'>bookmarks</span>"
+                    html = "<div class='board-cell board-like gray qaDetail'>"
+                    html += "<span class='material-icons' id='comment_scrap_btn' onclick='udpScrap(" + "\"" + writer + "\"," + commentQaNum + ")' >bookmarks</span>"
                     html += "</div>"
                 }
 
