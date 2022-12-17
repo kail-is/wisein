@@ -120,6 +120,23 @@ public class memberController {
 		return "redirect:/";
 	}
 
+	@GetMapping(value = "/user/withdraw")
+	public String getWithdrawalUser() throws Exception {
+		return "withdrawal";
+	}
+
+	@PostMapping(value = "/user/withdraw")
+	public String postWithdrawalUser(MemberDTO dto, HttpSession session) throws Exception {
+		service.withdraw(dto, session);
+		return "redirect:/";
+	}
+
+
+	@ResponseBody
+	@GetMapping(value = "/idDupChk")
+	public int getIdDupChk(String userId) throws Exception {
+		return service.idDupChk(userId);
+	}
 
 	@ResponseBody
 	@GetMapping(value = "/delImgFile")
@@ -131,17 +148,6 @@ public class memberController {
 		map.put("code","0000");
 		map.put("msg", "삭제 완료.");
 		return map;
-	}
-
-	@GetMapping(value = "/user/withdraw")
-	public String getWithdrawalUser() throws Exception {
-		return "withdrawal";
-	}
-
-	@PostMapping(value = "/user/withdraw")
-	public String postWithdrawalUser(MemberDTO dto, HttpSession session) throws Exception {
-		service.withdraw(dto, session);
-		return "redirect:/";
 	}
 
 }
