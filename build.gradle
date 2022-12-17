@@ -41,7 +41,7 @@ dependencies {
 
 
 	implementation 'javax.servlet:jstl:1.2'
-	compileOnly 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	providedCompile 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
 	implementation 'org.apache.tiles:tiles-jsp:3.0.5'
 	implementation 'org.apache.tiles:tiles-servlet:3.0.5'
