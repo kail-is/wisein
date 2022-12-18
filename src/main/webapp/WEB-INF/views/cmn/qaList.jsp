@@ -84,7 +84,7 @@
 
                     <c:if test="${qa.likeCount == 0}">
                         <div class="board-cell board-like gray">
-                            <span class="material-icons">thumb_up</span>
+                            <span class="material-icons">thumb_up</span>${qa.likeCount}
                         </div>
                     </c:if>
                     <c:if test="${qa.likeCount != 0}">
@@ -95,12 +95,12 @@
 
                     <c:if test="${qa.scrapCount == 0}">
                         <div class="board-cell board-scrap gray">
-                            <span class="material-icons">bookmarks</span>
+                            <span class="material-icons" style="max-width:24px;">bookmarks</span>${qa.scrapCount}
                         </div>
                     </c:if>
                     <c:if test="${qa.scrapCount != 0}">
                         <div class="board-cell board-scrap purple2">
-                            <span class="material-icons">bookmarks</span>${qa.scrapCount}
+                            <span class="material-icons" style="max-width:24px;">bookmarks</span>${qa.scrapCount}
                         </div>
                     </c:if>
 
