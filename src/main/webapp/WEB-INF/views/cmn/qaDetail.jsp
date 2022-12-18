@@ -12,13 +12,11 @@
         <div class="info">
             <div class="title">
                 <c:out value="${qaListDTO.subject}" />
-            </div>
-        </div>
-        <div class="title">
-            <div class="icon" style="float:right;">
-                <c:if test="${qaListDTO.adpYn eq 'N'}">
-                    <a href="#" role="button" class="button btn_register" onclick="comment_btn('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }',${num});"  id="comment_btn" name="comment_btn" style="float: right;">답변!</a>
-                </c:if>
+                <div class="icon" style="float:right;">
+                    <c:if test="${qaListDTO.adpYn eq 'N'}">
+                        <a href="#" role="button" class="button btn_register" onclick="comment_btn('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }',${num});"  id="comment_btn" name="comment_btn" style="float: right;">답변!</a>
+                    </c:if>
+                </div>
             </div>
         </div>
 
@@ -35,8 +33,10 @@
             </c:if>
 
         <c:if test="${member.id == qaListDTO.writer}">
-            <span class="material-icons" onclick="update_btn(${qaListDTO.num})" id="update_btn">border_color</span>
-            <span class="material-icons" onclick="delete_btn(${qaListDTO.num})" id="delete_btn">delete</span>
+            <div class="board-cell board-like purple2 qaDetail">
+                <span class="material-icons" onclick="update_btn(${qaListDTO.num})" id="update_btn">border_color</span>
+                <span class="material-icons" onclick="delete_btn(${qaListDTO.num})" id="delete_btn">delete</span>
+            </div>
         </c:if>
         </div>
         <div class="subject">
@@ -45,7 +45,8 @@
     </section>
 
 <hr>
-</br>
+<b>답변( <c:out value="${fn:length(commentQaList)}"/> )개</b>
+</br></br>
 
 <c:set var="i" value="${0}"  />
 <c:forEach var="commentQa" items="${commentQaList}" varStatus="status">
@@ -84,44 +85,47 @@
                         <c:set var="done_loop" value="true"/>
                     </c:if>
                 </c:forEach>
-<span id="changeLikeHtml${i}">
-                <c:if test="${check == 0}">
-                    <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
-                    </div>
-                </c:if>
 
-                <c:if test="${check == 1}">
-                    <div class="board-cell board-like purple2 qaDetail">
-                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})"  >thumb_up</span>
-                    </div>
-                </c:if>
+                <span id="changeLikeHtml${i}">
+                    <c:if test="${check == 0}">
+                        <div class="board-cell board-like gray qaDetail">
+                        <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
+                        </div>
+                    </c:if>
 
-                <c:if test="${check == 2}">
-                    <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
-                    </div>
-                </c:if>
-</span>
-<span id="changeScrapHtml${i}">
-                <c:if test="${checkScrap == 0}">
-                    <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_scrap_btn" onclick="regScrap('${writer}',${commentQaNum})" >bookmarks</span>
-                    </div>
-                </c:if>
+                    <c:if test="${check == 1}">
+                        <div class="board-cell board-like purple2 qaDetail">
+                        <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})"  >thumb_up</span>
+                        </div>
+                    </c:if>
 
-                <c:if test="${checkScrap == 1}">
-                    <div class="board-cell board-like purple2 qaDetail">
-                    <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})"  >bookmarks</span>
-                    </div>
-                </c:if>
+                    <c:if test="${check == 2}">
+                        <div class="board-cell board-like gray qaDetail">
+                        <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
+                        </div>
+                    </c:if>
+                </span>
 
-                <c:if test="${checkScrap == 2}">
-                    <div class="board-cell board-like gray qaDetail">
-                    <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})" >bookmarks</span>
-                    </div>
-                </c:if>
-</span>
+                <span id="changeScrapHtml${i}">
+                    <c:if test="${checkScrap == 0}">
+                        <div class="board-cell board-like gray qaDetail">
+                        <span class="material-icons" id="comment_scrap_btn" onclick="regScrap('${writer}',${commentQaNum})" >bookmarks</span>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${checkScrap == 1}">
+                        <div class="board-cell board-like purple2 qaDetail">
+                        <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})"  >bookmarks</span>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${checkScrap == 2}">
+                        <div class="board-cell board-like gray qaDetail">
+                        <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})" >bookmarks</span>
+                        </div>
+                    </c:if>
+                </span>
+
                 <c:if test="${member.id == qaListDTO.writer && qaListDTO.adpYn eq 'N'}">
                     <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn('${fn:replace(writer, "'", "\\'") }',${qaListDTO.num},${commentQaNum});" style="float: right;">채택하기!</a>
                 </c:if>
@@ -143,8 +147,10 @@
             </c:if>
 
             <c:if test="${member.id == commentQa.writer}">
-                <span class="material-icons" id="comment_update_btn" onclick="comment_update_btn(${commentQaNum})" >border_color</span>
-                <span class="material-icons" id="comment_delete_btn" onclick="comment_delete_btn(${commentQaNum})" >delete</span>
+                <div class="board-cell board-like purple2 qaDetail">
+                    <span class="material-icons" id="comment_update_btn" onclick="comment_update_btn(${commentQaNum})" >border_color</span>
+                    <span class="material-icons" id="comment_delete_btn" onclick="comment_delete_btn(${commentQaNum})" >delete</span>
+                </div>
             </c:if>
         </div>
         <div class="subject">

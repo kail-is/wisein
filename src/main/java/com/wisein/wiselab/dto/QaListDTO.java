@@ -19,6 +19,7 @@ public class QaListDTO extends PaginationInfo {
     private String delYn;
     private int parentNum;
     private int likeCount;
+    private int scrapCount;
     private int adpNum;
 }
 
