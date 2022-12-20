@@ -49,6 +49,7 @@ public class RestMatzipController {
         List<CompanyDTO> company = new ArrayList<>();
         Map<String, List<CompanyDTO>> map = new HashMap<>();
         for (int i=0; i<siteList.size(); i++) {
+            String location = siteList.get(i).getLocation();
             companyDTO = new CompanyDTO();
             try {
                 jObject = (JSONObject) jParser.parse(siteList.get(i).getCompanydata());
@@ -59,7 +60,7 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            List<CompanyDTO> siteCountList = dao.matzipCount(siteList.get(i).getLocation());
+            List<CompanyDTO> siteCountList = dao.matzipCount(location);
 
             if (siteCountList.size()==0) {
                 companyDTO.setId(siteList.get(i).getId());
@@ -80,15 +81,15 @@ public class RestMatzipController {
             company.add(companyDTO);
         }
 
-        map.put("company", company);
+        map.put("list", company);
         return map;
 
     }
 
     @PostMapping(value="/foodList")
     public Map<String, List<CompanyDTO>> matzipList(CompanyDTO companyDTO,Model model,
-                                                     PageDataDTO pageDataDto,
-                                                     @RequestBody String pageData) {
+                                                    PageDataDTO pageDataDto,
+                                                    @RequestBody String pageData) {
         try {
             jObject = (JSONObject) jParser.parse(pageData);
             JSONObject jsonObj = (JSONObject) jObject;
@@ -139,7 +140,7 @@ public class RestMatzipController {
             company.add(companyDTO);
         }
 
-        map.put("matzip", company);
+        map.put("list", company);
 
         return map;
     }
@@ -184,20 +185,6 @@ public class RestMatzipController {
         return null;
     }
 
-    @GetMapping(value="/matzipDetailId")
-    public int matzipDetailId(@RequestParam("loc") String loc) {
-
-        int matzipId = dao.matzipId(loc);
-        return matzipId;
-    }
-
-    @GetMapping(value="/matzipCheck")
-    public int matzipCheck(@RequestParam("id") int id) {
-
-        int check = dao.matzipExistCheck(id);
-        return check;
-    }
-
     @GetMapping(value="/foodCategorySelect")
     public Map<String, List<CompanyDTO>> categorySelect(CompanyDTO companyDTO,
                                                         @RequestParam("option") String option) {
@@ -237,7 +224,7 @@ public class RestMatzipController {
 
             company.add(companyDTO);
         }
-        map.put("company", company);
+        map.put("list", company);
         return map;
 
     }

@@ -242,15 +242,21 @@ function stringLengthCheck(input, maxByte) {
 */
 let commonPopup = {
 
-alertPopup : function (alertMsg, modalCheck) {
+alertPopup : function (alertMsg, dimCheck) {
+    let dimClosed;
+    if (typeof dimCheck != "undefined") {
+        dimClosed = true;
+    }
     let closeBtn = document.querySelector('#alert-close-btn');
 
     if (alertMsg!=null && alertMsg.trim()!="") {
         this.open("alert-type", alertMsg);
     }
+    $dim();
 
     closeBtn.addEventListener('click', function () {
-        commonPopup.close(modalCheck);
+        console.log(dimClosed);
+        commonPopup.close(dimClosed);
     });
 
 },
@@ -285,10 +291,13 @@ callback : function (confirmMsg) {
 
 },
 
-close : function (modalCheck) {
+close : function (dimClosed) {
+    console.log(dimClosed);
     document.querySelector('#commonPopup').classList.add('none');
     document.querySelector('#roadViewPopup').classList.add('none');
-    commonPopup.modalPopupCheck(modalCheck);
+    if (typeof dimClosed == "undefined") {
+        $dim(false);
+    }
 },
 
 open : function (type, msg) {
@@ -306,24 +315,7 @@ open : function (type, msg) {
         document.querySelector('.alert-button-wrap').style.display = "none";
         document.querySelector('.popup-message-wrap').innerHTML = msg;
     }
-    this.modalPopupCheck(true);
-},
-
-modalPopupCheck : function (modalCheck) {
-    let body = document.getElementsByTagName('body')[0];
-    let element = document.getElementById('dim');
-    let elDimWrapper = document.getElementById('dim-wrapper');
-
-    if (modalCheck) {
-        element.className         += ' dim';
-        elDimWrapper.style.display = 'block';
-        body.style.overflowY       = 'hidden';
-
-    } else {
-        element.classList.remove('dim');
-        elDimWrapper.style.display = 'none';
-        body.style.overflowY       = 'auto';
-    }
+    $dim();
 },
 }
 

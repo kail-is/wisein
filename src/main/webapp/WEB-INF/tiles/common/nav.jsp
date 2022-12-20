@@ -245,7 +245,7 @@
     <div class="signUp-popup-wrap form-between">
         <div class="popup-message-wrap">
         </div>
-        <div class="alert-button-wrap">
+        <div class="alert-button-wrap confirm">
             <button type="button" id="alert-close-btn">확인</button>
         </div>
 

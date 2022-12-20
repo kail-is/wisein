@@ -15,6 +15,6 @@
 <script>
 window.onload = function(){
    document.querySelector("form").submit();
-   commonPopup.alertPopup("탈퇴 완료",false)
+   commonPopup.alertPopup("탈퇴 완료")
 }
 </script>
