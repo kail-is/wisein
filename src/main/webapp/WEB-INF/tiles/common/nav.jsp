@@ -10,8 +10,8 @@
             <div class="top">
                 <div class="info">
                     <c:if test="${not empty member.fileList[0]}">
-                        <img src ="../${member.fileList[0].filePath}" class="info"
-                            onError="this.src='../resources/image/Conic.png';this.classList.remove('info')">
+                        <img src ="../${member.fileList[0].filePath}" class=""
+                            onError="this.src='../resources/image/Conic.png';">
                     </c:if>
                     <c:if test="${empty member.fileList[0]}">
                         <img src ="../resources/image/Conic.png">

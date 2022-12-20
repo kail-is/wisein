@@ -251,6 +251,17 @@ header ul li:nth-child(2) .select-wrap select {
   }
 }
 
+.content-wrap .board-list .board-line .board-scrap {
+  -ms-flex-preferred-size: 80px;
+  flex-basis: 80px;
+}
+
+@media screen and (max-width: 576px) {
+  .content-wrap .board-list .board-line .board-scrap {
+    display: none;
+  }
+}
+
 .content-wrap .board-list .board-line .board-writer {
   position: relative;
   -ms-flex-preferred-size: 120px;
