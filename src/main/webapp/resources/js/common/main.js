@@ -3,35 +3,30 @@
     let body         = document.getElementsByTagName('body')[0];
     let element      = document.getElementById('dim');
     let elDimWrapper = document.getElementById('dim-wrapper');
-    //let loadingImg   = document.getElementById('loading-img');
-    let isDimming    = true;
+    let loadingImg   = document.getElementById('loading-img');
     let option       = {};
 
-
-    for(let i = 0; i<arguments.length;i++){
-        switch (typeof(arguments[i])) {
-            case 'object':
-                if(arguments[i].nodeType === 1){
-                    element = arguments[i];
-                }else{
-                    option = arguments[i];
-                }
-                break;
-            case 'boolean':
-                isDimming = arguments[i];
-                break;
-            default:
-                break;
-        }
+    switch (typeof arguments[0]) {
+        case "boolean":
+            option.isDimming = arguments[0];
+            break;
+        case "object":
+            option.isDimming = arguments[0].isDimming;
+            option.isLoading = arguments[0].isLoading;
+            break;
+        default:
+            option.isDimming = true;
+            break;
     }
-    if(isDimming){
-        //loadingImg.style.display   = option.isLoading ? 'block' : 'none';
+
+    if(option.isDimming){
+        loadingImg.style.display   = option.isLoading ? 'block' : 'none';
         element.className         += ' dim';
         elDimWrapper.style.display = 'block';
         body.style.overflowY       = 'hidden';
     }else{
         element.classList.remove('dim');
-        //loadingImg.style.display   = 'none';
+        loadingImg.style.display   = 'none';
         elDimWrapper.style.display = 'none';
         body.style.overflowY       = 'auto';
     }

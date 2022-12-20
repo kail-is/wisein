@@ -21,12 +21,12 @@ window.onload = function() {
     pwChkBtn.addEventListener('click', () => {
         if (pw.value === pwChk.value) {
             pwChkBool = true;
-            commonPopup.alertPopup("패스워드가 일치합니다.", false);
+            commonPopup.alertPopup("패스워드가 일치합니다.");
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
-          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.", false);
+          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
@@ -60,9 +60,9 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     updBtn.addEventListener('click', () => {
       if (checkAll()) {
-        commonPopup.alertPopup("유효성 테스트 통과", false);
+        commonPopup.alertPopup("유효성 테스트 통과");
       } else {
-        commonPopup.alertPopup("유효성 테스트 미통과", false);
+        commonPopup.alertPopup("유효성 테스트 미통과");
         event.preventDefault();
       }
     });

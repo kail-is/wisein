@@ -1,11 +1,11 @@
         function validCheck() {
             let result = true;
              if(document.querySelector("#subject").value == ''){
-                commonPopup.alertPopup('제목을 입력하세요✍', false);
+                commonPopup.alertPopup('제목을 입력하세요✍');
                 document.querySelector("#subject").focus();
                 result = false;
              }else if(editor.getMarkdown() == ''){
-                commonPopup.alertPopup('내용을 입력하세요✍', false)
+                commonPopup.alertPopup('내용을 입력하세요✍')
                 editor.focus();
                 result = false;
              }

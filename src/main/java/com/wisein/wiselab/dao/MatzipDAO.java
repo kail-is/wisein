@@ -43,8 +43,6 @@ public interface MatzipDAO {
 
     public List<CompanyDTO> recmMatzipCount(int id);
 
-    public int matzipId(String loc);
-
     public int matzipExistCheck(int id);
 
     public List<CompanyDTO> companyCategory();
