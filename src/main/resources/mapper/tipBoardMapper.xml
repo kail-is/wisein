@@ -16,6 +16,7 @@
                   ,A.DEL_YN
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
+                  ,A.SCRAP_COUNT
             FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                         ,TB.NUM
                         ,TB.CATEGORY
@@ -28,6 +29,7 @@
                         ,TB.COUNT
                         ,TB.PARENT_NUM
                         ,TB.LIKE_COUNT
+                        ,TB.SCRAP_COUNT
                    FROM TIP_BOARD TB
                        ,(SELECT @ROWNUM:=0) R
                   WHERE 1=1
@@ -56,6 +58,7 @@
                   ,A.DEL_YN
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
+                  ,A.SCRAP_COUNT
             FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                         ,TB.NUM
                         ,TB.CATEGORY
@@ -68,6 +71,7 @@
                         ,TB.COUNT
                         ,TB.PARENT_NUM
                         ,TB.LIKE_COUNT
+                        ,TB.SCRAP_COUNT
                    FROM TIP_BOARD TB
                        ,(SELECT @ROWNUM:=0) R
                   WHERE 1=1

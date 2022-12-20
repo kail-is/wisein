@@ -26,9 +26,9 @@ window.onload = function() {
 			      if (httpRequest.status === 200) {
 			    	var result = httpRequest.response;
                      if (result > 0) {
-    			        commonPopup.alertPopup("아이디가 존재합니다. 다른 아이디를 입력해주세요.", false);
+    			        commonPopup.alertPopup("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
                      } else {
-                        commonPopup.alertPopup("사용 가능한 아이디입니다.", false);
+                        commonPopup.alertPopup("사용 가능한 아이디입니다.");
                         idBox.readOnly = true; // 재수정 불가를 위한 readOnly 활성화
                         idChkBool = true;
                      }
@@ -57,15 +57,15 @@ window.onload = function() {
     pwChkBtn.addEventListener('click', () => {
         if ( !pw.value && !pwChk.value ) {
             pwChkBool = false;
-            commonPopup.alertPopup("패스워드를 입력하세요.", false);
+            commonPopup.alertPopup("패스워드를 입력하세요.");
         } else if( pw.value === pwChk.value ) {
             pwChkBool = true;
-            commonPopup.alertPopup("패스워드가 일치합니다.", false);
+            commonPopup.alertPopup("패스워드가 일치합니다.");
             pwBox.readOnly = true;
             pwChkBox.readOnly = true;
         } else {
           pwChkBool = false;
-          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.", false);
+          commonPopup.alertPopup("패스워드가 불일치합니다. 재입력하세요.");
         }
     });
 
@@ -100,10 +100,10 @@ window.onload = function() {
     // 회원 가입 버튼 유효성 컨트롤: stateHandler
     signupBtn.addEventListener('click', () => {
       if (checkAll()) {
-        commonPopup.alertPopup("유효성 테스트 통과", false);
+        commonPopup.alertPopup("유효성 테스트 통과");
         emailValid();
       } else {
-        commonPopup.alertPopup("유효성 테스트 미통과", false);
+        commonPopup.alertPopup("유효성 테스트 미통과");
         event.preventDefault();
       }
     });
@@ -129,7 +129,7 @@ window.onload = function() {
                 document.getElementById('reg_form').submit();
             },
             error:function(request, status, error) {
-                commonPopup.alertPopup("실패", false);
+                commonPopup.alertPopup("실패");
             }
         })
     }

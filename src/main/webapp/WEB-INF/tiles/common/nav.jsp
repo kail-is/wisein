@@ -10,7 +10,7 @@
             <div class="top">
                 <div class="info">
                     <c:if test="${not empty member.fileList[0]}">
-                        <img src ="../${member.fileList[0].filePath}" class=""
+                       <img src ="../${member.fileList[0].filePath}" class=""
                             onError="this.src='../resources/image/Conic.png';">
                     </c:if>
                     <c:if test="${empty member.fileList[0]}">
@@ -245,7 +245,7 @@
     <div class="signUp-popup-wrap form-between">
         <div class="popup-message-wrap">
         </div>
-        <div class="alert-button-wrap">
+        <div class="alert-button-wrap confirm">
             <button type="button" id="alert-close-btn">확인</button>
         </div>
 

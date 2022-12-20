@@ -38,12 +38,10 @@ public interface MatzipDAO {
 
     public List<CompanyDTO> matzipCount(String location);
 
-//    public List<CompanyDTO> matzipList(String location);
+    //    public List<CompanyDTO> matzipList(String location);
     public List<CompanyDTO> matzipList(PageDataDTO pageDataDto);
 
     public List<CompanyDTO> recmMatzipCount(int id);
-
-    public int matzipId(String loc);
 
     public int matzipExistCheck(int id);
 

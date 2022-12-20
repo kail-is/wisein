@@ -20,4 +20,5 @@ public class TipBoardDTO extends PaginationInfo  {
     private int count;
     private int parentNum;
     private int likeCount;
+    private int scrapCount;
 }
