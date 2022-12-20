@@ -100,13 +100,12 @@
        let reptConfirm = await commonPopup.confirmPopup('업체 폐업 신고를 하시겠습니까?', commonPopup.callback);
 
        if (reptConfirm) {
-           $dim({isDimming : true, isLoading : true});
            fetch("/reportClosed?" + "matzip_id=" + matzip_id)
                .then(response => response.text())
                .catch(error => console.error('Error:', error))
                .then(response => commonPopup.alertPopup('정상 신고 처리 되었습니다. 관리자 확인 뒤 폐업처리됩니다.'));
        }else {
-          commonPopup.alertPopup('폐업 신고 취소');
+          commonPopup.alertPopup('폐업 신고 취소', false);
        }
 
     }

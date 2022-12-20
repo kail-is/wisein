@@ -110,7 +110,7 @@
             FROM RECM_BOARD
             WHERE REF_MATZIP = #{id}
             AND DEL_YN = 'N'
-        ) = 0 AND ID = #{id};
+        ) = 0;
     </update>
 
     <update id="delRecm" parameterType="Integer">
@@ -200,6 +200,13 @@
             DISTINCT
              LOCATION
           FROM COMPANY
+    </select>
+
+    <select id="matzipId" resultType="Integer">
+        SELECT
+            ID
+          FROM MATZIP_BOARD
+         WHERE ADDRESS_NAME = #{loc}
     </select>
 
     <select id="selectRecmPostNum" parameterType="recmDTO" resultType="Int">

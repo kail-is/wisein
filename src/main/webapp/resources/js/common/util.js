@@ -242,21 +242,15 @@ function stringLengthCheck(input, maxByte) {
 */
 let commonPopup = {
 
-alertPopup : function (alertMsg, dimCheck) {
-    let dimClosed;
-    if (typeof dimCheck != "undefined") {
-        dimClosed = true;
-    }
+alertPopup : function (alertMsg, modalCheck) {
     let closeBtn = document.querySelector('#alert-close-btn');
 
     if (alertMsg!=null && alertMsg.trim()!="") {
         this.open("alert-type", alertMsg);
     }
-    $dim();
 
     closeBtn.addEventListener('click', function () {
-        console.log(dimClosed);
-        commonPopup.close(dimClosed);
+        commonPopup.close(modalCheck);
     });
 
 },
@@ -291,13 +285,10 @@ callback : function (confirmMsg) {
 
 },
 
-close : function (dimClosed) {
-    console.log(dimClosed);
+close : function (modalCheck) {
     document.querySelector('#commonPopup').classList.add('none');
     document.querySelector('#roadViewPopup').classList.add('none');
-    if (typeof dimClosed == "undefined") {
-        $dim(false);
-    }
+    commonPopup.modalPopupCheck(modalCheck);
 },
 
 open : function (type, msg) {
@@ -315,9 +306,25 @@ open : function (type, msg) {
         document.querySelector('.alert-button-wrap').style.display = "none";
         document.querySelector('.popup-message-wrap').innerHTML = msg;
     }
-    $dim();
+    this.modalPopupCheck(true);
 },
 
+modalPopupCheck : function (modalCheck) {
+    let body = document.getElementsByTagName('body')[0];
+    let element = document.getElementById('dim');
+    let elDimWrapper = document.getElementById('dim-wrapper');
+
+    if (modalCheck) {
+        element.className         += ' dim';
+        elDimWrapper.style.display = 'block';
+        body.style.overflowY       = 'hidden';
+
+    } else {
+        element.classList.remove('dim');
+        elDimWrapper.style.display = 'none';
+        body.style.overflowY       = 'auto';
+    }
+},
 }
 
  /*

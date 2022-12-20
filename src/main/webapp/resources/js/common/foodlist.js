@@ -1,39 +1,56 @@
-let marker;
+let x, y, companyLength, localCheck, marker;
 let createDiv = document.createElement('div');
+let createDivBefore = document.querySelector('.button-wrap');
 let pageDiv = document.querySelector('#page');
-let coordinate;
-let type;
+let name, infoTitle, map;
 let clickOverlay = null;
+let content;
 
-let mapContainer = document.getElementById('map')
+let totalCount;
+let dataPerPage = 5;
+let currentPage;
+let startRow;
+let endRow;
+let pageBlock = 5;
+let startPage;
+let endPage;
+let totalPage;
+
+
+
+var mapContainer = document.getElementById('map')
     mapOption = {
         center: new kakao.maps.LatLng(37.37947804818484, 127.11415037150388),
         level: 5,
     };
 
-let map = new kakao.maps.Map(mapContainer, mapOption);
+
+map = new kakao.maps.Map(mapContainer, mapOption);
 
 //맛집 로드시 회사리스트 get
-//window.addEventListener('DOMContentLoaded', function(){
-function init() {
-    let companyArray = Array.from(document.querySelectorAll('#list'));
-    for (let i=0; i<companyArray.length; i++) {
-        companyArray[i].remove();
-    }
-    type = "company";
-        fetch("/companyList")
-            .then(response => response.json())
-            .catch(error => console.log("Error"))
-            .then(companyList => {
-                setDataList(companyList, type);
-            })
-}
-//});
+window.addEventListener('DOMContentLoaded', function(){
+    fetch("/companyList")
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(companyList => {
+            for (let i=0; i<companyList.company.length; i++) {
+                createDiv.innerHTML
+                    += "<div id='list' class='matzip-list-line'>"
+                    + "<div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
+                    + companyList.company[i].location+"</div>"
+                    + "<div onclick='getMatzipList(&quot;" + companyList.company[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
+                    + companyList.company[i].companyName+"</div>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
+                    + companyList.company[i].matzipCount+"</div>"
+                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + companyList.company[i].companyLoc+ "&quot;,&quot;" + companyList.company[i].companyName+ "&quot;,&quot;" + companyList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                    + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + companyList.company[i].companyLoc + "&quot;)'>visibility</button><div></div>";
+            }
+            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
+        });
+});
 
 //카테고리 선택
 function foodCategorySelect(target) {
-    console.log(target.value);
-    type = "company";
     removeAllChild(pageDiv);
 
     if (target.value != "none") {
@@ -50,17 +67,25 @@ function foodCategorySelect(target) {
                 for (let i=0; i<companyArray.length; i++) {
                     companyArray[i].remove();
                 }
-                setDataList(categoryList, type)
+                for (let i=0; i<categoryList.company.length; i++) {
+                    createDiv.innerHTML
+                        += "<div id='list' class='matzip-list-line'><div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
+                        + categoryList.company[i].location+"</div>"
+                        + "<div onclick='getMatzipList(&quot;" + categoryList.company[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
+                        + categoryList.company[i].companyName+"</div>"
+                        + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
+                        + categoryList.company[i].matzipCount+"</div>"
+                        + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + categoryList.company[i].companyLoc+ "&quot;,&quot;" + categoryList.company[i].companyName+ "&quot;,&quot;" + categoryList.company[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                        + "<div class='matzip-list-cell board-map purple' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + categoryList.company[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
+                }
+                createDivBefore.insertAdjacentElement('beforebegin', createDiv);
+
             });
     }
 }
 
-//맛집 리스트
+//회사 클릭시 맛집리스트 get
 function getMatzipList(location, currentPage) {
-    let pageBlock = 5;
-    let dataPerPage = 5;
-
-    type = "matzip";
     removeAllChild(pageDiv);
 
     if (currentPage==null) {
@@ -89,7 +114,25 @@ function getMatzipList(location, currentPage) {
         .then(response => response.json())
         .catch(error => console.log('Error'))
         .then(matzipList => {
-            setDataList(matzipList, type);
+            if (matzipList.matzip.length==0) {
+                createDiv.innerHTML
+                    += "<div id='list' class='matzip-list-line' style='height:50px;justify-content:center;align-items:center;';>"
+                    + "등록된 맛집이 없습니다."
+                    + "</div>";
+            }
+            for (let i=0;i<matzipList.matzip.length; i++) {
+                createDiv.innerHTML
+                    += "<div id='list' class='matzip-list-line'><div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
+                    + matzipList.matzip[i].location+"</div>"
+                    + "<div onclick='localExistCheck(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
+                    + matzipList.matzip[i].companyName+"</div>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
+                    + matzipList.matzip[i].matzipCount+"</div>"
+                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + matzipList.matzip[i].companyLoc+ "&quot;,&quot;" + matzipList.matzip[i].companyName+ "&quot;,&quot;" + matzipList.matzip[i].id+ "&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
+                    + "<div class='matzip-list-cell board-map purple' style='width:50px;'>" + "<button class='material-icons-outlined purple' onclick='roadView(&quot;" + matzipList.matzip[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
+
+            }
+            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
 
             fetch("/dataCount?"+"location="+location)
                 .then(response => response.json())
@@ -184,172 +227,6 @@ function getMatzipList(location, currentPage) {
         })
 }
 
-//데이터 set
-function setDataList(dataList, type) {
-    let createDivBefore = document.querySelector('.button-wrap');
-    let args = arguments;
-    let listText;
-
-    if (dataList.list.length == 0) {
-        if (args[1] == "company") {
-            listText = "등록된 파견사이트가 없습니다.";
-        } else {
-            listText = "등록된 맛집이 없습니다.";
-        }
-        createDiv.innerHTML
-            += "<div id='list' class='matzip-list-line' style='height:50px;justify-content:center;align-items:center;';>"
-            + listText
-            + "</div>";
-    } else {
-        if (args[1] == "company") {
-            for (let i=0; i<dataList.list.length; i++) {
-                createDiv.innerHTML
-                    += "<div id='list' class='matzip-list-line'>"
-                    + "<div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
-                    + dataList.list[i].location+"</div>"
-                    + "<div onclick='getMatzipList(&quot;" + dataList.list[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
-                    + dataList.list[i].companyName+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
-                    + dataList.list[i].matzipCount+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + dataList.list[i].companyLoc+ "&quot;,&quot;" + dataList.list[i].companyName+ "&quot;,&quot;" + dataList.list[i].id+ "&quot;,&quot;company&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
-                    + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + dataList.list[i].companyLoc + "&quot;)'>visibility</button><div></div>";
-            }
-            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
-        } else if (args[1] == "matzip") {
-            for (let i=0;i<dataList.list.length; i++) {
-                createDiv.innerHTML
-                    += "<div id='list' class='matzip-list-line'>"
-                    + "<div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
-                    + dataList.list[i].location+"</div>"
-                    + "<div onclick='detailPage(&quot;" + dataList.list[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
-                    + dataList.list[i].companyName+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
-                    + dataList.list[i].matzipCount+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + dataList.list[i].companyLoc+ "&quot;,&quot;" + dataList.list[i].companyName+ "&quot;,&quot;" + dataList.list[i].id+ "&quot;,&quot;matzip&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
-                    + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + dataList.list[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
-
-            }
-            createDivBefore.insertAdjacentElement('beforebegin', createDiv);
-        }
-    }
-}
-
-async function getLocalLatitue(location) {
-    let coordinateObj = {};
-    await fetch("/lateChange?"+"local="+location)
-        .then(response => response.json())
-        .catch(error => console.log('Error'))
-        .then(late => {
-            let lateRst = JSON.parse(late.local.toString().replace(/&quot;/g, '"'));
-            coordinateObj.latitude = lateRst.documents[0].x;
-            coordinateObj.longitude = lateRst.documents[0].y;
-        });
-    return coordinateObj;
-}
-
-//마커 찍기
-async function checkLocal(location, companyName, id, type) {
-    let content, overlayText;
-
-    coordinate = await getLocalLatitue(location);
-
-    var moveLatLon = new kakao.maps.LatLng(coordinate.longitude, coordinate.latitude);
-    map.panTo(moveLatLon);
-
-    marker = new kakao.maps.Marker({
-        position: moveLatLon,
-        clickable: true
-    });
-
-    marker.setMap(map);
-
-    kakao.maps.event.addListener(marker, 'click', function() {
-        if (clickOverlay) {
-            clickOverlay.setMap(null);
-        }
-
-        marker = new kakao.maps.Marker({
-            position: moveLatLon,
-            clickable: true
-        });
-
-        customOverlay = new kakao.maps.CustomOverlay({
-            map: map,
-            position: marker.getPosition()
-        });
-
-        if (type=="matzip") {
-            overlayText = '<div class="detail-btn"><a href="javascript:void(0);"  onclick="detailPage(\''+id+'\');">상세보기</a></div>'
-        } else {
-            overlayText = '';
-        }
-        content = '<div class="wrap food-wrap">' +
-        '    <div class="info food-wrap">' +
-        '        <div class="title food-wrap">' +
-        companyName+
-        '            <div class="close-btn food-wrap" onclick="closeOverlay()" title="닫기"></div>' +
-        '        </div>' +
-        '        <div class="body food-wrap">' +
-        '            <div class="desc">' +
-        '                <div class="ellipsis">'+location+'</div>' +
-        ''                 +overlayText+
-        '            </div>' +
-        '        </div>' +
-        '    </div>' +
-        '</div>';
-
-        customOverlay.setContent(content);
-
-        customOverlay.setMap(map);
-        clickOverlay = customOverlay;
-    });
-}
-
-//상세 페이지 이동
-function detailPage(id) {
-    id = Number(id);
-    if (typeof id == "number") {
-        let url = "http://" + document.location.host + "/matzip?id="+id;
-        location.href = url
-    } else {
-        return;
-    }
-}
-
-//커스텀 오버레이 닫기
-function closeOverlay() {
-    customOverlay.setMap(null);
-}
-
-//로드뷰 표시
-async function roadView(local) {
-    coordinate = await getLocalLatitue(local);
-
-    let roadviewContainer = document.getElementById('roadview');
-    let roadview = new kakao.maps.Roadview(roadviewContainer);
-    let roadviewClient = new kakao.maps.RoadviewClient();
-
-    let position = new kakao.maps.LatLng(coordinate.longitude, coordinate.latitude);
-
-    roadviewClient.getNearestPanoId(position, 50, function(panoId) {
-        if (panoId==null) {
-            commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!");
-        } else {
-            let closeBtn = document.querySelector('#road-close-btn');
-
-            document.querySelector('#roadViewPopup').classList.remove('none');
-            $dim();
-
-            closeBtn.addEventListener('click', function() {
-                commonPopup.close();
-                $dim(false);
-            });
-
-            roadview.setPanoId(panoId, position);
-        }
-    });
-}
-
 function removeAllChild(pageDiv) {
     while (pageDiv.hasChildNodes()) {
         pageDiv.removeChild(pageDiv.firstChild);
@@ -370,4 +247,152 @@ function setPageBlock(currentPage, pageBlock) {
     endPage = startPage + pageBlock - 1;
 }
 
-init();
+//마커 찍기 공통
+function checkLocal(location, companyName, id) {
+
+    fetch("/lateChange?"+"local="+location)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(late => {
+            let lateRst = JSON.parse(late.local.toString().replace(/&quot;/g, '"'));
+            x = lateRst.documents[0].x;
+            y = lateRst.documents[0].y;
+
+            var moveLatLon = new kakao.maps.LatLng(y, x);
+            map.panTo(moveLatLon);
+
+            var markerPosition = new kakao.maps.LatLng(y, x);
+
+            marker = new kakao.maps.Marker({
+                position: markerPosition,
+                clickable: true
+            });
+
+            marker.setMap(map);
+
+            kakao.maps.event.addListener(marker, 'click', function() {
+                if (clickOverlay) {
+                    clickOverlay.setMap(null);
+                }
+
+                marker = new kakao.maps.Marker({
+                    position: markerPosition,
+                    clickable: true
+                });
+
+                customOverlay = new kakao.maps.CustomOverlay({
+                    map: map,
+                    position: marker.getPosition()
+                });
+
+                content = '<div class="wrap food-wrap">' +
+                '    <div class="info food-wrap">' +
+                '        <div class="title food-wrap">' +
+                companyName+
+                '            <div class="close-btn food-wrap" onclick="closeOverlay()" title="닫기"></div>' +
+                '        </div>' +
+                '        <div class="body food-wrap">' +
+                '            <div class="desc">' +
+                '                <div class="ellipsis">'+location+'</div>' +
+                '                <div class="detail-btn"><a href="javascript:void(0);"  onclick="localExistCheck(\''+location+'\',\''+id+'\');">상세보기</a></div>' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
+                '</div>';
+                customOverlay.setContent(content);
+
+                customOverlay.setMap(map);
+                clickOverlay = customOverlay;
+            });
+        })
+}
+
+//로드뷰 좌표 변환
+function roadView(local) {
+    fetch("/lateChange?"+"local="+local)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(late => {
+            let lateRst = JSON.parse(late.local.toString().replace(/&quot;/g, '"'));
+            x = lateRst.documents[0].x;
+            y = lateRst.documents[0].y;
+
+            setRoadView(x, y);
+        })
+}
+
+//커스텀 오버레이 맛집 상세페이지 이동
+function detailPage(loc, localCheck) {
+    if (localCheck == 1) {
+        fetch("/matzipDetailId?"+"loc="+loc)
+            .then(response => response.json())
+            .catch(error => console.log('Error'))
+            .then(matzipId => {
+                if (typeof matzipId != 'number') {
+                    return;
+                } else {
+                    let url = "http://" + document.location.host + "/matzip?id="+matzipId;
+                    location.href = url;
+                }
+            });
+    }
+}
+
+//커스텀 오버레이 닫기
+function closeOverlay() {
+    customOverlay.setMap(null);
+}
+
+//로드뷰 표시
+function setRoadView(x, y) {
+    let roadviewContainer = document.getElementById('roadview');
+    let roadview = new kakao.maps.Roadview(roadviewContainer);
+    let roadviewClient = new kakao.maps.RoadviewClient();
+
+    let position = new kakao.maps.LatLng(y, x);
+
+    roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+        if (panoId==null) {
+            commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!", false);
+        } else {
+            let closeBtn = document.querySelector('#road-close-btn');
+
+            document.querySelector('#roadViewPopup').classList.remove('none');
+            commonPopup.modalPopupCheck(true);
+
+            closeBtn.addEventListener('click', function() {
+                commonPopup.close();
+                commonPopup.modalPopupCheck(false);
+            });
+
+            roadview.setPanoId(panoId, position);
+        }
+    });
+}
+
+//matzip board db에 맛집이 있는 지 확인
+function localExistCheck(location, id) {
+    fetch("/matzipCheck?"+"id="+id)
+        .then(response => response.json())
+        .catch(error => console.log('Error'))
+        .then(existCheck => {
+            localCheck = existCheck;
+            detailPage(location, localCheck);
+        });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

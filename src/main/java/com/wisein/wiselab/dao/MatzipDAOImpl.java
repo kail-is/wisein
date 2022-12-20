@@ -100,6 +100,11 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
+    public int matzipId(String loc) {
+        return sql.selectOne(NS + ".matzipId",loc);
+    }
+
+    @Override
     public int matzipExistCheck(int id) {
         return sql.selectOne(NS + ".matzipExistCheck",id);
     }

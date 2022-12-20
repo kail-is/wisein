@@ -10,12 +10,12 @@
                 var content = document.querySelector("#content").value;
 
                 if(subject == ""){
-                    commonPopup.alertPopup('제목을 입력하세요.');
+                    alert('제목을 입력하세요.');
                     return false;
                 }
 
                 if(content == '<p><br></p>'){
-                    commonPopup.alertPopup('본문을 입력하세요.');
+                    alert('본문을 입력하세요.');
                     return false;
                 }
 
@@ -31,7 +31,7 @@
                 form.method = "POST";
                 form.submit();
             } else if(writer == ""){
-               commonPopup.alertPopup("로그인 후 이용가능합니다.");
+               alert("로그인 후 이용가능합니다.");
             }
         }
 

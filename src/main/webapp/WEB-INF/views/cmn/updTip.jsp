@@ -87,11 +87,11 @@
              var content = editor.getMarkdown();
 
              if(subject == ''){
-                 commonPopup.alertPopup('제목을 입력하세요✍');
+                 commonPopup.alertPopup('제목을 입력하세요✍', false);
                  document.querySelector("#subject").focus();
                  return;
              }if(content == ''){
-                 commonPopup.alertPopup('내용을 입력하세요✍');
+                 commonPopup.alertPopup('내용을 입력하세요✍', false);
                  editor.focus();
                  return;
              }else{

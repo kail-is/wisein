@@ -1319,10 +1319,6 @@ body {
     height:40px;
 }
 
-.alert-button-wrap.confirm button{
-    background-color:#9933FF;
-}
-
 .alert-button-wrap button {
     color:white;
     padding: 0.375rem;
@@ -1339,11 +1335,11 @@ body {
 }
 
 .confirm-btn button {
-    background-color:#9933FF;
     margin-left:85px;
     float:left;
     color:white;
     padding: 0.375rem;
+    background-color: gray;
     cursor: pointer;
     -webkit-box-shadow: 2px 2px 2px #b1a5a5;
     box-shadow: 2px 2px 2px #b1a5a5;
