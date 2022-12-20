@@ -36,6 +36,9 @@
                 <div class="board-cell board-like gray">
                     좋아요
                 </div>
+                <div class="board-cell board-like gray">
+                    스크랩
+                </div>
                 <div class="board-cell board-writer gray">
                     작성자
                 </div>
@@ -54,6 +57,7 @@
                     </div>
                     <div class="board-cell board-title">
                         <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
+                    <!--좋아요-->
                     </div>
                     <c:if test="${tip.likeCount == 0}">
                         <div class="board-cell board-like gray">
@@ -63,6 +67,17 @@
                     <c:if test="${tip.likeCount != 0}">
                         <div class="board-cell board-like purple2">
                             <span class="material-icons">thumb_up</span>${tip.likeCount}
+                        </div>
+                    </c:if>
+                    <!--북마크-->
+                    <c:if test="${tip.scrapCount == 0}">
+                        <div class="board-cell board-like gray">
+                            <span class="material-icons" style="max-width:24px;">bookmarks</span>${tip.scrapCount}
+                        </div>
+                    </c:if>
+                    <c:if test="${tip.scrapCount != 0}">
+                        <div class="board-cell board-like purple2">
+                            <span class="material-icons" style="max-width:24px;">bookmarks</span>${tip.scrapCount}
                         </div>
                     </c:if>
                     <div class="board-cell board-writer gray">
