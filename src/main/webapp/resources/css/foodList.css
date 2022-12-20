@@ -21,7 +21,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  height: calc(100vh - 120px);
+  height: 600px;
 }
 
 
@@ -42,7 +42,6 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    height: 81vh;
   }
 }
 
@@ -284,7 +283,7 @@
     justify-content:center;
     align-items:stretch;
     position:relative;
-    bottom:-100px;
+    bottom:-150px;
 }
 
 @media screen and (max-width: 992px) {
@@ -292,7 +291,7 @@
         text-align:center;
         position:relative;
         font-size:13px;
-        bottom:-40px;
+        bottom:-60px;
     }
 
     .matzip-category, .food-list-title, .board-map {

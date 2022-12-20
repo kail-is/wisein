@@ -56,7 +56,7 @@ public class EmailController {
                 "		아래 <b style=\"color: #02b875\">메일 인증</b> 버튼을 클릭하여 인증을 완료해주세요.<br />" +
                 "		감사합니다." +
                 "	</p>" +
-                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6/authSuccess\">" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6:9092/authSuccess\">" +
                 "		<p" +
                 "			style=\"display: inline-block; width: 210px; height: 45px; margin: 30px 5px 40px; background: #02b875; line-height: 45px; vertical-align: middle; font-size: 16px;\">" +
                 "			메일 인증</p>" +
@@ -159,7 +159,7 @@ public class EmailController {
                 "	 style=\"text-align: center; margin: 2em; font-weight: bold;\">" +
                     changePw +
                 "	</p>" +
-                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6/chgPw?memberToken=" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6:9092/chgPw?memberToken=" +
                 memberToken +
                 "\">" +
                 "		<p" +
@@ -229,7 +229,7 @@ public class EmailController {
                 "	<p" +
                 "	 style=\"text-align: center; margin: 2em;\">" +
                 "			해당 맛집 확인</p>" +
-                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6/matzip?id=" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6:9092/matzip?id=" +
                 matzipId +
                 "\">" +
                 "		<p" +
@@ -237,7 +237,7 @@ public class EmailController {
                 " 맛집 이동" +
                 "	</p>" +
                 "	</a>" +
-                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6/addClosed?matzipId=" +
+                "	<a style=\"color: #FFF; text-decoration: none; text-align: center;\" href=\"http://218.52.89.6:9092/addClosed?matzipId=" +
                 matzipId +
                 "\">" +
                 "		<p" +
