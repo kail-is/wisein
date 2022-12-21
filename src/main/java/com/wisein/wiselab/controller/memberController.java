@@ -72,16 +72,16 @@ public class memberController {
 				lgFailMessage ="로그인에 실패했습니다.";
 				rttr.addFlashAttribute("msg", lgFailMessage);
 
-				return "redirect:/";
+				return "redirect:qalist";
 			}
 		} else {
 			lgFailMessage ="로그인에 실패했습니다.";
 			rttr.addFlashAttribute("msg", lgFailMessage);
 
-			return "redirect:/";
+			return "redirect:qalist";
 		}
 
-		return "redirect:/";
+		return "redirect:qalist";
 	}
 
 	@GetMapping(value = "/user/logout")

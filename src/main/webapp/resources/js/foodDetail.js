@@ -28,19 +28,13 @@
 
        let delConfirm = await commonPopup.confirmPopup('삭제하시겠습니까?', commonPopup.callback);
         //추천 삭제
+        debugger;
        if (delConfirm) {
            fetch("/delRecm?" + "id=" + recmId)
                 .then(response => response.text())
                 .catch(error => console.error('Error:', error))
                 .then(recmMatzipId => {
-                    let matzip_num = recmMatzipId;
-                    //맛집 삭제
-                    fetch("/addClosed?" + "matzipId=" + matzip_num)
-                        .then(response => response.text())
-                        .catch(error => console.error('Error:', error))
-                        .then(response => {
-                            window.location.href = "recmCnt?id=" + matzip_id
-                        });
+                    window.location.href = "/matzip?id=" + recmMatzipId
                 });
 
        }

@@ -104,13 +104,7 @@
     <update id="updClosedStat" parameterType="Int">
         UPDATE MATZIP_BOARD
         SET CLOSED_STATE = 'Y'
-        WHERE (
-        SELECT
-        COUNT(*)
-        FROM RECM_BOARD
-        WHERE REF_MATZIP = #{id}
-        AND DEL_YN = 'N'
-        ) = 0 AND ID = #{id};
+        WHERE ID = #{id};
     </update>
 
     <update id="delRecm" parameterType="Integer">

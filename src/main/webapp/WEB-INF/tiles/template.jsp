@@ -73,6 +73,8 @@
 	<c:if test="${empty member}">
 	    $dim();
 	    document.querySelector('#joinBox').classList.remove('none');
+        let loadingMsg = document.querySelector("#lg_fail_msg").innerText;
+        if (loadingMsg != '') { commonPopup.alertPopup(loadingMsg, false); }
 	</c:if>
 	</script>
 </html>

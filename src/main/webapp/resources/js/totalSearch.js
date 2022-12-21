@@ -1,9 +1,5 @@
 let callAjaxIntegrationData = (addr = location.pathname) => {
 
-    if(location.href.indexOf("integration") == -1) {
-        return
-    }
-
     let currentPageNo = 0;
     let boardTypeList = [];
     let isCall        = true;
@@ -83,11 +79,10 @@ let callAjaxIntegrationData = (addr = location.pathname) => {
     };
 }
 
+if(location.href.indexOf("integration") > -1) {
 let callFun = callAjaxIntegrationData();
 
-if(typeof callFun === "function") {
-    callFun();
-}
+callFun();
 
 window.addEventListener('wheel',()=>{
     let scrollY =  window.innerHeight + window.scrollY;//브라우저 안쪽 길이 + 스크롤의 현재 위치
@@ -97,6 +92,9 @@ window.addEventListener('wheel',()=>{
         callFun();
     }
 });
+
+
+}
 
 window.onbeforeunload = function() {
     callFun = null;
