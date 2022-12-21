@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:formatDate  var="hireDate" value="${member.hireDate}" type="DATE" pattern="yyyy-MM-dd"/>
-
+<p id="lg_fail_msg" style="display:none">${msg}</p>
     <div class="sidebar-wrap">
         <input type="checkbox" name="" id="bar-chk" style="display: none;">
         <div class="sidebar">
@@ -31,7 +31,7 @@
                      <c:if test="${not empty member}">
                          <li><a href="/questionsList?sideCheck=Y">작성 글 모아 보기</a> </li>
                          <li onclick="userUpd()">정보 수정 </li>
-                         <li><a href="user/logout">로그아웃</a></li>
+                         <li><a href="/user/logout">로그아웃</a></li>
                          <li onclick="userWithdraw()">탈퇴</a> </li>
                      </c:if>
                     </ul>
