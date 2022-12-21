@@ -1,0 +1,1 @@
+const KAKAO_KEY = 'e15377be3993b9fa5ef9f07a69752999';
