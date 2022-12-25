@@ -149,6 +149,8 @@
         WHERE
             BRD_REF = #{brdRef}
             AND DLT_YN = 'N'
+        ORDER BY
+            REG_DATE DESC;
     </select>
 
     <!--  회원 탈퇴  -->
