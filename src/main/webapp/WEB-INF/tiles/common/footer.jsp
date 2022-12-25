@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <!--반응형 서치-->
-    <div class="search-wrap">
+    <div class="search-wrap mobile-search">
         <div class="select-wrap">
              <select name="searchType" class="searchType" id="search-list2">
                 <option value="all"   ${searchType eq 'all' ? 'selected':''}>카테고리</option>

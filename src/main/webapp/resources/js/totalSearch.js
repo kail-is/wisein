@@ -103,3 +103,8 @@ window.onbeforeunload = function() {
 function goBrdDetail(brdType, brdNum) {
     location.href = "http://" + document.location.host + "/" + brdType.toLowerCase() + "Detail?num=" + brdNum
 }
+
+if (document.location.pathname.indexOf('list') > -1
+    || document.location.pathname.indexOf('List') > -1) {
+    document.querySelector(".mobile-search").style.display = "flex";
+}
