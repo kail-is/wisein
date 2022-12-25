@@ -1406,3 +1406,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.uploadcare--widget__button.uploadcare--widget__button_type_open {
+    background-color: #7E57C2;
+}

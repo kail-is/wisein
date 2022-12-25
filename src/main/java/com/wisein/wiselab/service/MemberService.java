@@ -23,7 +23,7 @@ public interface MemberService {
 
     public int authIdExist(String id) throws Exception;
 
-    public void modify(MemberDTO dto, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
+    public void modify(MemberDTO dto) throws Exception;
 
     public void addChgePw(MemberDTO dto) throws Exception;
 

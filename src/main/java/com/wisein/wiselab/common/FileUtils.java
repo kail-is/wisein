@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import lombok.Data;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +78,37 @@ public class FileUtils {
                 }
             }
         }
+        return fileList;
+    }
+
+    public List<FileDTO> parseFileInfo(String brdRef, String regId, String fileType, JSONObject fileInfos) throws Exception {
+        if (ObjectUtils.isEmpty(fileInfos)) {
+            return null;
+        }
+        String brdType = brdRef.split("\\|\\|")[0];
+        String brdNum = brdRef.split("\\|\\|")[1];
+
+        List<FileDTO> fileList = new ArrayList<>();
+        Iterator iterator = fileInfos.keySet().iterator();
+
+//        while (iterator.hasNext()) {
+
+//            String key = (String)iterator.next();
+
+//            if(fileInfos.get(key) instanceof JSONObject)
+//            {
+                JSONObject originalImageInfo = (JSONObject) fileInfos.get("originalImageInfo");
+
+                FileDTO oneFile = new FileDTO();
+                oneFile.setBrdRef(brdRef);
+                oneFile.setFileName((String) fileInfos.get("uuid"));
+                oneFile.setOrgFileName((String) fileInfos.get("name"));
+                oneFile.setFilePath((String) fileInfos.get("originalUrl"));
+                oneFile.setFileExtension((String) originalImageInfo.get("format"));
+                oneFile.setRegId(regId);
+                fileList.add(oneFile);
+//           }
+//        }
         return fileList;
     }
 }

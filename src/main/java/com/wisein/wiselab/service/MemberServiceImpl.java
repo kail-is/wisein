@@ -5,6 +5,8 @@ import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -66,31 +69,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void modify(MemberDTO dto, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+    public void modify(MemberDTO dto) throws Exception {
 
-        if(ObjectUtils.isEmpty(multipartHttpServletRequest) == false) {
-            Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-            String name;
-            while(iterator.hasNext()) {
-                name = iterator.next();
-                List<MultipartFile> list = multipartHttpServletRequest.getFiles(name);
-                for(MultipartFile multipartFile : list) {
-                    String contType =  multipartFile.getContentType();
-                    String[] contArr = contType.split("/");
-                    String extension = contArr[1];
-                }
-            }
+        JSONObject fileInfos = null;
+        if (ObjectUtils.isEmpty(dto.getFileInfos()) == false) {
+            fileInfos = (JSONObject) JSONValue.parse(dto.getFileInfos());
         }
 
-        if(dto.getPw() != null) {
+        if (dto.getPw() != null) {
             dao.modifyPass(dto);
-        }else {
+        } else {
             dao.modify(dto);
         }
 
-        String brdRef =  "mem||" + dto.getId();
-        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, dto.getId(), "image", multipartHttpServletRequest);
-        if(CollectionUtils.isEmpty(list) == false) {
+        String brdRef = "mem||" + dto.getId();
+        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, dto.getId(), "image", fileInfos);
+        if (CollectionUtils.isEmpty(list) == false) {
             dao.insertMemFileList(list);
         }
     }

@@ -109,7 +109,7 @@ public class memberController {
 			dto.setPw(null);
 		}
 
-		service.modify(dto, multipartHttpServletRequest);
+		service.modify(dto);
 
 		// 회원 정보 수정 뒤 세션 등록 dto 수정
 		MemberDTO login = service.login(dto);

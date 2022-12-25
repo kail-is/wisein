@@ -18,6 +18,7 @@ public class MemberDTO {
     private String meetLink;
     private String meetYn;
     private List<FileDTO> fileList;
+    private String fileInfos;
     private String memStatus;
     private String authState;
     private String memberToken;

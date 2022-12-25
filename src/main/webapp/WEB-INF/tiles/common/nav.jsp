@@ -10,7 +10,7 @@
             <div class="top">
                 <div class="info">
                     <c:if test="${not empty member.fileList[0]}">
-                       <img src ="../${member.fileList[0].filePath}" class=""
+                       <img src ="${member.fileList[0].filePath}" class=""
                             onError="this.src='../resources/image/Conic.png';">
                     </c:if>
                     <c:if test="${empty member.fileList[0]}">
@@ -195,11 +195,12 @@
         </div>
         <div class="signUp-input-wrap">
            <label class="signUp-input-label">프로필 사진</label>
-           <input type="file" id="files" name="fileName" />
-            <div class="file_list">
+           <input type="hidden" role="uploadcare-uploader" data-public-key="bd591f9450438bb316d9" data-multiple="false" data-system-dialog="true">
+           <input type="hidden" id="uploadcare-url" name="fileInfos" value="${member.fileInfos}">
+                <div class="file_list">
                 <div class="profile_img">
-                <img src ="../${member.fileList[0].filePath}" width="25" height="25"
-                    onError="this.src='../resources/image/Conic.png'">
+                <img src ="${member.fileList[0].filePath}" width="25" height="25"
+                    onError="this.src='../resources/image/Conic.png'" id="memImg">
                 <p class="del-btn" onclick="imgDel(this.id)" id="${member.fileList[0].fileName}"></p>
                 </div>
             </div>
