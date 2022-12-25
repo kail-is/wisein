@@ -151,30 +151,41 @@
 
     <select id="matzipCount" resultType="CompanyDTO" parameterType="String">
         SELECT
-        COUNT(*) AS MATZIPCOUNT
-        , CATEGORY AS LOCATION
+        COUNT(B.REF_MATZIP) as MATZIPCOUNT,
+        CATEGORY as LOCATION
+        FROM
+        (
+        SELECT
+        ID,
+        CATEGORY
         FROM MATZIP_BOARD
-        WHERE CATEGORY IN (SELECT LOCATION FROM COMPANY)
-        AND CATEGORY=#{location}
-        AND CLOSED_STATE = 'N' GROUP BY CATEGORY;
+        WHERE CATEGORY = #{location}
+        ) A,
+        RECM_BOARD B
+        WHERE A.ID = B.REF_MATZIP
+        AND DEL_YN = 'N';
     </select>
 
     <select id="matzipList" parameterType="PageDataDTO" resultType="CompanyDTO">
         SELECT
-        A.ID
-        , A.LOCATION
-        , A.COMPANY_DATA
+        DISTINCT
+        A.ID,
+        A.LOCATION,
+        A.COMPANY_DATA
         FROM
-        (SELECT
-        @ROWNUM:=@ROWNUM+1 AS RNUM
-        , B.ID
-        , B.CATEGORY AS LOCATION
-        , B.MATZIP_DATA AS COMPANY_DATA
-        FROM MATZIP_BOARD AS B
-        , (SELECT @ROWNUM:=0) R
-        WHERE CATEGORY=#{location}
-        AND CLOSED_STATE = 'N'
-        ) AS A
+        (
+        SELECT
+        @ROWNUM:=@ROWNUM+1 AS RNUM,
+        ID,
+        CATEGORY as LOCATION,
+        MATZIP_DATA as COMPANY_DATA
+        FROM MATZIP_BOARD
+        WHERE CATEGORY = #{location}
+        ) A,
+        RECM_BOARD B,
+        (SELECT @ROWNUM:=0) R
+        WHERE A.ID = B.REF_MATZIP
+        AND DEL_YN = 'N'
         LIMIT #{startRow}, #{dataPerPage}
     </select>
 
