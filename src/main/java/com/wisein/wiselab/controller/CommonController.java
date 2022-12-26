@@ -3,15 +3,14 @@ package com.wisein.wiselab.controller;
 import com.wisein.wiselab.dto.FileDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.service.CommonService;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +44,26 @@ public class CommonController {
         String brdNm = multipartHttpServletRequest.getParameter("brdNm");
 
         String url = comService.uploadImgList(brdNm, member.getId(), multipartHttpServletRequest);
+
+        return url;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/uploadImg")
+    public String postJsonImg (HttpSession session, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+
+        MemberDTO member = (MemberDTO)(session.getAttribute("member"));
+        String brdNm = multipartHttpServletRequest.getParameter("brdNm");
+        String brdCdNm = multipartHttpServletRequest.getParameter("brdCdNm");
+        String fileInfo = multipartHttpServletRequest.getParameter("fileInfo");
+
+        System.out.println(fileInfo);
+
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse(fileInfo);
+        JSONObject fileInfos = (JSONObject) obj;
+
+        String url = comService.uploadImgList(brdNm, member.getId(), brdCdNm, fileInfos);
 
         return url;
     }

@@ -5,26 +5,37 @@ let updYn = document.location.pathname.startsWith('/upd')
 const brdNum = updYn ? document.location.search.replace(/[^0-9]/g,"") : randomString()
 const brdNm = getBoardNm()
 
+
 const onUploadImage = (blob, callback) => {
-   console.log(blob)
+     let uploadImg = uploadcare.fileFrom("object", blob);
+     uploadImg.done(fileInfo => {
+       let formData = new FormData();
+       formData.append("brdCdNm", brdNum)
+       formData.append("brdNm", brdNm)
+       formData.append("fileInfo", JSON.stringify(fileInfo))
 
-   let formData = new FormData();
-   formData.append("brdNumCd", brdNum)
-   formData.append("brdNm", brdNm)
-   formData.append("file", blob)
+       let entries = formData.entries();
+       for (const pair of entries) {
+           console.log(pair[0]+ ', ' + pair[1]);
+       }
 
-    fetch('/upload', {
-        method: 'POST',
-        cache: 'no-cache',
-        body: formData
-    })
-    .then(response => response.text())
-    .catch(error => console.error('Error:', error))
-    .then( imgUrl => {
-        const alt = document.getElementById("toastuiAltTextInput").value
-        url = window.location.host
-        callback( "http://" + url + '/' + imgUrl, alt)
-     });
+       debugger;
+
+        fetch('/uploadImg', {
+            method: 'POST',
+            cache: 'no-cache',
+            body: formData,
+        })
+        .then(response => response.text())
+        .catch(error => console.error('Error:', error))
+        .then( imgUrl => {
+            console.log('uploadImg')
+        });
+
+        console.log("File uploaded: ", fileInfo.cdnUrl);
+        const alt = document.getElementById("toastuiAltTextInput").value;
+        callback(fileInfo.cdnUrl, alt)
+    });
 
     return false
  };

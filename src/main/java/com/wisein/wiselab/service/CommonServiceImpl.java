@@ -4,6 +4,7 @@ import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.CommonDAO;
 import com.wisein.wiselab.dto.FileDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -29,6 +30,19 @@ public class CommonServiceImpl implements CommonService {
         String brdRef =  brd + "||" + id;
         List<FileDTO> list = dao.selectFileList(brdRef);
         return list;
+    }
+
+
+    @Override
+    public String uploadImgList(String brd, String regId, String brdNumCd, JSONObject fileInfos) throws Exception {
+        String brdRef = brd + "||" + brdNumCd;
+        String url = "";
+        List<FileDTO> list = fileUtils.parseFileInfo(brdRef, regId, "image", fileInfos);
+        if(CollectionUtils.isEmpty(list) == false) {
+            dao.uploadImgList(list);
+            url = list.get(0).getFilePath();
+        }
+        return url;
     }
 
     @Override

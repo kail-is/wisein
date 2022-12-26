@@ -60,7 +60,7 @@
 
         const brdName = getBoardNm()
 
-         fetch("/updateHash?" + "brdNm=" + brdName + "&randomStr=" + brdNum + "brdNum=" + postNum)
+         fetch("/updateHash?" + "brdNm=" + brdName + "&randomStr=" + brdNum + "&brdNum=" + postNum)
                .then(response => response.text())
                .catch(error => console.error('Error:', error))
                .then(response => {
