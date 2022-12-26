@@ -19,7 +19,7 @@
         document.querySelector('#matzip-name').value = matzip_obj.place_name;
 
         const defaultStar = document.querySelector("#star-val").value
-        document.querySelector("#star")[defaultStar - 5].selected = true;
+        document.querySelector("#star")[5 - defaultStar].selected = true;
 
         editor.setHTML(document.querySelector('#content').value);
     }
