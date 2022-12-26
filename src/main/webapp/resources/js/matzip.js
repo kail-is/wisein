@@ -183,7 +183,8 @@
                    keywordEl.value = result.selectedData.split("(")[1].replace(")","");
                    matzipDataEl.value = JSON.stringify(result.resultData, null, 2);
 
-                   keywordEl.style.width = "50%"
+                   matzip_name.disabled = true;
+                   keywordEl.disabled = true;
                    matzip_name.classList.remove('none');
                    fmtSrhBtn.classList.remove('none');
                    addSrhBtn.classList.add('none');
@@ -197,7 +198,9 @@
         keywordEl.value = ""
         matzipDataEl.value = ""
 
-        keywordEl.style.width = "70%"
+        matzip_name.disabled = false;
+        keywordEl.disabled = false;
+
         matzip_name.classList.add('none');
         fmtSrhBtn.classList.add('none');
         addSrhBtn.classList.remove('none');

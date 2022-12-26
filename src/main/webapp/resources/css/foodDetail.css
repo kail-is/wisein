@@ -423,3 +423,28 @@
     --swiper-theme-color: lightgray !important;
     --swiper-navigation-size: 30px !important;
 }
+
+
+@media screen and (max-width: 576px) {
+
+    .content-inner-box #star {
+        border: none;
+        font-size: 35px;
+        width: 100%;
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    .content-inner-box .keyword {
+        width: 74%
+    }
+
+    .content-inner-box #category {
+        width: 100%
+    }
+
+    .content-inner-box #matzip-name {
+        width: 100%
+    }
+
+}

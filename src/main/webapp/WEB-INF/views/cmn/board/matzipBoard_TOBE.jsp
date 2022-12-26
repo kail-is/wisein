@@ -14,7 +14,7 @@
                 <input type="hidden" size="210" id="matzip_id" value="${matzip.id}" disabled>
              </c:if>
 
-            <input type="text" size="210" id="writer" value="${member.id}" placeholder="아이디입니다" disabled>
+            <input type="hidden" size="210" id="writer" value="${member.id}" placeholder="아이디입니다" disabled>
 
             <div class="content-inner-box">
                 <select name="star" id="star">
