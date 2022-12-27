@@ -302,9 +302,6 @@ header ul li:nth-child(2) .select-wrap select {
     -ms-flex-direction: row;
     flex-direction: row;
   }
-  .mobile-search {
-    display:none;
-  }
 }
 
  .search-wrap .select-wrap {
