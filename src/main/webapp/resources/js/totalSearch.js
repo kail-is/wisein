@@ -104,7 +104,8 @@ function goBrdDetail(brdType, brdNum) {
     location.href = "http://" + document.location.host + "/" + brdType.toLowerCase() + "Detail?num=" + brdNum
 }
 
-if (document.location.pathname.indexOf('list') > -1
-    || document.location.pathname.indexOf('List') > -1) {
+if ((document.location.pathname.indexOf('list') > -1
+     || document.location.pathname.indexOf('List') > -1)
+     && window.matchMedia("screen and (max-width: 576px)").matches) {
     document.querySelector(".mobile-search").style.display = "flex";
 }
