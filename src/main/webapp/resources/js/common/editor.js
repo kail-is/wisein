@@ -5,6 +5,7 @@ let updYn = document.location.pathname.startsWith('/upd')
 const brdNum = updYn ? document.location.search.replace(/[^0-9]/g,"") : randomString()
 const brdNm = getBoardNm()
 
+UPLOADCARE_PUBLIC_KEY = "bd591f9450438bb316d9"
 
 const onUploadImage = (blob, callback) => {
      let uploadImg = uploadcare.fileFrom("object", blob);

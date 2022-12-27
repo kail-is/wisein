@@ -45,14 +45,14 @@
                     method : 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(obj),
-                }).then(response => response.text())
-                .catch(error => console.error('Error:', error))
-                .then(response => {
-                   commonPopup.alertPopup("성공");
-                   const postNum = getPostNum(writer, subject)
-                   if(brdNum != postNum){ updateImgHash(brdNum, postNum) }
-                   window.location.href = "/matzip?id=" + matzip_id
+                }).then(response => {
+                    getPostNum(writer, subject).then((data) => {
+                    // TODO 동기식 실행 완료 - fulfilled Promise 객체 수정 요함
+                        if(brdNum != data){ updateImgHash(brdNum, data) }
+                        window.location.href = "/matzip?id=" + matzip_id
+                    })
                 })
+                .catch(error => console.error('Error:', error))
         }
     }
 
@@ -75,7 +75,6 @@
         const response = await fetch("/getPostNum?" + "writer=" + writer + "&subject=" + subject)
         const data = await response.text()
         return data
-        // TODO 동기식 실행 완료 - fulfilled Promise 객체 수정 요함
     }
 
     function matzipUpd(){
