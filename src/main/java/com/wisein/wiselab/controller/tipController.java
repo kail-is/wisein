@@ -59,6 +59,10 @@ public class tipController {
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
+        if(tipList.isEmpty()){
+            tipList = null;
+        }
+
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
 
