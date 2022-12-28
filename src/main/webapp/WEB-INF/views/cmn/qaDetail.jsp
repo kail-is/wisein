@@ -44,9 +44,12 @@
         </div>
     </section>
 
-<hr>
-<b>답변( <c:out value="${fn:length(commentQaList)}"/> )개</b>
-</br></br>
+    <section class="recommend-wrap">
+        <div class="recommend-titleLine">
+            답변 (<c:out value="${fn:length(commentQaList)}"/>)
+        </div>
+    </section>
+    <br>
 
 <c:set var="i" value="${0}"  />
 <c:forEach var="commentQa" items="${commentQaList}" varStatus="status">
