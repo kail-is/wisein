@@ -13,8 +13,6 @@ let mapContainer = document.getElementById('map')
 
 let map = new kakao.maps.Map(mapContainer, mapOption);
 
-//맛집 로드시 회사리스트 get
-//window.addEventListener('DOMContentLoaded', function(){
 function init() {
     let companyArray = Array.from(document.querySelectorAll('#list'));
     for (let i=0; i<companyArray.length; i++) {
@@ -28,11 +26,9 @@ function init() {
                 setDataList(companyList, type);
             })
 }
-//});
 
 //카테고리 선택
 function foodCategorySelect(target) {
-    console.log(target.value);
     type = "company";
     removeAllChild(pageDiv);
 

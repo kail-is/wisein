@@ -60,9 +60,9 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            List<CompanyDTO> siteCountList = dao.matzipCount(location);
+            int siteCount = dao.dataCount(location);
 
-            if (siteCountList.size()==0) {
+            if (siteCount==0) {
                 companyDTO.setId(siteList.get(i).getId());
                 companyDTO.setLocation(siteList.get(i).getLocation());
                 companyDTO.setMatzipCount(0);
@@ -73,7 +73,7 @@ public class RestMatzipController {
             } else {
                 companyDTO.setId(siteList.get(i).getId());
                 companyDTO.setLocation(siteList.get(i).getLocation());
-                companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
+                companyDTO.setMatzipCount(siteCount);
                 companyDTO.setCompanyName((String) jObject.get("place_name"));
                 companyDTO.setCompanyLoc((String) jObject.get("address_name"));
             }
@@ -194,6 +194,7 @@ public class RestMatzipController {
         Map<String, List<CompanyDTO>> map = new HashMap<>();
 
         for (int i=0; i<siteList.size(); i++) {
+            String location = siteList.get(i).getLocation();
             companyDTO = new CompanyDTO();
 
             try {
@@ -205,9 +206,9 @@ public class RestMatzipController {
                 e.printStackTrace();
             }
 
-            List<CompanyDTO> siteCountList = dao.matzipCount(siteList.get(i).getLocation());
+            int siteCount = dao.dataCount(location);
 
-            if (siteCountList.size()==0) {
+            if (siteCount==0) {
                 companyDTO.setId(siteList.get(i).getId());
                 companyDTO.setLocation(siteList.get(i).getLocation());
                 companyDTO.setMatzipCount(0);
@@ -217,7 +218,7 @@ public class RestMatzipController {
             } else {
                 companyDTO.setId(siteList.get(i).getId());
                 companyDTO.setLocation(siteList.get(i).getLocation());
-                companyDTO.setMatzipCount(siteCountList.get(0).getMatzipCount());
+                companyDTO.setMatzipCount(siteCount);
                 companyDTO.setCompanyName((String) jObject.get("place_name"));
                 companyDTO.setCompanyLoc((String) jObject.get("address_name"));
             }

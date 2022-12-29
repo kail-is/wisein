@@ -85,11 +85,6 @@ public class MatzipDAOImpl implements MatzipDAO {
     }
 
     @Override
-    public List<CompanyDTO> matzipCount(String location) {
-        return sql.selectList(NS+ ".matzipCount", location);
-    }
-
-    @Override
     public List<CompanyDTO> matzipList(PageDataDTO pageDataDto) {
         return sql.selectList(NS+ ".matzipList", pageDataDto);
     }
@@ -97,11 +92,6 @@ public class MatzipDAOImpl implements MatzipDAO {
     @Override
     public List<CompanyDTO> recmMatzipCount(int id) {
         return sql.selectList(NS + ".recmMatzip", id);
-    }
-
-    @Override
-    public int matzipExistCheck(int id) {
-        return sql.selectOne(NS + ".matzipExistCheck",id);
     }
 
     @Override

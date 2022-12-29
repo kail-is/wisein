@@ -149,23 +149,6 @@
         FROM COMPANY
     </select>
 
-    <select id="matzipCount" resultType="CompanyDTO" parameterType="String">
-        SELECT
-        COUNT(B.REF_MATZIP) as MATZIPCOUNT,
-        CATEGORY as LOCATION
-        FROM
-        (
-        SELECT
-        ID,
-        CATEGORY
-        FROM MATZIP_BOARD
-        WHERE CATEGORY = #{location}
-        ) A,
-        RECM_BOARD B
-        WHERE A.ID = B.REF_MATZIP
-        AND DEL_YN = 'N';
-    </select>
-
     <select id="matzipList" parameterType="PageDataDTO" resultType="CompanyDTO">
         SELECT
         DISTINCT
@@ -218,19 +201,6 @@
         LIMIT 1
     </select>
 
-    <select id="matzipExistCheck" parameterType="Integer" resultType="Integer">
-        SELECT
-        EXISTS
-        (
-        SELECT
-        REF_MATZIP FROM RECM_BOARD
-        WHERE REF_MATZIP = #{id}
-        limit 1
-        )
-        AS SUCCESS
-    </select>
-
-
     <select id="companyCategory" resultType="CompanyDTO">
         SELECT
         LOCATION
@@ -248,9 +218,16 @@
 
     <select id="dataCount" parameterType="String" resultType="Integer">
         SELECT
-        COUNT(*)
+        COUNT(DISTINCT B.REF_MATZIP)
+        FROM
+        (
+        SELECT
+        ID
         FROM MATZIP_BOARD
-        WHERE CATEGORY=#{location}
-        AND CLOSED_STATE = 'N'
+        WHERE CATEGORY = #{location}
+        ) A,
+        RECM_BOARD B
+        WHERE A.ID = B.REF_MATZIP
+        AND DEL_YN = 'N';
     </select>
 </mapper>
