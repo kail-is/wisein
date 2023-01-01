@@ -32,11 +32,16 @@ function init() {
 }
 
 function initMap() {
+    let changeText = document.getElementById('changeText');
+    changeText.innerText = "맛집";
+
     if (markers.length != 0) {
         for (let i=0; i<markers.length; i++) {
             markers[i].setMap(null);
         }
-        customOverlay.setMap(null);
+        if (typeof customOverlay != "undefined") {
+            customOverlay.setMap(null);
+        }
     }
 
     var moveLatLon = new kakao.maps.LatLng(37.37947804818484, 127.11415037150388);
@@ -211,8 +216,8 @@ function setDataList(dataList, type) {
             listText = "등록된 맛집이 없습니다.";
         }
         createDiv.innerHTML
-            += "<div id='list' class='matzip-list-line' style='height:50px;justify-content:center;align-items:center;';>"
-            + listText
+            += "<div id='list' class='matzip-list-line' style='height:200px;justify-content:center;align-items:center;';>"
+            + "<img class='matzip-non' src='../resources/image/nonPosting.png'>"
             + "</div>";
     } else {
         if (args[1] == "company") {

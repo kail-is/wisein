@@ -255,7 +255,6 @@ alertPopup : function (alertMsg, dimCheck) {
     $dim();
 
     closeBtn.addEventListener('click', function () {
-        console.log(dimClosed);
         commonPopup.close(dimClosed);
     });
 
@@ -292,7 +291,6 @@ callback : function (confirmMsg) {
 },
 
 close : function (dimClosed) {
-    console.log(dimClosed);
     document.querySelector('#commonPopup').classList.add('none');
     document.querySelector('#roadViewPopup').classList.add('none');
     if (typeof dimClosed == "undefined") {
