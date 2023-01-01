@@ -9,6 +9,19 @@
 <div class="content-wrap boardList" style="max-width: 1300px;">
 </c:if>
 -->
+
+<c:if test="${qaList == null}">
+    <div class="content-wrap boardList">
+        <section class="content-frame boardList">
+             <div class="content-top-group">
+                <button type="button" onClick="location.href='/qaBoard'" ></button>
+            </div>
+            <img src ="../resources/image/nonPosting.png" class="noPost">
+        </section>
+    </div>
+</c:if>
+
+<c:if test="${qaList != null}">
 <div class="content-wrap boardList">
     <section class="content-frame boardList">
         <div class="content-top-group">
@@ -127,3 +140,4 @@
     	</div>
     </ul>
 </div>
+</c:if>
