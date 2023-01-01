@@ -234,6 +234,16 @@ input, select {
   margin-bottom: 0.5em;
 }
 
+.content-wrap .content-frame .header-section {
+  display: flex;
+}
+
+.content-wrap .content-frame .header-section .title {
+  margin-right: auto;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
 .content-wrap .content-frame .title {
   font-weight: bold;
   font-size: 18px;

@@ -5,9 +5,12 @@
 <c:if test="${tipList == null}">
     <div class="content-wrap boardList">
         <section class="content-frame boardList">
-             <div class="content-top-group">
-                <button type="button" onClick="location.href='tipBoard'" ></button>
-            </div>
+             <div class="header-section">
+                 <div class="title">TIP</div>
+                 <div class="content-top-group">
+                    <button type="button" onClick="location.href='tipBoard'"></button>
+                </div>
+             </div>
             <img src ="../resources/image/nonPosting.png" class="noPost">
         </section>
     </div>
@@ -17,10 +20,13 @@
 <c:if test="${tipList != null}">
     <div class="content-wrap boardList">
         <section class="content-frame boardList">
-            <div class="content-top-group">
-               <c:if test="${side_gubun ne 'Y'}">
-                    <button type="button" onClick="location.href='tipBoard'" ></button>
-               </c:if>
+            <div class="header-section">
+                <div class="title">TIP</div>
+                <div class="content-top-group">
+                   <c:if test="${side_gubun ne 'Y'}">
+                        <button type="button" onClick="location.href='tipBoard'" ></button>
+                   </c:if>
+                </div>
             </div>
             <div class="board-list">
                 <div class="board-line board-header">

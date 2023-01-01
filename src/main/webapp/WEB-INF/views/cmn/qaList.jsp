@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>\
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!--
 <c:if test="${empty questionsListWriter && empty commentListWriter}">
@@ -13,9 +13,12 @@
 <c:if test="${qaList == null}">
     <div class="content-wrap boardList">
         <section class="content-frame boardList">
-             <div class="content-top-group">
-                <button type="button" onClick="location.href='/qaBoard'" ></button>
-            </div>
+             <div class="header-section">
+                 <div class="title">QA</div>
+                 <div class="content-top-group">
+                    <button type="button" onClick="location.href='/qaBoard'" ></button>
+                </div>
+             </div>
             <img src ="../resources/image/nonPosting.png" class="noPost">
         </section>
     </div>
@@ -24,10 +27,13 @@
 <c:if test="${qaList != null}">
 <div class="content-wrap boardList">
     <section class="content-frame boardList">
-        <div class="content-top-group">
-        <c:if test="${side_gubun ne 'Y'}">
-            <button type="button" onClick="location.href='/qaBoard'" ></button>
-        </c:if>
+        <div class="header-section">
+            <div class="title">QA</div>
+            <div class="content-top-group">
+                <c:if test="${side_gubun ne 'Y'}">
+                    <button type="button" onClick="location.href='/qaBoard'" ></button>
+                </c:if>
+            </div>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
