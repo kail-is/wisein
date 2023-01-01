@@ -407,4 +407,7 @@
     #refr-btn > span {
         font-size:25px;
     }
+    .material-icons-outlined.purple {
+        width:40px;
+    }
 }

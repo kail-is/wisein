@@ -223,7 +223,7 @@ function setDataList(dataList, type) {
                     + dataList.list[i].location+"</div>"
                     + "<div onclick='getMatzipList(&quot;" + dataList.list[i].location+"&quot;)' class='matzip-list-cell food-list-title'>"
                     + dataList.list[i].companyName+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons purple'>map</span>"
                     + dataList.list[i].matzipCount+"</div>"
                     + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + dataList.list[i].companyLoc+ "&quot;,&quot;" + dataList.list[i].companyName+ "&quot;,&quot;" + dataList.list[i].id+ "&quot;,&quot;company&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
                     + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + dataList.list[i].companyLoc + "&quot;)'>visibility</button><div></div>";
@@ -237,7 +237,7 @@ function setDataList(dataList, type) {
                     + dataList.list[i].location+"</div>"
                     + "<div onclick='detailPage(&quot;" + dataList.list[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
                     + dataList.list[i].companyName+"</div>"
-                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons'>map</span>"
+                    + "<div class='matzip-list-cell board-map purple'><span class='material-icons purple'>map</span>"
                     + dataList.list[i].matzipCount+"</div>"
                     + "<div class='matzip-list-cell board-map purple'><button onclick='checkLocal(&quot;" + dataList.list[i].companyLoc+ "&quot;,&quot;" + dataList.list[i].companyName+ "&quot;,&quot;" + dataList.list[i].id+ "&quot;,&quot;matzip&quot;)' class='material-icons-outlined purple'>where_to_vote</button></div>"
                     + "<div class='matzip-list-cell board-map purple'><button class='material-icons-outlined purple' onclick='roadView(&quot;" + dataList.list[i].companyLoc + "&quot;)'>visibility</button>" + "<div></div>";
