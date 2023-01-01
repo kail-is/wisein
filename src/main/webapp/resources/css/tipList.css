@@ -30,6 +30,14 @@ header ul li:nth-child(2) .select-wrap select {
   font-size: 16px;
 }
 
+
+.content-wrap .content-frame .noPost {
+    margin: 100px auto;
+    display: block;
+    width: 100%;
+    max-width: 500px;
+}
+
 @media screen and (max-width: 576px) {
   .content-wrap .content-top-group {
     display: -webkit-box;
@@ -301,6 +309,8 @@ header ul li:nth-child(2) .select-wrap select {
     -webkit-box-direction: normal;
     -ms-flex-direction: row;
     flex-direction: row;
+    margin-top:30px;
+    margin-bottom:30px;
   }
 }
 

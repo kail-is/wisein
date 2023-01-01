@@ -63,9 +63,12 @@ public class qaController {
         String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQaList(qaListDTO);
 
+        if(qaList.isEmpty()){
+            qaList = null;
+        }
+
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
-
         return "cmn/qaList";
     }
 

@@ -5,10 +5,10 @@
 <c:if test="${tipList == null}">
     <div class="content-wrap boardList">
         <section class="content-frame boardList">
-            <div class="content-top-group">
+             <div class="content-top-group">
                 <button type="button" onClick="location.href='tipBoard'" ></button>
             </div>
-            <img src ="../resources/image/nonPosting.png" style="margin: 100px auto; display: block;">
+            <img src ="../resources/image/nonPosting.png" class="noPost">
         </section>
     </div>
 </c:if>
