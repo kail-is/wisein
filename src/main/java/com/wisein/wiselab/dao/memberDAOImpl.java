@@ -72,6 +72,7 @@ public class memberDAOImpl implements MemberDAO {
 
     @Override
     public void insertMemFileList(List<FileDTO> list) {
+        sql.update(NS + ".deleteMemFileList", list.get(0).getBrdRef());
         sql.insert(NS + ".insertMemFileList", list);
     }
 

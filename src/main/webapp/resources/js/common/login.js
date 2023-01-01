@@ -296,6 +296,11 @@ function findPw() {
 }
 
 function userUpd() {
+    let imgSelector = document.querySelector("#memImg").src;
+    if(imgSelector.indexOf("resources/image/Conic.png") > 0){
+        imgSelector.style.display = 'none';
+        document.querySelector(".del-btn").style.display = 'none';
+    }
     document.querySelector('#userUpdBox').classList.remove('none');
     document.querySelector('#bar-chk').checked = false;
     $dim();

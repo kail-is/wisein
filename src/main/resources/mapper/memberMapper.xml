@@ -99,6 +99,14 @@
         WHERE ID = #{id}
     </update>
 
+    <!--  회원 정보 사진 업로드 수정  -->
+    <update id="deleteMemFileList" parameterType="String">
+        UPDATE FILE
+        SET
+        DLT_YN = 'Y'
+        WHERE BRD_REF = #{brdRef}
+    </update>
+
     <!-- 회원 정보 이미지 파일 업로드  -->
     <insert id="insertMemFileList" parameterType="FileDTO">
         <![CDATA[
