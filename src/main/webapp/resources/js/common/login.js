@@ -296,8 +296,8 @@ function findPw() {
 }
 
 function userUpd() {
-    let imgSelector = document.querySelector("#memImg").src;
-    if(imgSelector.indexOf("resources/image/Conic.png") > 0){
+    let imgSelector = document.querySelector("#memImg");
+    if(imgSelector.src.indexOf("resources/image/Conic.png") > 0){
         imgSelector.style.display = 'none';
         document.querySelector(".del-btn").style.display = 'none';
     }
