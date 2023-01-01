@@ -70,6 +70,9 @@
   position: relative;
 }
 
+.content-frame.food-wrap .top-group .category-wrap #selectOption {
+    color: black;
+}
 
 @media screen and (max-width: 992px) {
   .content-frame.food-wrap .top-group, .btn-group {

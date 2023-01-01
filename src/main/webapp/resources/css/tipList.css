@@ -345,6 +345,7 @@ header ul li:nth-child(2) .select-wrap select {
   -moz-appearance: none;
   appearance: none;
   background: url(../image/select_arrow.jpg) no-repeat right;
+  color: black;
 }
 
 .search-wrap .search-bar {
