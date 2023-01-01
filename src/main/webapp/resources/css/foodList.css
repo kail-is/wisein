@@ -314,7 +314,6 @@
 .btn-wrap {
     font-weight:800;
     color:#B266FF;
-
 }
 
 .btn-wrap:hover {
@@ -379,6 +378,9 @@
 
     .info.food-wrap:after {
         bottom:-10px;
+    }
+    .btn-wrap {
+        width:20px;
     }
 }
 
