@@ -2,6 +2,8 @@ let marker;
 let createDiv = document.createElement('div');
 let pageDiv = document.querySelector('#page');
 let coordinate;
+let markers = [];
+let customOverlay;
 let type;
 let clickOverlay = null;
 
@@ -18,6 +20,8 @@ function init() {
     for (let i=0; i<companyArray.length; i++) {
         companyArray[i].remove();
     }
+    removeAllChild(pageDiv);
+
     type = "company";
         fetch("/companyList")
             .then(response => response.json())
@@ -25,6 +29,20 @@ function init() {
             .then(companyList => {
                 setDataList(companyList, type);
             })
+}
+
+function initMap() {
+    if (markers.length != 0) {
+        for (let i=0; i<markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        customOverlay.setMap(null);
+    }
+
+    var moveLatLon = new kakao.maps.LatLng(37.37947804818484, 127.11415037150388);
+    map.panTo(moveLatLon);
+
+    init();
 }
 
 //카테고리 선택
@@ -256,6 +274,8 @@ async function checkLocal(location, companyName, id, type) {
         position: moveLatLon,
         clickable: true
     });
+
+    markers.push(marker);
 
     marker.setMap(map);
 

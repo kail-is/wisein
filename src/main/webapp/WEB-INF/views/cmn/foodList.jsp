@@ -17,7 +17,15 @@
                     expand_more
                 </span>
             </div>
-            <input class="recm-btn" type="button" onclick="location.href='matzipBoard'" value="추천">
+
+            <div class="btn-group">
+                <button id="refr-btn" onclick="initMap()">
+                    <span class="material-icons-outlined">
+                        refresh
+                    </span>
+                </button>
+                <input class="recm-btn" type="button" onclick="location.href='matzipBoard'" value="추천">
+            </div>
         </div>
 
         <div class="map-wrap food-wrap">
@@ -53,6 +61,12 @@
                         로드뷰
                     </div>
                 </div>
+
+            <button id="refresh-btn" onclick="initMap()">
+                <span class="material-icons-outlined">
+                    refresh
+                </span>
+            </button>
 
             <div class="button-wrap">
                 <input type="button" onclick="location.href='matzipBoard'"value="추천">

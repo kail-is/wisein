@@ -71,7 +71,7 @@
 
 
 @media screen and (max-width: 992px) {
-  .content-frame.food-wrap .top-group {
+  .content-frame.food-wrap .top-group, .btn-group {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -377,5 +377,34 @@
 
     .info.food-wrap:after {
         bottom:-10px;
+    }
+}
+
+#refresh-btn{
+    position:absolute;
+    bottom:0;
+    color:#7E57C2;
+    right:9em;
+}
+
+#refresh-btn > span {
+    font-size:47px;
+}
+
+#refr-btn {
+    display:none;
+}
+
+@media screen and (max-width: 992px) {
+    #refresh-btn {
+        display:none;
+    }
+    #refr-btn {
+        display:block;
+        color:#7E57C2;
+        margin-right:5px;
+    }
+    #refr-btn > span {
+        font-size:25px;
     }
 }
