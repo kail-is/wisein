@@ -303,19 +303,8 @@ input, select {
   bottom: 2em;
 }
 
-@media screen and (max-width: 992px) {
-  .top-arrow {
-    bottom: 5em;
-  }
-}
-
 .top-arrow span {
   font-size: 48px;
-}
-
-@media screen and (max-width: 576px) {
-  .top-arrow {
-  }
 }
 
 @-webkit-keyframes sidebar {
