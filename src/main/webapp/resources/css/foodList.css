@@ -42,6 +42,7 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    margin-bottom:auto;
   }
 }
 
@@ -378,6 +379,9 @@
     .info.food-wrap:after {
         bottom:-10px;
     }
+    .btn-wrap {
+        width:20px;
+    }
 }
 
 #refresh-btn{
@@ -410,4 +414,14 @@
     .material-icons-outlined.purple {
         width:40px;
     }
+    #id {
+        height:80px;
+    }
+    .matzip-non {
+        width:150px;
+    }
+}
+
+.matzip-non {
+    max-width:250px;
 }
