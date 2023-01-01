@@ -41,24 +41,14 @@
                     <li><a href="/tipList">Tech Tip</a></li>
                     <li><a href="/matzipList">사이트 별 맛집 목록</a></li>
                 </ul>
-                <div class="search-bar">
-                    <span class="material-icons">
-                        search
-                    </span>
-                    <input type="text">
-                </div>
             </div>
             <div class="bottom">
                 <ul class="icon">
                     <li>
+                        <a href="https://m196.mailplug.com/member/login?host_domain=wiselab.co.kr">
                         <span class="material-icons">
-                            perm_identity
-                        </span>
-                    </li>
-                    <li>
-                        <span class="material-icons">
-                            link
-                        </span>
+                            mail
+                        </span></a>
                     </li>
                 </ul>
             </div>
