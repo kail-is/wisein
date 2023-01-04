@@ -354,4 +354,16 @@ public class QaListDAOImpl implements QaListDAO {
     public int selectMemberQaCommentTotalCount(QaListDTO dto) throws Exception {
         return sql.selectOne(NS + ".selectMemberQaCommentTotalCount", dto);
     }
+
+    /* 댓글 삭제 시 좋아요 삭제*/
+    @Override
+    public void deleteLikeQaBoard(int num) throws Exception {
+        sql.delete(NS + ".deleteLikeQaBoard", num);
+    }
+
+    /* 댓글 삭제 시 스크랩 삭제*/
+    @Override
+    public void deleteScrapQaBoard(int num) throws Exception {
+        sql.delete(NS + ".deleteScrapQaBoard", num);
+    }
 }

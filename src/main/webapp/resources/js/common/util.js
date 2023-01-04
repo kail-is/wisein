@@ -20,7 +20,7 @@ function isEmpty(obj){
      * return : Bool
      * 날짜 : 2022-08-11
      * */
-function gfn_isNum(val){
+function isNum(val){
   return !isNaN(val)
 }
 
@@ -31,7 +31,7 @@ function gfn_isNum(val){
      * return : Bool
      * 날짜 : 2022-08-11
      * */
-function gfn_isAlpha(val){
+function isAlpha(val){
     if(!val){
         return false;
     }
@@ -46,7 +46,7 @@ function gfn_isAlpha(val){
      * return : Bool
      * 날짜 : 2022-08-11
      * */
-function gfn_isAlNum(val){
+function isAlNum(val){
     if(!val){
         return false;
     }
@@ -61,7 +61,7 @@ function gfn_isAlNum(val){
      * return : Bool
      * 날짜 : 2022-08-11
      * */
-function gfn_isKor(val){
+function isKor(val){
     if(!val){
         return false;
     }
@@ -76,7 +76,7 @@ function gfn_isKor(val){
      * return : int
      * 날짜 : 2022-08-11
      * */
-function gfn_getNum(obj){
+function getNum(obj){
   if(!isNaN(obj)){
     return Number(obj)
   }
@@ -89,7 +89,7 @@ function gfn_getNum(obj){
      * return : ""
      * 날짜 : 2022-08-11
      * */
-function gfn_nullToEmpty(obj) {
+function nullToEmpty(obj) {
     var newStr = obj;
 
     if( obj == "" || obj == null || obj == undefined || ( obj != null && typeof obj == "object" && !Object.keys(obj).length ) ){
@@ -105,7 +105,7 @@ function gfn_nullToEmpty(obj) {
      * return : int
      * 날짜 : 2022-08-11
      * */
-function gfn_length(obj){
+function length(obj){
     if( obj == "" || obj == null || obj == undefined || ( obj != null && typeof obj == "object" && !Object.keys(obj).length ) ){
       return 0;
     }
@@ -119,7 +119,7 @@ function gfn_length(obj){
      * return : int
      * 날짜 : 2022-08-11
      * */
-function gfn_indexOf(strFull, searchStr){
+function indexOf(strFull, searchStr){
     idx = strFull.indexOf(searchStr);
     return idx;
 }
@@ -131,7 +131,7 @@ function gfn_indexOf(strFull, searchStr){
      * return : int
      * 날짜 : 2022-08-11
      * */
-function gfn_replace(strFull, strOld, strNew){
+function replace(strFull, strOld, strNew){
     strFull = strFull.replace(strOld, strNew);
     return strFull;
 }

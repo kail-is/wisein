@@ -27,10 +27,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.lang.model.SourceVersion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -632,9 +629,28 @@ public class qaController {
                     }
                 }
             }
-        }else if(commentQaNum != 0){    // 댓글 삭제일경우
+        }
+        // 댓글 삭제일경우
+        else if(commentQaNum != 0){
+            // 1.댓글 num을 받아서
+            // 2.댓글 삭제 진행
+            // 3.댓글 좋아요 여부 삭제 진행
+            // 4.댓글 스크랩 여부 삭제 진행
+            // 5.원본게시글 조회 후 좋아요, 스크랩 COUNT 값 감소
+
+            //1.
             num = commentQaNum;
+            //2.
             qaListservice.deleteQaBoard(num);
+            //3.
+            qaListservice.deleteLikeQaBoard(num);
+            //4.
+            qaListservice.deleteScrapQaBoard(num);
+            //5.
+            int parentNum = likeService.getQaParentNum(num);
+            qaListservice.delQaLikeCount(parentNum); // 원본게시글 전체 likeCount 값 감소
+            qaListservice.delQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 감소
+
         }
         return "redirect:/qalist";
     }
@@ -840,22 +856,6 @@ public class qaController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

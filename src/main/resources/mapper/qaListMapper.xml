@@ -109,9 +109,11 @@
         UPDATE
         qa_board
         SET
-        del_yn = 'Y'
-        , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
-        WHERE num = #{num}
+        DEL_YN = 'Y'
+        , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+        , LIKE_COUNT = 0
+        , SCRAP_COUNT = 0
+        WHERE NUM = #{num}
     </delete>
 
     <!-- 게시글 삭제시 댓글 삭제 -->
@@ -119,8 +121,10 @@
         UPDATE
         qa_board
         SET
-        del_yn = 'Y'
-        , upd_date = (SELECT date_format(now(),'%Y-%c-%d'))
+        DEL_YN = 'Y'
+        , UPD_DATE = (SELECT date_format(now(),'%Y-%c-%d'))
+        , LIKE_COUNT = 0
+        , SCRAP_COUNT = 0
         WHERE PARENT_NUM = #{num}
     </delete>
 
@@ -466,5 +470,23 @@
 		   AND PARENT_NUM is NOT NULL
 		]]>
     </select>
+
+    <!-- 좋아요 삭제 -->
+    <delete id="deleteLikeQaBoard" parameterType="Integer">
+        UPDATE
+        like_board
+        SET
+        DEL_YN = 'Y'
+        WHERE BOARD_IDX = #{num}
+    </delete>
+
+    <!-- 스크랩 삭제 -->
+    <delete id="deleteScrapQaBoard" parameterType="Integer">
+        UPDATE
+        scrap_board
+        SET
+        DEL_YN = 'Y'
+        WHERE BOARD_IDX = #{num}
+    </delete>
 
 </mapper>

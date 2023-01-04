@@ -433,4 +433,16 @@ public class QaListServiceImpl implements QaListService {
     public int selectMemberQaCommentTotalCount(QaListDTO dto) throws Exception {
         return dao.selectMemberQaCommentTotalCount(dto);
     }
+
+    /* 댓글 삭제 시 좋아요 삭제*/
+    @Override
+    public void deleteLikeQaBoard(int num) throws Exception {
+        dao.deleteLikeQaBoard(num);
+    }
+
+    /* 댓글 삭제 시 스크랩 삭제*/
+    @Override
+    public void deleteScrapQaBoard(int num) throws Exception {
+        dao.deleteScrapQaBoard(num);
+    }
 }

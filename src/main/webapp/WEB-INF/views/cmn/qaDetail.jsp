@@ -33,10 +33,12 @@
             </c:if>
 
         <c:if test="${member.id == qaListDTO.writer}">
+            <c:if test="${qaListDTO.adpYn eq 'N'}">
             <div class="board-cell board-like purple2 qaDetail">
                 <span class="material-icons" onclick="update_btn(${qaListDTO.num})" id="update_btn">border_color</span>
                 <span class="material-icons" onclick="delete_btn(${qaListDTO.num})" id="delete_btn">delete</span>
             </div>
+            </c:if>
         </c:if>
         </div>
         <div class="subject">
@@ -150,10 +152,12 @@
             </c:if>
 
             <c:if test="${member.id == commentQa.writer}">
-                <div class="board-cell board-like purple2 qaDetail">
-                    <span class="material-icons" id="comment_update_btn" onclick="comment_update_btn(${commentQaNum})" >border_color</span>
-                    <span class="material-icons" id="comment_delete_btn" onclick="comment_delete_btn(${commentQaNum})" >delete</span>
-                </div>
+                <c:if test="${qaListDTO.adpYn eq 'N'}">
+                    <div class="board-cell board-like purple2 qaDetail">
+                        <span class="material-icons" id="comment_update_btn" onclick="comment_update_btn(${commentQaNum})" >border_color</span>
+                        <span class="material-icons" id="comment_delete_btn" onclick="comment_delete_btn(${commentQaNum})" >delete</span>
+                    </div>
+                </c:if>
             </c:if>
         </div>
         <div class="subject">

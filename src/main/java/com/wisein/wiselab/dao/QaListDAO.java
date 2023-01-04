@@ -248,4 +248,9 @@ public interface QaListDAO {
     /* 댓글 모아보기 페이징조회 */
     public int selectMemberQaCommentTotalCount(QaListDTO dto) throws  Exception;
 
+    /* 댓글 삭제 시 좋아요 삭제*/
+    public void deleteLikeQaBoard(int num) throws  Exception;
+
+    /* 댓글 삭제 시 스크랩 삭제*/
+    public void deleteScrapQaBoard(int num) throws  Exception;
 }
