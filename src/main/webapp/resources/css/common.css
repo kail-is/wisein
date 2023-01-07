@@ -476,6 +476,10 @@ input, select {
   .sidebar-wrap .sidebar .search-bar {
     display: block;
   }
+  .searchType option {
+    color:black;
+    background-color:white;
+  }
 }
 
 .sidebar-wrap .sidebar .search-bar span {
