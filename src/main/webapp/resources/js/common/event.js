@@ -21,13 +21,24 @@
 
 
 let totalSearchWriter = document.getElementsByClassName("writer");
+let beforeClickElement;
+
 Array.from(totalSearchWriter).forEach(function(element) {
     element.addEventListener('click', function(e) {
+        let clickElement = e.target;
+
         if(e.target.nextElementSibling.style.display === 'block'){
-debugger;
             e.target.nextElementSibling.style.display = 'none';
         }else{
             e.target.nextElementSibling.style.display = 'block';
         }
+
+        if (typeof beforeClickElement != "undefined") {
+            if (clickElement != beforeClickElement) {
+                beforeClickElement.nextElementSibling.style.display = 'none';
+            }
+        }
+
+        beforeClickElement = clickElement;
     });
 });

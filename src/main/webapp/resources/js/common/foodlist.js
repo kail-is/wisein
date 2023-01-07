@@ -1,10 +1,8 @@
 let marker;
 let createDiv = document.createElement('div');
 let pageDiv = document.querySelector('#page');
-let coordinate;
 let markers = [];
 let customOverlay;
-let type;
 let clickOverlay = null;
 
 let mapContainer = document.getElementById('map')
@@ -22,7 +20,7 @@ function init() {
     }
     removeAllChild(pageDiv);
 
-    type = "company";
+    let type = "company";
         fetch("/companyList")
             .then(response => response.json())
             .catch(error => console.log("Error"))
@@ -52,7 +50,7 @@ function initMap() {
 
 //카테고리 선택
 function foodCategorySelect(target) {
-    type = "company";
+    let type = "company";
     removeAllChild(pageDiv);
 
     if (target.value != "none") {
@@ -79,7 +77,7 @@ function getMatzipList(location, currentPage) {
     let pageBlock = 5;
     let dataPerPage = 5;
 
-    type = "matzip";
+    let type = "matzip";
     removeAllChild(pageDiv);
 
     if (currentPage==null) {
@@ -270,7 +268,7 @@ async function getLocalLatitue(location) {
 async function checkLocal(location, companyName, id, type) {
     let content, overlayText;
 
-    coordinate = await getLocalLatitue(location);
+    let coordinate = await getLocalLatitue(location);
 
     var moveLatLon = new kakao.maps.LatLng(coordinate.longitude, coordinate.latitude);
     map.panTo(moveLatLon);
@@ -344,7 +342,7 @@ function closeOverlay() {
 
 //로드뷰 표시
 async function roadView(local) {
-    coordinate = await getLocalLatitue(local);
+    let coordinate = await getLocalLatitue(local);
 
     let roadviewContainer = document.getElementById('roadview');
     let roadview = new kakao.maps.Roadview(roadviewContainer);
