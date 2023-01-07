@@ -5,6 +5,14 @@ let tagList = hTagToList(document.querySelector(".subject"));
 
 var leftSideBar = document.querySelector("#leftSideBar");
 
+var questionsListWriter = document.querySelector("#questionsListWriter").value;
+var commentListWriter = document.querySelector("#commentListWriter").value;
+var tipWriter = document.querySelector("#tipWriter").value;
+
+console.log(questionsListWriter);
+console.log(commentListWriter);
+console.log(tipWriter);
+
 var pathName = window.location.pathname
 //console.log(pathName);
 if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip"){
@@ -18,9 +26,9 @@ if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== 
 var classVar = pathName.substring(1, pathName.length);
 
 if(pathName === "/questionsList" || pathName === "/commentList" || pathName === "/gatherMemTip") {
-    leftSideBar.innerHTML +='<li class="questionsList" style="cursor: pointer; padding-left: 10px; padding-bottom: 5px"><a href=/questionsList>Qa질문 모아보기</a></li>';
-    leftSideBar.innerHTML +='<li class="commentList" style="cursor: pointer; padding-left: 10px; padding-bottom: 5px"><a href=/commentList?sideCheck=Y>Qa답글 모아보기</a></li>';
-    leftSideBar.innerHTML +='<li class="gatherMemTip" style="cursor: pointer; padding-left: 10px; padding-bottom: 5px"><a href=/gatherMemTip?sideCheck=Y>Tip게시글 모아보기</a></li>';
+    leftSideBar.innerHTML +="<li class='questionsList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/questionsList?questionsListWriter=" + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter + "\"&tipWriter=" + "\"" + tipWriter + "\">Qa질문 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='commentList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/commentList?questionsListWriter=" + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter + "\"&tipWriter=" + "\"" + tipWriter + "\">Qa답글 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='gatherMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherMemTip?questionsListWriter=" + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter + "\"&tipWriter=" + "\"" + tipWriter + "\">Tip게시글 모아보기</a></li>";
 
     const temp = document.querySelector(".questionsList");
     temp.style="color: #949494; margin: 1em 0; cursor: pointer; padding-left: 10px; padding-bottom: 5px; font-weight: 300;";

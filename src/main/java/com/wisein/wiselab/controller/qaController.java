@@ -736,38 +736,58 @@ public class qaController {
     public String questionsList (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
             , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
+            , @RequestParam(value="commentListWriter", required = false) String commentListWriter
+            , @RequestParam(value="tipWriter", required = false) String tipWriter
            , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        // 사이드모아보기 아니면서 처음 모아보기일경우
-        if(qaListDTO.getWriter() != null){
-            String temp = (String)session.getAttribute("questionsListWriter");
-            if(temp != null){
-                session.removeAttribute("questionsListWriter");
-            }
-            session.setAttribute("questionsListWriter", qaListDTO.getWriter());
-            //System.out.println("사이드모아보기 아니면서 처음 모아보기일경우");
+        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+            questionsListWriter = questionsListWriter.substring(1);
+            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+            qaListDTO.setWriter(questionsListWriter);
         }
+        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+            commentListWriter = commentListWriter.substring(1);
+            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+            qaListDTO.setWriter(commentListWriter);
+        }
+        if(tipWriter != null && !tipWriter.equals("\"\"")){
+            tipWriter = tipWriter.substring(1);
+            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+            qaListDTO.setWriter(tipWriter);
+        }
+
         // 사이드모아보기 처음일경우
         if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
             String temp = (String)session.getAttribute("questionsListWriter");
             if(temp != null){
                 session.removeAttribute("questionsListWriter");
             }
-            session.setAttribute("questionsListWriter", member.getId());
-            //System.out.println("사이드모아보기 처음일경우");
+            qaListDTO.setWriter(member.getId());
         }
 
-        qaListDTO.setWriter((String)session.getAttribute("questionsListWriter"));
+        // 사이드모아보기 아니면서 모아보기
+        if(qaListDTO.getWriter() != null){
+            String temp = (String)session.getAttribute("questionsListWriter");
+            if(temp != null){
+                session.removeAttribute("questionsListWriter");
+            }
+            session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+        }
+
         session.setAttribute("questionsListWriter", qaListDTO.getWriter());
-//        System.out.println(qaListDTO.getWriter());
 
-        // 본인글 및 본인 질문모아보기에서는 사이드바 보여주게 설정
-        if(member.getId().equals(qaListDTO.getWriter())){
-            String side_gubun = "Y";
-            model.addAttribute("side_gubun", side_gubun);
+        if(null != session.getAttribute("commentListWriter")){
+            session.removeAttribute("commentListWriter");
         }
+        if(null != session.getAttribute("tipWriter")){
+            session.removeAttribute("tipWriter");
+        }
+
+        String side_gubun = "Y";
+        model.addAttribute("side_gubun", side_gubun);
 
         List<QaListDTO> qaList = new ArrayList<>();
 
@@ -785,9 +805,37 @@ public class qaController {
     public String commentList (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
             , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
+            , @RequestParam(value="commentListWriter", required = false) String commentListWriter
+            , @RequestParam(value="tipWriter", required = false) String tipWriter
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+            questionsListWriter = questionsListWriter.substring(1);
+            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+            qaListDTO.setWriter(questionsListWriter);
+        }
+        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+            commentListWriter = commentListWriter.substring(1);
+            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+            qaListDTO.setWriter(commentListWriter);
+        }
+        if(tipWriter != null && !tipWriter.equals("\"\"")){
+            tipWriter = tipWriter.substring(1);
+            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+            qaListDTO.setWriter(tipWriter);
+        }
+
+        // 사이드바에서 QA답글모아보기 예외처리
+        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
+            String temp = (String)session.getAttribute("commentListWriter");
+            if(temp != null && temp.equals(member.getId())){
+                qaListDTO.setWriter(temp);
+                qaListDTO.setWriter(member.getId());
+            }
+        }
 
         // 사이드모아보기 아니면서 처음 모아보기일경우
         if(qaListDTO.getWriter() != null){
@@ -798,27 +846,17 @@ public class qaController {
             session.setAttribute("commentListWriter", qaListDTO.getWriter());
         }
 
-        qaListDTO.setWriter((String)session.getAttribute("commentListWriter"));
+        session.setAttribute("commentListWriter", qaListDTO.getWriter());
 
-//System.out.println(sideCheck);
-        // 사이드바에서 QA답글모아보기 예외처리
-        if(sideCheck.equals("Y")){
-            String temp = (String)session.getAttribute("questionsListWriter");
-            if(temp != null && temp.equals(member.getId())){
-                qaListDTO.setWriter(temp);
-                session.setAttribute("commentListWriter", member.getId());
-            }
+        if(null != session.getAttribute("questionsListWriter")){
+            session.removeAttribute("questionsListWriter");
+        }
+        if(null != session.getAttribute("tipWriter")){
+            session.removeAttribute("tipWriter");
         }
 
-//System.out.println(session.getAttribute("questionsListWriter"));
-//System.out.println(session.getAttribute("commentListWriter"));
-//System.out.println(qaListDTO.getWriter());
-
-        // 본인글 및 본인 답글모아보기에서는 사이드바 보여주게 설정
-        if(member.getId().equals(qaListDTO.getWriter())){
-            String side_gubun = "Y";
-            model.addAttribute("side_gubun", side_gubun);
-        }
+        String side_gubun = "Y";
+        model.addAttribute("side_gubun", side_gubun);
 
         List<QaListDTO> qaList = new ArrayList<>();
 
