@@ -27,7 +27,6 @@
             let html = "<div class='recommend-titleLine'> 댓글 ("+newCommArr.length+")</div>"
             for(let i=0; i < newCommArr.length; i++){
                 newCommArr[i].content = newCommArr[i].content.replaceAll('&lt;br&gt;', '<br>')
-                console.log("ddddddddd"+newCommArr[i].content)
                 html += "<ul class='recommend'><li>"
                 html += "<div class='wrap'><div class='recommend-info-wrap'>"
 

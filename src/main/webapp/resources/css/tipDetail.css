@@ -6,6 +6,16 @@ header ul li:nth-child(2) .select-wrap select {
   width: 100%
 }
 
+.content-wrap .content-frame .subject a {
+  text-decoration: underline;
+}
+
+.content-wrap .content-frame .subject a:hover {
+  font-weight: bold;
+
+}
+
+
 .recommend-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
