@@ -8,11 +8,7 @@ header ul li:nth-child(2) .select-wrap select {
 
 .content-wrap .content-frame .subject a {
   text-decoration: underline;
-}
-
-.content-wrap .content-frame .subject a:hover {
   font-weight: bold;
-
 }
 
 
