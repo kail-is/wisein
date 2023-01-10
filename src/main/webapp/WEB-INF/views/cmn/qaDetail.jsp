@@ -64,75 +64,75 @@
         <div class="title">
             <c:out value="${commentQa.subject}" />
             <div class="icon" style="float:right;">
+                <c:if test="${commentQaWriter != member.id}">
+                    <c:set var="check" value="0"/>
+                    <c:forEach var="likeQa" items="${likeQaBoardList}" varStatus="status">
+                        <c:set var="done_loop" value="false"/>
+                        <c:if test="${likeQa.boardIdx == commentQa.num && likeQa.delYn eq 'N'}">
+                            <c:set var="check" value="1"/>
+                            <c:set var="done_loop" value="true"/>
+                        </c:if>
+                        <c:if test="${likeQa.boardIdx == commentQa.num && likeQa.delYn eq 'Y'}">
+                            <c:set var="check" value="2"/>
+                            <c:set var="done_loop" value="true"/>
+                        </c:if>
+                    </c:forEach>
 
-                <c:set var="check" value="0"/>
-                <c:forEach var="likeQa" items="${likeQaBoardList}" varStatus="status">
-                    <c:set var="done_loop" value="false"/>
-                    <c:if test="${likeQa.boardIdx == commentQa.num && likeQa.delYn eq 'N'}">
-                        <c:set var="check" value="1"/>
-                        <c:set var="done_loop" value="true"/>
-                    </c:if>
-                    <c:if test="${likeQa.boardIdx == commentQa.num && likeQa.delYn eq 'Y'}">
-                        <c:set var="check" value="2"/>
-                        <c:set var="done_loop" value="true"/>
-                    </c:if>
-                </c:forEach>
+                    <c:set var="checkScrap" value="0"/>
+                    <c:forEach var="scrapQa" items="${scrapQaBoardList}" varStatus="status">
+                        <c:set var="done_loop" value="false"/>
+                        <c:if test="${scrapQa.boardIdx == commentQa.num && scrapQa.delYn eq 'N'}">
+                            <c:set var="checkScrap" value="1"/>
+                            <c:set var="done_loop" value="true"/>
+                        </c:if>
+                        <c:if test="${scrapQa.boardIdx == commentQa.num && scrapQa.delYn eq 'Y'}">
+                            <c:set var="checkScrap" value="2"/>
+                            <c:set var="done_loop" value="true"/>
+                        </c:if>
+                    </c:forEach>
 
-                <c:set var="checkScrap" value="0"/>
-                <c:forEach var="scrapQa" items="${scrapQaBoardList}" varStatus="status">
-                    <c:set var="done_loop" value="false"/>
-                    <c:if test="${scrapQa.boardIdx == commentQa.num && scrapQa.delYn eq 'N'}">
-                        <c:set var="checkScrap" value="1"/>
-                        <c:set var="done_loop" value="true"/>
-                    </c:if>
-                    <c:if test="${scrapQa.boardIdx == commentQa.num && scrapQa.delYn eq 'Y'}">
-                        <c:set var="checkScrap" value="2"/>
-                        <c:set var="done_loop" value="true"/>
-                    </c:if>
-                </c:forEach>
+                    <span id="changeLikeHtml${i}">
+                        <c:if test="${check == 0}">
+                            <div class="board-cell board-like gray qaDetail">
+                            <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
+                            </div>
+                        </c:if>
 
-                <span id="changeLikeHtml${i}">
-                    <c:if test="${check == 0}">
-                        <div class="board-cell board-like gray qaDetail">
-                        <span class="material-icons" id="comment_like_btn" onclick="regLike('${writer}',${commentQaNum})" >thumb_up</span>
-                        </div>
-                    </c:if>
+                        <c:if test="${check == 1}">
+                            <div class="board-cell board-like purple2 qaDetail">
+                            <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})"  >thumb_up</span>
+                            </div>
+                        </c:if>
 
-                    <c:if test="${check == 1}">
-                        <div class="board-cell board-like purple2 qaDetail">
-                        <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})"  >thumb_up</span>
-                        </div>
-                    </c:if>
+                        <c:if test="${check == 2}">
+                            <div class="board-cell board-like gray qaDetail">
+                            <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
+                            </div>
+                        </c:if>
+                    </span>
 
-                    <c:if test="${check == 2}">
-                        <div class="board-cell board-like gray qaDetail">
-                        <span class="material-icons" id="comment_like_btn" onclick="udpLike('${writer}',${commentQaNum})">thumb_up</span>
-                        </div>
-                    </c:if>
-                </span>
+                    <span id="changeScrapHtml${i}">
+                        <c:if test="${checkScrap == 0}">
+                            <div class="board-cell board-like gray qaDetail">
+                            <span class="material-icons" id="comment_scrap_btn" onclick="regScrap('${writer}',${commentQaNum})" >bookmarks</span>
+                            </div>
+                        </c:if>
 
-                <span id="changeScrapHtml${i}">
-                    <c:if test="${checkScrap == 0}">
-                        <div class="board-cell board-like gray qaDetail">
-                        <span class="material-icons" id="comment_scrap_btn" onclick="regScrap('${writer}',${commentQaNum})" >bookmarks</span>
-                        </div>
-                    </c:if>
+                        <c:if test="${checkScrap == 1}">
+                            <div class="board-cell board-like purple2 qaDetail">
+                            <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})"  >bookmarks</span>
+                            </div>
+                        </c:if>
 
-                    <c:if test="${checkScrap == 1}">
-                        <div class="board-cell board-like purple2 qaDetail">
-                        <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})"  >bookmarks</span>
-                        </div>
+                        <c:if test="${checkScrap == 2}">
+                            <div class="board-cell board-like gray qaDetail">
+                            <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})" >bookmarks</span>
+                            </div>
+                        </c:if>
+                    </span>
+                    <c:if test="${member.id == qaListDTO.writer && qaListDTO.adpYn eq 'N'}">
+                        <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn('${fn:replace(writer, "'", "\\'") }',${qaListDTO.num},${commentQaNum});" style="float: right;">채택하기!</a>
                     </c:if>
-
-                    <c:if test="${checkScrap == 2}">
-                        <div class="board-cell board-like gray qaDetail">
-                        <span class="material-icons" id="comment_scrap_btn" onclick="udpScrap('${writer}',${commentQaNum})" >bookmarks</span>
-                        </div>
-                    </c:if>
-                </span>
-
-                <c:if test="${member.id == qaListDTO.writer && qaListDTO.adpYn eq 'N'}">
-                    <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn('${fn:replace(writer, "'", "\\'") }',${qaListDTO.num},${commentQaNum});" style="float: right;">채택하기!</a>
                 </c:if>
                 <c:if test="${qaListDTO.adpNum == commentQaNum && qaListDTO.adpYn eq 'Y'}">
                    <a href="#" style="float: right;">질문자채택!</a>

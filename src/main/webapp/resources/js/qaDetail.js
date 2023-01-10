@@ -51,11 +51,13 @@
         }
 
         // 채택하기
-        function adp_btn(writer, boardNum, commentNum) {
+        async function adp_btn(writer, boardNum, commentNum) {
                if(writer != ""){
-                   document.querySelector("#boardNum").value = boardNum;
-                   document.querySelector("#commentNum").value = commentNum;
-                   document.getElementById('adpForm').submit();
+                   if(await commonPopup.confirmPopup('정말 채택하시겠습니까?', commonPopup.callback)){
+                       document.querySelector("#boardNum").value = boardNum;
+                       document.querySelector("#commentNum").value = commentNum;
+                       document.getElementById('adpForm').submit();
+                   }
                } else if(writer == ""){
                    commonPopup.alertPopup("로그인 후 이용가능합니다.");
                }

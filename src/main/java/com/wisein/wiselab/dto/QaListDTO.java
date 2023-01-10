@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class QaListDTO extends PaginationInfo {
     private int num;
+    private int commCnt;
     private String category;
     private String writer;
     private String subject;
