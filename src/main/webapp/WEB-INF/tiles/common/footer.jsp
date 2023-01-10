@@ -4,13 +4,13 @@
     <div class="search-wrap mobile-search">
         <div class="select-wrap">
              <select name="searchType" class="searchType" id="search-list2">
-                <option value="all"   ${searchType eq 'all' ? 'selected':''}>카테고리</option>
+                <option value="all"   ${searchType eq 'all' ? 'selected':''}>전체검색</option>
                 <option value="front" ${searchType eq 'front'?'selected':''}>FRONT</option>
                 <option value="back"  ${searchType eq 'back'?'selected':''}>BACK</option>
                 <option value="db"    ${searchType eq 'db'?'selected':''}>DB</option>
              </select>
         </div>
-        <input type="text" id="keywordInput2" class="search-bar" placeholder="Type something…" value="${keyword}" onkeyup="enterKey('MO')"/>
+        <input type="text" id="keywordInput2" class="search-bar" placeholder="검색할 제목을 입력하세요" value="${keyword}" onkeyup="enterKey('MO')"/>
         <span class="material-icons">
             <a onclick="enterKey('MO')">search</a>
         </span>

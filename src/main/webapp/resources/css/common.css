@@ -546,6 +546,10 @@ input, select {
   color: #949494;
 }
 
+ .white{
+  color: #ffffff;
+}
+
 .xs-off {
   display: inline-block;
 }
