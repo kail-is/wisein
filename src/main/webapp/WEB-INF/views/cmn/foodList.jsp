@@ -13,9 +13,6 @@
                     </select>
                 </p>
 
-                <span class="material-icons">
-                    expand_more
-                </span>
             </div>
 
             <div class="btn-group">
@@ -43,10 +40,6 @@
                                 </c:forEach>
                             </select>
                         </p>
-
-                        <span class="material-icons">
-                            expand_more
-                        </span>
                     </div>
                     <div class="matzip-list-cell food-list-title">
                         <p>site</p>

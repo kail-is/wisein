@@ -30,6 +30,11 @@ function init() {
 }
 
 function initMap() {
+    let select = document.querySelectorAll('#selectOption');
+    for (let j=0; j<select.length; j++) {
+        select[j].options[0].selected = true;
+    }
+
     let changeText = document.getElementById('changeText');
     changeText.innerText = "맛집";
 

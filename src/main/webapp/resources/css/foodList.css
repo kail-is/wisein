@@ -125,9 +125,9 @@
 
 .category-select #selectOption {
     border: 0;
-    -webkit-appearance: none;
+    /*-webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
+    appearance: none;*/
 }
 
 @media screen and (max-width: 992px) {

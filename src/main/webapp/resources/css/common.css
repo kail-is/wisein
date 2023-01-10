@@ -582,7 +582,7 @@ input, select {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-  position: fixed;
+  position: absolute;
   border-radius: 0.75em;
   left: 5%;
   width: 200px;
@@ -594,7 +594,7 @@ input, select {
   top: 120px;
 }
 
-@media screen and (max-width: 1850px) {
+@media screen and (max-width: 1450px) {
   .info-wrap {
     display: none;
   }
