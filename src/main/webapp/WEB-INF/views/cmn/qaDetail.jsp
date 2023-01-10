@@ -64,7 +64,7 @@
         <div class="title">
             <c:out value="${commentQa.subject}" />
             <div class="icon" style="float:right;">
-                <c:if test="${commentQaWriter != member.id}">
+                <c:if test="${commentQa.writer != member.id}">
                     <c:set var="check" value="0"/>
                     <c:forEach var="likeQa" items="${likeQaBoardList}" varStatus="status">
                         <c:set var="done_loop" value="false"/>
