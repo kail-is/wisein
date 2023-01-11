@@ -1,4 +1,4 @@
-let marker;
+let marker, region;
 let createDiv = document.createElement('div');
 let pageDiv = document.querySelector('#page');
 let markers = [];
@@ -13,6 +13,7 @@ let mapContainer = document.getElementById('map')
 
 let map = new kakao.maps.Map(mapContainer, mapOption);
 
+//그리드 초기화 파견사이트
 function init() {
     let companyArray = Array.from(document.querySelectorAll('#list'));
     for (let i=0; i<companyArray.length; i++) {
@@ -29,15 +30,14 @@ function init() {
             })
 }
 
+//KAKAO MAP 초기화
 function initMap() {
     let select = document.querySelectorAll('#selectOption');
     for (let j=0; j<select.length; j++) {
         select[j].options[0].selected = true;
     }
-
     let changeText = document.getElementById('changeText');
     changeText.innerText = "맛집";
-
     if (markers.length != 0) {
         for (let i=0; i<markers.length; i++) {
             markers[i].setMap(null);
@@ -60,7 +60,6 @@ function foodCategorySelect(target) {
 
     if (target.value != "none") {
         let option = target.options[target.selectedIndex].text;
-
         fetch("/foodCategorySelect?"+"option="+option)
             .then(response => response.json())
             .catch(error => console.log('Error'))
@@ -77,23 +76,22 @@ function foodCategorySelect(target) {
     }
 }
 
-//맛집 리스트
+//맛집 리스트, 파견 지역별 페이징 처리
 function getMatzipList(location, currentPage) {
+    region = location;
     let pageBlock = 5;
     let dataPerPage = 5;
-
     let type = "matzip";
+
     removeAllChild(pageDiv);
 
     if (currentPage==null) {
         currentPage=1;
     }
-
     let companyArray = Array.from(document.querySelectorAll('#list'));
     for (let i=0; i<companyArray.length; i++) {
         companyArray[i].remove();
     }
-
     setPageRow(currentPage, dataPerPage);
     changeText.innerText = "추천수";
 
@@ -130,7 +128,6 @@ function getMatzipList(location, currentPage) {
                                 getMatzipList(location, 1);
                             }
                         }
-
                         if (startPage>1) {
                             creBtn = document.createElement('button');
                             creBtn.innerHTML = "〈";
@@ -140,7 +137,6 @@ function getMatzipList(location, currentPage) {
                                 getMatzipList(location, startPage-parseInt(1));
                             }
                         }
-
                         for (let i=startPage; i<=endPage; i++) {
                             creBtn = document.createElement('button');
                             creBtn.innerHTML += i;
@@ -150,7 +146,6 @@ function getMatzipList(location, currentPage) {
                                 getMatzipList(location, this.innerHTML);
                             }
                         }
-
                         if (endPage<totalPage) {
                             creBtn = document.createElement('button');
                             creBtn.innerHTML = "〉";
@@ -179,7 +174,6 @@ function getMatzipList(location, currentPage) {
                                 getMatzipList(location, 1);
                             }
                         }
-
                         if (startPage>1) {
                             creBtn = document.createElement('button');
                             creBtn.innerHTML = "〈";
@@ -189,7 +183,6 @@ function getMatzipList(location, currentPage) {
                                 getMatzipList(location, startPage-parseInt(1));
                             }
                         }
-
                         for (let i=startPage; i<=totalPage; i++) {
                             creBtn = document.createElement('button');
                             creBtn.innerHTML += i;
@@ -206,7 +199,7 @@ function getMatzipList(location, currentPage) {
         })
 }
 
-//데이터 set
+//그리드 set
 function setDataList(dataList, type) {
     let createDivBefore = document.querySelector('.button-wrap');
     let args = arguments;
@@ -243,7 +236,7 @@ function setDataList(dataList, type) {
                     += "<div id='list' class='matzip-list-line'>"
                     + "<div style='width:300px;' class='matzip-list-cell matzip-category purple2'>"
                     + dataList.list[i].location+"</div>"
-                    + "<div onclick='detailPage(&quot;" + dataList.list[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
+                    + "<div onclick='goPage(&quot;" + dataList.list[i].id+ "&quot;)' class='matzip-list-cell food-list-title'>"
                     + dataList.list[i].companyName+"</div>"
                     + "<div class='matzip-list-cell board-map purple'><span class='material-icons purple'>map</span>"
                     + dataList.list[i].matzipCount+"</div>"
@@ -272,38 +265,30 @@ async function getLocalLatitue(location) {
 //마커 찍기
 async function checkLocal(location, companyName, id, type) {
     let content, overlayText;
-
     let coordinate = await getLocalLatitue(location);
-
     var moveLatLon = new kakao.maps.LatLng(coordinate.longitude, coordinate.latitude);
     map.panTo(moveLatLon);
-
     marker = new kakao.maps.Marker({
         position: moveLatLon,
         clickable: true
     });
-
     markers.push(marker);
-
     marker.setMap(map);
 
     kakao.maps.event.addListener(marker, 'click', function() {
         if (clickOverlay) {
             clickOverlay.setMap(null);
         }
-
         marker = new kakao.maps.Marker({
             position: moveLatLon,
             clickable: true
         });
-
         customOverlay = new kakao.maps.CustomOverlay({
             map: map,
             position: marker.getPosition()
         });
-
         if (type=="matzip") {
-            overlayText = '<div class="detail-btn"><a href="javascript:void(0);"  onclick="detailPage(\''+id+'\');">상세보기</a></div>'
+            overlayText = '<div class="detail-btn"><a href="javascript:void(0);"  onclick="goPage(\''+id+'\');">상세보기</a></div>'
         } else {
             overlayText = '';
         }
@@ -323,20 +308,37 @@ async function checkLocal(location, companyName, id, type) {
         '</div>';
 
         customOverlay.setContent(content);
-
         customOverlay.setMap(map);
         clickOverlay = customOverlay;
     });
 }
 
-//상세 페이지 이동
-function detailPage(id) {
-    id = Number(id);
-    if (typeof id == "number") {
-        let url = "http://" + document.location.host + "/matzip?id="+id;
-        location.href = url
+//페이지 이동
+function goPage(id) {
+    if (arguments.length < 1) {
+        if (region != null) {
+            location.href='matzipBoard?option='+region;
+            return;
+        } else {
+            let option;
+            let selectElements = document.querySelectorAll('#selectOption');
+            let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let selectEl = isMobile ? selectElements[0] : selectElements[1];
+            if (selectEl.options[selectEl.selectedIndex].text=="-----") {
+                option = selectEl.options[selectEl.selectedIndex + 1].text
+            } else {
+                option = selectEl.options[selectEl.selectedIndex].text
+            }
+            location.href='matzipBoard?option='+option;
+        }
     } else {
-        return;
+        id = Number(id);
+        if (typeof id == "number") {
+            let url = "http://" + document.location.host + "/matzip?id="+id;
+            location.href = url
+        } else {
+            return;
+        }
     }
 }
 
@@ -348,11 +350,9 @@ function closeOverlay() {
 //로드뷰 표시
 async function roadView(local) {
     let coordinate = await getLocalLatitue(local);
-
     let roadviewContainer = document.getElementById('roadview');
     let roadview = new kakao.maps.Roadview(roadviewContainer);
     let roadviewClient = new kakao.maps.RoadviewClient();
-
     let position = new kakao.maps.LatLng(coordinate.longitude, coordinate.latitude);
 
     roadviewClient.getNearestPanoId(position, 50, function(panoId) {
@@ -360,20 +360,18 @@ async function roadView(local) {
             commonPopup.alertPopup("해당 지역의 로드뷰를 볼 수 없습니다!");
         } else {
             let closeBtn = document.querySelector('#road-close-btn');
-
             document.querySelector('#roadViewPopup').classList.remove('none');
             $dim();
-
             closeBtn.addEventListener('click', function() {
                 commonPopup.close();
                 $dim(false);
             });
-
             roadview.setPanoId(panoId, position);
         }
     });
 }
 
+//파견 지역별 페이징 처리
 function removeAllChild(pageDiv) {
     while (pageDiv.hasChildNodes()) {
         pageDiv.removeChild(pageDiv.firstChild);

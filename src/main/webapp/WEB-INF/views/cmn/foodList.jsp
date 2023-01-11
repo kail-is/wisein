@@ -21,7 +21,7 @@
                         refresh
                     </span>
                 </button>
-                <input class="recm-btn" type="button" onclick="location.href='matzipBoard'" value="추천">
+                <input class="recm-btn" type="button" onclick="goPage()" value="추천">
             </div>
         </div>
 
@@ -62,7 +62,7 @@
             </button>
 
             <div class="button-wrap">
-                <input type="button" onclick="location.href='matzipBoard'"value="추천">
+                <input type="button" onclick="goPage()"value="추천">
             </div>
         </div>
 

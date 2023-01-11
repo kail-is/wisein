@@ -24,6 +24,18 @@
         editor.setHTML(document.querySelector('#content').value);
     }
 
+    function init() {
+        let selectElement  = document.getElementById('category');
+        let url = window.location.search;
+        let len = selectElement.options.length;
+        let param = new URLSearchParams(url);
+        for (let i=0; i<len; i++) {
+            if (selectElement.options[i].value == param.get('option')) {
+                selectElement.options[i].selected = true;
+            }
+        }
+    }
+
     function matzipSubmit(){
 
         const writer = document.getElementById('writer').value;
@@ -205,3 +217,5 @@
         addSrhBtn.classList.remove('none');
 
     }
+
+    init();
