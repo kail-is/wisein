@@ -10,6 +10,9 @@ public interface LikeDAO {
     /* like 여부 조회 */
     public String TipLikeYN(LikeBoardDTO dto) throws Exception;
 
+    /* like 여부 조회 */
+    public String QaLikeYN(LikeBoardDTO dto) throws Exception;
+
     /* like 등록 */
     public void insertLike(LikeBoardDTO dto) throws Exception;
 

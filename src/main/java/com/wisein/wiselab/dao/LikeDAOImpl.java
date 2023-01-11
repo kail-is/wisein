@@ -20,6 +20,12 @@ public class LikeDAOImpl implements LikeDAO {
         return sql.selectOne(NS + ".TipLikeYN", dto);
     }
 
+    /* like 여부 조회 */
+    @Override
+    public String QaLikeYN(LikeBoardDTO dto) throws Exception {
+        return sql.selectOne(NS + ".QaLikeYN", dto);
+    }
+
     /* like 등록 */
     @Override
     public void insertLike(LikeBoardDTO dto) throws Exception {

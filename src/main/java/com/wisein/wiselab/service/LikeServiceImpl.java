@@ -19,6 +19,12 @@ public class LikeServiceImpl implements LikeService {
         return dao.TipLikeYN(dto);
     }
 
+    /* like 여부 조회 */
+    @Override
+    public String QaLikeYN(LikeBoardDTO dto) throws Exception {
+        return dao.QaLikeYN(dto);
+    }
+
     /* like 등록 */
     @Override
     public void insertLike(LikeBoardDTO dto) throws Exception {

@@ -11,6 +11,14 @@
            AND BOARD_IDX = #{boardIdx}
     </select>
 
+    <select id="QaLikeYN" parameterType="LikeBoardDTO" resultType="String">
+        SELECT DEL_YN
+         FROM LIKE_BOARD
+        WHERE USER_ID = #{userId}
+          AND BOARD_TYPE = #{boardType}
+          AND BOARD_IDX = #{boardIdx}
+    </select>
+
     <!-- like 등록-->
     <insert id="insertLike" parameterType="LikeBoardDTO">
         INSERT INTO LIKE_BOARD

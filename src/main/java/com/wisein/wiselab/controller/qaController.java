@@ -632,24 +632,52 @@ public class qaController {
         }
         // 댓글 삭제일경우
         else if(commentQaNum != 0){
-            // 1.댓글 num을 받아서
+            // 1.댓글 commentQaNum 받아서
             // 2.댓글 삭제 진행
-            // 3.댓글 좋아요 여부 삭제 진행
-            // 4.댓글 스크랩 여부 삭제 진행
-            // 5.원본게시글 조회 후 좋아요, 스크랩 COUNT 값 감소
+            // 3.댓글 좋아요,스크랩 DEL_YN ='N' 값 조회
+            // 4.여부에따라 원본 게시글 조회
+            // 4-1.원본 게시글 좋아요,스크랩 COUNT -1 진행
+            // 5.댓글 좋아요 여부 삭제 진행
+            // 6.댓글 스크랩 여부 삭제 진행
 
-            //1.
-            num = commentQaNum;
+            // like정보 셋팅
+            LikeBoardDTO likeDto = new LikeBoardDTO();
+            likeDto.setUserId(member.getId());
+            likeDto.setBoardType("qa");
+            likeDto.setBoardIdx(commentQaNum);
+            // scrap정보 셋팅
+            ScrapBoardDTO scrapDto = new ScrapBoardDTO();
+            scrapDto.setUserId(member.getId());
+            scrapDto.setBoardType("qa");
+            scrapDto.setBoardIdx(commentQaNum);
+
             //2.
-            qaListservice.deleteQaBoard(num);
+            qaListservice.deleteQaBoard(commentQaNum);
             //3.
-            qaListservice.deleteLikeQaBoard(num);
+            String likeDelCheck = likeService.QaLikeYN(likeDto);
+            String scrapDelCheck = scrapService.QaScrapYN(scrapDto);
+            System.out.println("likeDelCheck : " + likeDelCheck);
+            System.out.println("scrapDelCheck : " + scrapDelCheck);
             //4.
-            qaListservice.deleteScrapQaBoard(num);
-            //5.
-            int parentNum = likeService.getQaParentNum(num);
-            qaListservice.delQaLikeCount(parentNum); // 원본게시글 전체 likeCount 값 감소
-            qaListservice.delQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 감소
+            if(likeDelCheck != null){
+                if(likeDelCheck.equals("N")){
+                    int parentNum = likeService.getQaParentNum(commentQaNum);
+                    //4-1.
+                    qaListservice.delQaLikeCount(parentNum); // 원본게시글 전체 likeCount 값 감소
+                    //5.
+                    qaListservice.deleteLikeQaBoard(commentQaNum);
+                }
+            }
+            //4.
+            if(scrapDelCheck != null){
+                if(scrapDelCheck.equals("N")){
+                    int parentNum = likeService.getQaParentNum(commentQaNum);
+                    //4-1.
+                    qaListservice.delQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 감소
+                    //6.
+                    qaListservice.deleteScrapQaBoard(commentQaNum);
+                }
+            }
 
         }
         return "redirect:/qalist";
