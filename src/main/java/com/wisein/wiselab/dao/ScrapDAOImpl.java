@@ -18,6 +18,12 @@ public class ScrapDAOImpl implements ScrapDAO {
         return sql.selectOne(NS + ".TipScrapYN", dto);
     }
 
+    /* Scrap 여부 조회 */
+    @Override
+    public String QaScrapYN(ScrapBoardDTO dto) throws Exception {
+        return sql.selectOne(NS + ".QaScrapYN", dto);
+    }
+
     /* Scrap 등록 */
     @Override
     public void insertScrap(ScrapBoardDTO dto) throws Exception {

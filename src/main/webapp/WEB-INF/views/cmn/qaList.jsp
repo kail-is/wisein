@@ -90,14 +90,10 @@
                     </div>
                     <div class="board-cell board-answer gray">
                         <c:if test="${qa.adpYn eq 'Y'}">
-                            <span class="material-icons" style="color:purple;">
-                                check_circle
-                            </span>
+                            <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
                         </c:if>
                         <c:if test="${qa.adpYn eq 'N'}">
-                            <span class="material-icons purple2">
-                                help_outline
-                            </span>
+                            <span class="material-icons purple2">help_outline</span>${qa.commCnt}
                         </c:if>
                     </div>
 

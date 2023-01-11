@@ -54,6 +54,9 @@
                         -->
                     </div>
                     <div class="board-cell board-like gray">
+                        댓글수
+                    </div>
+                    <div class="board-cell board-like gray">
                         좋아요
                     </div>
                     <div class="board-cell board-like gray">
@@ -77,8 +80,19 @@
                         </div>
                         <div class="board-cell board-title">
                             <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
-                        <!--좋아요-->
                         </div>
+                        <!--댓글수-->
+                        <c:if test="${tip.commCnt == 0}">
+                            <div class="board-cell board-like gray">
+                                <span class="material-icons">comment</span>${tip.commCnt}
+                            </div>
+                        </c:if>
+                        <c:if test="${tip.commCnt != 0}">
+                            <div class="board-cell board-like purple2">
+                                <span class="material-icons">comment</span>${tip.commCnt}
+                            </div>
+                        </c:if>
+                        <!--좋아요-->
                         <c:if test="${tip.likeCount == 0}">
                             <div class="board-cell board-like gray">
                                 <span class="material-icons">thumb_up</span>${tip.likeCount}

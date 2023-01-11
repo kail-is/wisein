@@ -17,6 +17,11 @@
              , A.PARENT_NUM
              , A.LIKE_COUNT
              , A.SCRAP_COUNT
+             ,(SELECT COUNT(*)
+                      FROM QA_BOARD COM
+                     WHERE COM.PARENT_NUM = A.NUM
+                       AND COM.DEL_YN = 'N'
+                       ) AS COMM_CNT
           FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                      , QB.NUM
                      , QB.CATEGORY

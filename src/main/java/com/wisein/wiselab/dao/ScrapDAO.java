@@ -8,6 +8,9 @@ public interface ScrapDAO {
     /* Scrap 여부 조회 */
     public String TipScrapYN(ScrapBoardDTO dto) throws Exception;
 
+    /* Scrap 여부 조회 */
+    public String QaScrapYN(ScrapBoardDTO dto) throws Exception;
+
     /* Scrap 등록 */
     public void insertScrap(ScrapBoardDTO dto) throws Exception;
 

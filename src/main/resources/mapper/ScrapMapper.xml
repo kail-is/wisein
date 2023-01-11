@@ -12,6 +12,15 @@
         AND BOARD_IDX = #{boardIdx}
     </select>
 
+    <select id="QaScrapYN" parameterType="ScrapBoardDTO" resultType="String">
+        SELECT DEL_YN
+        FROM
+            Scrap_board
+        WHERE USER_ID = #{userId}
+        AND BOARD_TYPE = #{boardType}
+        AND BOARD_IDX = #{boardIdx}
+    </select>
+
     <!-- Scrap 등록-->
     <insert id="insertScrap" parameterType="ScrapBoardDTO">
         INSERT INTO Scrap_board

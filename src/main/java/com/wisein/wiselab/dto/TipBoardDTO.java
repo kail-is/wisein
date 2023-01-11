@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 public class TipBoardDTO extends PaginationInfo  {
     private int num;
+    private int commCnt;
     private String category;
     private String writer;
     private String subject;

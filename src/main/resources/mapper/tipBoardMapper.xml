@@ -17,6 +17,11 @@
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
                   ,A.SCRAP_COUNT
+                  ,(SELECT COUNT(*)
+                      FROM COMMENT COM
+                     WHERE COM.BOARD_IDX = A.NUM
+                       AND COM.DEL_YN = 'n'
+                       AND COM.BOARD_TYPE ='tip') AS COMM_CNT
             FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                         ,TB.NUM
                         ,TB.CATEGORY
@@ -59,6 +64,11 @@
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
                   ,A.SCRAP_COUNT
+                  ,(SELECT COUNT(*)
+                      FROM COMMENT COM
+                     WHERE COM.BOARD_IDX = A.NUM
+                       AND COM.DEL_YN = 'n'
+                       AND COM.BOARD_TYPE ='tip') AS COMM_CNT
             FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                         ,TB.NUM
                         ,TB.CATEGORY

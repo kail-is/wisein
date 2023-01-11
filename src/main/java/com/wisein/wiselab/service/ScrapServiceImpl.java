@@ -19,6 +19,12 @@ public class ScrapServiceImpl implements ScrapService {
         return dao.TipScrapYN(dto);
     }
 
+    /* Scrap 여부 조회 */
+    @Override
+    public String QaScrapYN(ScrapBoardDTO dto) throws Exception {
+        return dao.QaScrapYN(dto);
+    }
+
     /* Scrap 등록 */
     @Override
     public void insertScrap(ScrapBoardDTO dto) throws Exception {

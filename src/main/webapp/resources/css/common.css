@@ -352,7 +352,7 @@ input, select {
   left: 0;
   width: 150px;
   padding: 1em 0;
-  background-color: rgba(163, 163, 163, 0.89);
+  background-color: rgba(163, 163, 163);
   border-radius: 0.25em;
   font-size: 14px;
   font-weight: 600;
@@ -544,6 +544,10 @@ input, select {
 
 .gray {
   color: #949494;
+}
+
+ .white{
+  color: #ffffff;
 }
 
 .xs-off {
