@@ -33,7 +33,7 @@
                 if(newCommArr[i].filePath == null){
                     html += "<img src ='../resources/image/Conic.png'>"
                 }else{
-                    html += "<img src ='../"+newCommArr[i].filePath+"'>"
+                    html += "<img src ="+newCommArr[i].filePath+">"
                 }
 
                 html += "<div class='info'><div class='title'>"+newCommArr[i].writer+"</div>"
