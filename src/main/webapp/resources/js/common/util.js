@@ -260,19 +260,19 @@ alertPopup : function (alertMsg, dimCheck) {
 
 },
 
-confirmPopup : function (confirmMsg, confirmCallback) {
+confirmPopup : function (confirmMsg, confirmCallback, dimming) {
     if (confirmMsg==null && confirmMsg.trim()=="") {
         console.log("Text is null");
 
     } else if (confirmCallback==null || typeof confirmCallback != 'function') {
         console.log("CallBack is not Function");
     } else {
-         return confirmCallback(confirmMsg);
+         return confirmCallback(confirmMsg, dimming);
     }
 
 },
 
-callback : function (confirmMsg) {
+callback : function (confirmMsg, dimming) {
     return new Promise(resolve => {
         let confirmBtn = document.querySelector('#confirm-btn');
         let cancelBtn = document.querySelector('#confirm-cancel-btn');
@@ -282,6 +282,10 @@ callback : function (confirmMsg) {
         const onclick = pass => {
             resolve(pass);
             commonPopup.close();
+
+            if (typeof dimming != "undefined") {
+                $dim();
+            }
         };
 
         confirmBtn.addEventListener('click', onclick.bind(null, true));

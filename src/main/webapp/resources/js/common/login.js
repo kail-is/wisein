@@ -53,7 +53,7 @@ window.onload = function() {
     // 아이디 재설정
     idBox.addEventListener('click', async () => {
         if (idChkBool == true) {
-            if (await commonPopup.confirmPopup("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
+            if (await commonPopup.confirmPopup("아이디를 재설정하시겠습니까? 아이디 중복 확인을 다시 받으셔야 합니다.", commonPopup.callback, true)) {
                 idChkBool = false;
                 document.querySelector("#idChkAlert > .porintColor").classList.add('none');
                 idBox.value = "";
@@ -99,7 +99,7 @@ window.onload = function() {
     // 회원정보 수정 비밀번호 재설정
     pwBox.addEventListener('click', async () => {
         if (pwChkBool == true) {
-            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback, true)) {
                 pwChkBool = false;
                 pwBox.value = "";
                 pwBox.readOnly = false;
@@ -148,7 +148,7 @@ window.onload = function() {
     // 회원정보 수정 비밀번호 재설정
     updPwBox.addEventListener('click', async () => {
         if (upd_pwChkBool == true) {
-            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback)) {
+            if (await commonPopup.confirmPopup("비밀번호를 재설정하시겠습니까? 패스워드 확인을 다시 받으셔야 합니다.", commonPopup.callback, true)) {
                 upd_pwChkBool = false;
                 updPwBox.value = "";
                 updPwBox.readOnly = false;
