@@ -273,6 +273,7 @@ input, select {
   -ms-flex-direction: row;
   flex-direction: row;
   position: relative;
+  gap: 5px;
 }
 
 .content-wrap .content-frame .writer-wrap p {
